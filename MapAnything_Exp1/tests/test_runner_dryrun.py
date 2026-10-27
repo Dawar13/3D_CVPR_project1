@@ -40,24 +40,27 @@ def fake_run_factory(clip):
 
     def fake_run(model, views, device):
         assert len(views) == N
-        out = {"pts3d": [], "depth_z": [], "pose": [], "conf": [], "mask": []}
+        out = {"pts3d": [], "depth_z": [], "pose": [], "conf": [], "mask": [], "intrinsics": []}
         for i, view in enumerate(views):
             assert tuple(view["img"].shape) == (H, W, 3)
+            if "depth_z" in view:
+                assert "intrinsics" in view and tuple(view["depth_z"].shape) == (H, W)
             if "camera_poses" in view:
                 T = view["camera_poses"].double().numpy()
             else:
                 T = clip["poses"][i].copy()
                 T[:3, :3] = T[:3, :3] @ so3_exp(np.radians(1.0) * np.array([0.0, 1.0, 0.0]))
-            K = clip["K"][i]
+            K = view["intrinsics"].double().numpy() if "intrinsics" in view else clip["K"][i]
             z = np.where(clip["depth"][i] > 0, clip["depth"][i], np.median(clip["depth"][i]))
             pc = np.stack([(u - K[0, 2]) / K[0, 0] * z, (v - K[1, 2]) / K[1, 1] * z, z], -1)
             out["pts3d"].append(pc @ T[:3, :3].T + T[:3, 3])
             out["depth_z"].append(z)
             out["pose"].append(T)
-            out["conf"].append(np.ones((H, W)))
+            out["conf"].append(np.full((H, W), 2.0 if "camera_poses" in view else 1.0))
             out["mask"].append(np.ones((H, W), bool))
+            out["intrinsics"].append(K)
         out = {k: np.stack(x) for k, x in out.items()}
-        out["runtime_s"], out["peak_mem_gb"] = 0.01, 0.0
+        out["runtime_s"], out["peak_mem_gb"], out["metric_scaling_factor"] = 0.01, 0.0, 1.0
         return out
 
     return fake_run
@@ -158,3 +161,60 @@ def test_demo_recon_refuses_eval_clips(monkeypatch):
     monkeypatch.setattr(sys, "argv", ["x", "--clip", "data/clips/eval__x__c0.npz", "--out", "unused"])
     with pytest.raises(SystemExit):
         demo.main()
+
+
+@pytest.fixture(scope="module")
+def e1_run(tmp_path_factory):
+    """The FULL E1 grid on an 8-view synthetic clip (depth hints on views 3 and 7), fake model."""
+    root = str(tmp_path_factory.mktemp("e1"))
+    synth.write_scene(root, n=8)
+    clips = os.path.join(root, "clips")
+    prepare_eth3d(root, clips, n_views=8, clips_per_scene=1, stride=1, tw=170, th=100, scenes=["synth"])
+    clip_path = os.path.join(clips, "dev__synth__c0.npz")
+    out = os.path.join(root, "e1")
+    mp = pytest.MonkeyPatch()
+    mp.setattr(model_io, "load_model", lambda ckpt, device: "fake")
+    mp.setattr(model_io, "run", fake_run_factory(load_clip(clip_path)))
+    mp.setattr(sys, "argv", ["run_exp1", "--config", os.path.join(ROOT, "configs", "e1_full.json"),
+                             "--clips", clip_path, "--out", out, "--device", "cpu"])
+    run_exp1.main()
+    mp.undo()
+    return out
+
+
+def test_e1_grid_runs_completely(e1_run):
+    pr = pd.read_csv(os.path.join(e1_run, "per_run.csv"))
+    pv = pd.read_csv(os.path.join(e1_run, "per_view.csv"))
+    assert not os.path.exists(os.path.join(e1_run, "failures.jsonl"))
+    runs = pr[pr.view_subset == "all"]
+    assert (runs.status == "ok").all() and len(runs) == 235
+    assert len(pv) == 8 * len(runs)
+    man = json.load(open(os.path.join(e1_run, "corruption_manifest.json")))
+    eq = {e["condition"]: e["max_abs_diff_vs_clean_pts3d"] for e in man if "max_abs_diff_vs_clean_pts3d" in e}
+    assert eq == {"zero_noise": 0.0, "scale_all_x1.0": 0.0}
+    # depth hints only on views 3 and 7; the metric flag is recorded
+    d = pv[pv.condition == "clean_pose_depth2"]
+    assert set(d[d.has_depth_hint == 1].view_idx) == {3, 7}
+    assert set(pr[pr.condition == "metric_flag_off"].metric_flag) == {0}
+    # the fake model copies pose hints, so absorption of a single 15 deg outlier is 1
+    o = pv[(pv.condition == "outlier_rot_rot_deg=15") & (pv.was_corrupted == 1) & (pv.control == "none")]
+    assert np.allclose(o.absorption_rot, 1.0, atol=1e-3)
+    # evaluation is gauge-invariant: moving every camera together changes nothing
+    g = pr[(pr.condition == "gauge_rigid") & (pr.view_subset == "all")].pts_relerr_scale
+    c = pr[(pr.condition == "clean_pose") & (pr.view_subset == "all")].pts_relerr_scale.iloc[0]
+    assert np.allclose(g, c, atol=1e-6)
+
+
+def test_e1_analysis_runs_on_the_full_grid(e1_run, monkeypatch):
+    from exp1 import e1_analysis
+    monkeypatch.setattr(sys, "argv", ["x", "--run", e1_run, "--checks"])
+    e1_analysis.main()
+    agg = os.path.join(e1_run, "agg")
+    for f in ("dose_response.csv", "contamination.csv", "confidence_auroc.csv", "absorption.csv", "fix.csv",
+              "scale.csv", "signals.json", "signals.md", "dev_checks.md", "fig_dose_response.png",
+              "fig_scene_heatmap.png", "fig_contamination.png", "fig_absorption.png", "fig_scale.png"):
+        assert os.path.exists(os.path.join(agg, f)), f
+    sig = json.load(open(os.path.join(agg, "signals.json")))
+    assert sig["decision"] in ("Strong GO", "Weak GO", "STOP")
+    # the fake model trusts every hint: blind trust (S3) must be detected
+    assert sig["S3"]["value"] is True

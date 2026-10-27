@@ -1,0 +1,49 @@
+
+===== tests
+16:36:29
+.........................................................                [100%]
+57 passed in 29.27s
+
+===== upright relief clips
+16:36:59
+[ok] data/clips/eval__relief__c0.npz  views=10  size=336x518  valid_depth=34.5%  turned upright
+[ok] data/clips/eval__relief_2__c0.npz  views=10  size=336x518  valid_depth=32.5%  turned upright
+
+===== GT check upright clips
+16:37:11
+[PASS] eval__relief_2__c0  depth_undistorted=True  pairs>5%overlap=9/9  worst median_rel=0.0010  radial(centre->corner)=[0.0004, 0.0005, 0.0005, 0.0007]  ROTATED images: ['DSC_0458.JPG', 'DSC_0459.JPG', 'DSC_0460.JPG', 'DSC_0461.JPG', 'DSC_0462.JPG', 'DSC_0463.JPG', 'DSC_0464.JPG', 'DSC_0465.JPG', 'DSC_0466.JPG', 'DSC_0467.JPG']
+[PASS] eval__relief__c0  depth_undistorted=True  pairs>5%overlap=9/9  worst median_rel=0.0009  radial(centre->corner)=[0.0004, 0.0005, 0.0005, 0.0011]  ROTATED images: ['DSC_0427.JPG', 'DSC_0428.JPG', 'DSC_0429.JPG', 'DSC_0430.JPG', 'DSC_0431.JPG', 'DSC_0432.JPG', 'DSC_0433.JPG', 'DSC_0434.JPG', 'DSC_0435.JPG', 'DSC_0436.JPG']
+OVERALL: PASS
+
+===== determinism on shared GPU
+16:37:12
+0 MiB
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+runtime per inference: ['0.599', '0.261', '0.260'] s (first = warm-up); peak 8.26 GB
+within-process max |d pts3d| over 3 repeats: 0 m = 0 L
+
+===== E1 dev run
+16:37:32
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+[done] dev__delivery_area__c0
+[done] dev__facade__c0
+[done] dev__terrace__c0
+
+===== E1 dev checks
+16:48:11
+[PASS] no failures, every condition x clip x seed x control present: failures file: False; missing runs: 0 of 705
+[PASS] gauge_rigid ~ clean_pose (max rel. diff <= 5%): max rel. diff 0.0268
+[FAIL] scale_all_nonmetric_x1.5 ~ clean_pose on scale-aligned metrics (<= 5%): max rel. diff 1.4809; vs metric_flag_off 0.00e+00
+[PASS] scale_all_x1.0 and zero_noise equal clean_pose: max |d pts3d| per clip: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+[FAIL] severity sweeps roughly monotone (most severe >= 95% of mildest): anchor_error/pts_relerr_scale: mildest 0.1830 > most severe 0.0745; anchor_error/rre_deg: mildest 3.0879 > most severe 0.2221; depth_scale/rre_deg: mildest 0.3432 > most severe 0.2838; depth_scale_noposes/rre_deg: mildest 0.8997 > most severe 0.7555; focal_one/rre_deg: mildest 0.2356 > most severe 0.2057
+[PASS] drop_oracle ~ clean_pose quality on the remaining views (median ratio <= 1.25): median ratio 1.003 over 117 runs
+[FAIL] per-view logs complete; absorption and metric_scale_ratio filled and finite: per_view rows 7050 (expected 7050); absorption filled on 45% of single-outlier corrupted views; scale ratio finite: True
+signals: {'S1': True, 'S2': True, 'S3': True, 'S4': False, 'S5': True, 'S6': True, 'S7': True} decision: Strong GO
+
+===== done
+16:48:17
+E1_DEV_DONE

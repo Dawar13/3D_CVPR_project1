@@ -212,3 +212,8 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
   2. real-size errors and `metric_scaling_factor` are primary readouts for the wrong-scale families.
 
   E1 coding has not started; waiting for the go-ahead. GPU: the A100 VM is shared with the rolling-shutter project (about 35 GB in use), and E1 needs about 8.3 GB per run, so it can share the card.
+- 2026-10-27: **E1 dev stage done; NOT frozen, no eval run** (on hold for discussion at the user's request).
+  - Code, grid (`configs/e1_full.json`, 235 inferences per clip), analysis (`exp1/e1_analysis.py`) and tests (57 pass) are written.
+  - relief and relief_2 are upright, and their GT check passes.
+  - Dev run: 705/705 runs, 0 failures, ~11 min; repeat runs are bit-identical on the shared GPU.
+  - Dev checks pass after amendments 1-13 in `experiments/E1.md`. The open point is amendment 13: turning the metric flag off changes `clean_pose` results by up to 148%, so the plan's sanity expectation for `scale_all_nonmetric_x1.5` does not hold, while that run equals `metric_flag_off` exactly.

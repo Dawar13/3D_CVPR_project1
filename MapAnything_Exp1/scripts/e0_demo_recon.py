@@ -23,11 +23,10 @@ import numpy as np
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
 from exp1 import model_io  # noqa: E402
-from exp1.corrupt_geometry import corrupt_poses  # noqa: E402
 from exp1.datasets import load_clip  # noqa: E402
 from exp1.geometry import invert_pose  # noqa: E402
 from exp1.metrics import evaluate, gt_points_ref0  # noqa: E402
-from exp1.run_exp1 import expand_conditions  # noqa: E402
+from exp1.run_exp1 import apply_corruption, expand_conditions  # noqa: E402
 
 CONDITIONS = ["rgb_only", "clean_pose", "outlier_rot_rot_deg=15"]
 
@@ -137,15 +136,16 @@ def main():
     write_ply(os.path.join(a.out, f"{cid}__gt.ply"), gt[keep], rgb)
 
     model = model_io.load_model(cfg["checkpoint"], a.device)
+    depth_views = tuple(cfg.get("depth_views", ()))
     results = {}
     for name in a.conditions:
         cond = conds[name]
-        poses, affected = clip["poses"], None
-        if cond.get("corruption"):
-            poses, entry = corrupt_poses(clip["poses"], cond["corruption"], a.seed, cid, name)
-            affected = entry["affected_views"]
-        pred = model_io.run(model, model_io.build_views(clip["images"], clip["K"], poses,
-                                                        cond["inputs"]), a.device)
+        # same damage as the runner (pose, lens or depth), same seed
+        poses, K, depth, entry = apply_corruption(clip, cond, a.seed, depth_views)
+        affected = entry["affected_views"] if entry and entry["target"] == "pose" else None
+        pred = model_io.run(model, model_io.build_views(clip["images"], K, poses, cond["inputs"], None,
+                                                        bool(cond.get("metric", True)), depth, depth_views),
+                            a.device)
         pts, pposes = pred_in_ref0(pred)
         results[name] = {"pts": pts[keep], "rgb": rgb, "poses": pposes,
                          "hint_poses": poses if affected else None, "affected": affected,

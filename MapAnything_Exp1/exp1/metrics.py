@@ -103,4 +103,34 @@ def evaluate(pred, clip, views=None):
     out["centre_err_rel"] = float(np.linalg.norm(cp[views] - cg[views], axis=1).mean() / L)
 
     out["mean_conf"] = float(pred["conf"][views].mean())
+    # predicted / true size of the scene (1 = metric scale right); all views, like s
+    out["metric_scale_ratio"] = float(np.median(pred["depth_z"][vall] / depth[vall]))
+    return out
+
+
+def per_view(pred, clip, s):
+    """Per-view quantities for per_view.csv. s: the clip's scale factor from evaluate()."""
+    depth, K = clip["depth"], clip["K"]
+    N = len(depth)
+    T0_inv = invert_pose(pred["pose"][0])
+    pts_p = pred["pts3d"] @ T0_inv[:3, :3].T + T0_inv[:3, 3]
+    pts_g, valid = gt_points_ref0(depth, K, clip["poses"])
+    out = {k: np.full(N, np.nan) for k in ("view_pts_err_scale", "view_pts_err_metric",
+                                           "view_depth_absrel_scale", "view_depth_absrel_metric",
+                                           "pred_depth_scale", "conf_mean", "conf_median")}
+    for i in range(N):
+        m = valid[i] & (pred["depth_z"][i] > 1e-6)
+        out["conf_mean"][i] = float(pred["conf"][i].mean())
+        out["conf_median"][i] = float(np.median(pred["conf"][i]))
+        if not m.any():
+            continue
+        gnorm = np.linalg.norm(pts_g[i][m], axis=-1).mean()
+        out["view_pts_err_metric"][i] = np.linalg.norm(pts_p[i][m] - pts_g[i][m], axis=-1).mean() / gnorm
+        out["view_pts_err_scale"][i] = np.linalg.norm(s * pts_p[i][m] - pts_g[i][m], axis=-1).mean() / gnorm
+        dp, dg = pred["depth_z"][i][m], depth[i][m]
+        out["view_depth_absrel_metric"][i] = float(np.mean(np.abs(dp - dg) / dg))
+        out["view_depth_absrel_scale"][i] = float(np.mean(np.abs(s * dp - dg) / dg))
+        out["pred_depth_scale"][i] = float(np.median(dp / dg))
+    out["pred_poses_rel"] = np.stack([T0_inv @ T for T in pred["pose"]])
+    out["pred_focal"] = 0.5 * (pred["intrinsics"][:, 0, 0] + pred["intrinsics"][:, 1, 1])
     return out

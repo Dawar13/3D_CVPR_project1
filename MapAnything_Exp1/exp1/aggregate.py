@@ -127,7 +127,8 @@ def fig_severity(summ, metric, out):
                 r = base.loc[ref]
                 ax.axhspan(r.ci_lo, r.ci_hi, color=col, alpha=0.15, lw=0)
                 ax.axhline(r["mean"], color=col, lw=2, label=lab)
-        ax.errorbar(x, g["mean"], yerr=[g["mean"] - g.ci_lo, g.ci_hi - g["mean"]],
+        ax.errorbar(x, g["mean"].to_numpy(float), yerr=np.vstack([(g["mean"] - g.ci_lo).to_numpy(float),
+                    (g.ci_hi - g["mean"]).to_numpy(float)]),
                     color=C_CORRUPT, lw=2, marker="o", ms=5, capsize=0, label="Corrupted prior")
         ax.set_xticks(x, [f"{s:g}" for s in g.sev])
         ax.set_xlabel(FAMILY_LABEL[fam], fontsize=8, color=INK2)

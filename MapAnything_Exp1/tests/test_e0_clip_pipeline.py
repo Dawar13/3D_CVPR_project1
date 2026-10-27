@@ -36,10 +36,10 @@ def R_to_quat_wxyz(R):
     return np.array([w, x, y, z])
 
 
-def plane_z(c2w, x, y):
-    """z-depth of the plane along camera rays with normalised coords (x, y)."""
+def plane_z(c2w, x, y, n=PLANE_N):
+    """z-depth of the plane n . X = PLANE_D along camera rays with normalised coords (x, y)."""
     d = np.stack([x, y, np.ones_like(x)], -1) @ c2w[:3, :3].T
-    s = (PLANE_D - PLANE_N @ c2w[:3, 3]) / (d @ PLANE_N)
+    s = (PLANE_D - n @ c2w[:3, 3]) / (d @ n)
     return np.where(s > 0, s, 0.0)
 
 
@@ -91,13 +91,13 @@ def write_scene(root, n=4, seed=0):
             f.writelines(lines)
 
 
-def analytic_depth(clip):
+def analytic_depth(clip, n=PLANE_N):
     """Exact undistorted z-depth at every clip pixel (OpenCV pixel convention)."""
     N, h, w = clip["depth"].shape
     u, v = np.meshgrid(np.arange(w), np.arange(h))
     out = []
     for K, T in zip(clip["K"], clip["poses"]):
-        out.append(plane_z(T, (u - K[0, 2]) / K[0, 0], (v - K[1, 2]) / K[1, 1]))
+        out.append(plane_z(T, (u - K[0, 2]) / K[0, 0], (v - K[1, 2]) / K[1, 1], n))
     return np.stack(out)
 
 
@@ -114,8 +114,8 @@ def clips(tmp_path_factory):
     return out
 
 
-def _median_rel(clip):
-    gt = analytic_depth(clip)
+def _median_rel(clip, n=PLANE_N):
+    gt = analytic_depth(clip, n)
     m = (clip["depth"] > 0) & (gt > 0)
     return float(np.median(np.abs(clip["depth"][m] - gt[m]) / gt[m]))
 
@@ -164,3 +164,36 @@ def test_split_is_fixed_over_full_eth3d_list():
 def test_thin_prism_identity_at_centre():
     u, v = thin_prism_fisheye_project(np.zeros(1), np.zeros(1), DIST)
     assert np.allclose([u[0], v[0]], DIST[2:4])
+
+
+def test_upright_rotation_keeps_geometry(tmp_path, monkeypatch):
+    """Views listed as stored-sideways are turned 90 deg clockwise: image, depth, K and pose
+    must stay consistent (GT check passes, depth matches the analytic plane)."""
+    import exp1.datasets as ds
+    root = str(tmp_path)
+    write_scene(root, n=4)
+    monkeypatch.setitem(ds.ETH3D_ROTATED, "synth", [f"DSC_{k:04d}.JPG" for k in range(4)])
+    side = os.path.join(root, "side")
+    up = os.path.join(root, "up")
+    prepare_eth3d(root, side, 4, 1, 1, 170, 100, ["synth"], upright=False)
+    prepare_eth3d(root, up, 4, 1, 1, 170, 100, ["synth"], upright=True)
+    a, b = load_clip(os.path.join(side, "dev__synth__c0.npz")), load_clip(os.path.join(up, "dev__synth__c0.npz"))
+    assert a["images"].shape == (4, 100, 170, 3) and b["images"].shape == (4, 170, 100, 3)
+    assert b["rotated_upright"].all() and not a["rotated_upright"].any()
+    assert np.array_equal(b["images"][0], np.rot90(a["images"][0], k=-1))
+    assert np.array_equal(b["depth"], np.rot90(a["depth"], k=-1, axes=(1, 2)))
+    assert np.allclose(b["poses"][0], np.eye(4), atol=1e-9)
+    assert e0_check_clips.check_clip(b)[1] == "PASS"
+    # same camera centres; depth along each pixel ray matches the rotated camera model
+    # new world frame = the turned camera 0: centres and the plane rotate by R_CW
+    assert np.allclose(a["poses"][:, :3, 3] @ ds.R_CW.T, b["poses"][:, :3, 3], atol=1e-9)
+    assert _median_rel(b, ds.R_CW @ PLANE_N) < 0.005
+
+
+def test_mixed_sideways_clip_is_refused(tmp_path, monkeypatch):
+    import exp1.datasets as ds
+    root = str(tmp_path)
+    write_scene(root, n=4)
+    monkeypatch.setitem(ds.ETH3D_ROTATED, "synth", ["DSC_0001.JPG"])
+    with pytest.raises(ValueError, match="mixes sideways"):
+        prepare_eth3d(root, os.path.join(root, "o"), 4, 1, 1, 170, 100, ["synth"])

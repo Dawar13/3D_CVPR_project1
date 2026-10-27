@@ -176,9 +176,26 @@ def load_eth3d_depth(path, W, H):
     return d
 
 
-def build_clip(root, scene, names, cams, imgs, tw, th, dist=None):
+# Camera frame of a view turned 90 deg clockwise: x' = -y, y' = x. Same convention as
+# map-anything eth3d.py:81-106 (adjust_pose_for_rotation, k=1; image rotate(-90)).
+R_CW = np.array([[0.0, -1.0, 0.0], [1.0, 0.0, 0.0], [0.0, 0.0, 1.0]])
+
+
+def rotate_upright(image, depth, K, c2w):
+    """Turn one stored-sideways view 90 deg clockwise, consistently for image (H,W,3),
+    depth (H,W), K (OpenCV pixel centres) and cam2world: pixel (u, v) -> (H-1-v, u)."""
+    H = image.shape[0]
+    K2 = np.array([[K[1, 1], 0.0, H - 1 - K[1, 2]], [0.0, K[0, 0], K[0, 2]], [0.0, 0.0, 1.0]])
+    T = c2w.copy()
+    T[:3, :3] = c2w[:3, :3] @ R_CW.T
+    return (np.ascontiguousarray(np.rot90(image, k=-1)), np.ascontiguousarray(np.rot90(depth, k=-1)),
+            K2, T)
+
+
+def build_clip(root, scene, names, cams, imgs, tw, th, dist=None, upright=True):
     """dist: (distorted cams, distorted images by basename) from dslr_calibration_jpg,
-    or None to read the GT depth as if it were on the undistorted grid."""
+    or None to read the GT depth as if it were on the undistorted grid.
+    upright: turn views listed in ETH3D_ROTATED upright (a clip must be all or none)."""
     images, Ks, poses, depths = [], [], [], []
     for name in names:
         cam_id, c2w = imgs[name]
@@ -203,13 +220,19 @@ def build_clip(root, scene, names, cams, imgs, tw, th, dist=None):
         Ks.append(adjust_K(K, W, H, nw, nh, left, top))
         poses.append(c2w)
         depths.append(resize_depth_nearest(d, W, H, nw, nh, left, top, tw, th, distortion))
+    rot = [upright and os.path.basename(n) in ETH3D_ROTATED.get(scene, []) for n in names]
+    if any(rot) and not all(rot):
+        raise ValueError(f"{scene}: clip mixes sideways and upright views {names}")
+    if all(rot):
+        for i in range(len(names)):
+            images[i], depths[i], Ks[i], poses[i] = rotate_upright(images[i], depths[i], Ks[i], poses[i])
     poses = relative_to_first(np.stack(poses))
     for i, T in enumerate(poses):
         validate_pose(T, f"{scene}/{names[i]}")
     return dict(images=np.stack(images), K=np.stack(Ks), poses=poses,
                 depth=np.stack(depths).astype(np.float32),
                 names=np.array(names), scene=np.array(scene),
-                depth_undistorted=np.array(dist is not None))
+                depth_undistorted=np.array(dist is not None), rotated_upright=np.array(rot))
 
 
 def load_distortion(root, scene):
@@ -225,7 +248,7 @@ def load_distortion(root, scene):
 
 
 def prepare_eth3d(root, out_dir, n_views, clips_per_scene, stride, tw, th, scenes,
-                  undistort_depth=True):
+                  undistort_depth=True, upright=True):
     os.makedirs(out_dir, exist_ok=True)
     written = []
     for scene in scenes:
@@ -242,12 +265,14 @@ def prepare_eth3d(root, out_dir, n_views, clips_per_scene, stride, tw, th, scene
         starts = np.linspace(0, len(names) - span, clips_per_scene).round().astype(int)
         for c, s in enumerate(starts):
             sel = names[s:s + span:stride]
-            clip = build_clip(root, scene, sel, cams, imgs, tw, th, dist)
+            clip = build_clip(root, scene, sel, cams, imgs, tw, th, dist, upright)
             split = split_of(scene, scenes)
             path = os.path.join(out_dir, f"{split}__{scene}__c{c}.npz")
             np.savez_compressed(path, **clip)
             valid = (clip["depth"] > 0).mean()
-            print(f"[ok] {path}  views={len(sel)}  valid_depth={valid:.1%}")
+            h, w = clip["images"].shape[1:3]
+            print(f"[ok] {path}  views={len(sel)}  size={w}x{h}  valid_depth={valid:.1%}"
+                  + ("  turned upright" if clip["rotated_upright"].any() else ""))
             written.append(path)
     return written
 
@@ -271,9 +296,12 @@ def main():
     ap.add_argument("--scenes", nargs="*", default=ETH3D_TRAIN_SCENES)
     ap.add_argument("--no_depth_undistort", action="store_true",
                     help="read GT depth as if on the undistorted grid (diagnostics only)")
+    ap.add_argument("--keep_sideways", action="store_true",
+                    help="do not turn ETH3D_ROTATED views upright (diagnostics only)")
     a = ap.parse_args()
     prepare_eth3d(a.eth3d_root, a.out, a.n_views, a.clips_per_scene, a.stride,
-                  a.size[0], a.size[1], a.scenes, undistort_depth=not a.no_depth_undistort)
+                  a.size[0], a.size[1], a.scenes, undistort_depth=not a.no_depth_undistort,
+                  upright=not a.keep_sideways)
 
 
 if __name__ == "__main__":
