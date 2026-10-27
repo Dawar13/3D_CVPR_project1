@@ -5,6 +5,7 @@
 Reads results/smoke*, results/e0_demo, results/det_b, reports/e0_clip_check and the
 smoke clip, and writes reports/e0_results/:
   e0_results.html        the results page, fully offline (data, images, three.js inlined)
+  e0_results.pdf         printed version of the page (only with --pdf_browser)
   numbers.csv            every number on the page, with its source file
   gt_check.csv           GT self-consistency summary per clip
   fig_errors.png         error bars per run (lower is better)
@@ -184,7 +185,7 @@ def page(template, data, out_dir, offline):
                     'new wrong-hint types for E1, with tests.</p>\n</section>')
     s = template.replace("{{GT_BULLETS}}", bullets).replace("{{GT_WORST}}", f"{worst:.2f}%")
     s = s.replace("{{OPEN_SECTION}}", open_sec)
-    for name in ("photos.jpg", "overview.png", "gtcheck.png"):
+    for name in ("photos.jpg", "overview.png", "gtcheck.png", "fig_3d_views.png"):
         s = s.replace("{{" + name + "}}", data_uri(os.path.join(out_dir, "_" + name)))
     s = s.replace("<!--DATA-->", '<script type="application/json" id="e0-data">' + json.dumps(data) + "</script>")
     if offline:
@@ -204,6 +205,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--out", default=p("reports", "e0_results"))
     ap.add_argument("--artifact_out")
+    ap.add_argument("--pdf_browser", help="Chrome/Edge executable; also prints e0_results.pdf")
     a = ap.parse_args()
     os.makedirs(os.path.join(a.out, "3d"), exist_ok=True)
 
@@ -240,7 +242,8 @@ def main():
     data = {"nums": nums, "gt": gt, "timing": timing, "demo": demo, "n_points": int(len(idx)), "n_total": int(n),
             "clouds": {k: b64(v) for k, v in clouds.items()}, "colors": b64(colors.astype(np.uint8)),
             "cams": cams.tolist()}
-    tmp = {"_photos.jpg": "photos.jpg", "_overview.png": "overview.png", "_gtcheck.png": f"gtcheck_{CLIP}.png"}
+    tmp = {"_photos.jpg": "photos.jpg", "_overview.png": "overview.png", "_gtcheck.png": f"gtcheck_{CLIP}.png",
+           "_fig_3d_views.png": "fig_3d_views.png"}
     for t, src in tmp.items():
         shutil.copy(os.path.join(a.out, src), os.path.join(a.out, t))
     template = open(p("scripts", "e0_results_template.html"), encoding="utf-8").read()
@@ -249,6 +252,13 @@ def main():
         open(a.artifact_out, "w", encoding="utf-8").write(page(template, data, a.out, False))
     for t in tmp:
         os.remove(os.path.join(a.out, t))
+    if a.pdf_browser:  # print view: static 3D figure instead of the WebGL viewer, light colours, A4
+        import pathlib
+        import subprocess
+        html = pathlib.Path(a.out, "e0_results.html").resolve()
+        subprocess.run([a.pdf_browser, "--headless=new", "--disable-gpu", "--no-pdf-header-footer",
+                        "--virtual-time-budget=15000", f"--print-to-pdf={pathlib.Path(a.out, 'e0_results.pdf').resolve()}",
+                        html.as_uri()], check=True, capture_output=True, timeout=180)
     print(f"wrote {a.out}: {sorted(os.listdir(a.out))}")
     print(f"GT check: {len(gt)} clips, missing {[s for s in ETH3D_TRAIN_SCENES if not any(g['clip'].endswith('__' + s + '__c0') for g in gt)]}")
 

@@ -106,6 +106,27 @@ tr:last-child td { border-bottom: 0; }
 code { font-family: var(--font-data); font-size: 0.86em; }
 .src { font-size: 0.82rem; color: var(--muted); }
 @media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+.print-only { display: none; }
+@page { size: A4; margin: 14mm 13mm; }
+@media print {
+  html:root:root:root {
+    --bg: #ffffff; --surface: #ffffff; --ink: #111417; --ink-2: #4b5157; --muted: #6b7178; --line: #dde1e5;
+    --accent: #2a78d6; --accent-soft: #e3eefb; --good: #0c7d0c; --good-soft: #e3f3e3; --warn: #9a5a00;
+    --warn-soft: #fbefd9; --bar: #2a78d6; --bar-bad: #e34948; --truth: #8f969c; color-scheme: light;
+  }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-size: 10.5pt; }
+  .page { padding-block: 0; gap: 22px; }
+  .viewer, .controls, .key, .tip, .screen-only { display: none !important; }
+  .print-only { display: grid !important; }
+  p.print-only { display: block !important; }
+  .chart, figure, .fix, .tile, .verdict, tr, .note-box { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  .charts { grid-template-columns: 1fr 1fr; }
+  .table-scroll { overflow: visible; }
+  table { font-size: 8.5pt; }
+  th, td { white-space: normal; padding: 5px 7px; }
+}
 </style>
 
 <div class="page">
@@ -148,7 +169,8 @@ code { font-family: var(--font-data); font-size: 0.86em; }
 <section class="wide viewer-wrap" aria-labelledby="h-3d">
   <div class="col stack" style="max-width:none">
     <h2 id="h-3d">The 3D reconstruction</h2>
-    <p class="col" style="margin:0;max-width:44rem">Drag to turn, scroll or pinch to zoom. Grey dots are the laser-scanned truth. Coloured dots are what MapAnything built, painted with the photo colours. Where the two overlap, the model got it right. Orange marks show the 10 true camera positions and the way each one faced.</p>
+    <p class="col print-only" style="margin:0;max-width:44rem">In the HTML version this is an interactive 3D view you can turn and zoom; on paper it is shown as fixed views. Grey dots are the laser-scanned truth. Coloured dots are what MapAnything built, painted with the photo colours. Where the two overlap, the model got it right. Orange marks show the 10 true camera positions and the way each one faced.</p>
+    <p class="col screen-only" style="margin:0;max-width:44rem">Drag to turn, scroll or pinch to zoom. Grey dots are the laser-scanned truth. Coloured dots are what MapAnything built, painted with the photo colours. Where the two overlap, the model got it right. Orange marks show the 10 true camera positions and the way each one faced.</p>
   </div>
   <div class="controls">
     <div class="seg" role="group" aria-label="Which reconstruction to show">
@@ -165,6 +187,10 @@ code { font-family: var(--font-data); font-size: 0.86em; }
     <span><i class="dot" style="background:linear-gradient(135deg,#6c6a63,#c9c4b5,#4f5a3d)"></i>MapAnything, photo colours</span>
     <span><i class="dot" style="background:#eb6834"></i>True camera positions</span>
   </div>
+  <figure class="col print-only" style="max-width:none">
+    <img src="{{fig_3d_views.png}}" alt="Perspective 3D views of the three reconstructions over the grey laser truth, with the 10 true cameras in orange." width="2431" height="927">
+    <figcaption>Perspective views from just behind the camera row: photos only, correct hints, and one wrong hint (first of 3 runs).</figcaption>
+  </figure>
   <figure class="col" style="max-width:none">
     <img src="{{overview.png}}" alt="Bird's-eye and side views of the scene for the truth and the three runs, with true cameras in black and the model's cameras in red." width="1762" height="898">
     <figcaption>The same reconstructions flattened to a bird's-eye view (top) and a side view (bottom), with the model's own camera guesses. Black = true cameras, red = where the model thinks they are, orange = the wrong hint we gave it. With correct hints, red sits on black. With photos only, the model's sense of size is about 10% too small (scale factor s = 1.116), so its cameras sit too close together.</figcaption>
@@ -186,6 +212,18 @@ code { font-family: var(--font-data); font-size: 0.86em; }
   <div class="fix"><h3>Lens info alone helps the shape, not the real-world size</h3><p>Telling the model the focal length fixed the shape (4.2% to 1.7% error) but made its guess of real-world size slightly worse on this scene. That is one scene, so we only note it.</p></div>
   <div class="fix"><h3>One wrong hint already hurts</h3><p>Turning a single camera's hint by 15° raised the average camera-angle error to 3.0°, worse than photos only (0.73°). On this scene, one bad hint cost more than having no hints at all. This is exactly what E1 tests properly across many scenes. Here it only shows the test machinery works.</p></div>
   <div class="fix"><h3>Removing the bad hint brings it back</h3><p>When we dropped the wrong hint, errors went back to almost the correct-hint level (shape 1.8%, angle 0.30°). Our simple "compare with photos-only" filter found the bad camera by itself in all 3 runs. For a 15° error that is expected; harder cases come in E1.</p></div>
+</section>
+
+<section class="col stack" aria-labelledby="h-why">
+  <h2 id="h-why">Where the errors come from</h2>
+  <p>"Vanilla" means we did not change the model. It does not mean the model is perfect. Every error number on this page measures the gap between what MapAnything built and what the laser scanner measured. That gap is what we want to measure. It is not a bug.</p>
+  <div class="fix"><h3>The model is an estimate</h3><p>MapAnything is a neural network that guesses depth and camera positions from pixels. It is good, but not exact. Even with the true camera positions given, its 3D points are off by 1.7% on average.</p></div>
+  <div class="fix"><h3>Photos alone do not reveal size</h3><p>From photos only, a wall 4 m away and 3 m tall looks the same as one 8 m away and 6 m tall. The model learns typical sizes from training and guesses. Here it guessed the scene about 10% too small. That is most of the 12.7% real-size error; once that single size factor is removed, 4.2% is left (the "shape" error).</p></div>
+  <div class="fix"><h3>Hints are inputs, not rules</h3><p>MapAnything reads the camera positions as extra information but still predicts its own; it does not copy them. So even with correct hints its camera angles are 0.18° off.</p></div>
+  <div class="fix"><h3>Small images and hard surfaces</h3><p>The model works at 518 × 336 pixels, so at 4-10 m one pixel covers roughly 1-3 cm of the scene. Large plain, shiny panels like the ones in these photos are hard to match from one photo to the next.</p></div>
+  <div class="fix"><h3>The answer key is almost exact</h3><p>The laser data and camera calibration disagree with themselves by at most 0.21% (next section). That is far smaller than the model's errors, so it does not explain them.</p></div>
+  <div class="fix"><h3>Only the wrong-hint rows have error we added on purpose</h3><p>Turning one camera by 15° is the test knob for E1. Every other row is the plain model on real data.</p></div>
+  <p>For scale: the MapAnything paper also reports a large drop when hints are added (relative point error from 0.08 to 0.02, on 2-photo tests averaged over three datasets). Our setup differs (10 photos, one scene, a different error formula), so the numbers are not directly comparable, but the direction matches. The two bugs we fixed in E0 were in our own data preparation; they made the run crash or mislabel scenes, and they do not affect these numbers.</p>
 </section>
 
 <section class="col stack" aria-labelledby="h-key">

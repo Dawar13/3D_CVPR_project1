@@ -6,6 +6,7 @@ Everything here is regenerated from the result files by `python scripts/e0_make_
 
 | File | What it is |
 |---|---|
+| `e0_results.pdf` | The same page as a 7-page A4 PDF (the 3D viewer is replaced by fixed 3D views). |
 | `e0_results.html` | The full results page. It works **offline**: the data, images and 3D viewer are all inside, so double-click to open. Drag to rotate the 3D view. |
 | `fig_errors.png` | Error bars per run: 3D shape error, 3D error at real size, camera angle error. Lower is better. |
 | `fig_3d_views.png` | Perspective views of the 3 reconstructions over the laser truth, with the true cameras. |
