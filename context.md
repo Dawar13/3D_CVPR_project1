@@ -20,6 +20,12 @@ Target venues: CVPR 2027 (registration 10 Nov 2026, submission 16 Nov 2026), or 
 ## 2. Hypotheses (each is tested by one experiment)
 
 - **H1 (problem exists):** for some realistic hint errors, MapAnything with hints is worse than MapAnything with images only. Realistic errors include a gross outlier pose (a GPS jump), a wrong metric scale on all poses, accumulated drift, or a wrong focal length on all views. The damage also spreads to views whose hints were correct. → **E1**
+  - **E1 result (2026-10-28): CONFIRMED, decision Strong GO** (`MapAnything_Exp1/reports/e1_results.md`).
+    - Harm is driven by wrong camera *rotations*: one camera 15° off made rotation error +114% vs images-only (10/10 scenes); drift level 2 +142%; a shared 5° heading +108%.
+    - Wrong scale and wrong depth scale are also harmful.
+    - Wrong camera *positions* are mostly absorbed safely; only a 10 L GPS jump hurts.
+    - Spread to good views is real but modest: +20% rotation error with 20% of views wrong.
+    - The model copies bad poses almost fully (absorption 0.96), even though its confidence flags the bad view (AUROC 0.91).
 - **H2 (mechanism):** if the damage comes mainly from the mean-based pose/depth scale (a 0% breakdown point), replacing it with a median removes most of it. If it does not, the damage happens inside the network. → **E2**
 - **H3 (detectability):** an image-consistency score computed without ground truth can identify which hints are bad, and dropping them recovers most of what an oracle recovers. → **E3**
 
@@ -218,3 +224,13 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
   - Dev run: 705/705 runs, 0 failures, ~11 min; repeat runs are bit-identical on the shared GPU.
   - Dev checks pass after amendments 1-13 in `experiments/E1.md`. The open point is amendment 13: turning the metric flag off changes `clean_pose` results by up to 148%, so the plan's sanity expectation for `scale_all_nonmetric_x1.5` does not hold, while that run equals `metric_flag_off` exactly.
 - 2026-10-27: **E1 preregistered at `71582c1` (tag `e1-prereg`).** The user approved amendments 13 (metric-flag sanity check) and 14 (5% minimum effect for S1). The grid, code and decision rules are frozen; the eval split is run once from this commit.
+- 2026-10-28: **E1 DONE. Decision: Strong GO.**
+  - Run: eval split run once from `71582c1` on 10 scenes; 2350/2350 runs, 0 failures, ~1 h 55 min (the shared GPU was slowed by the rolling-shutter project).
+  - Signals (`results/e1_eval/agg/signals.json`): S1, S2, S3, S5, S6 and S7 YES; S4 NO (the model's confidence does flag bad views, AUROC 0.91).
+  - Key numbers are in `reports/e1_results.md` and the plain summary in `reports/e1_results/e1_results.html` / `.pdf`.
+  - Eval-run diagnostics: all pass except `gauge_rigid` (electro rotation differs by 0.026°, 9.4% relative, better not worse; 6/10 scenes bit-identical). This is numerical precision and does not enter the decision.
+  - Caveats:
+    - S2 is marginal (+20.4% vs the 20% bar).
+    - benefit_lost is unstable for the lens and depth families, so the report leads with "% vs without the hint" figures (presentation only; decision unchanged).
+    - Realistic ranges follow the preregistered rule, not yet literature sources.
+  - **Next: E2** (mean vs median pose scale). Also note for E3: the simple filter fails on correlated errors (drift, shared heading, scale) and on 5° outliers, while the model's own confidence already flags single bad views.

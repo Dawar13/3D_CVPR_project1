@@ -1,0 +1,75 @@
+
+===== provenance
+17:23:48
+frozen commit: 71582c1 (tag e1-prereg)
+d41d8cd98f00b204e9800998ecf8427e  exp1/__init__.py
+47992e2173684de61d0cf8841d001ff8  exp1/aggregate.py
+caaa4b89eea59811a50ecf04b0194b65  exp1/controls.py
+9540b2ba19362b7af423af677ad3caf2  exp1/corrupt_geometry.py
+ba42ac5959f1b3f549fbf2916a681827  exp1/corrupt_inputs.py
+05740c297702126a973ddf3eeff5b536  exp1/datasets.py
+a344805e957e2db14096e055f5413a17  exp1/e1_analysis.py
+1bf141e69a67106566a3df11f7c33823  exp1/geometry.py
+1103446f19c66b5f74c6aafb0fac6e47  exp1/metrics.py
+cf70903c65cfc848438adcaa56790b0e  exp1/model_io.py
+6dcb1950fab740e192347333c80cc9ce  exp1/run_exp1.py
+9afd28454e686d861b731e0296aebb4b  configs/e1_full.json
+NVIDIA A100-SXM4-80GB, 7257 MiB, 81920 MiB
+data/clips/eval__courtyard__c0.npz
+data/clips/eval__electro__c0.npz
+data/clips/eval__kicker__c0.npz
+data/clips/eval__meadow__c0.npz
+data/clips/eval__office__c0.npz
+data/clips/eval__pipes__c0.npz
+data/clips/eval__playground__c0.npz
+data/clips/eval__relief_2__c0.npz
+data/clips/eval__relief__c0.npz
+data/clips/eval__terrains__c0.npz
+
+===== E1 EVAL RUN (once)
+17:23:48
+[done] eval__courtyard__c0
+[done] eval__electro__c0
+[done] eval__kicker__c0
+[done] eval__meadow__c0
+[done] eval__office__c0
+[done] eval__pipes__c0
+[done] eval__playground__c0
+[done] eval__relief_2__c0
+[done] eval__relief__c0
+[done] eval__terrains__c0
+
+===== E1 eval analysis
+19:18:19
+[PASS] no failures, every condition x clip x seed x control present: failures file: False; missing runs: 0 of 2350
+[FAIL] gauge_rigid ~ clean_pose (max rel. diff <= 5%): max rel. diff 0.0943
+[PASS] scale_all_nonmetric_x1.5 == metric_flag_off (exact): max rel. diff 0.00e+00
+[INFO] INFO: scale_all_nonmetric_x1.5 vs clean_pose (metric-flag effect, not gating): max rel. diff 0.6903
+[PASS] scale_all_x1.0 and zero_noise equal clean_pose: max |d pts3d| per clip: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+[PASS] severity sweeps roughly monotone (most severe >= 95% of mildest, per damage direction): ok (checked: depth_noise[0.05->0.1], drift[1->3], focal_all[0.9->0.8], focal_all[1.1->1.2], focal_all_noposes[0.9->0.8], focal_all_noposes[1.1->1.2], noise_rot[0.5->5], noise_trans[0.005->0.05], outlier_frac[0.1->0.4], outlier_rot[5->90], outlier_trans_large[1->10], outlier_trans_small[0.1->0.5], principal_shift[0.05->0.1], scale_all[0.8->0.5], scale_all[1.25->2], shared_heading_bias[2->10])
+[PASS] drop_oracle ~ clean_pose quality on the remaining views (median ratio <= 1.25): median ratio 1.024 over 390 runs
+[PASS] per-view logs complete; absorption and metric_scale_ratio filled and finite: per_view rows 23500 (expected 23500); absorption filled on 100% of single-outlier corrupted views; scale ratio finite: True
+signals: {'S1': True, 'S2': True, 'S3': True, 'S4': False, 'S5': True, 'S6': True, 'S7': True} decision: Strong GO
+
+===== visuals (dev clip, qualitative)
+19:18:29
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+clean_pose                   pts_relerr_metric=0.0273  pts_relerr_scale=0.0174  rre_deg=0.1844
+outlier_rot_rot_deg=15       pts_relerr_metric=0.0402  pts_relerr_scale=0.0299  rre_deg=2.9069
+outlier_trans_large_trans_frac=3 pts_relerr_metric=0.0900  pts_relerr_scale=0.0789  rre_deg=0.2383
+drift_level=2                pts_relerr_metric=0.0692  pts_relerr_scale=0.0536  rre_deg=3.3574
+shared_heading_bias_rot_deg=5 pts_relerr_metric=0.0387  pts_relerr_scale=0.0390  rre_deg=1.3851
+written to results/e1_demo_pose
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+clean_pose                   pts_relerr_metric=0.0273  pts_relerr_scale=0.0174  rre_deg=0.1844
+scale_all_factor=1.5         pts_relerr_metric=0.3644  pts_relerr_scale=0.0218  rre_deg=0.3992
+focal_all_factor=1.2         pts_relerr_metric=0.1385  pts_relerr_scale=0.1029  rre_deg=0.2438
+depth_scale_factor=1.5       pts_relerr_metric=0.1130  pts_relerr_scale=0.0434  rre_deg=0.2701
+metric_flag_off              pts_relerr_metric=0.1608  pts_relerr_scale=0.0193  rre_deg=0.1558
+written to results/e1_demo_other
+
+===== done
+19:19:14
+E1_EVAL_DONE

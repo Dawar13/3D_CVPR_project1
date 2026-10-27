@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MapAnything Under Wrong Hints</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column (~46rem) with wide bands for figures and the family table. */
+:root {
+  --bg: #f6f7f8; --surface: #fdfdfc; --ink: #111417; --ink-2: #4b5157; --muted: #7d838a; --line: #dde1e5;
+  --accent: #2a78d6; --yes: #9a2b2b; --yes-soft: #fbe4e2; --no: #2f6b2f; --no-soft: #e3f1e3;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #111315; --surface: #1a1c1e; --ink: #eef0f2; --ink-2: #b9bfc5; --muted: #8b9198;
+    --line: #2d3135; --accent: #5598e7; --yes: #f08a84; --yes-soft: #3a1e1c; --no: #7fd07f; --no-soft: #18291a; color-scheme: dark; }
+}
+:root[data-theme="dark"] { --bg: #111315; --surface: #1a1c1e; --ink: #eef0f2; --ink-2: #b9bfc5; --muted: #8b9198;
+  --line: #2d3135; --accent: #5598e7; --yes: #f08a84; --yes-soft: #3a1e1c; --no: #7fd07f; --no-soft: #18291a; color-scheme: dark; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+.page { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 40px 72px; display: grid; gap: 48px; }
+.col { max-width: 46rem; margin-inline: auto; width: 100%; min-width: 0; }
+.wide { max-width: 72rem; margin-inline: auto; width: 100%; min-width: 0; }
+h1, h2, h3 { margin: 0; line-height: 1.2; text-wrap: balance; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.5rem); font-weight: 600; }
+h2 { font-size: 1.4rem; font-weight: 600; }
+p { margin: 0; }
+.stack { display: grid; gap: 14px; }
+.eyebrow { font-family: var(--font-data); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.1rem; color: var(--ink-2); }
+.verdict { display: grid; gap: 14px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.decision { font-size: 1.7rem; font-weight: 600; }
+.chip { font-family: var(--font-data); font-size: 0.75rem; font-weight: 500; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.chip.yes { background: var(--yes-soft); color: var(--yes); }
+.chip.no { background: var(--no-soft); color: var(--no); }
+figure { margin: 0; display: grid; gap: 8px; }
+figure img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+figcaption, .src { font-size: 0.86rem; color: var(--muted); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.86rem; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: 0.78rem; }
+td.num, th.num { text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+tr:last-child td { border-bottom: 0; }
+.sub { font-size: 0.78rem; color: var(--muted); }
+.how { padding-left: 14px; border-left: 2px solid var(--line); color: var(--ink-2); font-size: 0.95rem; }
+code { font-family: var(--font-data); font-size: 0.86em; }
+@page { size: A4; margin: 13mm 12mm; }
+@media print {
+  html:root:root:root { --bg: #fff; --surface: #fff; --ink: #111417; --ink-2: #4b5157; --muted: #6b7178; --line: #dde1e5;
+    --yes: #9a2b2b; --yes-soft: #fbe4e2; --no: #2f6b2f; --no-soft: #e3f1e3; color-scheme: light; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { font-size: 10pt; }
+  .page { padding-block: 0; gap: 20px; display: block; }
+  .page > * + * { margin-top: 20px; }
+  .stack, .verdict { display: block; }
+  .stack > * + *, .verdict > * + * { margin-top: 10px; }
+  .table-scroll { overflow: visible; }
+  table { font-size: 8pt; }
+  th, td { padding: 4px 6px; }
+  figure, .verdict, tr, .how { break-inside: avoid; }
+  h2 { break-after: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="col stack">
+  <p class="eyebrow">E1 · 10 held-out ETH3D scenes · frozen at {{COMMIT}} (tag e1-prereg)</p>
+  <h1>MapAnything Under Wrong Hints</h1>
+  <p class="lead">We gave MapAnything wrong hints of 19 kinds (wrong camera positions, wrong lens settings, wrong depth, a forgotten metric flag) and measured whether it ends up worse than with no hints at all.</p>
+</header>
+
+<section class="col">
+  <div class="verdict">
+    <p class="eyebrow">Decision (rules frozen before the run)</p>
+    <p class="decision">{{DECISION}}</p>
+    <div class="table-scroll"><table><thead><tr><th>Signal</th><th>Question</th><th>Answer</th></tr></thead><tbody>{{SIG_ROWS}}</tbody></table></div>
+    <p class="src">{{N_OK}} runs on {{N_CLIPS}} test scenes, {{N_FAIL}} failures. {{N_FAM_HARM}} of {{N_FAM}} kinds of wrong hint made results worse than no hint at a realistic size. Median "absorption" of a single bad camera: {{S3_VAL}} (1 = fully copied). Model confidence AUROC for spotting the bad view: {{S4_VAL}} (0.5 = no signal, 1 = perfect).</p>
+  </div>
+</section>
+
+{{TAKEAWAYS}}
+
+<section class="col stack">
+  <h2>What we tested</h2>
+  <p>Each test is one scene, 10 photos, rebuilt by MapAnything with hints. Every wrong-hint run is compared with the same scene's runs with <strong>no</strong> hint of that kind (the "floor") and with the <strong>correct</strong> hint (the "ceiling"). Scenes and their size L: {{L_LIST}}.</p>
+  <div class="how"><strong>How to read "benefit lost".</strong> 0 = as good as the correct hint, 1 = as bad as having no hint. Above 1 means the wrong hint is worse than no hint. It is a ratio, so when the correct hint barely helps it can get very large from a small change; the tables also show the plain difference.</div>
+</section>
+
+<section class="wide stack">
+  <h2 class="col" style="margin:0;max-width:46rem">Headline: how much worse than without that hint</h2>
+  <figure><img src="{{IMG:fig_harm_vs_size.png}}" alt="Percent change against the no-hint result for each kind and size of wrong hint."><figcaption>One panel per kind of wrong hint. Blue = 3D shape, orange = camera rotation, green = 3D at real size. Red line = same as without that hint; above it the wrong hint hurts. Shaded columns = realistic error sizes. Mean over the 10 test scenes with 95% confidence intervals.</figcaption></figure>
+</section>
+
+<section class="wide stack">
+  <h2 class="col" style="margin:0;max-width:46rem">Each kind of wrong hint, at its worst realistic size</h2>
+  {{FAMILY_TABLE}}
+  <p class="src">"vs no-hint" = how much worse than the matching floor (+ = worse). "vs dropping poses" = the same run against photos + lens with all poses dropped (+ = dropping the poses would have been better). Source: family_summary.csv, dose_response.csv.</p>
+</section>
+
+<section class="wide stack">
+  <h2 class="col" style="margin:0;max-width:46rem">Is it one unlucky scene?</h2>
+  <figure><img src="{{IMG:fig_scene_harm.png}}" alt="Per-scene heatmap of percent change against the no-hint result."><figcaption>Each cell is one test scene at each kind's most severe realistic setting. Red = in that scene the wrong hint was worse than no hint; blue = still better.</figcaption></figure>
+</section>
+
+<section class="col stack">
+  <h2>Does one bad hint hurt the good views?</h2>
+  <figure><img src="{{IMG:fig_contamination.png}}" alt="Error rise on uncorrupted views."><figcaption>Error rise on the views whose hints were correct, compared with all-correct hints. Red line = the 20% bar for "spread".</figcaption></figure>
+</section>
+
+<section class="col stack">
+  <h2>Does the model copy bad hints, and does it notice?</h2>
+  <figure><img src="{{IMG:fig_absorption.png}}" alt="Absorption of bad hints per condition."><figcaption>Absorption on the damaged view: 1 = the model copies the bad hint, 0 = it ignores it.</figcaption></figure>
+</section>
+
+<section class="col stack">
+  <h2>Wrong scale</h2>
+  <figure><img src="{{IMG:fig_scale.png}}" alt="Predicted scene size against injected scale factor."><figcaption>Predicted scene size relative to the correct-hint run, against the injected scale error. Red line = copies the wrong scale completely; grey line = ignores it.</figcaption></figure>
+</section>
+
+<section class="wide stack">
+  <h2 class="col" style="margin:0;max-width:46rem">What it looks like (practice scene, qualitative)</h2>
+  {{DEMOS}}
+</section>
+
+<section class="wide stack">
+  <h2 class="col" style="margin:0;max-width:46rem">As preregistered: "benefit lost"</h2>
+  <p class="col" style="margin:0;max-width:46rem">The plan's own headline measure. It divides by how much the correct hint helped, so for lens and depth hints, where the correct hint helps very little, it swings wildly. Those panels have huge error bars, and the per-scene map shows random-looking stripes. The decision rules use it together with the 5% minimum effect; the figures above show the same comparisons in a stable form.</p>
+  <figure><img src="{{IMG:fig_dose_response.png}}" alt="Benefit lost against error size, as preregistered."><figcaption>Benefit lost (0 = correct hint, 1 = no hint) against error size.</figcaption></figure>
+  <figure><img src="{{IMG:fig_scene_heatmap.png}}" alt="Benefit lost per scene, as preregistered."><figcaption>Benefit lost per scene (3D shape), most severe realistic setting.</figcaption></figure>
+</section>
+
+<section class="col stack">
+  <h2>Where to find everything</h2>
+  <p class="src">Technical report: <code>reports/e1_results.md</code>. Tables: <code>reports/e1_results/*.csv</code>. Raw runs: <code>results/e1_eval/</code>. Plan, frozen rules and amendments: <code>experiments/E1.md</code>.</p>
+</section>
+
+</div>
+</body>
+</html>
