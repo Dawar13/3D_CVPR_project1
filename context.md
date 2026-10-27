@@ -1,0 +1,169 @@
+# Project context: Do 3D foundation models trust bad hints?
+
+Last updated: 27 Oct 2026. Update the "Status and decisions log" at the bottom after every experiment.
+
+## 1. One-paragraph summary
+
+Feed-forward 3D models such as **MapAnything** and **OmniVGGT** take images plus optional *hints*: camera poses, intrinsics (lens settings) and depth maps. With clean hints they get much better. Real hints come from GPS, odometry, cheap depth sensors or wrong EXIF data, so they are often wrong.
+
+We want to find out three things:
+1. Do wrong hints make these models worse than using images alone, and for which kinds of error?
+2. Why does it happen? Is it the average-based scale normalisation, or contamination inside attention?
+3. Can bad hints be detected and switched off at inference time, using only the images as the witness, with no training?
+
+The project is modular:
+- Proving (1) alone is a workshop-level analysis.
+- (1) + (2) + (3) with a clear accuracy gain is a CVPR-level method paper.
+
+Target venues: CVPR 2027 (registration 10 Nov 2026, submission 16 Nov 2026), or a CVPR/ICML 2027 workshop as fallback.
+
+## 2. Hypotheses (each is tested by one experiment)
+
+- **H1 (problem exists):** for some realistic hint errors, MapAnything with hints is worse than MapAnything with images only. Realistic errors include a gross outlier pose (a GPS jump), a wrong metric scale on all poses, accumulated drift, or a wrong focal length on all views. The damage also spreads to views whose hints were correct. → **E1**
+- **H2 (mechanism):** if the damage comes mainly from the mean-based pose/depth scale (a 0% breakdown point), replacing it with a median removes most of it. If it does not, the damage happens inside the network. → **E2**
+- **H3 (detectability):** an image-consistency score computed without ground truth can identify which hints are bad, and dropping them recovers most of what an oracle recovers. → **E3**
+
+## 3. Background you need (verified facts only)
+
+**MapAnything** (Keetha et al., Meta + CMU; arXiv 2509.13414, v3 Jan 2026):
+- Inputs: N images, plus optional per-view intrinsics (converted to ray directions), camera poses (OpenCV cam2world; split into quaternion + translation) and depth.
+- Every input is encoded to features of the same size: F_I (DINOv2 image), F_R (rays), F_D (normalised depth), F_Q (rotation), F_T (translation direction), F_ẑp (pose scale), F_ẑd (depth scale).
+- They are fused per view as F_E = LN( LN(F_I) + Σ_m LN(F_m) ), over the hints that were provided, then passed to a 16-layer alternating-attention transformer.
+- **Pose scale ẑp** = the *mean* distance of the provided cameras from the world frame (view 0). Translations are divided by it. **Depth scale ẑd** = the mean depth of that view. Both scales are only used when the inputs are flagged metric.
+- Training gave hints with selection probabilities (overall 0.9; each modality 0.5). The paper describes no noise added to hints.
+- Limitations section (verbatim points): (a) it does not explicitly account for noise or uncertainty in geometric inputs; (c) test-time compute and iterative inference remain unexplored, which "ties into effectively handling noise in the inputs"; (d) multi-modal features are fused before the transformer.
+- Clean-hint benefit (Table 2, two-view, averaged over ETH3D/SN++v2/TAv2): points rel. error 0.08 (images only) → 0.02 (all hints); inliers 57.5 → 82.0.
+- API constraints (repo docs):
+  - If any view has `camera_poses`, view 0 must also have them.
+  - Do not give both `intrinsics` and `ray_directions`.
+  - `depth_z` needs intrinsics or rays.
+  - `preprocess_inputs` converts intrinsics → rays, depth_z → depth along ray, and poses → quats + trans.
+
+**OmniVGGT** (Peng et al., CVPR 2026; arXiv 2511.10560): VGGT plus a GeoAdapter.
+- Camera hints are injected through zero-initialised convolutions; depth hints are added directly.
+- A missing hint is replaced by a learned placeholder token, chosen by a binary present/absent switch.
+- Used for the cross-model replication only (E4), after GO.
+
+**Closest related work. We must cite these and differ from them:**
+- **VPGGT** (arXiv 2610.05531, Oct 2026, contemporaneous): trains OmniVGGT with simulated *pose* drift and adds a "prior residual connection".
+  - Pose noise only; intrinsics and depth stay clean.
+  - It is training-based and does not detect *which* hint is bad.
+  - Key number: on TUM RGB-D the released OmniVGGT with realistic noisy poses still beat images-only. Translation accuracy at 5° was 57.11 vs 38.00. So mild realistic noise is NOT catastrophic. Our case must be gross or correlated errors.
+- **WorldMirror** (arXiv 2510.10726): reports graceful degradation under moderate pose and depth noise.
+- **TCO** (arXiv 2604.03878): a test-time method that uses hints as constraints on an image-only model.
+- **Pow3R** (CVPR 2025): the first feed-forward model with priors; it examined incorrect camera inputs.
+
+## 4. Assets and licences
+
+| Asset | Where | Licence / notes |
+|---|---|---|
+| MapAnything code | github.com/facebookresearch/map-anything | Open source |
+| MapAnything weights | HF `facebook/map-anything` (13 datasets) | CC BY-NC 4.0 (research OK) |
+| MapAnything weights (alt) | HF `facebook/map-anything-apache` (6 datasets) | Apache 2.0 |
+| OmniVGGT code / weights | github.com/Livioni/OmniVGGT-official, HF `Livioni/OmniVGGT` | Check the LICENSE file before use |
+| ETH3D high-res multi-view, training split | eth3d.net | CC BY-NC-SA 4.0; files `multi_view_training_dslr_undistorted.7z` + `multi_view_training_dslr_depth.7z` |
+
+Everything is free to download for research. Nothing requires payment or private data.
+
+## 5. Codebase
+
+- `MapAnything_Exp1/` holds Shubh's Experiment-1 harness, imported as-is. It is inference only. **It has never been run.**
+  - `exp1/datasets.py`: ETH3D → fixed 10-view clips (`.npz`: images, K, poses relative to view 0, GT depth). The dev/eval split is by scene-name hash (3 dev / 10 eval).
+  - `exp1/corrupt_geometry.py`: exact-magnitude, random-direction pose corruption, logged to a manifest. View 0 is never corrupted.
+  - `exp1/model_io.py`: the ONLY file that calls the MapAnything API.
+  - `exp1/run_exp1.py`: condition × clip × seed runner. It is resumable, scores contamination on the uncorrupted views, and runs the controls `drop_oracle` (cheating upper bound) and `filter_rgbcheck` (deployable baseline).
+  - `exp1/metrics.py`: depth AbsRel/δ1, point error, pairwise pose errors; raw metric plus one per-clip median scale; no alignment.
+  - `exp1/aggregate.py`: bootstrap CIs, paired deltas, and `benefit_lost` (>1 means worse than images-only).
+- `papers/` holds PDFs and short notes of the papers in §3. Add more here.
+- `results/` and `data/` are git-ignored. Keep them out of the repo.
+
+## 6. Rules (non-negotiable)
+
+1. **Preregister.** Finalise every condition grid and GO/STOP threshold *before* running on the eval split. Never change them after seeing eval results. The dev split is only for debugging.
+2. **Images-only and clean-hint references are always run** on the same clips, and every comparison is paired.
+3. **No ground truth at test time** for anything called "deployable". GT is used only for scoring and for oracle controls, which must be labelled ORACLE.
+4. **Verify the interface first.** Check every assumption flagged in `MapAnything_Exp1/README.md` ("Things to verify") against the installed commit before trusting any number. Record file:line evidence.
+5. **One change at a time.** Every new condition or patch gets its own name, a config entry and a manifest entry.
+6. **Reproducibility.** Log the MapAnything commit, checkpoint id, torch/CUDA versions, seeds and image hashes (the runner already does).
+7. **Honesty.**
+   - Never invent or "expect" numbers in reports.
+   - Label projections as projections.
+   - Report failures and negative results.
+   - If something looks too good, check for leakage first.
+8. **Do not touch shared environments** on the server. Use the dedicated conda env.
+
+## 7. Experiment plan: the initial set only (E0–E3)
+
+### E0: Setup and smoke test (target: day 1)
+- Run `scripts/setup_server.sh` and `scripts/env_report.sh`, then the official README example, then `pytest`.
+- Prepare clips: `python -m exp1.datasets --eth3d_root <ETH3D> --out data/clips --n_views 10 --size 518 336`.
+- Run the smoke test on one dev clip with `rgb_only`, `clean_pose` and `zero_noise`.
+- Fill in `reports/exp1_environment_and_reproduction.md`. In particular, find out what MapAnything does when a hint is missing (term skipped? zeros? a learned token?). This decides what "gate = 0" means later.
+- **PASS:** outputs are finite; output resolution equals 518×336; `zero_noise` ≈ `clean_pose` (bf16 noise only); partial poses are accepted; runtime and memory per 10-view clip are recorded.
+
+### E1: Does the problem exist? (target: days 2–3)
+Shubh's grid in `configs/pilot.json` (noise and outlier families with controls), PLUS these new families. Each needs new corruption code with unit tests:
+
+| New family | Definition | Why |
+|---|---|---|
+| `outlier_trans_large` | 1 non-reference view; translation +{1, 3, 10}×L, random direction | GPS jump; stresses the mean pose scale |
+| `scale_all` | all non-reference translations × {0.67, 1.5}, metric flag on | wrong metric scale; errors agree with each other |
+| `drift` | accumulated heading-rate bias + velocity bias along view order (2 severities) | realistic odometry drift (cf. VPGGT) |
+| `focal_all` | fx, fy × {0.8, 1.2} on all views; poses clean | wrong EXIF/calibration; shared error |
+| `focal_only` | same as above but no poses (reference: `rgb_K`) | isolates the intrinsics effect |
+| *(E1b, if time)* `depth_scale` | give GT depth on 2 views, then × 1.5 | wrong depth-sensor scale |
+
+- **Readouts:**
+  - `benefit_lost` and paired Δ vs `rgb_only` for `pts_relerr_scale`, `rre_deg` and `depth_absrel_scale`;
+  - the fraction of eval clips worse than `rgb_only`;
+  - contamination: the uncorrupted views' error vs `clean_pose` on the same views;
+  - `filter_rgbcheck` and `drop_oracle` recovery.
+- **GO (H1 true):** at least one realistic family has `benefit_lost > 1` on the eval split, i.e. it is worse than images-only.
+  - The 95% CI of the paired Δ vs `rgb_only` must exclude 0.
+  - At least 7 of 10 eval scenes must be worse.
+  - `filter_rgbcheck` must recover less than half of what `drop_oracle` recovers (or not apply, as with correlated errors).
+- **STOP / downgrade:** everything degrades gracefully and stays better than images-only, or the simple filter already fixes it. Then write it up as a careful analysis note (workshop at most) and pivot.
+
+### E2: Mechanism, mean vs median (target: day 3–4, only if E1 = GO)
+- Patch MapAnything's pose-scale (and depth-scale) computation from mean to median, behind a flag, so the original code path is untouched.
+- Rerun the clean references plus only the E1 conditions that failed.
+- Optional isolation run: corrupt only the scale feature while keeping directions correct, if the code allows it.
+- **Check first:** clean-hint accuracy must not change (paired Δ CI includes 0). The model was trained with the mean, so the median could itself shift the input distribution.
+- **Readout:** the fraction of the `drop_oracle` recovery achieved by the median patch.
+  - ≥ 70% → the cause is the scale statistic. This is a small fix: a workshop paper or one section of a bigger paper.
+  - < 30% → the cause is inside the network. This is the stronger story; go to E3.
+
+### E3: Can bad hints be detected without ground truth? (target: days 4–6)
+- For every corrupted run, compute per-view scores:
+  - (a) the model's confidence on that view;
+  - (b) disagreement with the images-only prediction, as a continuous version of `filter_rgbcheck`;
+  - (c) **image consistency with leave-one-group-out**: rerun with view i's hint removed, then measure how much cross-view consistency improves. Consistency means warping DINO features (or pixels) of neighbouring views into view i using the predicted depth and pose, and comparing them.
+- For correlated errors (`scale_all`, `drift`, `focal_all`), compute the same score at the **group** level (all hints vs none).
+- **Readouts:**
+  - AUROC for flagging the truly corrupted views or groups;
+  - the accuracy recovered by dropping flagged hints, as a fraction of `drop_oracle`;
+  - extra runtime.
+- **GO for the method paper:** score (c) reaches AUROC ≥ 0.85 and recovers ≥ 70% of the oracle gain, and clearly beats (b) on the correlated or subtle cases.
+- **STOP:** (c) is no better than (b). The deployable baseline is then already enough; publish the E1/E2 analysis only.
+
+### Later (not now): E4 replicate E1–E3 on OmniVGGT; E5 two-pass refinement; E6 soft gates or light training. Only after E3 = GO.
+
+## 8. Compute budget (estimates; replace with measured values after E0)
+- One GPU with ≥ 24 GB (A100/H100/RTX 4090/A6000). MapAnything is about 1B parameters and runs in bf16.
+- E0: < 0.5 GPU-h.
+- E1: about 2–3k forward passes ≈ 1–2 GPU-h.
+- E2: < 1 GPU-h.
+- E3: leave-one-group-out adds about 10 passes per corrupted run, plus feature warping ≈ 2–4 GPU-h.
+- **Total for E0–E3: under 10 GPU-hours.** No training. No gradients needed.
+- Disk: ETH3D archives (several GB; check sizes on the download page), checkpoints (a few GB), plus results. Keep 50 GB free.
+- RAM: 32 GB or more is recommended for clip preparation.
+
+## 9. Open questions to resolve (update as answered)
+- [ ] What exactly does MapAnything feed when a hint is missing? (E0)
+- [ ] Does `preprocess_inputs` resize 518×336? (E0)
+- [ ] Are partial per-view poses accepted, with view 0 posed? (E0; the docs say yes)
+- [ ] Where in the code are the pose scale ẑp and depth scale ẑd computed? (E2 patch point; record file:line)
+- [ ] Is the `metric` flag handled per view or globally?
+
+## 10. Status and decisions log
+- 2026-10-27: Project set up. Shubh's Exp-1 harness imported (never run). Plan E0–E3 agreed. Next: E0.
