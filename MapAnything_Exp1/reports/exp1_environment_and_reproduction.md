@@ -40,16 +40,17 @@ Full evidence: `reports/e0_interface.md`.
 
 ## Data (ETH3D, E0 Steps 4-5)
 - Raw data: 13 scenes × 3 archives = 16 GB. `dslr_jpg` is needed for the depth undistortion.
-- **Download status:** 10 of 13 scenes downloaded. eth3d.net started refusing TLS handshakes at about 14:07 UTC, from both the VM and the laptop, so `relief`, `relief_2` and `terrains` (all eval) are **pending**.
+- **Download:** all 13 scenes are in. eth3d.net refused TLS from about 14:07 to 15:15 UTC, so `relief`, `relief_2` and `terrains` (eval) were fetched after it came back, on the same VM (`reports/e0_eval3_console.txt`).
 - Clips: 10 views at 518×336.
   - dev = `delivery_area`, `facade`, `terrace`;
-  - eval so far = `courtyard`, `electro`, `kicker`, `meadow`, `office`, `pipes`, `playground`;
-  - logs: `reports/e0_logs/4_clips.txt`, `4_clips_eval.txt`, `4_clips_eval_relabel.txt`;
-  - copies on the laptop in `data/clips/`, git-ignored.
-- **GT self-consistency, all 10 available clips: PASS** (`reports/e0_logs/5_clip_check_all.txt`):
+  - eval = the other 10;
+  - logs: `reports/e0_logs/4_clips.txt`, `4_clips_eval.txt`, `4_clips_eval_relabel.txt`, `4_clips_eval3.txt`;
+  - copies on the laptop in `data/clips/` (60 MB), git-ignored.
+- **GT self-consistency, all 13 clips: PASS** (`reports/e0_logs/5_clip_check_all.txt`, `reports/e0_results/gt_check.csv`):
   - worst pair median relative depth difference 0.02%-0.21%;
   - flat radial profiles;
-  - 2-6 of 9 pairs per clip above 5% overlap (sparse GT).
+  - 2-9 of 9 pairs per clip above 5% overlap (sparse GT).
+- **Sideways photos:** the `relief` and `relief_2` clips consist entirely of images ETH3D stores rotated by 90° (`reports/e0_logs/4_layout_all.txt`). Their geometry is consistent (both PASS). MapAnything's own converter turns them upright, though (`eth3d.py:210-249`). **Decide before any E1 eval run.**
 - **Split bug found and fixed:** `prepare_eth3d` used to compute the dev/eval split over the scenes passed in. A 7-scene run therefore labelled the eval scenes `electro`, `kicker` and `pipes` as `dev` (`reports/e0_eval_console_mislabelled.txt`).
   - Now `datasets.split_of` always splits over the full 13-scene list; test `test_split_is_fixed_over_full_eth3d_list`.
   - The 3 clips were deleted and rebuilt as `eval__`. **No model ever ran on them.**
@@ -66,4 +67,6 @@ Full evidence: `reports/e0_interface.md`.
 - [x] Reproduced: interface, data and smoke runs behave as expected on the dev split.
 - [x] Blocking issue found and fixed: ETH3D GT depth is on the distorted grid; the harness as delivered crashed on it (`reports/e0_interface.md`, "Other findings" 1).
 - [x] Split bug found and fixed (see Data above).
-- [ ] Open: download `relief`, `relief_2` and `terrains` once eth3d.net is back, then build their clips and GT-check them. Required before any E1 eval run.
+- [x] All 13 clips built and GT-checked.
+- [ ] Open for E1 (not E0): sideways `relief` / `relief_2` photos (see Data above).
+- Figures, 3D point clouds, numbers and an offline results page: `reports/e0_results/` (`README.md` there).

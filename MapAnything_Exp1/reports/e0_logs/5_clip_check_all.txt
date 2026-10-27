@@ -8,4 +8,7 @@
 [PASS] eval__office__c0  depth_undistorted=True  pairs>5%overlap=6/9  worst median_rel=0.0012  radial(centre->corner)=[0.0007, 0.0009, 0.0009, 0.0008]
 [PASS] eval__pipes__c0  depth_undistorted=True  pairs>5%overlap=5/9  worst median_rel=0.0012  radial(centre->corner)=[0.0007, 0.0006, 0.0004, 0.0003]
 [PASS] eval__playground__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0009  radial(centre->corner)=[0.0008, 0.0008, 0.0009, 0.0007]
+[PASS] eval__relief_2__c0  depth_undistorted=True  pairs>5%overlap=9/9  worst median_rel=0.0010  radial(centre->corner)=[0.0004, 0.0005, 0.0005, 0.0007]  ROTATED images: ['DSC_0458.JPG', 'DSC_0459.JPG', 'DSC_0460.JPG', 'DSC_0461.JPG', 'DSC_0462.JPG', 'DSC_0463.JPG', 'DSC_0464.JPG', 'DSC_0465.JPG', 'DSC_0466.JPG', 'DSC_0467.JPG']
+[PASS] eval__relief__c0  depth_undistorted=True  pairs>5%overlap=9/9  worst median_rel=0.0009  radial(centre->corner)=[0.0004, 0.0005, 0.0005, 0.0011]  ROTATED images: ['DSC_0427.JPG', 'DSC_0428.JPG', 'DSC_0429.JPG', 'DSC_0430.JPG', 'DSC_0431.JPG', 'DSC_0432.JPG', 'DSC_0433.JPG', 'DSC_0434.JPG', 'DSC_0435.JPG', 'DSC_0436.JPG']
+[PASS] eval__terrains__c0  depth_undistorted=True  pairs>5%overlap=6/9  worst median_rel=0.0002  radial(centre->corner)=[0.0002, 0.0002, 0.0002, 0.0001]
 OVERALL: PASS

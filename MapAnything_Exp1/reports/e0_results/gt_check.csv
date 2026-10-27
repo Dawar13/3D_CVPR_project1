@@ -1,0 +1,14 @@
+clip,split,pairs_over_5pct_overlap,worst_median_rel_pct,radial_r0_pct,radial_r1_pct,radial_r2_pct,radial_r3_pct,verdict
+dev__delivery_area__c0,dev,5,0.017,0.017,0.016,0.017,0.019,PASS
+dev__facade__c0,dev,2,0.053,0.04,0.04,0.039,0.046,PASS
+dev__terrace__c0,dev,3,0.212,0.12,0.163,0.212,0.181,PASS
+eval__courtyard__c0,eval,3,0.046,0.053,0.025,0.029,0.053,PASS
+eval__electro__c0,eval,3,0.195,0.149,0.176,0.139,0.061,PASS
+eval__kicker__c0,eval,2,0.145,0.143,0.15,0.1,0.148,PASS
+eval__meadow__c0,eval,5,0.178,0.052,0.066,0.27,0.048,PASS
+eval__office__c0,eval,6,0.118,0.071,0.091,0.091,0.082,PASS
+eval__pipes__c0,eval,5,0.119,0.066,0.062,0.042,0.033,PASS
+eval__playground__c0,eval,3,0.087,0.079,0.078,0.094,0.072,PASS
+eval__relief_2__c0,eval,9,0.098,0.045,0.055,0.054,0.067,PASS
+eval__relief__c0,eval,9,0.094,0.04,0.048,0.052,0.109,PASS
+eval__terrains__c0,eval,6,0.018,0.019,0.017,0.016,0.012,PASS

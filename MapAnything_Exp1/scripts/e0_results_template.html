@@ -1,0 +1,384 @@
+<title>MapAnything Vanilla Run</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: one reading column (~44rem) with two wide bands (3D viewer, charts) that open to ~70rem. */
+:root {
+  --bg: #f6f7f8;
+  --surface: #fdfdfc;
+  --ink: #111417;
+  --ink-2: #4b5157;
+  --muted: #7d838a;
+  --line: #dde1e5;
+  --accent: #2a78d6;
+  --accent-soft: #e3eefb;
+  --good: #0c7d0c;
+  --good-soft: #e3f3e3;
+  --warn: #9a5a00;
+  --warn-soft: #fbefd9;
+  --bar: #2a78d6;
+  --bar-bad: #e34948;
+  --truth: #8f969c;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SF Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111315; --surface: #1a1c1e; --ink: #eef0f2; --ink-2: #b9bfc5; --muted: #8b9198;
+    --line: #2d3135; --accent: #5598e7; --accent-soft: #1b2a3c; --good: #3cc23c; --good-soft: #15291a;
+    --warn: #e0a347; --warn-soft: #2e2414; --bar: #3987e5; --bar-bad: #e66767; --truth: #8a9096;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111315; --surface: #1a1c1e; --ink: #eef0f2; --ink-2: #b9bfc5; --muted: #8b9198;
+  --line: #2d3135; --accent: #5598e7; --accent-soft: #1b2a3c; --good: #3cc23c; --good-soft: #15291a;
+  --warn: #e0a347; --warn-soft: #2e2414; --bar: #3987e5; --bar-bad: #e66767; --truth: #8a9096;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+.page { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 40px 72px; display: grid; gap: 56px; }
+.col { max-width: 44rem; margin-inline: auto; width: 100%; min-width: 0; }
+.wide { max-width: 70rem; margin-inline: auto; width: 100%; min-width: 0; }
+h1, h2, h3 { text-wrap: balance; margin: 0; line-height: 1.2; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 600; letter-spacing: -0.01em; }
+h2 { font-size: 1.45rem; font-weight: 600; }
+h3 { font-size: 1.05rem; font-weight: 600; }
+p { margin: 0; }
+.stack { display: grid; gap: 14px; }
+.eyebrow { font-family: var(--font-data); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.12rem; color: var(--ink-2); }
+.verdict { display: grid; gap: 18px; padding: 24px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.verdict h2 { font-size: 1.6rem; }
+.checks { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.checks li { display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: start; }
+.chip { font-family: var(--font-data); font-size: 0.75rem; font-weight: 500; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+.chip.ok { background: var(--good-soft); color: var(--good); }
+.chip.ok::before { content: "✓ "; }
+.chip.wait { background: var(--warn-soft); color: var(--warn); }
+.chip.wait::before { content: "… "; }
+figure { margin: 0; display: grid; gap: 8px; }
+figure img { width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--line); background: #fff; }
+figcaption { font-size: 0.88rem; color: var(--muted); }
+.viewer-wrap { display: grid; gap: 12px; }
+.viewer { position: relative; width: 100%; aspect-ratio: 16 / 9; max-height: 70vh; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; touch-action: none; }
+.viewer canvas { display: block; width: 100%; height: 100%; }
+.viewer .status { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); font-family: var(--font-data); font-size: 0.85rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.seg button { font: inherit; font-size: 0.9rem; padding: 7px 12px; border: 0; background: transparent; color: var(--ink-2); cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--line); }
+.seg button[aria-pressed="true"] { background: var(--accent-soft); color: var(--ink); font-weight: 500; }
+.seg button:focus-visible, .toggle input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.toggle { display: inline-flex; gap: 8px; align-items: center; font-size: 0.9rem; color: var(--ink-2); cursor: pointer; }
+.readout { font-family: var(--font-data); font-size: 0.85rem; color: var(--ink-2); }
+.key { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.85rem; color: var(--muted); }
+.key span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 20px; }
+.chart { display: grid; gap: 12px; align-content: start; padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; min-width: 0; }
+.chart .what { font-size: 0.88rem; color: var(--ink-2); }
+.bars { display: grid; gap: 10px; }
+.bar-row { display: grid; gap: 3px; }
+.bar-label { font-size: 0.85rem; color: var(--ink-2); }
+.track { position: relative; height: 18px; }
+.bar { position: absolute; left: 0; top: 0; height: 18px; border-radius: 0 4px 4px 0; background: var(--bar); }
+.bar.bad { background: var(--bar-bad); }
+.bar-val { position: absolute; top: 0; height: 18px; line-height: 18px; font-family: var(--font-data); font-size: 0.8rem; color: var(--ink); padding-left: 6px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.ref { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--ink-2); opacity: 0.55; }
+.ref-note { font-size: 0.78rem; color: var(--muted); }
+.tip { position: fixed; z-index: 20; pointer-events: none; background: var(--ink); color: var(--bg); font-size: 0.82rem; padding: 6px 9px; border-radius: 6px; max-width: 18rem; line-height: 1.4; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr)); gap: 14px; }
+.tile { padding: 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; display: grid; gap: 4px; align-content: start; }
+.tile .label { font-size: 0.85rem; color: var(--muted); }
+.tile .value { font-size: 1.9rem; font-weight: 600; line-height: 1.15; }
+.tile .note { font-size: 0.85rem; color: var(--ink-2); }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.88rem; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-weight: 500; color: var(--muted); font-size: 0.8rem; }
+td.num { font-family: var(--font-data); font-variant-numeric: tabular-nums; text-align: right; }
+th.num { text-align: right; }
+tr:last-child td { border-bottom: 0; }
+.note-box { padding: 16px 18px; border-radius: 10px; background: var(--warn-soft); color: var(--ink); font-size: 0.95rem; }
+.fix { display: grid; gap: 6px; padding-left: 16px; border-left: 2px solid var(--line); }
+code { font-family: var(--font-data); font-size: 0.86em; }
+.src { font-size: 0.82rem; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="page">
+
+<header class="col stack">
+  <p class="eyebrow">E0 · ETH3D · MapAnything 3d10cf7a · 27 Oct 2026</p>
+  <h1>MapAnything Vanilla Run</h1>
+  <p class="lead">Before testing what wrong hints do to MapAnything, we checked that the plain, unmodified model runs correctly in our setup. This page shows what it built, the numbers, and what we fixed on the way.</p>
+</header>
+
+<section class="col">
+  <div class="verdict">
+    <p class="eyebrow">Short answer</p>
+    <h2>Yes. Vanilla MapAnything ran properly.</h2>
+    <ul class="checks">
+      <li><span class="chip ok">PASS</span><span>It ran with no errors and produced sensible 3D on a real scene.</span></li>
+      <li><span class="chip ok">PASS</span><span>Correct hints made it clearly better, as the MapAnything paper says they should. Camera angles got 75% more accurate and the 3D shape 58% more accurate.</span></li>
+      <li><span class="chip ok">PASS</span><span>Running it twice gives exactly the same answer, down to the last digit.</span></li>
+{{GT_BULLETS}}
+    </ul>
+  </div>
+</section>
+
+<section class="col stack">
+  <h2>What we asked the model to do</h2>
+  <p>We gave MapAnything 10 photos of one place (a delivery area at ETH Zurich, from the ETH3D dataset) and asked it to rebuild the place in 3D and work out where each photo was taken from. ETH3D also has a laser scan of the same place, so we can measure how close the model gets.</p>
+  <figure>
+    <img src="{{photos.jpg}}" alt="The 10 input photos of the delivery-area scene: a wall of large panels with a striped corner post, taken while walking sideways." width="1319" height="342">
+    <figcaption>The 10 input photos, each resized to 518 × 336 pixels, the size MapAnything works at.</figcaption>
+  </figure>
+  <p>We ran it four ways:</p>
+  <ul>
+    <li><strong>Photos only.</strong> The model has to guess everything.</li>
+    <li><strong>Photos + lens info.</strong> We also tell it each camera's focal length.</li>
+    <li><strong>Correct hints.</strong> Photos, lens info, and the true position of every camera.</li>
+    <li><strong>One wrong hint.</strong> Same as correct hints, but one camera's direction is turned 15° wrong. This previews E1; here it only checks that the corruption code works.</li>
+  </ul>
+</section>
+
+<section class="wide viewer-wrap" aria-labelledby="h-3d">
+  <div class="col stack" style="max-width:none">
+    <h2 id="h-3d">The 3D reconstruction</h2>
+    <p class="col" style="margin:0;max-width:44rem">Drag to turn, scroll or pinch to zoom. Grey dots are the laser-scanned truth. Coloured dots are what MapAnything built, painted with the photo colours. Where the two overlap, the model got it right. Orange marks show the 10 true camera positions and the way each one faced.</p>
+  </div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Which reconstruction to show">
+      <button type="button" id="v-rgb" data-set="rgb_only" aria-pressed="false">Photos only</button>
+      <button type="button" id="v-clean" data-set="clean" aria-pressed="true">Correct hints</button>
+      <button type="button" id="v-bad" data-set="bad" aria-pressed="false">One wrong hint</button>
+    </div>
+    <label class="toggle"><input type="checkbox" id="v-truth" checked> Show laser truth</label>
+    <span class="readout" id="v-readout"></span>
+  </div>
+  <div class="viewer" id="viewer"><div class="status" id="v-status">Loading 36,000 points…</div></div>
+  <div class="key">
+    <span><i class="dot" style="background:var(--truth)"></i>Laser-scanned truth</span>
+    <span><i class="dot" style="background:linear-gradient(135deg,#6c6a63,#c9c4b5,#4f5a3d)"></i>MapAnything, photo colours</span>
+    <span><i class="dot" style="background:#eb6834"></i>True camera positions</span>
+  </div>
+  <figure class="col" style="max-width:none">
+    <img src="{{overview.png}}" alt="Bird's-eye and side views of the scene for the truth and the three runs, with true cameras in black and the model's cameras in red." width="1762" height="898">
+    <figcaption>The same reconstructions flattened to a bird's-eye view (top) and a side view (bottom), with the model's own camera guesses. Black = true cameras, red = where the model thinks they are, orange = the wrong hint we gave it. With correct hints, red sits on black. With photos only, the model's sense of size is about 10% too small (scale factor s = 1.116), so its cameras sit too close together.</figcaption>
+  </figure>
+</section>
+
+<section class="wide stack" aria-labelledby="h-num">
+  <div class="col stack" style="max-width:44rem;margin:0">
+    <h2 id="h-num">The numbers</h2>
+    <p>Lower is better in every chart. The thin vertical line marks the photos-only result, so a bar that ends left of it beat "photos only". The wrong-hint rows are averages of 3 runs, each with a different camera turned wrong.</p>
+  </div>
+  <div class="charts" id="charts"></div>
+  <p class="ref-note">All from one scene (<code>dev__delivery_area__c0</code>). This checks that the pipeline works. It is not yet a research result. Sources: <code>results/smoke/per_run.csv</code>, <code>results/smoke_ctrl/per_run.csv</code>.</p>
+</section>
+
+<section class="col stack">
+  <h2>What the numbers say, in plain words</h2>
+  <div class="fix"><h3>Correct hints help a lot</h3><p>With the true camera positions, the 3D shape error fell from 4.2% to 1.7% and the camera-angle error from 0.73° to 0.18°. MapAnything is built to use hints like this, so this is the main sign that our pipeline feeds them in correctly. If we had a mistake in how camera positions are passed in, hints would have made things worse instead.</p></div>
+  <div class="fix"><h3>Lens info alone helps the shape, not the real-world size</h3><p>Telling the model the focal length fixed the shape (4.2% to 1.7% error) but made its guess of real-world size slightly worse on this scene. That is one scene, so we only note it.</p></div>
+  <div class="fix"><h3>One wrong hint already hurts</h3><p>Turning a single camera's hint by 15° raised the average camera-angle error to 3.0°, worse than photos only (0.73°). On this scene, one bad hint cost more than having no hints at all. This is exactly what E1 tests properly across many scenes. Here it only shows the test machinery works.</p></div>
+  <div class="fix"><h3>Removing the bad hint brings it back</h3><p>When we dropped the wrong hint, errors went back to almost the correct-hint level (shape 1.8%, angle 0.30°). Our simple "compare with photos-only" filter found the bad camera by itself in all 3 runs. For a 15° error that is expected; harder cases come in E1.</p></div>
+</section>
+
+<section class="col stack" aria-labelledby="h-key">
+  <h2 id="h-key">Is the answer key right?</h2>
+  <p>We grade the model against ETH3D's laser scans, so first we checked that the scans agree with themselves. We took the laser depth from photo 1, moved it into the view of the other photos using the true camera positions, and compared it with their own laser depth. If our camera handling were wrong, they would disagree by many percent.</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Scene</th><th>Used for</th><th class="num">Photo pairs checked</th><th class="num">Worst disagreement</th><th>Result</th></tr></thead>
+      <tbody id="gt-rows"></tbody>
+    </table>
+  </div>
+  <p class="src">Pass rule: under 3% disagreement. Worst seen: {{GT_WORST}}. Source: <code>reports/e0_clip_check/clip_check.csv</code>.</p>
+  <figure>
+    <img src="{{gtcheck.png}}" alt="Left: photo 1. Middle: its laser depth, a sparse speckle of coloured dots. Right: photo 2 with the moved laser points drawn in green, meaning under 2% disagreement." width="1346" height="355">
+    <figcaption>Left: photo 1. Middle: its laser depth (blank = no laser point; the scan covers about 1 pixel in 10). Right: those laser points moved into photo 2. Green means they land where photo 2's own scan says they should.</figcaption>
+  </figure>
+</section>
+
+<section class="col stack">
+  <h2>Speed, memory and repeatability</h2>
+  <div class="tiles">
+    <div class="tile"><span class="label">Time to rebuild 10 photos</span><span class="value">0.26 s</span><span class="note">on one A100 GPU, after a one-off 0.55 s warm-up</span></div>
+    <div class="tile"><span class="label">Peak GPU memory</span><span class="value">8.3 GB</span><span class="note">of the 80 GB card; a 24 GB card is plenty</span></div>
+    <div class="tile"><span class="label">Difference between repeat runs</span><span class="value">0</span><span class="note">bit-for-bit identical, so any change in E1 is real</span></div>
+  </div>
+  <p class="src">Sources: <code>reports/e0_logs/7_smoke_check.txt</code>, <code>reports/e0_logs/8_det_b.txt</code>.</p>
+</section>
+
+<section class="col stack">
+  <h2>What we fixed on the way</h2>
+  <div class="fix"><h3>The laser depth was being matched to the wrong photos</h3><p>ETH3D's laser depth belongs to the original photos, which have lens distortion. The harness paired it with the straightened photos, which are even a different size (about 6200 × 4130 instead of 6048 × 4032). The original code crashed on the very first photo. We now re-map the depth through the lens model, the same way MapAnything's own ETH3D code does.</p></div>
+  <div class="fix"><h3>Three test scenes were labelled as practice scenes</h3><p>When only some scenes were prepared, the code picked "practice" scenes from that subset instead of the fixed list. Three test scenes got the practice label. No model ever ran on them; we fixed the rule, added a test and rebuilt them.</p></div>
+</section>
+
+{{OPEN_SECTION}}
+
+<section class="wide stack" aria-labelledby="h-all">
+  <h2 id="h-all" class="col" style="margin:0;max-width:44rem">All numbers</h2>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>Run</th><th class="num">3D shape error</th><th class="num">3D error, real size</th><th class="num">Depth error, real size</th><th class="num">Camera angle error</th><th class="num">Camera direction error</th><th class="num">Runs averaged</th></tr></thead>
+      <tbody id="all-rows"></tbody>
+    </table>
+  </div>
+  <p class="src">"Shape" errors first remove one overall size factor per scene. "Real size" errors use the model's own metre-scale answer. Angle errors are averaged over all camera pairs. Internal names: rgb_only, rgb_K, clean_pose_noK, clean_pose, zero_noise, outlier_rot_rot_deg=15, drop_oracle, filter_rgbcheck.</p>
+</section>
+
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<!--DATA-->
+<!--THREE-->
+<script>
+const RUNS = [
+  { key: "rgb_only", label: "Photos only" },
+  { key: "rgb_K", label: "Photos + lens info" },
+  { key: "clean_pose_noK", label: "Photos + camera positions" },
+  { key: "clean_pose", label: "Correct hints (lens + positions)" },
+  { key: "outlier", label: "One wrong hint (15°)", bad: true },
+  { key: "drop_oracle", label: "Wrong hint removed" },
+];
+const ALL_ROWS = [
+  ["rgb_only", "Photos only"], ["rgb_K", "Photos + lens info"], ["clean_pose_noK", "Photos + camera positions"],
+  ["clean_pose", "Correct hints"], ["zero_noise", "Correct hints, passed through the corruption code at 0°"],
+  ["outlier", "One wrong hint (15°)"], ["drop_oracle", "Wrong hint removed (we know which)"],
+  ["filter_rgbcheck", "Wrong hint removed (found automatically)"],
+];
+const ALL13 = ["courtyard", "delivery_area", "electro", "facade", "kicker", "meadow", "office", "pipes", "playground", "relief", "relief_2", "terrains", "terrace"];
+const tip = document.getElementById("tip");
+function showTip(e, html) { tip.innerHTML = html; tip.hidden = false; moveTip(e); }
+function moveTip(e) {
+  const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+  tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px";
+}
+function hideTip() { tip.hidden = true; }
+
+function chart(host, title, what, metric, fmt, nums) {
+  const vals = RUNS.map(r => nums[r.key][metric]);
+  const max = Math.max(...vals) * 1.18;
+  const refPct = nums.rgb_only[metric] / max * 100;
+  const box = document.createElement("div");
+  box.className = "chart";
+  box.innerHTML = `<h3>${title}</h3><p class="what">${what}</p><div class="bars"></div>`;
+  const bars = box.querySelector(".bars");
+  RUNS.forEach(r => {
+    const v = nums[r.key][metric], pct = v / max * 100;
+    const row = document.createElement("div");
+    row.className = "bar-row";
+    row.innerHTML = `<span class="bar-label">${r.label}</span><div class="track">
+      <div class="bar${r.bad ? " bad" : ""}" style="width:${pct}%"></div>
+      <span class="ref" style="left:${refPct}%"></span>
+      <span class="bar-val" style="left:${pct}%">${fmt(v)}</span></div>`;
+    const track = row.querySelector(".track");
+    const n = nums[r.key].n_seeds;
+    const html = `<strong>${r.label}</strong><br>${title}: ${fmt(v)}${n > 1 ? `<br>average of ${n} runs` : ""}`;
+    track.addEventListener("pointerenter", e => showTip(e, html));
+    track.addEventListener("pointermove", moveTip);
+    track.addEventListener("pointerleave", hideTip);
+    bars.appendChild(row);
+  });
+  host.appendChild(box);
+}
+
+function tables(d) {
+  const pct = v => (100 * v).toFixed(1) + "%", deg = v => v.toFixed(2) + "°";
+  document.getElementById("all-rows").innerHTML = ALL_ROWS.map(([k, l]) => {
+    const n = d.nums[k];
+    return `<tr><td>${l}</td><td class="num">${pct(n.pts_relerr_scale)}</td><td class="num">${pct(n.pts_relerr_metric)}</td>
+      <td class="num">${pct(n.depth_absrel_metric)}</td><td class="num">${deg(n.rre_deg)}</td><td class="num">${deg(n.rte_deg)}</td><td class="num">${n.n_seeds}</td></tr>`;
+  }).join("");
+  document.getElementById("gt-rows").innerHTML = d.gt.map(g => {
+    const [split, scene] = g.clip.split("__");
+    return `<tr><td>${scene}</td><td>${split === "dev" ? "practice (dev)" : "held-out test (eval)"}</td>
+      <td class="num">${g.pairs} of 9</td><td class="num">${g.worst_pct.toFixed(2)}%</td><td><span class="chip ok">PASS</span></td></tr>`;
+  }).join("") + ALL13.filter(s => !d.gt.some(g => g.clip.endsWith("__" + s + "__c0"))).map(s =>
+    `<tr><td>${s}</td><td>held-out test (eval)</td><td class="num">–</td><td class="num">–</td><td><span class="chip wait">PENDING</span></td></tr>`).join("");
+}
+
+function b64(s) { const b = atob(s), u = new Uint8Array(b.length); for (let i = 0; i < b.length; i++) u[i] = b.charCodeAt(i); return u.buffer; }
+
+function viewer(d) {
+  const host = document.getElementById("viewer"), status = document.getElementById("v-status");
+  if (!window.THREE || !THREE.OrbitControls) { status.textContent = "3D viewer could not load. The flat views below show the same reconstructions."; return; }
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
+  catch (e) { status.textContent = "This browser has no WebGL. The flat views below show the same reconstructions."; return; }
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  host.appendChild(renderer.domElement);
+  status.hidden = true;
+  const scene = new THREE.Scene();
+  const cam = new THREE.PerspectiveCamera(50, 16 / 9, 0.05, 500);
+  const controls = new THREE.OrbitControls(cam, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = 0.08;
+
+  const colors = new Float32Array(new Uint8Array(b64(d.colors))).map(v => v / 255);
+  const sets = {};
+  for (const k of ["gt", "rgb_only", "clean", "bad"]) {
+    const g = new THREE.BufferGeometry();
+    g.setAttribute("position", new THREE.BufferAttribute(new Float32Array(b64(d.clouds[k])), 3));
+    if (k !== "gt") g.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    const m = k === "gt"
+      ? new THREE.PointsMaterial({ size: 0.045, color: 0x8f969c, transparent: true, opacity: 0.55, depthWrite: false })
+      : new THREE.PointsMaterial({ size: 0.05, vertexColors: true });
+    sets[k] = new THREE.Points(g, m); sets[k].visible = false; scene.add(sets[k]);
+  }
+  const camGroup = new THREE.Group();
+  const camMat = new THREE.LineBasicMaterial({ color: 0xeb6834 });
+  const dotGeo = new THREE.SphereGeometry(0.09, 12, 8), dotMat = new THREE.MeshBasicMaterial({ color: 0xeb6834 });
+  d.cams.forEach(c => {
+    const p = new THREE.Vector3(c[0], c[1], c[2]), f = new THREE.Vector3(c[3], c[4], c[5]).multiplyScalar(0.8);
+    camGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([p, p.clone().add(f)]), camMat));
+    const s = new THREE.Mesh(dotGeo, dotMat); s.position.copy(p); camGroup.add(s);
+  });
+  scene.add(camGroup);
+
+  sets.gt.geometry.computeBoundingSphere();
+  const bs = sets.gt.geometry.boundingSphere, target = bs.center.clone();
+  const rig = d.cams.reduce((a, c) => a.add(new THREE.Vector3(c[0], c[1], c[2])), new THREE.Vector3()).multiplyScalar(1 / d.cams.length);
+  const back = rig.clone().sub(target).normalize();
+  cam.position.copy(rig.clone().add(back.multiplyScalar(bs.radius * 0.55)).add(new THREE.Vector3(0, bs.radius * 0.45, 0)));
+  controls.target.copy(target); controls.update();
+
+  const runOf = { rgb_only: "rgb_only", clean: "clean_pose", bad: "outlier_rot_rot_deg=15" };
+  const readout = document.getElementById("v-readout");
+  let current = "clean";
+  function show(key) {
+    current = key;
+    for (const k of ["rgb_only", "clean", "bad"]) sets[k].visible = k === key;
+    document.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.set === key)));
+    const n = d.demo[runOf[key]];
+    readout.textContent = `This view: 3D shape error ${(100 * n.pts_relerr_scale).toFixed(1)}% · camera angle error ${n.rre_deg.toFixed(2)}°`
+      + (key === "bad" ? " (first of the 3 wrong-hint runs)" : "");
+  }
+  document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => show(b.dataset.set)));
+  const truth = document.getElementById("v-truth");
+  sets.gt.visible = truth.checked;
+  truth.addEventListener("change", () => { sets.gt.visible = truth.checked; });
+  show(current);
+
+  function resize() {
+    const w = host.clientWidth, h = host.clientHeight;
+    renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(host); resize();
+  (function loop() { controls.update(); renderer.render(scene, cam); requestAnimationFrame(loop); })();
+}
+
+Promise.resolve().then(() => JSON.parse(document.getElementById("e0-data").textContent)).then(d => {
+  const host = document.getElementById("charts");
+  chart(host, "3D shape error", "How far the 3D points are from the laser truth, after fixing overall size.", "pts_relerr_scale", v => (100 * v).toFixed(1) + "%", d.nums);
+  chart(host, "3D error at real size", "The same, using the model's own guess of real-world metres.", "pts_relerr_metric", v => (100 * v).toFixed(1) + "%", d.nums);
+  chart(host, "Camera angle error", "How wrong the model is about which way the cameras face, relative to each other.", "rre_deg", v => v.toFixed(2) + "°", d.nums);
+  tables(d);
+  viewer(d);
+}).catch(e => { document.getElementById("v-status").textContent = "Could not read the page data: " + e.message; });
+</script>
