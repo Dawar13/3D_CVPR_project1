@@ -217,3 +217,4 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
   - relief and relief_2 are upright, and their GT check passes.
   - Dev run: 705/705 runs, 0 failures, ~11 min; repeat runs are bit-identical on the shared GPU.
   - Dev checks pass after amendments 1-13 in `experiments/E1.md`. The open point is amendment 13: turning the metric flag off changes `clean_pose` results by up to 148%, so the plan's sanity expectation for `scale_all_nonmetric_x1.5` does not hold, while that run equals `metric_flag_off` exactly.
+- 2026-10-27: **E1 preregistered at `71582c1` (tag `e1-prereg`).** The user approved amendments 13 (metric-flag sanity check) and 14 (5% minimum effect for S1). The grid, code and decision rules are frozen; the eval split is run once from this commit.
