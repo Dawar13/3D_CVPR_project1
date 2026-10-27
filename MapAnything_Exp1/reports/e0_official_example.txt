@@ -1,0 +1,23 @@
+torch 2.14.1+cu130 cuda 13.0 gpu NVIDIA A100-SXM4-80GB
+checkpoint facebook/map-anything  scene delivery_area  images ['DSC_0675.JPG', 'DSC_0676.JPG', 'DSC_0677.JPG', 'DSC_0678.JPG', 'DSC_0679.JPG']
+Loading pretrained dinov2_vitg14 from torch hub
+
+5 views; keys/shapes/dtypes of view 0, finiteness over all views:
+  cam_quats                    (1, 4)               torch.float32    finite=True
+  cam_trans                    (1, 3)               torch.float32    finite=True
+  camera_poses                 (1, 4, 4)            torch.float32    finite=True
+  conf                         (1, 336, 518)        torch.float32    finite=True
+  depth_along_ray              (1, 336, 518, 1)     torch.float32    finite=True
+  depth_z                      (1, 336, 518, 1)     torch.float32    finite=True
+  img_no_norm                  (1, 336, 518, 3)     torch.float32    finite=True
+  intrinsics                   (1, 3, 3)            torch.float32    finite=True
+  mask                         (1, 336, 518, 1)     torch.bool       finite=True
+  metric_scaling_factor        (1, 1)               torch.float32    finite=True
+  non_ambiguous_mask           (1, 336, 518)        torch.bool       finite=True
+  non_ambiguous_mask_logits    (1, 336, 518)        torch.float32    finite=True
+  pts3d                        (1, 336, 518, 3)     torch.float32    finite=True
+  pts3d_cam                    (1, 336, 518, 3)     torch.float32    finite=True
+  ray_directions               (1, 336, 518, 3)     torch.float32    finite=True
+
+runtime 1.038 s for 5 views (includes first-call warm-up); peak GPU memory 6.44 GB
+PASS

@@ -1,0 +1,16 @@
+[OK ] delivery_area (dev)
+      44 registered images; undistorted cameras {0: (6208, 4135)}
+      distorted cameras {0: 6048x4032}
+      44 images and 44 depth files found
+      first clip: DSC_0675.JPG .. DSC_0684.JPG (10 views)
+[OK ] facade (dev)
+      76 registered images; undistorted cameras {4: (6200, 4132), 3: (6193, 4127), 2: (6200, 4131), 1: (6204, 4132), 0: (6201, 4130)}
+      distorted cameras {0: 6048x4032, 1: 6048x4032, 2: 6048x4032, 3: 6048x4032, 4: 6048x4032}
+      76 images and 76 depth files found
+      first clip: DSC_0324.JPG .. DSC_0333.JPG (10 views)
+[OK ] terrace (dev)
+      23 registered images; undistorted cameras {0: (6205, 4136), 1: (6203, 4134), 2: (6206, 4133), 3: (6204, 4135)}
+      distorted cameras {3: 6048x4032, 2: 6048x4032, 1: 6048x4032, 0: 6048x4032}
+      23 images and 23 depth files found
+      first clip: DSC_0259.JPG .. DSC_0269.JPG (10 views)
+OVERALL: OK

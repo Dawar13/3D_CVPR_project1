@@ -1,0 +1,16 @@
+[ok] data/clips/eval__electro__c0.npz  views=10  valid_depth=24.6%
+[ok] data/clips/eval__kicker__c0.npz  views=10  valid_depth=17.8%
+[ok] data/clips/eval__pipes__c0.npz  views=10  valid_depth=9.8%
+total 45416
+drwxr-xr-x 2 gpunet gpunet    4096 Oct 27 14:29 .
+drwxr-xr-x 3 gpunet gpunet    4096 Oct 27 13:56 ..
+-rw-r--r-- 1 gpunet gpunet 3648773 Oct 27 13:56 dev__delivery_area__c0.npz
+-rw-r--r-- 1 gpunet gpunet 5179913 Oct 27 13:56 dev__facade__c0.npz
+-rw-r--r-- 1 gpunet gpunet 5197797 Oct 27 13:56 dev__terrace__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4652541 Oct 27 14:25 eval__courtyard__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4843528 Oct 27 14:29 eval__electro__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4674669 Oct 27 14:29 eval__kicker__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4971051 Oct 27 14:25 eval__meadow__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4588670 Oct 27 14:25 eval__office__c0.npz
+-rw-r--r-- 1 gpunet gpunet 3876601 Oct 27 14:29 eval__pipes__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4849396 Oct 27 14:25 eval__playground__c0.npz

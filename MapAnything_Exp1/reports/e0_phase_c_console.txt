@@ -1,0 +1,133 @@
+
+===== 4.3 layout
+[OK ] delivery_area (dev)
+      44 registered images; undistorted cameras {0: (6208, 4135)}
+      distorted cameras {0: 6048x4032}
+      44 images and 44 depth files found
+      first clip: DSC_0675.JPG .. DSC_0684.JPG (10 views)
+[OK ] facade (dev)
+      76 registered images; undistorted cameras {4: (6200, 4132), 3: (6193, 4127), 2: (6200, 4131), 1: (6204, 4132), 0: (6201, 4130)}
+      distorted cameras {0: 6048x4032, 1: 6048x4032, 2: 6048x4032, 3: 6048x4032, 4: 6048x4032}
+      76 images and 76 depth files found
+      first clip: DSC_0324.JPG .. DSC_0333.JPG (10 views)
+[OK ] terrace (dev)
+      23 registered images; undistorted cameras {0: (6205, 4136), 1: (6203, 4134), 2: (6206, 4133), 3: (6204, 4135)}
+      distorted cameras {3: 6048x4032, 2: 6048x4032, 1: 6048x4032, 0: 6048x4032}
+      23 images and 23 depth files found
+      first clip: DSC_0259.JPG .. DSC_0269.JPG (10 views)
+OVERALL: OK
+
+===== 4.4 clips (depth undistorted)
+[ok] data/clips/dev__delivery_area__c0.npz  views=10  valid_depth=9.3%
+[ok] data/clips/dev__facade__c0.npz  views=10  valid_depth=10.8%
+[ok] data/clips/dev__terrace__c0.npz  views=10  valid_depth=25.6%
+total 13708
+drwxr-xr-x 2 gpunet gpunet    4096 Oct 27 13:54 .
+drwxr-xr-x 3 gpunet gpunet    4096 Oct 27 13:56 ..
+-rw-r--r-- 1 gpunet gpunet 3648773 Oct 27 13:56 dev__delivery_area__c0.npz
+-rw-r--r-- 1 gpunet gpunet 5179913 Oct 27 13:56 dev__facade__c0.npz
+-rw-r--r-- 1 gpunet gpunet 5197797 Oct 27 13:56 dev__terrace__c0.npz
+
+===== 5 GT self-consistency (GT only, no model)
+[PASS] dev__delivery_area__c0  depth_undistorted=True  pairs>5%overlap=5/9  worst median_rel=0.0002  radial(centre->corner)=[0.0002, 0.0002, 0.0002, 0.0002]
+[PASS] dev__facade__c0  depth_undistorted=True  pairs>5%overlap=2/9  worst median_rel=0.0005  radial(centre->corner)=[0.0004, 0.0004, 0.0004, 0.0005]
+[PASS] dev__terrace__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0021  radial(centre->corner)=[0.0012, 0.0016, 0.0021, 0.0018]
+OVERALL: PASS
+
+===== 6 official README example (GPU)
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+torch 2.14.1+cu130 cuda 13.0 gpu NVIDIA A100-SXM4-80GB
+checkpoint facebook/map-anything  scene delivery_area  images ['DSC_0675.JPG', 'DSC_0676.JPG', 'DSC_0677.JPG', 'DSC_0678.JPG', 'DSC_0679.JPG']
+Loading pretrained dinov2_vitg14 from torch hub
+
+5 views; keys/shapes/dtypes of view 0, finiteness over all views:
+  cam_quats                    (1, 4)               torch.float32    finite=True
+  cam_trans                    (1, 3)               torch.float32    finite=True
+  camera_poses                 (1, 4, 4)            torch.float32    finite=True
+  conf                         (1, 336, 518)        torch.float32    finite=True
+  depth_along_ray              (1, 336, 518, 1)     torch.float32    finite=True
+  depth_z                      (1, 336, 518, 1)     torch.float32    finite=True
+  img_no_norm                  (1, 336, 518, 3)     torch.float32    finite=True
+  intrinsics                   (1, 3, 3)            torch.float32    finite=True
+  mask                         (1, 336, 518, 1)     torch.bool       finite=True
+  metric_scaling_factor        (1, 1)               torch.float32    finite=True
+  non_ambiguous_mask           (1, 336, 518)        torch.bool       finite=True
+  non_ambiguous_mask_logits    (1, 336, 518)        torch.float32    finite=True
+  pts3d                        (1, 336, 518, 3)     torch.float32    finite=True
+  pts3d_cam                    (1, 336, 518, 3)     torch.float32    finite=True
+  ray_directions               (1, 336, 518, 3)     torch.float32    finite=True
+
+runtime 1.038 s for 5 views (includes first-call warm-up); peak GPU memory 6.44 GB
+PASS
+smoke clip: data/clips/dev__delivery_area__c0.npz
+
+===== 7 smoke runs (GPU)
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading pretrained dinov2_vitg14 from torch hub
+[done] dev__delivery_area__c0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+[done] dev__delivery_area__c0
+== results/smoke: 11 rows, 0 failures; commit 3d10cf7a30 ckpt facebook/map-anything torch 2.14.1+cu130 cuda 13.0 gpu NVIDIA A100-SXM4-80GB
+== results/smoke_ctrl: 41 rows, 0 failures; commit 3d10cf7a30 ckpt facebook/map-anything torch 2.14.1+cu130 cuda 13.0 gpu NVIDIA A100-SXM4-80GB
+
+[PASS] all rows ok (0 not ok), failures.jsonl lines: 0
+[PASS] no resize error (metrics.evaluate raises if pred size != GT)
+[PASS] zero_noise vs clean_pose: max|d pts3d| = 0 m = 0 L (threshold 1e-3 L, L = 1.72 m)
+
+reference conditions (control=none, all views; lower is better except mean_conf):
+                pts_relerr_scale  rre_deg  depth_absrel_scale  pts_relerr_metric  depth_absrel_metric  rte_deg  mean_conf
+condition                                                                                                                
+rgb_only                  0.0415   0.7315              0.0169             0.1271               0.1038   3.1453     7.7390
+rgb_K                     0.0168   0.7604              0.0162             0.1500               0.1454   1.1007    27.4266
+clean_pose                0.0174   0.1844              0.0127             0.0273               0.0200   0.3089    44.2149
+clean_pose_noK            0.0474   0.1959              0.0137             0.0448               0.0567   0.3528    16.8920
+zero_noise                0.0174   0.1844              0.0127             0.0273               0.0200   0.3089    44.2149
+[PASS] clean_pose vs rgb_only: pts_relerr_scale -58.0%, rre_deg -74.8%
+[INFO] rgb_K vs rgb_only: pts_relerr_scale -59.6%, rre_deg +3.9%
+
+[PASS] controls ran:
+             condition  seed         control status  n_pose_dropped  dropped_are_corrupted  pts_relerr_scale  rre_deg
+outlier_rot_rot_deg=15     0     drop_oracle     ok             1.0                    1.0          0.017592 0.334946
+outlier_rot_rot_deg=15     0 filter_rgbcheck     ok             1.0                    1.0          0.017592 0.334946
+outlier_rot_rot_deg=15     1     drop_oracle     ok             1.0                    1.0          0.017608 0.308074
+outlier_rot_rot_deg=15     1 filter_rgbcheck     ok             1.0                    1.0          0.017608 0.308074
+outlier_rot_rot_deg=15     2     drop_oracle     ok             1.0                    1.0          0.018265 0.256588
+outlier_rot_rot_deg=15     2 filter_rgbcheck     ok             1.0                    1.0          0.018265 0.256588
+
+runtime per 10-view inference: median 0.263 s (min 0.254, max 0.527); peak memory max 8.26 GB
+
+===== 7b visual check: demo reconstructions of the smoke clip (GPU)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+rgb_only                     pts_relerr_metric=0.1271  pts_relerr_scale=0.0415  rre_deg=0.7315
+clean_pose                   pts_relerr_metric=0.0273  pts_relerr_scale=0.0174  rre_deg=0.1844
+outlier_rot_rot_deg=15       pts_relerr_metric=0.0402  pts_relerr_scale=0.0299  rre_deg=2.9069
+written to results/e0_demo
+
+===== 8 determinism + timing (GPU, two processes)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+runtime per inference: ['0.557', '0.258', '0.258'] s (first = warm-up); peak 8.26 GB
+within-process max |d pts3d| over 3 repeats: 0 m = 0 L
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+runtime per inference: ['0.577', '0.259', '0.258'] s (first = warm-up); peak 8.26 GB
+within-process max |d pts3d| over 3 repeats: 0 m = 0 L
+across processes max |d pts3d|: 0 = 0 L
+across processes max |d depth_z|: 0
+across processes max |d pose|: 0
+across processes max |d conf|: 0
+
+===== provenance
+3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9
+HF snapshot: a1d87e9086706fb9974f3be5a3e3a0ca5401c5aa
+NVIDIA A100-SXM4-80GB, 81920 MiB, 580.126.09
+
+Phase C done. Hand reports/ and results/ back for Phase D.
+PHASEC_EXIT=0

@@ -1,0 +1,5 @@
+Loading pretrained dinov2_vitg14 from torch hub
+rgb_only                     pts_relerr_metric=0.1271  pts_relerr_scale=0.0415  rre_deg=0.7315
+clean_pose                   pts_relerr_metric=0.0273  pts_relerr_scale=0.0174  rre_deg=0.1844
+outlier_rot_rot_deg=15       pts_relerr_metric=0.0402  pts_relerr_scale=0.0299  rre_deg=2.9069
+written to results/e0_demo

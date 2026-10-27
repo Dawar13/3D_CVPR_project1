@@ -1,0 +1,11 @@
+[PASS] dev__delivery_area__c0  depth_undistorted=True  pairs>5%overlap=5/9  worst median_rel=0.0002  radial(centre->corner)=[0.0002, 0.0002, 0.0002, 0.0002]
+[PASS] dev__facade__c0  depth_undistorted=True  pairs>5%overlap=2/9  worst median_rel=0.0005  radial(centre->corner)=[0.0004, 0.0004, 0.0004, 0.0005]
+[PASS] dev__terrace__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0021  radial(centre->corner)=[0.0012, 0.0016, 0.0021, 0.0018]
+[PASS] eval__courtyard__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0005  radial(centre->corner)=[0.0005, 0.0003, 0.0003, 0.0005]
+[PASS] eval__electro__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0019  radial(centre->corner)=[0.0015, 0.0018, 0.0014, 0.0006]
+[PASS] eval__kicker__c0  depth_undistorted=True  pairs>5%overlap=2/9  worst median_rel=0.0015  radial(centre->corner)=[0.0014, 0.0015, 0.001, 0.0015]
+[PASS] eval__meadow__c0  depth_undistorted=True  pairs>5%overlap=5/9  worst median_rel=0.0018  radial(centre->corner)=[0.0005, 0.0007, 0.0027, 0.0005]
+[PASS] eval__office__c0  depth_undistorted=True  pairs>5%overlap=6/9  worst median_rel=0.0012  radial(centre->corner)=[0.0007, 0.0009, 0.0009, 0.0008]
+[PASS] eval__pipes__c0  depth_undistorted=True  pairs>5%overlap=5/9  worst median_rel=0.0012  radial(centre->corner)=[0.0007, 0.0006, 0.0004, 0.0003]
+[PASS] eval__playground__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0009  radial(centre->corner)=[0.0008, 0.0008, 0.0009, 0.0007]
+OVERALL: PASS

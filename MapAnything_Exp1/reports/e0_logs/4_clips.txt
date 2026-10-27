@@ -1,0 +1,9 @@
+[ok] data/clips/dev__delivery_area__c0.npz  views=10  valid_depth=9.3%
+[ok] data/clips/dev__facade__c0.npz  views=10  valid_depth=10.8%
+[ok] data/clips/dev__terrace__c0.npz  views=10  valid_depth=25.6%
+total 13708
+drwxr-xr-x 2 gpunet gpunet    4096 Oct 27 13:54 .
+drwxr-xr-x 3 gpunet gpunet    4096 Oct 27 13:56 ..
+-rw-r--r-- 1 gpunet gpunet 3648773 Oct 27 13:56 dev__delivery_area__c0.npz
+-rw-r--r-- 1 gpunet gpunet 5179913 Oct 27 13:56 dev__facade__c0.npz
+-rw-r--r-- 1 gpunet gpunet 5197797 Oct 27 13:56 dev__terrace__c0.npz

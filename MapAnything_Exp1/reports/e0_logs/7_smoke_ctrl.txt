@@ -1,0 +1,4 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+[done] dev__delivery_area__c0

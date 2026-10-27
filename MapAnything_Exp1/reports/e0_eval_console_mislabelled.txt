@@ -1,0 +1,83 @@
+[OK ] delivery_area (dev)
+      44 registered images; undistorted cameras {0: (6208, 4135)}
+      distorted cameras {0: 6048x4032}
+      44 images and 44 depth files found
+      first clip: DSC_0675.JPG .. DSC_0684.JPG (10 views)
+[OK ] facade (dev)
+      76 registered images; undistorted cameras {4: (6200, 4132), 3: (6193, 4127), 2: (6200, 4131), 1: (6204, 4132), 0: (6201, 4130)}
+      distorted cameras {0: 6048x4032, 1: 6048x4032, 2: 6048x4032, 3: 6048x4032, 4: 6048x4032}
+      76 images and 76 depth files found
+      first clip: DSC_0324.JPG .. DSC_0333.JPG (10 views)
+[OK ] terrace (dev)
+      23 registered images; undistorted cameras {0: (6205, 4136), 1: (6203, 4134), 2: (6206, 4133), 3: (6204, 4135)}
+      distorted cameras {3: 6048x4032, 2: 6048x4032, 1: 6048x4032, 0: 6048x4032}
+      23 images and 23 depth files found
+      first clip: DSC_0259.JPG .. DSC_0269.JPG (10 views)
+[OK ] courtyard (eval)
+      38 registered images; undistorted cameras {3: (6208, 4134), 2: (6200, 4134), 1: (6205, 4135), 0: (6198, 4129)}
+      distorted cameras {0: 6048x4032, 1: 6048x4032, 2: 6048x4032, 3: 6048x4032}
+      38 images and 38 depth files found
+      first clip: DSC_0286.JPG .. DSC_0295.JPG (10 views)
+[OK ] electro (eval)
+      45 registered images; undistorted cameras {5: (6192, 4121), 4: (6172, 4118), 3: (6203, 4134), 2: (6198, 4132), 1: (6198, 4130), 0: (6205, 4134)}
+      distorted cameras {0: 6048x4032, 1: 6048x4032, 2: 6048x4032, 3: 6048x4032, 4: 6048x4032, 5: 6048x4032}
+      45 images and 45 depth files found
+      first clip: DSC_9257.JPG .. DSC_9266.JPG (10 views)
+[OK ] kicker (eval)
+      31 registered images; undistorted cameras {0: (6211, 4137)}
+      distorted cameras {0: 6048x4032}
+      31 images and 31 depth files found
+      first clip: DSC_6487.JPG .. DSC_6497.JPG (10 views)
+[OK ] meadow (eval)
+      15 registered images; undistorted cameras {0: (6201, 4135)}
+      distorted cameras {0: 6048x4032}
+      15 images and 15 depth files found
+      first clip: DSC_6535.JPG .. DSC_6553.JPG (10 views)
+[OK ] office (eval)
+      26 registered images; undistorted cameras {0: (6221, 4146)}
+      distorted cameras {0: 6048x4032}
+      26 images and 26 depth files found
+      first clip: DSC_0219.JPG .. DSC_0235.JPG (10 views)
+[OK ] pipes (eval)
+      14 registered images; undistorted cameras {0: (6220, 4141)}
+      distorted cameras {0: 6048x4032}
+      14 images and 14 depth files found
+      first clip: DSC_0634.JPG .. DSC_0643.JPG (10 views)
+[OK ] playground (eval)
+      38 registered images; undistorted cameras {4: (6215, 4140), 3: (6214, 4139), 2: (6221, 4146), 1: (6209, 4137), 0: (6215, 4141)}
+      distorted cameras {0: 6048x4032, 1: 6048x4032, 2: 6048x4032, 3: 6048x4032, 4: 6048x4032}
+      38 images and 38 depth files found
+      first clip: DSC_0567.JPG .. DSC_0576.JPG (10 views)
+OVERALL: OK
+[ok] data/clips/eval__courtyard__c0.npz  views=10  valid_depth=8.2%
+[ok] data/clips/dev__electro__c0.npz  views=10  valid_depth=24.6%
+[ok] data/clips/dev__kicker__c0.npz  views=10  valid_depth=17.8%
+[ok] data/clips/eval__meadow__c0.npz  views=10  valid_depth=14.2%
+[ok] data/clips/eval__office__c0.npz  views=10  valid_depth=27.8%
+[ok] data/clips/dev__pipes__c0.npz  views=10  valid_depth=9.8%
+[ok] data/clips/eval__playground__c0.npz  views=10  valid_depth=6.4%
+total 45416
+drwxr-xr-x 2 gpunet gpunet    4096 Oct 27 14:25 .
+drwxr-xr-x 3 gpunet gpunet    4096 Oct 27 13:56 ..
+-rw-r--r-- 1 gpunet gpunet 3648773 Oct 27 13:56 dev__delivery_area__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4843528 Oct 27 14:25 dev__electro__c0.npz
+-rw-r--r-- 1 gpunet gpunet 5179913 Oct 27 13:56 dev__facade__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4674669 Oct 27 14:25 dev__kicker__c0.npz
+-rw-r--r-- 1 gpunet gpunet 3876601 Oct 27 14:25 dev__pipes__c0.npz
+-rw-r--r-- 1 gpunet gpunet 5197797 Oct 27 13:56 dev__terrace__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4652541 Oct 27 14:25 eval__courtyard__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4971051 Oct 27 14:25 eval__meadow__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4588670 Oct 27 14:25 eval__office__c0.npz
+-rw-r--r-- 1 gpunet gpunet 4849396 Oct 27 14:25 eval__playground__c0.npz
+[PASS] dev__delivery_area__c0  depth_undistorted=True  pairs>5%overlap=5/9  worst median_rel=0.0002  radial(centre->corner)=[0.0002, 0.0002, 0.0002, 0.0002]
+[PASS] dev__electro__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0019  radial(centre->corner)=[0.0015, 0.0018, 0.0014, 0.0006]
+[PASS] dev__facade__c0  depth_undistorted=True  pairs>5%overlap=2/9  worst median_rel=0.0005  radial(centre->corner)=[0.0004, 0.0004, 0.0004, 0.0005]
+[PASS] dev__kicker__c0  depth_undistorted=True  pairs>5%overlap=2/9  worst median_rel=0.0015  radial(centre->corner)=[0.0014, 0.0015, 0.001, 0.0015]
+[PASS] dev__pipes__c0  depth_undistorted=True  pairs>5%overlap=5/9  worst median_rel=0.0012  radial(centre->corner)=[0.0007, 0.0006, 0.0004, 0.0003]
+[PASS] dev__terrace__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0021  radial(centre->corner)=[0.0012, 0.0016, 0.0021, 0.0018]
+[PASS] eval__courtyard__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0005  radial(centre->corner)=[0.0005, 0.0003, 0.0003, 0.0005]
+[PASS] eval__meadow__c0  depth_undistorted=True  pairs>5%overlap=5/9  worst median_rel=0.0018  radial(centre->corner)=[0.0005, 0.0007, 0.0027, 0.0005]
+[PASS] eval__office__c0  depth_undistorted=True  pairs>5%overlap=6/9  worst median_rel=0.0012  radial(centre->corner)=[0.0007, 0.0009, 0.0009, 0.0008]
+[PASS] eval__playground__c0  depth_undistorted=True  pairs>5%overlap=3/9  worst median_rel=0.0009  radial(centre->corner)=[0.0008, 0.0008, 0.0009, 0.0007]
+OVERALL: PASS
+EVAL7_DONE

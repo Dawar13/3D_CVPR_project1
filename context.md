@@ -27,9 +27,9 @@ Target venues: CVPR 2027 (registration 10 Nov 2026, submission 16 Nov 2026), or 
 
 **MapAnything** (Keetha et al., Meta + CMU; arXiv 2509.13414, v3 Jan 2026):
 - Inputs: N images, plus optional per-view intrinsics (converted to ray directions), camera poses (OpenCV cam2world; split into quaternion + translation) and depth.
-- Every input is encoded to features of the same size: F_I (DINOv2 image), F_R (rays), F_D (normalised depth), F_Q (rotation), F_T (translation direction), F_ẑp (pose scale), F_ẑd (depth scale).
-- They are fused per view as F_E = LN( LN(F_I) + Σ_m LN(F_m) ), over the hints that were provided, then passed to a 16-layer alternating-attention transformer.
-- **Pose scale ẑp** = the *mean* distance of the provided cameras from the world frame (view 0). Translations are divided by it. **Depth scale ẑd** = the mean depth of that view. Both scales are only used when the inputs are flagged metric.
+- Every input is encoded to features of the same size: F_I (DINOv2 image), F_R (rays), F_D (normalised depth), F_Q (rotation), F_T (translation **divided by ẑp, not a unit direction**; code check, `reports/e0_interface.md` Q8), F_ẑp (pose scale), F_ẑd (depth scale).
+- They are fused per view as F_E = LN( LN(F_I) + Σ_m LN(F_m) ) (paper), over the hints that were provided, then passed to a 16-layer alternating-attention transformer. In code: F_E = LN(F_I + Σ_m mask_m · F_m). A missing hint is the same encoder output multiplied by 0, not a learned token (e0_interface Q7).
+- **Pose scale ẑp** = the *mean* distance from view 0 of the posed cameras with non-zero translation (view 0 and unposed views are excluded). All translations are divided by it. **Depth scale ẑd** = the per-view mean of valid depth along the ray. The normalisation always happens; only the scale *features* F_ẑp/F_ẑd are gated per view by `is_metric_scale` (default True when absent) (e0_interface Q8-Q9).
 - Training gave hints with selection probabilities (overall 0.9; each modality 0.5). The paper describes no noise added to hints.
 - Limitations section (verbatim points): (a) it does not explicitly account for noise or uncertainty in geometric inputs; (c) test-time compute and iterative inference remain unexplored, which "ties into effectively handling noise in the inputs"; (d) multi-modal features are fused before the transformer.
 - Clean-hint benefit (Table 2, two-view, averaged over ETH3D/SN++v2/TAv2): points rel. error 0.08 (images only) → 0.02 (all hints); inliers 57.5 → 82.0.
@@ -60,8 +60,8 @@ Target venues: CVPR 2027 (registration 10 Nov 2026, submission 16 Nov 2026), or 
 | MapAnything code | github.com/facebookresearch/map-anything | Open source |
 | MapAnything weights | HF `facebook/map-anything` (13 datasets) | CC BY-NC 4.0 (research OK) |
 | MapAnything weights (alt) | HF `facebook/map-anything-apache` (6 datasets) | Apache 2.0 |
-| OmniVGGT code / weights | github.com/Livioni/OmniVGGT-official, HF `Livioni/OmniVGGT` | Check the LICENSE file before use |
-| ETH3D high-res multi-view, training split | eth3d.net | CC BY-NC-SA 4.0; files `multi_view_training_dslr_undistorted.7z` + `multi_view_training_dslr_depth.7z` |
+| OmniVGGT code / weights | github.com/Livioni/OmniVGGT-official, HF `Livioni/OmniVGGT` | Checked 2026-10-27: code MIT (`LICENSE`), HF card MIT; 1.217 B params, 4.87 GB fp32. Trained from VGGT-1B (README:293), whose weights are CC BY-NC 4.0 and whose code is under the VGGT License: treat as research/non-commercial and **acknowledge VGGT in the paper** (VGGT License 1.b.ii) |
+| ETH3D high-res multi-view, training split | eth3d.net | CC BY-NC-SA 4.0; per scene `dslr_undistorted` + `dslr_depth` + `dslr_jpg` (the last only for `dslr_calibration_jpg`, needed to undistort GT depth); `scripts/e0_download_eth3d.sh` |
 
 Everything is free to download for research. Nothing requires payment or private data.
 
@@ -74,6 +74,8 @@ Everything is free to download for research. Nothing requires payment or private
   - `exp1/run_exp1.py`: condition × clip × seed runner. It is resumable, scores contamination on the uncorrupted views, and runs the controls `drop_oracle` (cheating upper bound) and `filter_rgbcheck` (deployable baseline).
   - `exp1/metrics.py`: depth AbsRel/δ1, point error, pairwise pose errors; raw metric plus one per-clip median scale; no alignment.
   - `exp1/aggregate.py`: bootstrap CIs, paired deltas, and `benefit_lost` (>1 means worse than images-only).
+  - `scripts/e0_*`: E0 checks (layout, GT self-consistency, official example, smoke check, determinism) and `e0_phase_c.sh`, which runs them all. `tests/test_runner_dryrun.py` runs the whole runner on CPU with a fake model, as a plumbing check.
+- `experiments/`: per-experiment plans (`E0.md`) and VM runbooks (`E0_runbook.md`).
 - `papers/` holds PDFs and short notes of the papers in §3. Add more here.
 - `results/` and `data/` are git-ignored. Keep them out of the repo.
 
@@ -148,7 +150,14 @@ Shubh's grid in `configs/pilot.json` (noise and outlier families with controls),
 
 ### Later (not now): E4 replicate E1–E3 on OmniVGGT; E5 two-pass refinement; E6 soft gates or light training. Only after E3 = GO.
 
-## 8. Compute budget (estimates; replace with measured values after E0)
+## 8. Compute budget
+**Measured in E0 (2026-10-27, A100-SXM4-80GB, bf16 autocast, `memory_efficient_inference=False`):**
+- one 10-view inference at 518×336 takes **0.26 s** after warm-up (first call ≈ 0.55 s), peak GPU memory **8.26 GB** (`MapAnything_Exp1/reports/e0_logs/7_smoke_check.txt`, `8_det_*.txt`);
+- output is bit-identical run to run;
+- MapAnything has 1.228 B parameters (fp32 checkpoint, 4.91 GB).
+
+**Projection, not measured:** E1's ~2-3k passes come to ~10-15 GPU-minutes of pure inference, plus model loading per process. Any GPU with ≥ 16 GB and bf16 would fit the measured peak. The estimates below were written before E0.
+
 - One GPU with ≥ 24 GB (A100/H100/RTX 4090/A6000). MapAnything is about 1B parameters and runs in bf16.
 - E0: < 0.5 GPU-h.
 - E1: about 2–3k forward passes ≈ 1–2 GPU-h.
@@ -159,11 +168,37 @@ Shubh's grid in `configs/pilot.json` (noise and outlier families with controls),
 - RAM: 32 GB or more is recommended for clip preparation.
 
 ## 9. Open questions to resolve (update as answered)
-- [ ] What exactly does MapAnything feed when a hint is missing? (E0)
-- [ ] Does `preprocess_inputs` resize 518×336? (E0)
-- [ ] Are partial per-view poses accepted, with view 0 posed? (E0; the docs say yes)
-- [ ] Where in the code are the pose scale ẑp and depth scale ẑd computed? (E2 patch point; record file:line)
-- [ ] Is the `metric` flag handled per view or globally?
+Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnything_Exp1/reports/e0_interface.md`. "Runtime" items are confirmed by E0 Phase C.
+- [x] What does MapAnything feed when a hint is missing? The encoder runs on a placeholder (zeros / identity pose) and its feature is multiplied by 0 before the fusion LayerNorm. No learned token. "Gate = 0" = omit the key. (Q7)
+- [x] Does `preprocess_inputs` resize 518×336? No: 518×336 is the 3:2 mapping and is kept exactly (runtime check pending). (Q5)
+- [x] Are partial per-view poses accepted, with view 0 posed? Yes (runtime check pending). (Q6)
+- [x] Where are ẑp and ẑd computed? `geometry.py:1558-1595` / `1523-1555`, called at `model.py:1122-1126` / `987-991`. E2 can swap in a median from `model_io` without editing `third_party`. (Q8, E2/E3 section)
+- [x] Is the `metric` flag per view or global? Per view; it gates only the scale features. (Q9)
+- [ ] NEW, decide before any E1 eval run: `scale_all` and `depth_scale` reach the model only through the scale features, while the planned E1 readouts are scale-normalised. Should `*_metric` metrics / `metric_scaling_factor` be primary readouts for these families? (e0_interface, "Implication for the preregistration")
 
 ## 10. Status and decisions log
 - 2026-10-27: Project set up. Shubh's Exp-1 harness imported (never run). Plan E0–E3 agreed. Next: E0.
+- 2026-10-27: E0 Phase A (laptop, no GPU) done. **E0 is NOT yet PASS**; no model has been run.
+  - Interface checked against the source @ `3d10cf7a`: `model_io.py` needed no functional change.
+  - **Bug fixed in `datasets.py`:** ETH3D GT depth is on the distorted grid. It is now undistorted via `dslr_calibration_jpg`, which needs a third archive. The thin-prism model matches pycolmap to 1e-12 px.
+  - E0 scripts and tests added, plus a visual check (Step 7b: demo reconstructions of the smoke clip as PLY files and an overview PNG). 30 tests pass on CPU, including a fake-model dry run of the whole runner.
+  - `setup_server.sh` pins the commit.
+  - Open: the E1 readout question in §9.
+  - Next: Phases B and C on the VM (`experiments/E0_runbook.md`).
+- 2026-10-27: **E0 PASS on the dev split; 3 eval scenes pending.** VM: A100-SXM4-80GB; torch 2.14.1+cu130; MapAnything `3d10cf7a`; HF snapshot `a1d87e90`. Evidence: `MapAnything_Exp1/reports/exp1_environment_and_reproduction.md`, `reports/e0_logs/`.
+  - Smoke clip `dev__delivery_area__c0`:
+    - 0 failures; no resize; `zero_noise` ≡ `clean_pose`;
+    - clean hints vs images-only: `pts_relerr_scale` −58%, `rre_deg` −75%;
+    - both controls ran and dropped exactly the corrupted view;
+    - visual check OK.
+  - Speed and determinism: 0.26 s per 10-view inference, 8.26 GB peak; bit-identical runs, so the noise floor is 0.
+  - GT check PASS on all 10 available clips (3 dev + 7 eval).
+  - Bugs found and fixed:
+    1. ETH3D GT depth is on the distorted grid (6048×4032, while the undistorted images are ~6200×4130), so the harness as delivered crashed on the first image;
+    2. the dev/eval split was computed over whichever scene subset was passed in, which mislabelled 3 eval scenes as dev; no model ran on them, and they were rebuilt.
+  - Not done: `relief`, `relief_2` and `terrains` (eval) could not be downloaded because eth3d.net refused TLS from ~14:07 UTC, from both the VM and the laptop. **Download, build clips and GT-check them before any E1 eval run.**
+  - Single-clip observations, no interpretation:
+    - `rgb_K` worsens the metric-scale errors while improving the scale-normalised ones;
+    - `clean_pose_noK` is slightly worse than `rgb_only` on `pts_relerr_scale`.
+  - The 10 clips (45 MB) are on the laptop in `data/clips/`, so the next VM can skip the 16 GB download for them.
+  - Next: decide the §9 E1 readout question, then E1 code (new corruption families + tests).

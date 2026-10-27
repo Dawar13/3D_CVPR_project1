@@ -1,0 +1,1 @@
+smoke clip: data/clips/dev__delivery_area__c0.npz

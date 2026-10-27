@@ -1,0 +1,30 @@
+## date
+Tue Oct 27 13:47:01 UTC 2026
+## host
+gpucloud
+Linux gpucloud 6.8.0-90-generic #91~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Thu Nov 20 15:20:45 UTC 2 x86_64 x86_64 x86_64 GNU/Linux
+## gpus
+index, name, memory.total [MiB], memory.used [MiB], utilization.gpu [%]
+0, NVIDIA A100-SXM4-80GB, 81920 MiB, 0 MiB, 0 %
+## gpu processes
+pid, used_gpu_memory [MiB], process_name
+## disk
+/dev/sda2       614G   31G  558G   6% /
+## python
+/home/gpunet/miniforge3/envs/mapanything/bin/python
+Python 3.12.16
+torch 2.14.1+cu130 cuda 13.0 available True
+mapanything ? /home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/third_party/map-anything/mapanything/__init__.py
+numpy 2.5.4 /home/gpunet/miniforge3/envs/mapanything/lib/python3.12/site-packages/numpy/__init__.py
+PIL 13.0.0 /home/gpunet/miniforge3/envs/mapanything/lib/python3.12/site-packages/PIL/__init__.py
+pandas 3.1.0 /home/gpunet/miniforge3/envs/mapanything/lib/python3.12/site-packages/pandas/__init__.py
+matplotlib 3.11.2 /home/gpunet/miniforge3/envs/mapanything/lib/python3.12/site-packages/matplotlib/__init__.py
+## map-anything repo (third_party/map-anything)
+3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+## HF cache
+no map-anything checkpoint cached

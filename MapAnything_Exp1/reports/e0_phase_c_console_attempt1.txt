@@ -1,0 +1,40 @@
+
+===== 4.3 layout
+[OK ] delivery_area (dev)
+      44 registered images; undistorted cameras {0: (6208, 4135)}
+      distorted cameras {0: 6048x4032}
+      44 images and 44 depth files found
+      first clip: DSC_0675.JPG .. DSC_0684.JPG (10 views)
+[OK ] facade (dev)
+      76 registered images; undistorted cameras {4: (6200, 4132), 3: (6193, 4127), 2: (6200, 4131), 1: (6204, 4132), 0: (6201, 4130)}
+      distorted cameras {0: 6048x4032, 1: 6048x4032, 2: 6048x4032, 3: 6048x4032, 4: 6048x4032}
+      76 images and 76 depth files found
+      first clip: DSC_0324.JPG .. DSC_0333.JPG (10 views)
+[OK ] terrace (dev)
+      23 registered images; undistorted cameras {0: (6205, 4136), 1: (6203, 4134), 2: (6206, 4133), 3: (6204, 4135)}
+      distorted cameras {3: 6048x4032, 2: 6048x4032, 1: 6048x4032, 0: 6048x4032}
+      23 images and 23 depth files found
+      first clip: DSC_0259.JPG .. DSC_0269.JPG (10 views)
+OVERALL: OK
+
+===== 4.4 clips (depth undistorted) + dev-only A/B clips with the old direct depth lookup
+[ok] data/clips/dev__delivery_area__c0.npz  views=10  valid_depth=9.3%
+[ok] data/clips/dev__facade__c0.npz  views=10  valid_depth=10.8%
+[ok] data/clips/dev__terrace__c0.npz  views=10  valid_depth=25.6%
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/exp1/datasets.py", line 274, in <module>
+    main()
+  File "/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/exp1/datasets.py", line 269, in main
+    prepare_eth3d(a.eth3d_root, a.out, a.n_views, a.clips_per_scene, a.stride,
+  File "/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/exp1/datasets.py", line 239, in prepare_eth3d
+    clip = build_clip(root, scene, sel, cams, imgs, tw, th, dist)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/exp1/datasets.py", line 187, in build_clip
+    d, distortion = load_eth3d_depth(dpath, W, H), None
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/exp1/datasets.py", line 166, in load_eth3d_depth
+    raise ValueError(f"{path}: {raw.size} floats, expected {W}x{H}")
+ValueError: /home/gpunet/eth3d/delivery_area/ground_truth_depth/dslr_images/DSC_0675.JPG: 24385536 floats, expected 6208x4135
+PHASEC_EXIT=1

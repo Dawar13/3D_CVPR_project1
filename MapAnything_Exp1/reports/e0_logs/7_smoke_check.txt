@@ -1,0 +1,28 @@
+== results/smoke: 11 rows, 0 failures; commit 3d10cf7a30 ckpt facebook/map-anything torch 2.14.1+cu130 cuda 13.0 gpu NVIDIA A100-SXM4-80GB
+== results/smoke_ctrl: 41 rows, 0 failures; commit 3d10cf7a30 ckpt facebook/map-anything torch 2.14.1+cu130 cuda 13.0 gpu NVIDIA A100-SXM4-80GB
+
+[PASS] all rows ok (0 not ok), failures.jsonl lines: 0
+[PASS] no resize error (metrics.evaluate raises if pred size != GT)
+[PASS] zero_noise vs clean_pose: max|d pts3d| = 0 m = 0 L (threshold 1e-3 L, L = 1.72 m)
+
+reference conditions (control=none, all views; lower is better except mean_conf):
+                pts_relerr_scale  rre_deg  depth_absrel_scale  pts_relerr_metric  depth_absrel_metric  rte_deg  mean_conf
+condition                                                                                                                
+rgb_only                  0.0415   0.7315              0.0169             0.1271               0.1038   3.1453     7.7390
+rgb_K                     0.0168   0.7604              0.0162             0.1500               0.1454   1.1007    27.4266
+clean_pose                0.0174   0.1844              0.0127             0.0273               0.0200   0.3089    44.2149
+clean_pose_noK            0.0474   0.1959              0.0137             0.0448               0.0567   0.3528    16.8920
+zero_noise                0.0174   0.1844              0.0127             0.0273               0.0200   0.3089    44.2149
+[PASS] clean_pose vs rgb_only: pts_relerr_scale -58.0%, rre_deg -74.8%
+[INFO] rgb_K vs rgb_only: pts_relerr_scale -59.6%, rre_deg +3.9%
+
+[PASS] controls ran:
+             condition  seed         control status  n_pose_dropped  dropped_are_corrupted  pts_relerr_scale  rre_deg
+outlier_rot_rot_deg=15     0     drop_oracle     ok             1.0                    1.0          0.017592 0.334946
+outlier_rot_rot_deg=15     0 filter_rgbcheck     ok             1.0                    1.0          0.017592 0.334946
+outlier_rot_rot_deg=15     1     drop_oracle     ok             1.0                    1.0          0.017608 0.308074
+outlier_rot_rot_deg=15     1 filter_rgbcheck     ok             1.0                    1.0          0.017608 0.308074
+outlier_rot_rot_deg=15     2     drop_oracle     ok             1.0                    1.0          0.018265 0.256588
+outlier_rot_rot_deg=15     2 filter_rgbcheck     ok             1.0                    1.0          0.018265 0.256588
+
+runtime per 10-view inference: median 0.263 s (min 0.254, max 0.527); peak memory max 8.26 GB

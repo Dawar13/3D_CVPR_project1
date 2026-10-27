@@ -9,6 +9,10 @@ RGB-only is obtained the official way: optional keys are simply absent.
 
 Before the first real run, check README.md "Things to verify" against the
 installed commit; any mismatch should be fixed here and nowhere else.
+
+Statically verified against map-anything 3d10cf7a (2026-08-07) by reading the
+source: every call, key and output index below matches. Evidence with file:line
+is in reports/e0_interface.md. Runtime confirmation is E0 Steps 6-8.
 """
 
 import time
@@ -89,3 +93,31 @@ def run(model, views, device):
     out["runtime_s"] = runtime
     out["peak_mem_gb"] = peak
     return out
+
+
+@torch.no_grad()
+def official_example(model, image_paths, device):
+    """README image-only example, kwargs copied verbatim (E0 Step 6). Raw predictions."""
+    from mapanything.utils.image import load_images
+    views = load_images(image_paths)
+    if device.startswith("cuda"):
+        torch.cuda.reset_peak_memory_stats()
+        torch.cuda.synchronize()
+    t0 = time.time()
+    preds = model.infer(
+        views,
+        memory_efficient_inference=True,
+        minibatch_size=None,
+        use_amp=True,
+        amp_dtype="bf16",
+        apply_mask=True,
+        mask_edges=True,
+        apply_confidence_mask=False,
+        confidence_percentile=10,
+        use_multiview_confidence=False,
+    )
+    if device.startswith("cuda"):
+        torch.cuda.synchronize()
+    runtime = time.time() - t0
+    peak = torch.cuda.max_memory_allocated() / 2**30 if device.startswith("cuda") else 0.0
+    return preds, runtime, peak

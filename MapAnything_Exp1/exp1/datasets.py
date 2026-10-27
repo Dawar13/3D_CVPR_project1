@@ -9,11 +9,19 @@ images, their order, resolution and preprocessing are fixed across conditions:
   depth   float32 (N, H, W)   GT z-depth in metres, 0 = invalid
   names   str     (N,)
   scene   str
+  depth_undistorted bool      True if GT depth was re-sampled onto the undistorted grid
 
-Expected raw layout (the two official ETH3D archives unpacked into one root):
+Expected raw layout (official ETH3D archives unpacked into one root):
   <root>/<scene>/images/dslr_images_undistorted/DSC_*.JPG
   <root>/<scene>/dslr_calibration_undistorted/{cameras.txt,images.txt}
   <root>/<scene>/ground_truth_depth/dslr_images/DSC_*.JPG   (raw float32, not JPEG)
+  <root>/<scene>/dslr_calibration_jpg/{cameras.txt,images.txt}   (from the dslr_jpg archive)
+
+The GT depth maps belong to the DISTORTED images (dslr_images, THIN_PRISM_FISHEYE),
+not the undistorted ones. Each undistorted target pixel is therefore re-projected
+into the distorted depth map, as MapAnything's own ETH3D converter does
+(map-anything data_processing/wai_processing/scripts/conversion/eth3d.py:253-414).
+--no_depth_undistort restores the old direct lookup (diagnostics only).
 
 Usage:
   python -m exp1.datasets --eth3d_root /data/eth3d --out data/clips \
@@ -34,12 +42,28 @@ ETH3D_TRAIN_SCENES = [
     "office", "pipes", "playground", "relief", "relief_2", "terrace", "terrains",
 ]
 N_DEV_SCENES = 3
+# Images stored rotated by 90 deg (originally portrait), per map-anything
+# data_processing/wai_processing/scripts/conversion/eth3d.py:210-249. Geometry is
+# still consistent; only "up" differs. Reported by the E0 checks, not altered.
+ETH3D_ROTATED = {
+    "delivery_area": [f"DSC_{i:04d}.JPG" for i in range(711, 715)],
+    "playground": [f"DSC_{i:04d}.JPG" for i in range(587, 593)],
+    "relief": [f"DSC_{i:04d}.JPG" for i in range(427, 440)],
+    "relief_2": [f"DSC_{i:04d}.JPG" for i in range(458, 469)],
+}
 
 
 def dev_eval_split(scenes, n_dev=N_DEV_SCENES):
     """Fixed split by hash of the scene name: not chosen by looking at results."""
     order = sorted(scenes, key=lambda s: hashlib.sha1(s.encode()).hexdigest())
     return sorted(order[:n_dev]), sorted(order[n_dev:])
+
+
+def split_of(scene, scenes=()):
+    """'dev' or 'eval'. ETH3D scenes are split over the FULL fixed list, so preparing a
+    subset can never relabel an eval scene as dev; other scenes (tests) over `scenes`."""
+    pool = ETH3D_TRAIN_SCENES if scene in ETH3D_TRAIN_SCENES else list(scenes)
+    return "dev" if scene in dev_eval_split(pool)[0] else "eval"
 
 
 def read_colmap_cameras(path):
@@ -54,6 +78,36 @@ def read_colmap_cameras(path):
         fx, fy, cx, cy = map(float, tok[4:8])
         cams[cam_id] = (W, H, np.array([[fx, 0, cx], [0, fy, cy], [0, 0, 1.0]]))
     return cams
+
+
+def read_colmap_distorted_cameras(path):
+    """dslr_calibration_jpg/cameras.txt -> {cam_id: (W, H, 12 THIN_PRISM_FISHEYE params)}."""
+    cams = {}
+    for line in open(path):
+        if line.startswith("#") or not line.strip():
+            continue
+        tok = line.split()
+        if tok[1] != "THIN_PRISM_FISHEYE" or len(tok) != 16:
+            raise ValueError(f"expected THIN_PRISM_FISHEYE with 12 params, got {tok[1:]}")
+        cams[int(tok[0])] = (int(tok[2]), int(tok[3]), np.array(list(map(float, tok[4:]))))
+    return cams
+
+
+def thin_prism_fisheye_project(x, y, params):
+    """COLMAP THIN_PRISM_FISHEYE: normalised coords (X/Z, Y/Z) -> distorted pixel coords.
+
+    params = fx, fy, cx, cy, k1, k2, p1, p2, k3, k4, sx1, sy1 (COLMAP pixel convention).
+    """
+    fx, fy, cx, cy, k1, k2, p1, p2, k3, k4, sx1, sy1 = params
+    r = np.hypot(x, y)
+    eps = np.finfo(np.float64).eps
+    s = np.where(r > eps, np.arctan(r) / np.maximum(r, eps), 1.0)
+    u, v = x * s, y * s
+    r2 = u * u + v * v
+    radial = k1 * r2 + k2 * r2**2 + k3 * r2**3 + k4 * r2**4
+    du = u * radial + 2 * p1 * u * v + p2 * (r2 + 2 * u * u) + sx1 * r2
+    dv = v * radial + 2 * p2 * u * v + p1 * (r2 + 2 * v * v) + sy1 * r2
+    return fx * (u + du) + cx, fy * (v + dv) + cy
 
 
 def read_colmap_images(path):
@@ -89,13 +143,28 @@ def adjust_K(K, W, H, nw, nh, left, top):
     return K2
 
 
-def resize_depth_nearest(depth, nw, nh, left, top, tw, th):
-    H, W = depth.shape
+def resize_depth_nearest(depth, W, H, nw, nh, left, top, tw, th, distortion=None):
+    """Nearest-sample GT depth at every target pixel of the resized+cropped (W, H) image.
+
+    distortion: None if `depth` is on the undistorted (W, H) grid; otherwise
+    (K_undistorted, thin-prism params) and `depth` is on the distorted grid.
+    """
     u = np.arange(left, left + tw)
     v = np.arange(top, top + th)
     src_u = np.clip(np.round((u + 0.5) * W / nw - 0.5).astype(int), 0, W - 1)
     src_v = np.clip(np.round((v + 0.5) * H / nh - 0.5).astype(int), 0, H - 1)
-    return depth[np.ix_(src_v, src_u)]
+    if distortion is None:
+        return depth[np.ix_(src_v, src_u)]
+    K, params = distortion
+    su, sv = np.meshgrid(src_u, src_v)
+    # COLMAP pixel convention: pixel i covers [i, i+1), centre at i + 0.5
+    xd, yd = thin_prism_fisheye_project((su + 0.5 - K[0, 2]) / K[0, 0],
+                                        (sv + 0.5 - K[1, 2]) / K[1, 1], params)
+    iu, iv = np.floor(xd).astype(int), np.floor(yd).astype(int)
+    inside = (iu >= 0) & (iu < depth.shape[1]) & (iv >= 0) & (iv < depth.shape[0])
+    out = np.zeros((th, tw), depth.dtype)
+    out[inside] = depth[iv[inside], iu[inside]]
+    return out
 
 
 def load_eth3d_depth(path, W, H):
@@ -107,7 +176,9 @@ def load_eth3d_depth(path, W, H):
     return d
 
 
-def build_clip(root, scene, names, cams, imgs, tw, th):
+def build_clip(root, scene, names, cams, imgs, tw, th, dist=None):
+    """dist: (distorted cams, distorted images by basename) from dslr_calibration_jpg,
+    or None to read the GT depth as if it were on the undistorted grid."""
     images, Ks, poses, depths = [], [], [], []
     for name in names:
         cam_id, c2w = imgs[name]
@@ -119,27 +190,49 @@ def build_clip(root, scene, names, cams, imgs, tw, th):
         im = im.resize((nw, nh), Image.BICUBIC).crop((left, top, left + tw, top + th))
         dpath = os.path.join(root, scene, "ground_truth_depth", "dslr_images",
                              os.path.basename(name))
-        d = load_eth3d_depth(dpath, W, H)
+        if dist is None:
+            d, distortion = load_eth3d_depth(dpath, W, H), None
+        else:
+            d_cams, d_imgs = dist
+            d_cam_id, d_c2w = d_imgs[os.path.basename(name)]
+            if d_cam_id != cam_id or not np.allclose(d_c2w, c2w, atol=1e-5):
+                raise ValueError(f"{name}: distorted and undistorted calibrations disagree")
+            Wd, Hd, params = d_cams[d_cam_id]
+            d, distortion = load_eth3d_depth(dpath, Wd, Hd), (K, params)
         images.append(np.asarray(im, dtype=np.uint8))
         Ks.append(adjust_K(K, W, H, nw, nh, left, top))
         poses.append(c2w)
-        depths.append(resize_depth_nearest(d, nw, nh, left, top, tw, th))
+        depths.append(resize_depth_nearest(d, W, H, nw, nh, left, top, tw, th, distortion))
     poses = relative_to_first(np.stack(poses))
     for i, T in enumerate(poses):
         validate_pose(T, f"{scene}/{names[i]}")
     return dict(images=np.stack(images), K=np.stack(Ks), poses=poses,
                 depth=np.stack(depths).astype(np.float32),
-                names=np.array(names), scene=np.array(scene))
+                names=np.array(names), scene=np.array(scene),
+                depth_undistorted=np.array(dist is not None))
 
 
-def prepare_eth3d(root, out_dir, n_views, clips_per_scene, stride, tw, th, scenes):
+def load_distortion(root, scene):
+    calib = os.path.join(root, scene, "dslr_calibration_jpg")
+    if not os.path.exists(os.path.join(calib, "cameras.txt")):
+        raise SystemExit(
+            f"{calib}/cameras.txt missing. ETH3D GT depth is on the DISTORTED image grid; "
+            "unpack dslr_calibration_jpg from multi_view_training_dslr_jpg.7z, "
+            "or pass --no_depth_undistort (diagnostics only).")
+    imgs = read_colmap_images(os.path.join(calib, "images.txt"))
+    return (read_colmap_distorted_cameras(os.path.join(calib, "cameras.txt")),
+            {os.path.basename(k): v for k, v in imgs.items()})
+
+
+def prepare_eth3d(root, out_dir, n_views, clips_per_scene, stride, tw, th, scenes,
+                  undistort_depth=True):
     os.makedirs(out_dir, exist_ok=True)
-    dev, ev = dev_eval_split(scenes)
     written = []
     for scene in scenes:
         calib = os.path.join(root, scene, "dslr_calibration_undistorted")
         cams = read_colmap_cameras(os.path.join(calib, "cameras.txt"))
         imgs = read_colmap_images(os.path.join(calib, "images.txt"))
+        dist = load_distortion(root, scene) if undistort_depth else None
         names = sorted(imgs)  # ETH3D DSLR names follow capture order
         span = (n_views - 1) * stride + 1
         if len(names) < span:
@@ -149,8 +242,8 @@ def prepare_eth3d(root, out_dir, n_views, clips_per_scene, stride, tw, th, scene
         starts = np.linspace(0, len(names) - span, clips_per_scene).round().astype(int)
         for c, s in enumerate(starts):
             sel = names[s:s + span:stride]
-            clip = build_clip(root, scene, sel, cams, imgs, tw, th)
-            split = "dev" if scene in dev else "eval"
+            clip = build_clip(root, scene, sel, cams, imgs, tw, th, dist)
+            split = split_of(scene, scenes)
             path = os.path.join(out_dir, f"{split}__{scene}__c{c}.npz")
             np.savez_compressed(path, **clip)
             valid = (clip["depth"] > 0).mean()
@@ -176,9 +269,11 @@ def main():
     ap.add_argument("--stride", type=int, default=1)
     ap.add_argument("--size", type=int, nargs=2, default=[518, 336], metavar=("W", "H"))
     ap.add_argument("--scenes", nargs="*", default=ETH3D_TRAIN_SCENES)
+    ap.add_argument("--no_depth_undistort", action="store_true",
+                    help="read GT depth as if on the undistorted grid (diagnostics only)")
     a = ap.parse_args()
     prepare_eth3d(a.eth3d_root, a.out, a.n_views, a.clips_per_scene, a.stride,
-                  a.size[0], a.size[1], a.scenes)
+                  a.size[0], a.size[1], a.scenes, undistort_depth=not a.no_depth_undistort)
 
 
 if __name__ == "__main__":

@@ -1,0 +1,7 @@
+Loading pretrained dinov2_vitg14 from torch hub
+runtime per inference: ['0.577', '0.259', '0.258'] s (first = warm-up); peak 8.26 GB
+within-process max |d pts3d| over 3 repeats: 0 m = 0 L
+across processes max |d pts3d|: 0 = 0 L
+across processes max |d depth_z|: 0
+across processes max |d pose|: 0
+across processes max |d conf|: 0
