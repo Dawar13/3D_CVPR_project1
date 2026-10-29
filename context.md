@@ -265,3 +265,10 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
     - Grid: `configs/e2c_full.json` (192 inferences per clip) and `configs/e2c_views.json`.
     - Clips: 24 eval + 8 dev ten-view clips, plus the 4- and 20-view sets. All pass the GT check, and every c0 is byte-identical to E1's clip.
     - The dev run on the 3 dev c0 clips is running. The preregistration draft (12 primary tests) is in `experiments/E2.md`; it is frozen only after the dev check and the user's approval.
+- 2026-10-29 (later): **E2-C preregistered at `b232c09` (tag `e2-prereg-C`); eval run started.**
+  - The user chose the trimmed grid: seeds 0-1, one-camera rotations up to 30° (Amendment 9). 3,232 eval inferences, about 5.5 h on the shared GPU.
+  - The VM code was verified by sha256 against the tag.
+  - **E2-D prepared.** OmniVGGT has its own conda env (`omnivggt`, torch 2.7.0+cu126), weights at HF snapshot `29c67625`, and a wrapper `exp1/model_io_omnivggt.py` (CPU smoke test OK).
+    - Its checks (`configs/e2d_checks.json`) are queued to start after the E2-C run. They run from a separate copy (`~/e2d`), so the frozen E2-C code is never touched.
+    - By its code, OmniVGGT removes the scale of pose and depth hints and ignores the principal point, so some E1 families cannot affect it; the checks test this.
+  - **E2-E download postponed by the user's choice:** keep the raw ETH3D data; the VM disk has 7 GB free. Still open: the ScanNet++ access form needs the user's and the PI's signatures.
