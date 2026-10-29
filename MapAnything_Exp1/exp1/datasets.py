@@ -30,6 +30,7 @@ Usage:
 
 import argparse
 import hashlib
+import itertools
 import os
 
 import numpy as np
@@ -247,8 +248,34 @@ def load_distortion(root, scene):
             {os.path.basename(k): v for k, v in imgs.items()})
 
 
+def clip_starts(n_images, span, clips_per_scene, non_overlapping=False, sideways=None):
+    """Clip start indices, evenly spaced over the sequence; the first clip always starts at 0.
+    non_overlapping (E2): no image in two clips, and every clip all-upright or all-sideways
+    (sideways: per-image flags). Among such windows, the non-overlapping set closest to the evenly
+    spaced positions (sum of |start - target|, earlier first on ties) is used; a scene that cannot
+    fit clips_per_scene of them gets fewer."""
+    if not non_overlapping:
+        return np.linspace(0, n_images - span, max(clips_per_scene, 1)).round().astype(int)
+    flags = [False] * n_images if sideways is None else list(sideways)
+    ok = [s for s in range(n_images - span + 1) if len(set(flags[s:s + span])) == 1]
+    if 0 not in ok:
+        raise ValueError("the first clip (start 0) mixes sideways and upright images")
+    for k in range(min(clips_per_scene, n_images // span), 0, -1):
+        target = np.linspace(0, n_images - span, k)
+        best = None
+        for rest in itertools.combinations([s for s in ok if s >= span], k - 1):
+            starts = (0,) + rest
+            if all(b - a >= span for a, b in zip(starts, starts[1:])):
+                cost = float(np.abs(np.array(starts) - target).sum())
+                if best is None or cost < best[0]:
+                    best = (cost, starts)
+        if best is not None:
+            return np.array(best[1], dtype=int)
+    return np.array([0])
+
+
 def prepare_eth3d(root, out_dir, n_views, clips_per_scene, stride, tw, th, scenes,
-                  undistort_depth=True, upright=True):
+                  undistort_depth=True, upright=True, non_overlapping=False):
     os.makedirs(out_dir, exist_ok=True)
     written = []
     for scene in scenes:
@@ -262,7 +289,13 @@ def prepare_eth3d(root, out_dir, n_views, clips_per_scene, stride, tw, th, scene
             print(f"[skip] {scene}: {len(names)} images < {span} needed")
             continue
         # clip starts evenly spaced over the sequence; fixed before any run
-        starts = np.linspace(0, len(names) - span, clips_per_scene).round().astype(int)
+        sideways = [upright and os.path.basename(n) in ETH3D_ROTATED.get(scene, []) for n in names[::stride]]
+        try:
+            starts = clip_starts(len(names), span, clips_per_scene, non_overlapping,
+                                 sideways if stride == 1 else None)
+        except ValueError as e:
+            print(f"[skip] {scene}: {e}")
+            continue
         for c, s in enumerate(starts):
             sel = names[s:s + span:stride]
             clip = build_clip(root, scene, sel, cams, imgs, tw, th, dist, upright)
@@ -298,10 +331,12 @@ def main():
                     help="read GT depth as if on the undistorted grid (diagnostics only)")
     ap.add_argument("--keep_sideways", action="store_true",
                     help="do not turn ETH3D_ROTATED views upright (diagnostics only)")
+    ap.add_argument("--non_overlapping", action="store_true",
+                    help="at most n_images // span clips per scene, so clips share no image (E2)")
     a = ap.parse_args()
     prepare_eth3d(a.eth3d_root, a.out, a.n_views, a.clips_per_scene, a.stride,
                   a.size[0], a.size[1], a.scenes, undistort_depth=not a.no_depth_undistort,
-                  upright=not a.keep_sideways)
+                  upright=not a.keep_sideways, non_overlapping=a.non_overlapping)
 
 
 if __name__ == "__main__":

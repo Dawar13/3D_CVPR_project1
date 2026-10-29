@@ -14,7 +14,7 @@ import numpy as np
 import pytest
 from PIL import Image
 
-from exp1.datasets import prepare_eth3d, load_clip, thin_prism_fisheye_project
+from exp1.datasets import clip_starts, prepare_eth3d, load_clip, thin_prism_fisheye_project
 from exp1.geometry import invert_pose, so3_exp
 
 W, H = 360, 240
@@ -159,6 +159,36 @@ def test_split_is_fixed_over_full_eth3d_list():
     assert all(split_of(s, subset) == "eval" for s in subset)
     assert all(split_of(s, ["facade"]) == "dev" for s in dev)
     assert split_of("synth", ["synth"]) == "dev"  # non-ETH3D scenes: split over themselves
+
+
+def test_clip_starts_non_overlapping_keeps_first_clip():
+    # E1 used clips_per_scene=1, i.e. the first 10 images; E2 adds clips without moving it
+    assert list(clip_starts(44, 10, 1)) == [0]
+    for n in (10, 14, 26, 31, 38, 76):
+        s = clip_starts(n, 10, 3, non_overlapping=True)
+        assert s[0] == 0 and len(s) == min(3, n // 10)
+        assert all(b - a >= 10 for a, b in zip(s, s[1:])) and s[-1] + 10 <= n
+    assert list(clip_starts(26, 10, 3, non_overlapping=True)) == [0, 16]
+    assert len(clip_starts(15, 10, 3)) == 3  # without the flag clips may overlap (old behaviour)
+
+
+def test_clip_starts_never_mix_sideways_and_upright():
+    # delivery_area: 44 images, 711-714 (positions 2-5 of DSC_0709...) sideways -> the evenly spaced
+    # third window [34, 44) is fine; a window over the sideways block would be refused
+    flags = [False] * 44
+    for i in range(20, 24):
+        flags[i] = True
+    s = clip_starts(44, 10, 3, True, flags)
+    assert s[0] == 0 and len(s) == 3
+    for a in s:
+        assert len(set(flags[a:a + 10])) == 1
+    assert all(b - a >= 10 for a, b in zip(s, s[1:]))
+    # relief-like: first 13 sideways, 18 upright -> only two clips fit
+    flags = [True] * 13 + [False] * 18
+    s = clip_starts(31, 10, 3, True, flags)
+    assert list(s) == [0, 21]
+    with pytest.raises(ValueError):
+        clip_starts(31, 10, 3, True, [False] * 5 + [True] * 26)
 
 
 def test_thin_prism_identity_at_centre():

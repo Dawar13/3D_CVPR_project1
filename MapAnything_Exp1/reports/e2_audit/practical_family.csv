@@ -1,0 +1,20 @@
+family,n_tests,harmful_any_setting,harmful_e1_realistic,e1_s1_realistic,harmful_settings,harmful_lit_realistic,harmful_lit_edge,lit_settings
+noise_rot,8,True,False,True,5.0:rotation +4.2,True,False,0.5:realistic; 1.0:realistic; 2.0:realistic; 5.0:realistic
+noise_trans,8,False,False,False,-,False,False,0.005:realistic; 0.01:realistic; 0.02:realistic; 0.05:realistic
+outlier_rot,8,True,True,True,15.0:rotation +1.62; 30.0:rotation +4.53; 90.0:rotation +16.5,True,True,5.0:realistic; 15.0:realistic; 30.0:edge; 90.0:beyond
+outlier_trans_small,6,False,False,False,-,False,False,0.1:unsourced; 0.25:unsourced; 0.5:unsourced
+outlier_trans_large,6,False,False,False,-,False,False,1.0:realistic; 3.0:realistic; 10.0:realistic
+outlier_frac,6,True,True,True,0.1:rotation +1.64; 0.2:rotation +4.17; 0.4:rotation +8.84,False,False,0.1:unsourced; 0.2:unsourced; 0.4:unsourced
+scale_all,24,True,False,True,2.0:real_size +0.537; 2.0:scale_ratio +0.479,True,False,0.5:realistic; 0.67:realistic; 0.8:realistic; 1.25:realistic; 1.5:realistic; 2.0:realistic
+drift,6,True,True,True,2.0:rotation +2; 3.0:rotation +5.46,False,False,1.0:beyond; 2.0:beyond; 3.0:beyond
+shared_heading_bias,6,True,False,True,10.0:rotation +4.76,True,False,2.0:realistic; 5.0:realistic; 10.0:realistic
+anchor_error,4,True,True,True,1.0:rotation +1.75,True,False,1.0:realistic; 2.0:realistic
+focal_all,8,False,False,True,-,False,False,0.8:edge; 0.9:realistic; 1.1:realistic; 1.2:edge
+focal_all_noposes,8,False,False,True,-,False,False,0.8:edge; 0.9:realistic; 1.1:realistic; 1.2:edge
+focal_one,4,False,False,False,-,False,False,0.7:edge; 1.3:edge
+principal_shift,4,False,False,True,-,False,False,0.05:beyond; 0.1:beyond
+depth_scale,8,True,True,True,1.5:real_size +0.103; 1.5:scale_ratio +0.107,True,False,0.67:realistic; 1.5:realistic
+depth_scale_noposes,8,False,False,True,-,False,False,0.67:realistic; 1.5:realistic
+depth_noise,4,False,False,False,-,False,False,0.05:realistic; 0.1:realistic
+depth_one_scale,2,True,True,True,1.5:shape +0.0252,True,False,1.5:realistic
+metric_flag_off,4,False,False,False,-,False,False,1.0:realistic

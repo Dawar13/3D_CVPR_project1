@@ -42,6 +42,35 @@ def load_model(checkpoint, device):
     return model
 
 
+def median_pose_translations(pose_translations, return_norm_factor=False):
+    """Drop-in for mapanything.utils.geometry.normalize_pose_translations (geometry.py:1558-1595)
+    with the MEDIAN instead of the mean distance of the non-zero translations as the pose scale.
+    Diagnostic only (E2-C C4). torch.quantile(0.5) averages the two middle values for even counts."""
+    assert pose_translations.ndim == 3 and pose_translations.shape[2] == 3
+    dis = pose_translations.norm(dim=-1)  # [B, V]
+    factors = []
+    for row in dis:
+        nz = row[row > 0]
+        factors.append(torch.quantile(nz.float(), 0.5).to(row.dtype) if nz.numel() else row.new_zeros(()))
+    norm_factor = torch.stack(factors).clip(min=1e-8)
+    normalized = pose_translations / norm_factor.unsqueeze(-1).unsqueeze(-1)
+    return (normalized, norm_factor) if return_norm_factor else normalized
+
+
+def set_pose_scale_statistic(stat):
+    """'mean' (MapAnything as shipped) or 'median'. model.py imports the function by name
+    (model.py:22-26) and calls it once per forward (model.py:1122-1126), so swapping the module
+    attribute changes only the pose-scale statistic; third_party is not edited."""
+    import mapanything.models.mapanything.model as mm
+    from mapanything.utils import geometry
+    if stat == "mean":
+        mm.normalize_pose_translations = geometry.normalize_pose_translations
+    elif stat == "median":
+        mm.normalize_pose_translations = median_pose_translations
+    else:
+        raise ValueError(f"unknown pose-scale statistic {stat!r}")
+
+
 def build_views(images, K, poses, inputs, pose_mask=None, metric=True, depth=None, depth_views=()):
     """images (N,H,W,3) uint8; K (N,3,3); poses (N,4,4) cam2world; depth (N,H,W) z-depth, 0 = invalid.
 

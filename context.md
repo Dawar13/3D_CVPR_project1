@@ -54,7 +54,7 @@ Target venues: CVPR 2027 (registration 10 Nov 2026, submission 16 Nov 2026), or 
 - **VPGGT** (arXiv 2610.05531, Oct 2026, contemporaneous): trains OmniVGGT with simulated *pose* drift and adds a "prior residual connection".
   - Pose noise only; intrinsics and depth stay clean.
   - It is training-based and does not detect *which* hint is bad.
-  - Key number: on TUM RGB-D the released OmniVGGT with realistic noisy poses still beat images-only. Translation accuracy at 5° was 57.11 vs 38.00. So mild realistic noise is NOT catastrophic. Our case must be gross or correlated errors.
+  - Key number: on TUM RGB-D the released OmniVGGT with realistic noisy poses still beat images-only: translation accuracy at 5° (RTA@5) 58.89 vs 38.00, rotation accuracy at 5° 100.00 vs 99.67 (Table 3, "w/C n"; checked in the PDF 2026-10-29). The earlier figure 57.11 is Table 1(a), where ground-truth depth was also supplied on all views. So mild realistic noise is NOT catastrophic. Our case must be gross or correlated errors.
 - **WorldMirror** (arXiv 2510.10726): reports graceful degradation under moderate pose and depth noise.
 - **TCO** (arXiv 2604.03878): a test-time method that uses hints as constraints on an image-only model.
 - **Pow3R** (CVPR 2025): the first feed-forward model with priors; it examined incorrect camera inputs.
@@ -102,6 +102,15 @@ Everything is free to download for research. Nothing requires payment or private
 
 ## 7. Experiment plan: the initial set only (E0–E3)
 
+**Phase map (updated 2026-10-29, `experiments/E2.md`):**
+- E0: pipeline check (done).
+- E1: does the problem exist? (done: Strong GO).
+- **E2: the nature of the problem.** Literature, audit, behaviour tests, a second model, real sensor hints, existing remedies. No solution work.
+- E3: our method.
+- E4: generality of the method.
+
+The E3 text below is the earlier sketch; it will be rewritten from the E2 results.
+
 ### E0: Setup and smoke test (target: day 1)
 - Run `scripts/setup_server.sh` and `scripts/env_report.sh`, then the official README example, then `pytest`.
 - Prepare clips: `python -m exp1.datasets --eth3d_root <ETH3D> --out data/clips --n_views 10 --size 518 336`.
@@ -132,14 +141,15 @@ Shubh's grid in `configs/pilot.json` (noise and outlier families with controls),
   - `filter_rgbcheck` must recover less than half of what `drop_oracle` recovers (or not apply, as with correlated errors).
 - **STOP / downgrade:** everything degrades gracefully and stays better than images-only, or the simple filter already fixes it. Then write it up as a careful analysis note (workshop at most) and pivot.
 
-### E2: Mechanism, mean vs median (target: day 3–4, only if E1 = GO)
-- Patch MapAnything's pose-scale (and depth-scale) computation from mean to median, behind a flag, so the original code path is untouched.
-- Rerun the clean references plus only the E1 conditions that failed.
-- Optional isolation run: corrupt only the scale feature while keeping directions correct, if the code allows it.
-- **Check first:** clean-hint accuracy must not change (paired Δ CI includes 0). The model was trained with the mean, so the median could itself shift the input distribution.
-- **Readout:** the fraction of the `drop_oracle` recovery achieved by the median patch.
-  - ≥ 70% → the cause is the scale statistic. This is a small fix: a workshop paper or one section of a bigger paper.
-  - < 30% → the cause is inside the network. This is the stronger story; go to E3.
+### E2: The nature of the problem (full plan: `experiments/E2.md`)
+Six parts, each preregistered before its eval run (tags `e2-prereg-<part>`), Holm-corrected, with practical thresholds (shape ≥ 1 pp, real size ≥ 5 pp, rotation ≥ 0.25°, scale ≥ 5%):
+- **E2-A** literature audit: closest work, classical tools, literature-realistic error sizes, datasets with real sensor hints. Gate: stop if a paper already measures our core findings.
+- **E2-B** post-hoc audit of E1: is "copying" real (not a code shortcut), practical significance, bad-camera vs good-camera pairs, absorption consistency, realistic re-labelling. Gate: stop if outputs are copied by code.
+- **E2-C** behaviour on MapAnything/ETH3D (3 clips per scene): trust curves (C1), knows-but-obeys (C2), which outputs are damaged (C3), which hint channel, incl. the mean→median scale probe as a diagnostic (C4), photos as evidence (C5), independent vs correlated at equal size (C6), partial hints (C7), what photos alone reveal (C8).
+- **E2-D** OmniVGGT (second model), **E2-E** real sensor hints, **E2-F** existing remedies (remaining gap).
+- **Decision:** GO to E3 / analysis paper / narrow (table in `experiments/E2.md` §7).
+
+The original E2 (mean vs median as the whole experiment) is now the C4 diagnostic.
 
 ### E3: Can bad hints be detected without ground truth? (target: days 4–6)
 - For every corrupted run, compute per-view scores:
@@ -154,7 +164,7 @@ Shubh's grid in `configs/pilot.json` (noise and outlier families with controls),
 - **GO for the method paper:** score (c) reaches AUROC ≥ 0.85 and recovers ≥ 70% of the oracle gain, and clearly beats (b) on the correlated or subtle cases.
 - **STOP:** (c) is no better than (b). The deployable baseline is then already enough; publish the E1/E2 analysis only.
 
-### Later (not now): E4 replicate E1–E3 on OmniVGGT; E5 two-pass refinement; E6 soft gates or light training. Only after E3 = GO.
+### Later (not now): E4 generality of the method (OmniVGGT and others); two-pass refinement; soft gates or light training. Only after E3 = GO. (The OmniVGGT *problem* replication moved into E2-D.)
 
 ## 8. Compute budget
 **Measured in E0 (2026-10-27, A100-SXM4-80GB, bf16 autocast, `memory_efficient_inference=False`):**
@@ -234,3 +244,24 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
     - benefit_lost is unstable for the lens and depth families, so the report leads with "% vs without the hint" figures (presentation only; decision unchanged).
     - Realistic ranges follow the preregistered rule, not yet literature sources.
   - **Next: E2** (mean vs median pose scale). Also note for E3: the simple filter fails on correlated errors (drift, shared heading, scale) and on 5° outliers, while the model's own confidence already flags single bad views.
+- 2026-10-29: **E2 started** (plan: `experiments/E2.md`, saved verbatim; amendments 1-7).
+  - **New VM** `gpucloud`: A100-SXM4-80GB, driver 550 / CUDA 12.4, torch 2.14.1+cu126 (E1 used cu130). It is shared with the rolling-shutter project (tmux `rs3d`, not ours). Every job is capped at 25% of GPU memory and starts only with ≥ 20 GB free.
+  - **E2-A literature: gate PASS** (`MapAnything_Exp1/reports/e2_literature.md`).
+    - No paper measures our core findings on these models.
+    - Partial overlaps to cite: Pow3R (2-view; it *refuses* gross wrong hints, and its confidence tracks agreement), VPGGT (drift-style pose noise on OmniVGGT, poses only, no gate), WorldMirror (wrong focal and depth noise, sometimes worse than no prior), TCO.
+    - Literature-realistic sizes replace E1's rule (`configs/e2_lit_realistic.json`). E1's drift levels are **beyond** every sourced drift rate.
+    - Datasets for E2-E: ARKitScenes validation split (open download), TUM RGB-D (open), ScanNet++ v2 (signed form from the user and the PI; MapAnything trained on it, only its 30 test scenes are held out).
+    - ETH3D is not in MapAnything's or OmniVGGT's training data.
+    - Correction: the VPGGT key number is Table 3, 58.89 vs 38.00 (§3 updated).
+  - **E2-B audit of E1: gate PASS** (`MapAnything_Exp1/reports/e2_audit.md`).
+    - Copying is real behaviour: the output pose comes from the network's pose head (`model.py:1504-1513`, `inference.py:363-378`), with 0 exact-1 absorptions.
+    - Under the strict standard (Holm over 132 tests, plus E2 practical thresholds), 16 tests and 9 families remain harmful; 7 families are harmful at literature-realistic sizes.
+    - Realistic harms: one camera 15°, compass-level all-camera rotation, shared 10° heading, first camera 15°, scale ×2, depth ×1.5.
+    - Harm is the bad camera itself: good-camera pairs change by at most 0.036°.
+    - For small position errors the model re-fits about half of the bad view's depth; for large ones it moves the points rigidly.
+    - The new VM reproduces E1 within 0.005° rotation and 0.06 pp shape.
+  - **E2-C prepared, not frozen.**
+    - Code and tests: 79 pass on the laptop (1 skipped: the MapAnything median-swap test, which passes on the VM).
+    - Grid: `configs/e2c_full.json` (192 inferences per clip) and `configs/e2c_views.json`.
+    - Clips: 24 eval + 8 dev ten-view clips, plus the 4- and 20-view sets. All pass the GT check, and every c0 is byte-identical to E1's clip.
+    - The dev run on the 3 dev c0 clips is running. The preregistration draft (12 primary tests) is in `experiments/E2.md`; it is frozen only after the dev check and the user's approval.

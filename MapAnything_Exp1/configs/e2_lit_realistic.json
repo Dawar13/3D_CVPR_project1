@@ -1,0 +1,22 @@
+{
+ "_comment": "E2-A literature-realistic labels for the E1 settings (reports/e2_literature.md section 3). Replaces the E1 rule 'realistic = all but the most severe setting'. Severities use the E1 config's own units (degrees, multiples of L, factors, sigma, level numbers). realistic = inside the documented range of at least one real hint source named in 'source'; edge = at the limit of what a source reports; beyond = larger than every source found; unsourced = plausible but no source gives a size. Written 2026-10-29, before any E2-C/D/E/F run.",
+ "noise_rot": {"realistic": [0.5, 1, 2, 5], "source": "0.5-2 deg: phone VIO orientation error < 2 deg on average (ADVIO). 5 deg: compass-derived rotations, mean deviations 5.5-6.9 deg (Tartachynska & Pylypyak 2026), beyond VIO"},
+ "noise_trans": {"realistic": [0.005, 0.01, 0.02, 0.05], "source": "VIO drift 6-14.6% of distance (Feigl et al. 2020); GPS is far larger (>= 0.7 L)"},
+ "outlier_rot": {"realistic": [5, 15], "edge": [30], "beyond": [90], "source": "indoor magnetometer heading error 12.45 deg average (Abadi et al., IPIN 2013); isolated compass deviations 13-25 deg; >30 deg spread only in a conference abstract (Jones 2021); 90 deg unsourced"},
+ "outlier_trans_small": {"unsourced": [0.1, 0.25, 0.5], "source": "VIO 'wild jumps' exist (ADVIO) but no size is given"},
+ "outlier_trans_large": {"realistic": [1, 3, 10], "source": "phone GPS 4.9 m open sky (GPS.gov), 7-13 m urban, max 99.7 m (Merry & Bettinger 2019); 10 L is inside for L <= 1.3 m, tails only for meadow (L = 6.76 m)"},
+ "outlier_frac": {"unsourced": [0.1, 0.2, 0.4], "source": "the per-view error (15 deg + 0.25 L) is inside indoor compass error; no source gives the fraction of views affected"},
+ "scale_all": {"realistic": [0.5, 0.67, 0.8, 1.25, 1.5, 2], "source": "monocular VO/SLAM: relative scale change 1:0.37 over one loop (Strasdat et al., RSS 2010); x0.8/x1.25 are at the edge for phone VIO (6-14.6%)"},
+ "drift": {"beyond": [1, 2, 3], "source": "heading-rate part 0.5/1/2 deg per photo = 0.8/1.6/3.2 deg per metre on the median clip, vs < 0.01 deg/m for phone VIO (ADVIO: < 2 deg over ~194 m) and ~0.12 deg/m gyro-only (Yang et al. 2020, OpenAlex abstract). The scale-growth part of levels 1-2 (5.1%/10.6% of path) is inside VIO drift (Feigl et al. 2020); level 3 (22.3%) is beyond"},
+ "shared_heading_bias": {"realistic": [2, 5, 10], "source": "compass bias 1-3 deg after calibration, 2-3x worse later, mean deviations up to 6.9 deg (Tartachynska & Pylypyak 2026); 12.45 deg average indoors (Abadi et al.)"},
+ "anchor_error": {"realistic": [1, 2], "source": "level 1 = 15 deg on view 0 (indoor compass); level 2 = 0.25 L (VIO-level offset)"},
+ "focal_all": {"realistic": [0.9, 1.1], "edge": [0.8, 1.2], "source": "EXIF focal 'usually good, but can occasionally be off by more than a factor of two'; SfM accepts 0.7-1.4 (Snavely et al. 2006); vendor flags > 5% (Pix4D); no error distribution found"},
+ "focal_all_noposes": {"realistic": [0.9, 1.1], "edge": [0.8, 1.2], "source": "as focal_all"},
+ "focal_one": {"edge": [0.7, 1.3], "source": "limit of the 0.7-1.4 window (Snavely et al. 2006)"},
+ "principal_shift": {"beyond": [0.05, 0.1], "source": "default vs calibrated principal point <= 2.5% of width (TUM RGB-D); crop bugs unsourced"},
+ "depth_scale": {"realistic": [0.67, 1.5], "source": "monocular metric-depth networks on ETH3D: AbsRel 0.34-0.55 (Metric3D v2, ZoeDepth; Metric3D v2 Table 3). Beyond active sensors (2-3.5% bias: TUM Kinect, Wasenmueller & Stricker 2016, phone LiDAR)"},
+ "depth_scale_noposes": {"realistic": [0.67, 1.5], "source": "as depth_scale"},
+ "depth_one_scale": {"realistic": [1.5], "source": "as depth_scale"},
+ "depth_noise": {"realistic": [0.05, 0.1], "source": "monocular depth AbsRel 0.05-0.07 on NYU/KITTI (Metric3D v2); depth edges (flying pixels); beyond active sensors on flat surfaces"},
+ "metric_flag_off": {"realistic": [1], "source": "categorical user error, no size to source"}
+}

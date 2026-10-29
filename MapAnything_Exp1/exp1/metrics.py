@@ -41,6 +41,79 @@ def gt_points_ref0(depth, K, poses):
     return pts, depth > 0
 
 
+def clip_gt_points(clip):
+    """gt_points_ref0 of a clip, computed once and kept in the clip dict (same numbers, less CPU)."""
+    if "_gt_pts" not in clip:
+        clip["_gt_pts"] = gt_points_ref0(clip["depth"], clip["K"], clip["poses"])
+    return clip["_gt_pts"]
+
+
+def umeyama(src, dst):
+    """Least-squares similarity (s, R, t) with dst ~ s R src + t (Umeyama 1991). src, dst (M,3)."""
+    mu_s, mu_d = src.mean(0), dst.mean(0)
+    a, b = src - mu_s, dst - mu_d
+    U, S, Vt = np.linalg.svd(b.T @ a / len(src))
+    D = np.eye(3)
+    if np.linalg.det(U) * np.linalg.det(Vt) < 0:
+        D[2, 2] = -1
+    R = U @ D @ Vt
+    s = float(np.trace(np.diag(S) @ D) / (a ** 2).sum(1).mean())
+    return s, R, mu_d - s * R @ mu_s
+
+
+def sim3_shape_err(pred_pts, gt_pts, gt_centre):
+    """A view's own shape: mean point error after fitting that view alone to the truth with one
+    rotation, shift and scale, relative to the mean true distance from its camera."""
+    s, R, t = umeyama(pred_pts, gt_pts)
+    res = np.linalg.norm(s * pred_pts @ R.T + t - gt_pts, axis=-1).mean()
+    return float(res / np.linalg.norm(gt_pts - gt_centre, axis=-1).mean())
+
+
+def _project(pts_world, T_c2w, K):
+    T = invert_pose(T_c2w)
+    pc = pts_world @ T[:3, :3].T + T[:3, 3]
+    z = pc[:, 2]
+    uv = pc[:, :2] / np.where(np.abs(z) > 1e-9, z, 1e-9)[:, None] * [K[0, 0], K[1, 1]] + [K[0, 2], K[1, 2]]
+    return uv, z
+
+
+def reproj_shift_px(i, depth, K, poses, hint_K=None, hint_poses=None, hint_depth=None, max_px=5000):
+    """Size of view i's hint error in pixels: mean image shift of its true 3D points when the hint
+    replaces the truth. Pose / intrinsics hints: re-projected into view i itself. Depth hint:
+    the hinted depth back-projected (true pose and K) and projected into every other view."""
+    H, W = depth.shape[1:]
+    v, u = np.nonzero(depth[i] > 0)
+    if len(u) == 0:
+        return np.nan
+    sel = np.linspace(0, len(u) - 1, min(max_px, len(u))).astype(int)
+    u, v = u[sel], v[sel]
+
+    def backproject(z, Ki, Ti):
+        pc = np.stack([(u - Ki[0, 2]) / Ki[0, 0] * z, (v - Ki[1, 2]) / Ki[1, 1] * z, z], -1)
+        return pc @ Ti[:3, :3].T + Ti[:3, 3]
+
+    X = backproject(depth[i][v, u], K[i], poses[i])
+    if hint_depth is not None:
+        Xh = backproject(hint_depth[i][v, u], K[i], poses[i])
+        shifts = []
+        for j in range(len(depth)):
+            if j == i:
+                continue
+            a, za = _project(X, poses[j], K[j])
+            b, zb = _project(Xh, poses[j], K[j])
+            ok = (za > 1e-6) & (zb > 1e-6) & (a[:, 0] >= 0) & (a[:, 0] < W) & (a[:, 1] >= 0) & (a[:, 1] < H)
+            if ok.any():
+                shifts.append(np.linalg.norm(a[ok] - b[ok], axis=-1).mean())
+        return float(np.mean(shifts)) if shifts else np.nan
+    Th = poses[i] if hint_poses is None else hint_poses[i]
+    Kh = K[i] if hint_K is None else hint_K[i]
+    uv, z = _project(X, Th, Kh)
+    ok = z > 1e-6
+    if not ok.any():
+        return np.nan
+    return float(np.linalg.norm(uv[ok] - np.stack([u, v], -1)[ok], axis=-1).mean())
+
+
 def _absrel_delta(pred, gt):
     r = np.abs(pred - gt) / gt
     ratio = np.maximum(pred / gt, gt / np.maximum(pred, 1e-8))
@@ -79,7 +152,7 @@ def evaluate(pred, clip, views=None):
     T0_inv = invert_pose(pred["pose"][0])
     pts_p = pred["pts3d"] @ T0_inv[:3, :3].T + T0_inv[:3, 3]
     pred_poses = np.stack([T0_inv @ T for T in pred["pose"]])
-    pts_g, valid = gt_points_ref0(depth, K, gt_poses)
+    pts_g, valid = clip_gt_points(clip)
 
     # one global scale per clip, computed on ALL views so it does not change with `views`
     vall = valid & (pred["depth_z"] > 1e-6)
@@ -114,10 +187,11 @@ def per_view(pred, clip, s):
     N = len(depth)
     T0_inv = invert_pose(pred["pose"][0])
     pts_p = pred["pts3d"] @ T0_inv[:3, :3].T + T0_inv[:3, 3]
-    pts_g, valid = gt_points_ref0(depth, K, clip["poses"])
+    pts_g, valid = clip_gt_points(clip)
     out = {k: np.full(N, np.nan) for k in ("view_pts_err_scale", "view_pts_err_metric",
                                            "view_depth_absrel_scale", "view_depth_absrel_metric",
-                                           "pred_depth_scale", "conf_mean", "conf_median")}
+                                           "pred_depth_scale", "conf_mean", "conf_median",
+                                           "view_shape_err_sim3")}
     for i in range(N):
         m = valid[i] & (pred["depth_z"][i] > 1e-6)
         out["conf_mean"][i] = float(pred["conf"][i].mean())
@@ -131,6 +205,8 @@ def per_view(pred, clip, s):
         out["view_depth_absrel_metric"][i] = float(np.mean(np.abs(dp - dg) / dg))
         out["view_depth_absrel_scale"][i] = float(np.mean(np.abs(s * dp - dg) / dg))
         out["pred_depth_scale"][i] = float(np.median(dp / dg))
+        if m.sum() >= 10:
+            out["view_shape_err_sim3"][i] = sim3_shape_err(pts_p[i][m], pts_g[i][m], clip["poses"][i][:3, 3])
     out["pred_poses_rel"] = np.stack([T0_inv @ T for T in pred["pose"]])
     out["pred_focal"] = 0.5 * (pred["intrinsics"][:, 0, 0] + pred["intrinsics"][:, 1, 1])
     return out

@@ -23,6 +23,15 @@ Types (spec["type"], default "perturb"):
                up to ~17 deg, random sign) and a compounding translation scale
                (1 + scale_growth)^i on step i. Odometry-style drift.
   "shared_rot" -> the same R' = R @ Exp(theta * u) (same u) on every non-reference view.
+  E2 (one channel at a time; rotations unchanged unless stated):
+  "radial"  -> distance only: c' = c + (frac * L) * c/|c| on the chosen views (direction from
+               view 0 kept, distance from view 0 grows by frac * L).
+  "orbit"   -> direction only: c turned about view 0 so that |c'| = |c| and |c' - c| = frac * L;
+               only views with |c| >= frac * L / 2 are eligible.
+  "drift_jitter" -> the per-view rotation and translation error SIZES of the "drift" run with the
+               same rot_deg / scale_growth whose condition name is spec["match"] (same seed, so the
+               same drift), applied with independent random axes / directions.
+  spec["eligible"] = [..] restricts which views "subset"/"all" may pick (partial poses, E2-C7).
 
 The reference view (index 0) is excluded by default, because poses are fed
 relative to view 0 and the model may normalise by the first view; corrupting
@@ -60,6 +69,10 @@ def select_views(n_views, spec, rng):
     if "views" in spec:
         return sorted(int(i) for i in spec["views"])
     eligible = list(range(1 if spec.get("exclude_ref", True) else 0, n_views))
+    if "eligible" in spec:
+        eligible = [i for i in eligible if i in set(int(j) for j in spec["eligible"])]
+    if not eligible:
+        raise ValueError("no eligible view for this corruption")
     mode = spec["mode"]
     if mode == "all":
         return eligible
@@ -94,7 +107,8 @@ def corrupt_poses(clean_poses, spec, base_seed, clip_id, cond_name):
     clean = np.asarray(clean_poses, dtype=np.float64)
     for i, T in enumerate(clean):
         validate_pose(T, f"{clip_id} clean view {i}")
-    seed = _seed_for(base_seed, clip_id, cond_name)
+    # seed_as: draw the same random corruption as another condition (paired variants, e.g. E2-C4 median)
+    seed = _seed_for(base_seed, clip_id, spec.get("seed_as", cond_name))
     rng = np.random.default_rng(seed)
     L = trajectory_scale(clean)
     kind = spec.get("type", "perturb")
@@ -129,6 +143,34 @@ def corrupt_poses(clean_poses, spec, base_seed, clip_id, cond_name):
         for i in views:
             out[i][:3, :3] = clean[i][:3, :3] @ dR
         params = {"rot_axis_cam": u.tolist()}
+    elif kind in ("radial", "orbit"):
+        c0 = clean[0][:3, 3]
+        dist = np.linalg.norm(clean[:, :3, 3] - c0, axis=1)
+        d = trans_frac * L
+        ok = [i for i in range(1, len(clean)) if dist[i] > 1e-9 and (kind == "radial" or dist[i] >= d / 2)]
+        views = select_views(len(clean), dict(spec, eligible=[i for i in ok if i in spec.get("eligible", ok)]), rng)
+        for i in views:
+            r = clean[i][:3, 3] - c0
+            if kind == "radial":
+                new = r * (1 + d / dist[i])
+            else:  # turn r about a random axis perpendicular to it by phi, chord = d
+                a = random_unit_vector(rng)
+                a = a - (a @ r) / (r @ r) * r
+                a /= np.linalg.norm(a)
+                phi = 2 * np.arcsin(min(1.0, d / (2 * dist[i])))
+                new = so3_exp(phi * a) @ r
+                per_view[int(i)] = {"axis_world": a.tolist(), "phi_deg": float(np.degrees(phi))}
+            out[i][:3, 3] = c0 + new
+    elif kind == "drift_jitter":
+        drift_spec = {"type": "drift", "rot_deg": rot_deg, "scale_growth": float(spec.get("scale_growth", 0.0))}
+        ref, _ = corrupt_poses(clean, drift_spec, base_seed, clip_id, spec["match"])
+        views = list(range(1, len(clean)))
+        for i in views:
+            th = np.degrees(np.arccos(np.clip((np.trace(clean[i][:3, :3].T @ ref[i][:3, :3]) - 1) / 2, -1, 1)))
+            t = float(np.linalg.norm(ref[i][:3, 3] - clean[i][:3, 3]))
+            out[i], info = perturb_pose(clean[i], th, t, rng)
+            per_view[int(i)] = {**info, "rot_deg": float(th), "trans_m": t}
+        params = {"match": spec["match"]}
     else:
         raise ValueError(f"unknown pose corruption type {kind!r}")
 

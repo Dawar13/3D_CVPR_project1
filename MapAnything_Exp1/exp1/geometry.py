@@ -23,6 +23,22 @@ def so3_exp(omega):
     return np.eye(3) + np.sin(theta) * K + (1 - np.cos(theta)) * (K @ K)
 
 
+def so3_log(R):
+    """Inverse of so3_exp: 3x3 rotation -> axis-angle vector (rad), angle in [0, pi]."""
+    theta = np.arccos(np.clip((np.trace(R) - 1.0) / 2.0, -1.0, 1.0))
+    w = np.array([R[2, 1] - R[1, 2], R[0, 2] - R[2, 0], R[1, 0] - R[0, 1]])
+    if theta < 1e-8:
+        return 0.5 * w
+    if np.pi - theta < 1e-3:  # sin(theta) ~ 0: read the axis from sym(R) - cos I = (1 - cos) n n^T
+        A = (0.5 * (R + R.T) - np.cos(theta) * np.eye(3)) / (1.0 - np.cos(theta))
+        k = int(np.argmax(np.diag(A)))
+        n = A[:, k] / np.sqrt(A[k, k])
+        if n @ w < 0:
+            n = -n
+        return theta * n / np.linalg.norm(n)
+    return theta / (2.0 * np.sin(theta)) * w
+
+
 def rotation_angle_deg(R):
     """Geodesic angle of a rotation matrix, in degrees, numerically clamped."""
     c = (np.trace(R) - 1.0) / 2.0
@@ -31,6 +47,15 @@ def rotation_angle_deg(R):
 
 def rotation_error_deg(R_a, R_b):
     return rotation_angle_deg(R_a.T @ R_b)
+
+
+def rotation_error_deg_precise(R_a, R_b):
+    """Same angle as rotation_error_deg, via atan2(|vee(R - R^T)| / 2, (tr R - 1) / 2), which stays
+    accurate near 0 deg (arccos of float32-rounded matrices has a ~0.03 deg floor). Used by the
+    E2 metrics; the E1 metrics keep rotation_error_deg."""
+    R = R_a.T @ R_b
+    s = 0.5 * np.linalg.norm([R[2, 1] - R[1, 2], R[0, 2] - R[2, 0], R[1, 0] - R[0, 1]])
+    return float(np.degrees(np.arctan2(s, (np.trace(R) - 1.0) / 2.0)))
 
 
 def random_unit_vector(rng):

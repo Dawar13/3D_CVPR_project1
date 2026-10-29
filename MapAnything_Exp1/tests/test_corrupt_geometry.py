@@ -8,7 +8,7 @@ import pytest
 
 from exp1.corrupt_geometry import corrupt_poses, select_views
 from exp1.geometry import (invert_pose, quat_wxyz_to_R, relative_to_first,
-                           rotation_angle_deg, rotation_error_deg, so3_exp,
+                           rotation_angle_deg, rotation_error_deg, so3_exp, so3_log,
                            trajectory_scale, validate_pose)
 from exp1.controls import rgbcheck_mask
 
@@ -31,6 +31,19 @@ def test_so3_exp_angle_exact():
         R = so3_exp(np.radians(deg) * u)
         validate_pose(np.block([[R, np.zeros((3, 1))], [np.zeros((1, 3)), 1]]))
         assert rotation_angle_deg(R) == pytest.approx(deg, abs=1e-6)
+
+
+def test_so3_log_inverts_exp():
+    rng = np.random.default_rng(2)
+    for deg in [0.0, 1e-7, 0.5, 15, 90, 170, 179.99, 180]:
+        u = rng.normal(size=3); u /= np.linalg.norm(u)
+        w = np.radians(deg) * u
+        v = so3_log(so3_exp(w))
+        assert np.allclose(so3_exp(v), so3_exp(w), atol=1e-6)
+        if deg < 179:
+            assert np.allclose(v, w, atol=1e-9)
+        else:  # at 180 deg the axis sign is ambiguous
+            assert np.linalg.norm(v) == pytest.approx(np.radians(deg), abs=1e-6)
 
 
 def test_quat_identity_and_inverse():
