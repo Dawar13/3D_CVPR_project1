@@ -1,0 +1,152 @@
+{
+ "_comment": "E2-D step 1 (experiments/E2.md section 4.1): OmniVGGT E0-style checks on the dev c0 clips, plus three invariances predicted from its code (scale and depth normalised by a mean, principal point unused). Debug only; no eval clips.",
+ "checkpoint": "Livioni/OmniVGGT",
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "depth_views": [
+  3,
+  7
+ ],
+ "filter_rot_tau_deg": 10.0,
+ "filter_dir_tau_deg": 15.0,
+ "conditions": [
+  {
+   "name": "rgb_only",
+   "family": "reference",
+   "inputs": []
+  },
+  {
+   "name": "clean_pose",
+   "family": "reference",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ]
+  },
+  {
+   "name": "rgb_depth2",
+   "family": "reference",
+   "inputs": [
+    "depth"
+   ]
+  },
+  {
+   "name": "clean_pose_depth2",
+   "family": "reference",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ]
+  },
+  {
+   "name": "repeat_clean",
+   "family": "check",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "seeds": 1,
+   "expect_equal": "clean_pose",
+   "corruption": {
+    "mode": "all",
+    "rot_deg": 0.0,
+    "trans_frac": 0.0
+   }
+  },
+  {
+   "name": "inv_scale_x1.5",
+   "family": "check",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "seeds": 1,
+   "expect_equal": "clean_pose",
+   "corruption": {
+    "type": "scale",
+    "factor": 1.5
+   }
+  },
+  {
+   "name": "inv_principal_0.05",
+   "family": "check",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "seeds": 1,
+   "expect_equal": "clean_pose",
+   "corruption": {
+    "target": "K",
+    "type": "principal",
+    "views": "all",
+    "shift": 0.05
+   }
+  },
+  {
+   "name": "inv_depth2_x1.5",
+   "family": "check",
+   "inputs": [
+    "depth"
+   ],
+   "seeds": 1,
+   "corruption": {
+    "target": "depth",
+    "type": "scale",
+    "factor": 1.5
+   }
+  },
+  {
+   "name": "depth_one_x1.5",
+   "family": "check",
+   "inputs": [
+    "depth"
+   ],
+   "seeds": 1,
+   "corruption": {
+    "target": "depth",
+    "type": "scale",
+    "factor": 1.5,
+    "views": [
+     3
+    ]
+   }
+  },
+  {
+   "name": "focal_all_x1.1",
+   "family": "check",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "seeds": 1,
+   "corruption": {
+    "target": "K",
+    "type": "focal",
+    "views": "all",
+    "factor": 1.1
+   }
+  },
+  {
+   "family": "outlier_rot",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "sweep": "rot_deg",
+   "values": [
+    15
+   ],
+   "seeds": 3,
+   "corruption": {
+    "mode": "subset",
+    "n": 1,
+    "trans_frac": 0.0
+   }
+  }
+ ]
+}

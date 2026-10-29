@@ -272,12 +272,17 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--mapanything_repo", default="third_party/map-anything")
+    ap.add_argument("--backend", default="mapanything", choices=["mapanything", "omnivggt"],
+                    help="omnivggt: exp1/model_io_omnivggt.py (E2-D); checkpoint and repo from the config")
     ap.add_argument("--only", nargs="*", help="run only these condition names (smoke tests)")
     ap.add_argument("--save_extras", action="store_true", help="write <out>/extras/<run_key>.npz")
     ap.add_argument("--mem_fraction", type=float, default=0.25,
                     help="cap this process's share of GPU memory (shared GPU; E2 plan 0.3)")
     a = ap.parse_args()
     t_start = time.strftime("%Y-%m-%d %H:%M:%S")
+    global model_io
+    if a.backend == "omnivggt":
+        from . import model_io_omnivggt as model_io
 
     cfg = json.load(open(a.config))
     conds = expand_conditions(cfg)
@@ -297,7 +302,9 @@ def main():
         os.makedirs(extras_dir, exist_ok=True)
     peak, n_new = 0.0, 0
     info = {"config": cfg, "clips": clips, "checkpoint": cfg["checkpoint"],
+            "backend": a.backend,
             "mapanything_commit": git_commit(a.mapanything_repo),
+            "model_repo_commit": git_commit(model_io.REPO) if a.backend == "omnivggt" else None,
             "torch": torch.__version__, "cuda": torch.version.cuda,
             "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
             "infer_kwargs": model_io.INFER_KW}

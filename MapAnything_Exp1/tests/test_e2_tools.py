@@ -159,3 +159,31 @@ def test_precise_rotation_error_agrees_and_resolves_tiny_angles():
             assert rotation_error_deg_precise(A, B) == pytest.approx(rotation_error_deg(A, B), abs=1e-6)
     A32 = so3_exp([0.3, 0.2, 0.1]).astype(np.float32).astype(np.float64)  # float32-rounded identity pair
     assert rotation_error_deg_precise(A32, A32 @ np.eye(3)) < 1e-4 < 0.01
+
+
+def test_omnivggt_build_views_mapping_and_refusals():
+    pytest.importorskip("torch")
+    from exp1 import model_io_omnivggt as mo
+    rng = np.random.default_rng(0)
+    N, H, W = 4, 28, 42
+    images = rng.integers(0, 256, (N, H, W, 3), dtype=np.uint8)
+    poses = random_poses(N, 1)
+    K = np.stack([np.array([[30.0, 0, 21], [0, 30.0, 14], [0, 0, 1]])] * N)
+    depth = rng.uniform(1, 5, (N, H, W)).astype(np.float32)
+    depth[:, :2] = 0
+    v = mo.build_views(images, K, poses, ["intrinsics", "pose", "depth"], np.array([1, 0, 1, 1], bool),
+                       True, depth, (1, 3))
+    assert v["camera_gt_index"] == [0, 2, 3] and v["depth_gt_index"] == [1, 3]
+    assert v["images"].shape == (N, 3, H, W) and float(v["images"].max()) <= 1.0
+    for i in (0, 2, 3):  # world-to-camera of the cam2world hint
+        E = np.vstack([v["extrinsics"][0, i].numpy(), [0, 0, 0, 1]])
+        assert np.allclose(E @ poses[i], np.eye(4), atol=1e-5)
+    assert not v["extrinsics"][0, 1].any() and not v["intrinsics"][0, 1].any()
+    assert np.array_equal(v["mask"][0, 3].numpy() > 0, depth[3] > 0) and not v["mask"][0, 0].any()
+    for bad in (["pose"], ["intrinsics"]):  # OmniVGGT has no pose-only or intrinsics-only hint
+        with pytest.raises(ValueError):
+            mo.build_views(images, K, poses, bad)
+    with pytest.raises(ValueError):  # view 0 must carry a camera when any view does
+        mo.build_views(images, K, poses, ["intrinsics", "pose"], np.array([0, 1, 1, 1], bool))
+    with pytest.raises(ValueError):  # sizes must be multiples of 14
+        mo.build_views(images[:, :27], K, poses, [])
