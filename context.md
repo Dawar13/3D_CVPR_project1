@@ -272,3 +272,7 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
     - Its checks (`configs/e2d_checks.json`) are queued to start after the E2-C run. They run from a separate copy (`~/e2d`), so the frozen E2-C code is never touched.
     - By its code, OmniVGGT removes the scale of pose and depth hints and ignores the principal point, so some E1 families cannot affect it; the checks test this.
   - **E2-E download postponed by the user's choice:** keep the raw ETH3D data; the VM disk has 7 GB free. Still open: the ScanNet++ access form needs the user's and the PI's signatures.
+- 2026-10-30: **E2-C eval run lost with the VM; restarts from zero (Amendment 10 in `experiments/E2.md`).**
+  - The user terminated the gpucloud VM during the run (at least 1,227 of 3,232 inferences done, 0 failures). The partial results were not copied back, and no eval metric had been read.
+  - Safe on the laptop: all code, all clips (`data/clips*`, image hashes checked against the earlier runs) and every earlier result. Gone with the VM: the raw ETH3D data (only needed to rebuild clips), the conda envs and the weight caches.
+  - Next VM: RTX PRO 6000 (Blackwell, needs CUDA ≥ 12.8 wheels). Order: setup → parity gate vs E1 → the E2-C eval run from `e2-prereg-C` → the E2-D OmniVGGT checks. `scripts/setup_omnivggt.sh` added.
