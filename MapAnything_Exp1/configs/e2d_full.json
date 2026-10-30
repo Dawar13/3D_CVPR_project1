@@ -1,0 +1,32 @@
+{
+ "_comment": "E2-D grid (experiments/E2.md section 4.2), OmniVGGT. C1 and C6 copied verbatim from configs/e2c_full.json and the 9 families that stayed harmful after the E2-B audit copied from configs/e1_full.json (controls and E1 'realistic' labels dropped), so condition names and therefore every random corruption equal MapAnything's. Changes for OmniVGGT: no rgb_K / clean_pose_noK references (it cannot take intrinsics alone or a pose without intrinsics); c1_focal's floor is rgb_only. Run with --backend omnivggt --save_extras.",
+ "checkpoint": "Livioni/OmniVGGT",
+ "seeds": [0, 1],
+ "depth_views": [3, 7],
+ "filter_rot_tau_deg": 10.0,
+ "filter_dir_tau_deg": 15.0,
+ "conditions": [
+  {"name": "rgb_only", "family": "reference", "inputs": []},
+  {"name": "clean_pose", "family": "reference", "inputs": ["intrinsics", "pose"]},
+  {"name": "rgb_depth2", "family": "reference", "inputs": ["depth"]},
+  {"name": "clean_pose_depth2", "family": "reference", "inputs": ["intrinsics", "pose", "depth"]},
+  {"family": "c1_rot", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [1, 2, 5, 10, 15, 30], "seeds": 3, "corruption": {"mode": "subset", "n": 1, "trans_frac": 0.0}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "c1_trans", "inputs": ["intrinsics", "pose"], "sweep": "trans_frac", "values": [0.05, 0.1, 0.25, 0.5, 1, 3, 10], "seeds": 3, "corruption": {"mode": "subset", "n": 1, "rot_deg": 0.0}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "c1_scale", "inputs": ["intrinsics", "pose"], "sweep": "factor", "values": [0.5, 0.63, 0.794, 1.0, 1.26, 1.587, 2.0], "seeds": 1, "corruption": {"type": "scale"}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "c1_depth", "inputs": ["intrinsics", "pose", "depth"], "sweep": "factor", "values": [0.5, 0.63, 0.794, 1.0, 1.26, 1.587, 2.0], "seeds": 1, "corruption": {"target": "depth", "type": "scale"}, "floor": "clean_pose", "ceiling": "clean_pose_depth2"},
+  {"family": "c1_focal", "inputs": ["intrinsics", "pose"], "sweep": "factor", "values": [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3], "seeds": 1, "corruption": {"target": "K", "type": "focal", "views": "all"}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "c6_indep_rot", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [2, 5], "seeds": 3, "corruption": {"mode": "all", "trans_frac": 0.0}, "controls": ["filter_rgbcheck"], "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "c6_shared_rot", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [2, 5], "seeds": 3, "corruption": {"type": "shared_rot"}, "controls": ["filter_rgbcheck"], "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "c6_drift", "inputs": ["intrinsics", "pose"], "levels": [{"rot_deg": 0.1, "scale_growth": 0.005}, {"rot_deg": 0.5, "scale_growth": 0.01}, {"rot_deg": 1.0, "scale_growth": 0.02}], "seeds": 3, "corruption": {"type": "drift"}, "controls": ["filter_rgbcheck"], "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "c6_drift_jitter", "inputs": ["intrinsics", "pose"], "levels": [{"rot_deg": 0.1, "scale_growth": 0.005, "match": "c6_drift_level=1"}, {"rot_deg": 0.5, "scale_growth": 0.01, "match": "c6_drift_level=2"}, {"rot_deg": 1.0, "scale_growth": 0.02, "match": "c6_drift_level=3"}], "seeds": 3, "corruption": {"type": "drift_jitter"}, "controls": ["filter_rgbcheck"], "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "noise_rot", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [0.5, 1, 2, 5], "seeds": 3, "corruption": {"mode": "all", "trans_frac": 0.0}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "outlier_rot", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [5, 15, 30, 90], "seeds": 3, "corruption": {"mode": "subset", "n": 1, "trans_frac": 0.0}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "outlier_frac", "inputs": ["intrinsics", "pose"], "sweep": "frac", "values": [0.1, 0.2, 0.4], "seeds": 3, "corruption": {"mode": "subset", "rot_deg": 15, "trans_frac": 0.25}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "scale_all", "inputs": ["intrinsics", "pose"], "sweep": "factor", "values": [0.5, 0.67, 0.8, 1.25, 1.5, 2], "seeds": 1, "corruption": {"type": "scale"}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "drift", "inputs": ["intrinsics", "pose"], "levels": [{"rot_deg": 0.5, "scale_growth": 0.01}, {"rot_deg": 1.0, "scale_growth": 0.02}, {"rot_deg": 2.0, "scale_growth": 0.04}], "seeds": 3, "corruption": {"type": "drift"}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "shared_heading_bias", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [2, 5, 10], "seeds": 3, "corruption": {"type": "shared_rot"}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "anchor_error", "inputs": ["intrinsics", "pose"], "levels": [{"rot_deg": 15.0, "trans_frac": 0.0}, {"rot_deg": 0.0, "trans_frac": 0.25}], "seeds": 3, "corruption": {"views": [0]}, "floor": "rgb_only", "ceiling": "clean_pose"},
+  {"family": "depth_scale", "inputs": ["intrinsics", "pose", "depth"], "sweep": "factor", "values": [0.67, 1.5], "seeds": 1, "corruption": {"target": "depth", "type": "scale"}, "floor": "clean_pose", "ceiling": "clean_pose_depth2"},
+  {"family": "depth_one_scale", "inputs": ["intrinsics", "pose", "depth"], "sweep": "factor", "values": [1.5], "seeds": 1, "corruption": {"target": "depth", "type": "scale", "views": [3]}, "floor": "clean_pose", "ceiling": "clean_pose_depth2"}
+ ]
+}

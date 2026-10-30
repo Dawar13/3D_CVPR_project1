@@ -280,9 +280,11 @@ def main():
                     help="cap this process's share of GPU memory (shared GPU; E2 plan 0.3)")
     a = ap.parse_args()
     t_start = time.strftime("%Y-%m-%d %H:%M:%S")
-    global model_io
+    global model_io  # rebound on every call, so one process can run both backends in turn (tests)
     if a.backend == "omnivggt":
         from . import model_io_omnivggt as model_io
+    else:
+        from . import model_io
 
     cfg = json.load(open(a.config))
     conds = expand_conditions(cfg)
