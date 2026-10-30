@@ -14,7 +14,7 @@ F=~/3D-CVPR_Exp/MapAnything_Exp1   # frozen tag e2-prereg-C
 H=~/e2d/MapAnything_Exp1           # HEAD
 log() { echo "$(date -u '+%F %T') $*" | tee -a ~/logs/session1.txt; }
 if [ -z "${SHARDS:-}" ]; then  # one process per 16 GB free and per 4 CPUs, at most 4
-  free=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | head -1)
+  free=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | sed -n 1p)
   SHARDS=$(( free / 16384 )); c=$(( $(nproc) / 4 ))
   [ "$c" -lt "$SHARDS" ] && SHARDS=$c
   [ "$SHARDS" -gt 4 ] && SHARDS=4
@@ -27,7 +27,7 @@ log "start, $SHARDS processes per job"
 
 log "1 parity gate"
 shard "$F" --config configs/e2b_audit.json --clips 'data/clips/eval__*.npz' --out results/parity_rtx
-one=$(cd "$F" && ls data/clips/eval__*.npz | head -1)
+one=$(cd "$F" && ls data/clips/eval__*.npz | sed -n 1p)
 (cd "$F" && python -m exp1.run_exp1 --config configs/e2b_audit.json --clips "$one" --out results/parity_single)
 set +e
 python - <<'PY' 2>&1 | tee -a ~/logs/session1.txt

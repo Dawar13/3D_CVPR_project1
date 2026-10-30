@@ -13,7 +13,7 @@ log() { echo "$(date -u '+%F %T') $*" | tee -a ~/logs/setup.txt; }
 
 cu_build() {  # Blackwell (sm_120) needs CUDA >= 12.8 wheels: cu130 needs driver >= 580 (as in E1), cu128 >= 570
   local drv
-  drv=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader | head -1 | cut -d. -f1)
+  drv=$(nvidia-smi --query-gpu=driver_version --format=csv,noheader | sed -n 1p | cut -d. -f1)
   if [ "$drv" -ge 580 ]; then echo cu130; elif [ "$drv" -ge 570 ]; then echo cu128; else
     echo "driver $drv is too old for this GPU" >&2; exit 1; fi
 }
