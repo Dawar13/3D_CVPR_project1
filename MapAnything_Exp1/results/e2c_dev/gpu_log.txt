@@ -1,0 +1,1 @@
+start=2026-10-29 15:04:44 end=2026-10-29 16:00:48 config=configs/e2c_full.json clips=data/clips/dev__*__c0.npz runs_recorded=576 peak_mem_gb=8.22 mem_fraction=0.25

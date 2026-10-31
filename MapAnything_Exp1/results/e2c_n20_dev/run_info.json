@@ -1,0 +1,71 @@
+{
+ "config": {
+  "_comment": "E2-C5 number of photos: the same one-bad-camera condition on 4- and 20-view clips (the 10-view case is in e2c_full.json). Frozen at tag e2-prereg-C.",
+  "checkpoint": "facebook/map-anything",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "depth_views": [
+   3,
+   7
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": []
+   },
+   {
+    "name": "clean_pose",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ]
+   },
+   {
+    "family": "c5_rot15_v3",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 15,
+      "trans_frac": 0.0
+     }
+    ],
+    "seeds": 3,
+    "corruption": {
+     "views": [
+      3
+     ]
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   }
+  ]
+ },
+ "clips": [
+  "data/clips_n20/dev__delivery_area__c0.npz",
+  "data/clips_n20/dev__facade__c0.npz",
+  "data/clips_n20/dev__terrace__c0.npz"
+ ],
+ "checkpoint": "facebook/map-anything",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "torch": "2.14.1+cu126",
+ "cuda": "12.6",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "memory_efficient_inference": false,
+  "use_amp": true,
+  "amp_dtype": "bf16",
+  "apply_mask": false,
+  "mask_edges": false,
+  "apply_confidence_mask": false
+ }
+}

@@ -1,0 +1,335 @@
+[
+ {
+  "clip_id": "dev__delivery_area__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 2779566698,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 2.43530476259818,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.019435138236317557,
+     0.7040610753368867,
+     0.7098734236448088
+    ],
+    "trans_dir_world": [
+     -0.4409458732308552,
+     -0.777915300210388,
+     0.4476768059429262
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__delivery_area__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 962525618,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 2.43530476259818,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.29880276301546443,
+     0.6794455928808496,
+     -0.6701272977047831
+    ],
+    "trans_dir_world": [
+     0.04392061419133087,
+     0.9740786675017555,
+     0.22190477499833286
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__delivery_area__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 2,
+  "rng_seed": 263443589,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 2.43530476259818,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.9671725036565639,
+     0.2079151598880426,
+     0.14611171910364779
+    ],
+    "trans_dir_world": [
+     -0.920263414257532,
+     0.339395309101346,
+     0.19474617464554184
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__facade__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 2923498031,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 5.207006483316778,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.5736441128731145,
+     0.07438859109199548,
+     -0.8157197860058105
+    ],
+    "trans_dir_world": [
+     -0.554816133211171,
+     -0.2584924552318735,
+     0.790797514485726
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__facade__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 1407966800,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 5.207006483316778,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.9838613761242846,
+     -0.1496135421760877,
+     0.09814571090145888
+    ],
+    "trans_dir_world": [
+     -0.15533338793776522,
+     -0.1650118571583069,
+     -0.9739828671947687
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__facade__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 2,
+  "rng_seed": 2709287320,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 5.207006483316778,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.41352486059450094,
+     0.6139561762847033,
+     0.6723503575310753
+    ],
+    "trans_dir_world": [
+     0.4937681335197787,
+     -0.8456275081568042,
+     -0.20274897723270555
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__terrace__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 2002122048,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 2.518385012548628,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.8190481498634,
+     0.4182750990442169,
+     0.3926908067740979
+    ],
+    "trans_dir_world": [
+     0.32958563405844216,
+     -0.7722903138905999,
+     0.5430846903504584
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__terrace__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 3368694423,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 2.518385012548628,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.17963792613714777,
+     -0.8598296309033968,
+     -0.4779364197397736
+    ],
+    "trans_dir_world": [
+     0.33816626706908975,
+     -0.9233193498363259,
+     -0.18200262095470382
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__terrace__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 2,
+  "rng_seed": 859411331,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 2.518385012548628,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.05,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.5725309093931389,
+     -0.6371648827998585,
+     0.5159740981058136
+    ],
+    "trans_dir_world": [
+     0.922200469537389,
+     0.043983682658494366,
+     0.38420271946567
+    ]
+   }
+  }
+ }
+]

@@ -1,0 +1,635 @@
+{
+ "config": {
+  "_comment": "E1 full grid (experiments/E1.md section 3). Frozen at tag e1-prereg after the dev practice run; never edited after any eval run. floor/ceiling = references for benefit_lost; realistic = low-to-middle settings (rule: drop the single most severe setting of a sweep; for two-sided factor sweeps drop the two outermost; for 2-setting sweeps keep the milder, or both if they are symmetric).",
+  "checkpoint": "facebook/map-anything",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "depth_views": [
+   3,
+   7
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": []
+   },
+   {
+    "name": "rgb_K",
+    "family": "reference",
+    "inputs": [
+     "intrinsics"
+    ]
+   },
+   {
+    "name": "clean_pose",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ]
+   },
+   {
+    "name": "clean_pose_noK",
+    "family": "reference",
+    "inputs": [
+     "pose"
+    ]
+   },
+   {
+    "name": "rgb_K_depth2",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ]
+   },
+   {
+    "name": "clean_pose_depth2",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ]
+   },
+   {
+    "name": "zero_noise",
+    "family": "sanity",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "all",
+     "rot_deg": 0.0,
+     "trans_frac": 0.0
+    },
+    "expect_equal": "clean_pose"
+   },
+   {
+    "name": "gauge_rigid",
+    "family": "sanity",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "seeds": 3,
+    "corruption": {
+     "type": "gauge",
+     "rot_deg": 30.0,
+     "trans_frac": 1.0
+    }
+   },
+   {
+    "name": "scale_all_nonmetric_x1.5",
+    "family": "sanity",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "metric": false,
+    "seeds": 1,
+    "corruption": {
+     "type": "scale",
+     "factor": 1.5
+    }
+   },
+   {
+    "name": "scale_all_x1.0",
+    "family": "sanity",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "scale",
+     "factor": 1.0
+    },
+    "expect_equal": "clean_pose"
+   },
+   {
+    "family": "noise_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     0.5,
+     1,
+     2,
+     5
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "all",
+     "trans_frac": 0.0
+    },
+    "realistic": [
+     0.5,
+     1,
+     2
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "noise_trans",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "trans_frac",
+    "values": [
+     0.005,
+     0.01,
+     0.02,
+     0.05
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "all",
+     "rot_deg": 0.0
+    },
+    "realistic": [
+     0.005,
+     0.01,
+     0.02
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "outlier_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     5,
+     15,
+     30,
+     90
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "trans_frac": 0.0
+    },
+    "realistic": [
+     5,
+     15,
+     30
+    ],
+    "controls": [
+     "drop_oracle",
+     "filter_rgbcheck"
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "outlier_trans_small",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "trans_frac",
+    "values": [
+     0.1,
+     0.25,
+     0.5
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "rot_deg": 0.0
+    },
+    "realistic": [
+     0.1,
+     0.25
+    ],
+    "controls": [
+     "drop_oracle",
+     "filter_rgbcheck"
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "outlier_trans_large",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "trans_frac",
+    "values": [
+     1,
+     3,
+     10
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "rot_deg": 0.0
+    },
+    "realistic": [
+     1,
+     3
+    ],
+    "controls": [
+     "drop_oracle",
+     "filter_rgbcheck"
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "outlier_frac",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "frac",
+    "values": [
+     0.1,
+     0.2,
+     0.4
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "subset",
+     "rot_deg": 15,
+     "trans_frac": 0.25
+    },
+    "realistic": [
+     0.1,
+     0.2
+    ],
+    "controls": [
+     "drop_oracle",
+     "filter_rgbcheck"
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "scale_all",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.5,
+     0.67,
+     0.8,
+     1.25,
+     1.5,
+     2
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "scale"
+    },
+    "realistic": [
+     0.67,
+     0.8,
+     1.25,
+     1.5
+    ],
+    "controls": [
+     "filter_rgbcheck"
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "drift",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 0.5,
+      "scale_growth": 0.01
+     },
+     {
+      "rot_deg": 1.0,
+      "scale_growth": 0.02
+     },
+     {
+      "rot_deg": 2.0,
+      "scale_growth": 0.04
+     }
+    ],
+    "seeds": 3,
+    "corruption": {
+     "type": "drift"
+    },
+    "realistic": [
+     1,
+     2
+    ],
+    "controls": [
+     "filter_rgbcheck"
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "shared_heading_bias",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     2,
+     5,
+     10
+    ],
+    "seeds": 3,
+    "corruption": {
+     "type": "shared_rot"
+    },
+    "realistic": [
+     2,
+     5
+    ],
+    "controls": [
+     "filter_rgbcheck"
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "anchor_error",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 15.0,
+      "trans_frac": 0.0
+     },
+     {
+      "rot_deg": 0.0,
+      "trans_frac": 0.25
+     }
+    ],
+    "seeds": 3,
+    "corruption": {
+     "views": [
+      0
+     ]
+    },
+    "realistic": [
+     1,
+     2
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "focal_all",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.8,
+     0.9,
+     1.1,
+     1.2
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "K",
+     "type": "focal",
+     "views": "all"
+    },
+    "realistic": [
+     0.9,
+     1.1
+    ],
+    "floor": "clean_pose_noK",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "focal_all_noposes",
+    "inputs": [
+     "intrinsics"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.8,
+     0.9,
+     1.1,
+     1.2
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "K",
+     "type": "focal",
+     "views": "all"
+    },
+    "realistic": [
+     0.9,
+     1.1
+    ],
+    "floor": "rgb_only",
+    "ceiling": "rgb_K"
+   },
+   {
+    "family": "focal_one",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.7,
+     1.3
+    ],
+    "seeds": 3,
+    "corruption": {
+     "target": "K",
+     "type": "focal",
+     "views": "one"
+    },
+    "realistic": [
+     0.7,
+     1.3
+    ],
+    "floor": "clean_pose_noK",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "principal_shift",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "shift",
+    "values": [
+     0.05,
+     0.1
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "K",
+     "type": "principal",
+     "views": "all"
+    },
+    "realistic": [
+     0.05
+    ],
+    "floor": "clean_pose_noK",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "depth_scale",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.67,
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale"
+    },
+    "realistic": [
+     0.67,
+     1.5
+    ],
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2"
+   },
+   {
+    "family": "depth_scale_noposes",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.67,
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale"
+    },
+    "realistic": [
+     0.67,
+     1.5
+    ],
+    "floor": "rgb_K",
+    "ceiling": "rgb_K_depth2"
+   },
+   {
+    "family": "depth_noise",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "sigma",
+    "values": [
+     0.05,
+     0.1
+    ],
+    "seeds": 3,
+    "corruption": {
+     "target": "depth",
+     "type": "noise"
+    },
+    "realistic": [
+     0.05
+    ],
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2"
+   },
+   {
+    "family": "depth_one_scale",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale",
+     "views": [
+      3
+     ]
+    },
+    "realistic": [
+     1.5
+    ],
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2"
+   },
+   {
+    "name": "metric_flag_off",
+    "family": "metric_flag_off",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "metric": false,
+    "seeds": 1,
+    "severity": 1,
+    "realistic": true,
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   }
+  ]
+ },
+ "clips": [
+  "data/clips/dev__delivery_area__c0.npz",
+  "data/clips/dev__facade__c0.npz",
+  "data/clips/dev__terrace__c0.npz"
+ ],
+ "checkpoint": "facebook/map-anything",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "torch": "2.14.1+cu130",
+ "cuda": "13.0",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "memory_efficient_inference": false,
+  "use_amp": true,
+  "amp_dtype": "bf16",
+  "apply_mask": false,
+  "mask_edges": false,
+  "apply_confidence_mask": false
+ }
+}

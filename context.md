@@ -83,7 +83,7 @@ Everything is free to download for research. Nothing requires payment or private
   - `scripts/e0_*`: E0 checks (layout, GT self-consistency, official example, smoke check, determinism) and `e0_phase_c.sh`, which runs them all. `tests/test_runner_dryrun.py` runs the whole runner on CPU with a fake model, as a plumbing check.
 - `experiments/`: per-experiment plans (`E0.md`) and VM runbooks (`E0_runbook.md`).
 - `papers/` holds PDFs and short notes of the papers in §3. Add more here.
-- `results/` and `data/` are git-ignored. Keep them out of the repo.
+- `MapAnything_Exp1/results/` is tracked in git (user decision 2026-10-31): every run folder, including the `.npz` extras. `data/` (clips, rebuilt from ETH3D) and `third_party/` (pinned by commit) stay git-ignored. Copy VM results back into `results/` and commit them.
 
 ## 6. Rules (non-negotiable)
 

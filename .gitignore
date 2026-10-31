@@ -1,7 +1,9 @@
+# results/ IS tracked (user decision 2026-10-31); clips and third-party code are not:
+# data/ is rebuilt from ETH3D (scripts/e0_download_eth3d.sh, exp1/datasets.py), third_party/ is pinned by commit.
 data/
-results/
 third_party/
 __pycache__/
 .pytest_cache/
 *.npz
+!**/results/**/*.npz
 *.pyc

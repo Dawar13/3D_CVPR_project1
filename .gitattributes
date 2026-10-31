@@ -4,3 +4,6 @@
 *.jpg binary
 *.ply binary
 *.html text eol=lf
+*.npz binary
+# run outputs are stored byte for byte (the csv module writes CRLF)
+MapAnything_Exp1/results/** -text

@@ -1,0 +1,1 @@
+start=2026-10-29 13:47:45 end=2026-10-29 14:01:52 config=configs/e2b_audit.json clips=data/clips/dev__*.npz runs_recorded=126 peak_mem_gb=8.21 mem_fraction=0.25

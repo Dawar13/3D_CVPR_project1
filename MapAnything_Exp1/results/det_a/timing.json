@@ -1,0 +1,14 @@
+{
+ "clip": "data/clips/dev__delivery_area__c0.npz",
+ "condition": "clean_pose",
+ "n_views": 10,
+ "runtime_s": [
+  0.5566580295562744,
+  0.2578394412994385,
+  0.2575514316558838
+ ],
+ "runtime_s_after_warmup_median": 0.25769543647766113,
+ "peak_mem_gb": 8.262547492980957,
+ "L_m": 1.7239760727544204,
+ "within_process_max_abs_pts3d": 0.0
+}

@@ -1,0 +1,166 @@
+{
+ "config": {
+  "_comment": "E2-B post-hoc audit of E1 (experiments/E2.md section 2). The reference runs and the single-view / fraction pose families copied verbatim from configs/e1_full.json (frozen at e1-prereg), controls removed. Same condition names and seeds, so every corruption is identical to E1. Run with --save_extras. Not part of the E1 decision.",
+  "checkpoint": "facebook/map-anything",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "depth_views": [
+   3,
+   7
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": []
+   },
+   {
+    "name": "rgb_K",
+    "family": "reference",
+    "inputs": [
+     "intrinsics"
+    ]
+   },
+   {
+    "name": "clean_pose",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ]
+   },
+   {
+    "family": "outlier_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     5,
+     15,
+     30,
+     90
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "trans_frac": 0.0
+    },
+    "realistic": [
+     5,
+     15,
+     30
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "outlier_trans_small",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "trans_frac",
+    "values": [
+     0.1,
+     0.25,
+     0.5
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "rot_deg": 0.0
+    },
+    "realistic": [
+     0.1,
+     0.25
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "outlier_trans_large",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "trans_frac",
+    "values": [
+     1,
+     3,
+     10
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "rot_deg": 0.0
+    },
+    "realistic": [
+     1,
+     3
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   },
+   {
+    "family": "outlier_frac",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "frac",
+    "values": [
+     0.1,
+     0.2,
+     0.4
+    ],
+    "seeds": 3,
+    "corruption": {
+     "mode": "subset",
+     "rot_deg": 15,
+     "trans_frac": 0.25
+    },
+    "realistic": [
+     0.1,
+     0.2
+    ],
+    "floor": "rgb_only",
+    "ceiling": "clean_pose"
+   }
+  ]
+ },
+ "clips": [
+  "data/clips/eval__courtyard__c0.npz",
+  "data/clips/eval__electro__c0.npz",
+  "data/clips/eval__kicker__c0.npz",
+  "data/clips/eval__meadow__c0.npz",
+  "data/clips/eval__office__c0.npz",
+  "data/clips/eval__pipes__c0.npz",
+  "data/clips/eval__playground__c0.npz",
+  "data/clips/eval__relief_2__c0.npz",
+  "data/clips/eval__relief__c0.npz",
+  "data/clips/eval__terrains__c0.npz"
+ ],
+ "checkpoint": "facebook/map-anything",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "torch": "2.14.1+cu126",
+ "cuda": "12.6",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "memory_efficient_inference": false,
+  "use_amp": true,
+  "amp_dtype": "bf16",
+  "apply_mask": false,
+  "mask_edges": false,
+  "apply_confidence_mask": false
+ }
+}

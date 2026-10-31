@@ -1,0 +1,173 @@
+{
+ "config": {
+  "_comment": "Preregistered pilot grid. Edit BEFORE looking at eval-split results, never after.",
+  "checkpoint": "facebook/map-anything",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": []
+   },
+   {
+    "name": "rgb_K",
+    "family": "reference",
+    "inputs": [
+     "intrinsics"
+    ]
+   },
+   {
+    "name": "clean_pose",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ]
+   },
+   {
+    "name": "clean_pose_noK",
+    "family": "reference",
+    "inputs": [
+     "pose"
+    ]
+   },
+   {
+    "name": "zero_noise",
+    "family": "sanity",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "corruption": {
+     "mode": "all",
+     "rot_deg": 0.0,
+     "trans_frac": 0.0
+    }
+   },
+   {
+    "family": "noise_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     0.5,
+     1,
+     2,
+     5
+    ],
+    "corruption": {
+     "mode": "all",
+     "trans_frac": 0.0
+    }
+   },
+   {
+    "family": "noise_trans",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "trans_frac",
+    "values": [
+     0.005,
+     0.01,
+     0.02,
+     0.05
+    ],
+    "corruption": {
+     "mode": "all",
+     "rot_deg": 0.0
+    }
+   },
+   {
+    "family": "outlier_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     5,
+     15,
+     30
+    ],
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "trans_frac": 0.0
+    },
+    "controls": [
+     "drop_oracle",
+     "filter_rgbcheck"
+    ]
+   },
+   {
+    "family": "outlier_trans",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "trans_frac",
+    "values": [
+     0.1,
+     0.25,
+     0.5
+    ],
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "rot_deg": 0.0
+    },
+    "controls": [
+     "drop_oracle",
+     "filter_rgbcheck"
+    ]
+   },
+   {
+    "family": "outlier_frac",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "frac",
+    "values": [
+     0.1,
+     0.2,
+     0.4
+    ],
+    "corruption": {
+     "mode": "subset",
+     "rot_deg": 15,
+     "trans_frac": 0.25
+    },
+    "controls": [
+     "drop_oracle",
+     "filter_rgbcheck"
+    ]
+   }
+  ]
+ },
+ "clips": [
+  "data/clips/dev__delivery_area__c0.npz"
+ ],
+ "checkpoint": "facebook/map-anything",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "torch": "2.14.1+cu130",
+ "cuda": "13.0",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "memory_efficient_inference": false,
+  "use_amp": true,
+  "amp_dtype": "bf16",
+  "apply_mask": false,
+  "mask_edges": false,
+  "apply_confidence_mask": false
+ }
+}

@@ -1,0 +1,1 @@
+start=2026-10-29 16:09:24 end=2026-10-29 16:11:35 config=configs/e2c_views.json clips=data/clips_n4/dev__*.npz runs_recorded=15 peak_mem_gb=6.04 mem_fraction=0.25

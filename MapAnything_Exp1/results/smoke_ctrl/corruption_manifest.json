@@ -1,0 +1,101 @@
+[
+ {
+  "clip_id": "dev__delivery_area__c0",
+  "condition": "outlier_rot_rot_deg=15",
+  "base_seed": 0,
+  "rng_seed": 2655948308,
+  "spec": {
+   "mode": "subset",
+   "n": 1,
+   "trans_frac": 0.0,
+   "rot_deg": 15
+  },
+  "scene_length_L_m": 1.7239760727544204,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   7
+  ],
+  "actual_fraction": 0.1,
+  "per_view": {
+   "7": {
+    "rot_axis_cam": [
+     -0.5767797235224074,
+     -0.10891242634301732,
+     -0.8096068391024697
+    ],
+    "trans_dir_world": [
+     0.028956061644085894,
+     0.7066331701511551,
+     -0.7069873473664098
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__delivery_area__c0",
+  "condition": "outlier_rot_rot_deg=15",
+  "base_seed": 1,
+  "rng_seed": 3467072223,
+  "spec": {
+   "mode": "subset",
+   "n": 1,
+   "trans_frac": 0.0,
+   "rot_deg": 15
+  },
+  "scene_length_L_m": 1.7239760727544204,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   6
+  ],
+  "actual_fraction": 0.1,
+  "per_view": {
+   "6": {
+    "rot_axis_cam": [
+     0.7600416341694206,
+     -0.425694086001628,
+     -0.49104099571452803
+    ],
+    "trans_dir_world": [
+     -0.8702682625150093,
+     0.19551111257085943,
+     0.45211564463133935
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "dev__delivery_area__c0",
+  "condition": "outlier_rot_rot_deg=15",
+  "base_seed": 2,
+  "rng_seed": 701635835,
+  "spec": {
+   "mode": "subset",
+   "n": 1,
+   "trans_frac": 0.0,
+   "rot_deg": 15
+  },
+  "scene_length_L_m": 1.7239760727544204,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.1,
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.30307083808873897,
+     0.9104200740884157,
+     -0.28157300260684304
+    ],
+    "trans_dir_world": [
+     -0.3030331102486144,
+     0.30293489363242565,
+     -0.9035493258881676
+    ]
+   }
+  }
+ }
+]
