@@ -4,8 +4,8 @@
 #   bash ~/vm_setup_e2.sh        unpack, install miniconda, create both envs, then start three tmux sessions:
 #     setup_ma  MapAnything env for the frozen e2-prereg-C tree   -> ~/logs/ready_mapanything
 #     setup_ov  OmniVGGT env for the HEAD tree (E2-D)             -> ~/logs/ready_omnivggt
-#     gpu       waits for ready_mapanything, then scripts/session1_queue.sh (the GPU never waits for OmniVGGT)
-# Trees: ~/3D-CVPR_Exp = tag e2-prereg-C (+ E2C_FROZEN_COMMIT); ~/e2d = HEAD. Both share ~/3D-CVPR_Exp/.../data.
+#     gpu       waits for ready_mapanything, then scripts/session_queue.sh (the GPU never waits for OmniVGGT)
+# Trees: ~/3D-CVPR_Exp = tag e2-prereg-C (+ E2C_FROZEN_COMMIT); ~/e2d = tag e2-prereg-DEF (+ E2DEF_FROZEN_COMMIT). Both share ~/3D-CVPR_Exp/.../data.
 set -euo pipefail
 F=~/3D-CVPR_Exp/MapAnything_Exp1
 H=~/e2d/MapAnything_Exp1
@@ -59,7 +59,7 @@ gpu() {
     [ -f ~/logs/FAILED_mapanything ] && { echo "MapAnything setup failed, see ~/logs/setup_ma.txt"; exit 1; }
     sleep 10
   done
-  bash "$H/scripts/session1_queue.sh"
+  bash "$H/scripts/session_queue.sh"
 }
 
 case "${1:-main}" in

@@ -16,13 +16,18 @@ from exp1.run_exp1 import expand_conditions, seeds_for  # noqa: E402
 F = os.path.expanduser("~/3D-CVPR_Exp/MapAnything_Exp1")
 H = os.path.expanduser("~/e2d/MapAnything_Exp1")
 JOBS = [("parity vs E1", F, "configs/e2b_audit.json", "data/clips/eval__*.npz", "results/parity_rtx"),
-        ("E2-C main grid", F, "configs/e2c_full.json", "data/clips_e2/eval__*.npz", "results/e2c_eval"),
+        ("E2-C eval", F, "configs/e2c_full.json", "data/clips_e2/eval__*.npz", "results/e2c_eval"),
         ("E2-C 4-view", F, "configs/e2c_views.json", "data/clips_n4/eval__*.npz", "results/e2c_n4_eval"),
         ("E2-C 20-view", F, "configs/e2c_views.json", "data/clips_n20/eval__*.npz", "results/e2c_n20_eval"),
-        ("E2-D checks", H, "configs/e2d_checks.json", "data/clips/dev__*.npz", "results/e2d_checks"),
-        ("E2-D dev (OmniVGGT)", H, "configs/e2d_full.json", "data/clips_e2/dev__*__c0.npz", "results/e2d_dev"),
-        ("E2-D dev (MapAnything)", H, "configs/e2d_mapanything.json", "data/clips_e2/dev__*__c0.npz",
-         "results/e2d_ma_dev")]
+        ("E2-DF dev (MA)", H, "configs/e2df_mapanything.json", "data/clips_e2/dev__*__c0.npz", "results/e2df_dev"),
+        ("E2-E dev (MA)", H, "configs/e2e_mapanything.json", "data/clips_e2e/dev__*.npz", "results/e2e_ma_dev"),
+        ("E2-DF eval (MA)", H, "configs/e2df_mapanything.json", "data/clips_e2/eval__*.npz", "results/e2df_eval"),
+        ("E2-E eval (MA)", H, "configs/e2e_mapanything.json", "data/clips_e2e/eval__*.npz", "results/e2e_ma_eval"),
+        ("E2-D checks (OV)", H, "configs/e2d_checks.json", "data/clips/dev__*.npz", "results/e2d_checks"),
+        ("E2-D dev (OV)", H, "configs/e2d_full.json", "data/clips_e2/dev__*__c0.npz", "results/e2d_dev"),
+        ("E2-E dev (OV)", H, "configs/e2e_omnivggt.json", "data/clips_e2e/dev__*.npz", "results/e2e_ov_dev"),
+        ("E2-D eval (OV)", H, "configs/e2d_full.json", "data/clips_e2/eval__*.npz", "results/e2d_eval"),
+        ("E2-E eval (OV)", H, "configs/e2e_omnivggt.json", "data/clips_e2e/eval__*.npz", "results/e2e_ov_eval")]
 
 
 def expected(tree, config, clips):
@@ -44,7 +49,7 @@ def done(tree, out):
 
 def bar(name, d, t, w=30):
     f = d * w // max(t, 1)
-    return f"{name:<24} {'#' * f}{'.' * (w - f)} {d:5d} / {t:<5d} {100 * d // max(t, 1):3d}%"
+    return f"{name:<20} {'#' * f}{'.' * (w - f)} {d:5d} / {t:<5d} {100 * d // max(t, 1):3d}%"
 
 
 if __name__ == "__main__":

@@ -30,6 +30,11 @@ Controls (pose corruption only):
                     with the RGB-only prediction; views whose relative rotation
                     differs by > filter_rot_tau_deg, or whose camera-centre
                     direction differs by > filter_dir_tau_deg, get no pose input.
+  drop_lowconf    : DEPLOYABLE (E2-F R3) — views whose mean confidence in the run itself is below
+                    lowconf_tau x the median over views get no pose input; then rerun.
+
+Device hints (E2-E): corruption {"target": "device", "use": [...]} replaces the ground-truth poses / K / depth
+with the clip's dev_poses / dev_K / dev_depth (or mono_depth); it counts as a pose corruption for the controls.
 """
 
 import argparse
@@ -116,6 +121,21 @@ def apply_corruption(clip, cond, seed, depth_views, base_mask=None):
             K, entry = corrupt_intrinsics(K, spec, seed, cid, name, clip["images"].shape[2])
         elif target == "depth":
             depth, entry = corrupt_depth(depth, depth_views, spec, seed, cid, name)
+        elif target == "device":  # E2-E: real device hints stored in the clip replace the ground truth
+            use = list(spec["use"])
+            src = {"pose": "dev_poses", "K": "dev_K", "depth": "dev_depth", "mono_depth": "mono_depth"}
+            if "pose" in use:
+                poses = clip[src["pose"]]
+            if "K" in use:
+                K = clip[src["K"]]
+            for d in ("depth", "mono_depth"):
+                if d in use:
+                    depth = clip[src[d]]
+            N = len(clip["images"])
+            affected = list(range(1, N)) if "pose" in use else (
+                sorted(depth_views) if {"depth", "mono_depth"} & set(use) else list(range(N)))
+            entry = {"clip_id": cid, "condition": name, "target": "pose" if "pose" in use else "device",
+                     "type": "device", "use": use, "affected_views": affected}
         else:
             raise ValueError(f"unknown corruption target {target!r}")
     return poses, K, depth, entry
@@ -433,6 +453,10 @@ def main():
                                 raise RuntimeError("filter_rgbcheck needs rgb_only run first")
                             mask = rgbcheck_mask(poses, cache["rgb_only"]["pose"],
                                                  cfg["filter_rot_tau_deg"], cfg["filter_dir_tau_deg"])
+                        elif ctrl == "drop_lowconf":  # R3 (E2-F): the model's own confidence, then rerun
+                            c = pred["conf"].reshape(N, -1).mean(1)
+                            mask = c / np.median(c) >= cfg["lowconf_tau"]
+                            mask[0] = True
                         else:
                             raise ValueError(ctrl)
                         record(cond, seed, ctrl, run_views(mask), entry,

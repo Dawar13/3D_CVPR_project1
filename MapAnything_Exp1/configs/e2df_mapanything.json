@@ -1,0 +1,27 @@
+{
+ "_comment": "E2-D MapAnything companion AND E2-F remedies (experiments/E2.md sections 4 and 6). The 9 families still harmful after E2-B, copied from configs/e1_full.json (same names, so the same corruptions OmniVGGT gets in configs/e2d_full.json). Remedies: R0 = rgb_only, R1 = rgb_K for pose families and the *_noposes families for depth, R2 = filter_rgbcheck, R3 = drop_lowconf (tau chosen on E2-C dev data: 5% of good views dropped), drop_oracle = ORACLE reference (not for anchor_error: view 0 cannot be dropped). Run with --save_extras.",
+ "checkpoint": "facebook/map-anything",
+ "seeds": [0, 1],
+ "depth_views": [3, 7],
+ "filter_rot_tau_deg": 10.0,
+ "filter_dir_tau_deg": 15.0,
+ "lowconf_tau": 0.4572,
+ "conditions": [
+  {"name": "rgb_only", "family": "reference", "inputs": []},
+  {"name": "rgb_K", "family": "reference", "inputs": ["intrinsics"]},
+  {"name": "clean_pose", "family": "reference", "inputs": ["intrinsics", "pose"]},
+  {"name": "rgb_K_depth2", "family": "reference", "inputs": ["intrinsics", "depth"]},
+  {"name": "clean_pose_depth2", "family": "reference", "inputs": ["intrinsics", "pose", "depth"]},
+  {"family": "noise_rot", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [0.5, 1, 2, 5], "seeds": 3, "corruption": {"mode": "all", "trans_frac": 0.0}, "floor": "rgb_only", "ceiling": "clean_pose", "controls": ["filter_rgbcheck", "drop_lowconf", "drop_oracle"]},
+  {"family": "outlier_rot", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [5, 15, 30, 90], "seeds": 3, "corruption": {"mode": "subset", "n": 1, "trans_frac": 0.0}, "floor": "rgb_only", "ceiling": "clean_pose", "controls": ["filter_rgbcheck", "drop_lowconf", "drop_oracle"]},
+  {"family": "outlier_frac", "inputs": ["intrinsics", "pose"], "sweep": "frac", "values": [0.1, 0.2, 0.4], "seeds": 3, "corruption": {"mode": "subset", "rot_deg": 15, "trans_frac": 0.25}, "floor": "rgb_only", "ceiling": "clean_pose", "controls": ["filter_rgbcheck", "drop_lowconf", "drop_oracle"]},
+  {"family": "scale_all", "inputs": ["intrinsics", "pose"], "sweep": "factor", "values": [0.5, 0.67, 0.8, 1.25, 1.5, 2], "seeds": 1, "corruption": {"type": "scale"}, "floor": "rgb_only", "ceiling": "clean_pose", "controls": ["filter_rgbcheck", "drop_lowconf", "drop_oracle"]},
+  {"family": "drift", "inputs": ["intrinsics", "pose"], "levels": [{"rot_deg": 0.5, "scale_growth": 0.01}, {"rot_deg": 1.0, "scale_growth": 0.02}, {"rot_deg": 2.0, "scale_growth": 0.04}], "seeds": 3, "corruption": {"type": "drift"}, "floor": "rgb_only", "ceiling": "clean_pose", "controls": ["filter_rgbcheck", "drop_lowconf", "drop_oracle"]},
+  {"family": "shared_heading_bias", "inputs": ["intrinsics", "pose"], "sweep": "rot_deg", "values": [2, 5, 10], "seeds": 3, "corruption": {"type": "shared_rot"}, "floor": "rgb_only", "ceiling": "clean_pose", "controls": ["filter_rgbcheck", "drop_lowconf", "drop_oracle"]},
+  {"family": "anchor_error", "inputs": ["intrinsics", "pose"], "levels": [{"rot_deg": 15.0, "trans_frac": 0.0}, {"rot_deg": 0.0, "trans_frac": 0.25}], "seeds": 3, "corruption": {"views": [0]}, "floor": "rgb_only", "ceiling": "clean_pose", "controls": ["filter_rgbcheck", "drop_lowconf"]},
+  {"family": "depth_scale", "inputs": ["intrinsics", "pose", "depth"], "sweep": "factor", "values": [0.67, 1.5], "seeds": 1, "corruption": {"target": "depth", "type": "scale"}, "floor": "clean_pose", "ceiling": "clean_pose_depth2"},
+  {"family": "depth_one_scale", "inputs": ["intrinsics", "pose", "depth"], "sweep": "factor", "values": [1.5], "seeds": 1, "corruption": {"target": "depth", "type": "scale", "views": [3]}, "floor": "clean_pose", "ceiling": "clean_pose_depth2"},
+  {"family": "depth_scale_noposes", "inputs": ["intrinsics", "depth"], "sweep": "factor", "values": [0.67, 1.5], "seeds": 1, "corruption": {"target": "depth", "type": "scale"}, "floor": "rgb_K", "ceiling": "rgb_K_depth2"},
+  {"family": "depth_one_scale_noposes", "inputs": ["intrinsics", "depth"], "sweep": "factor", "values": [1.5], "seeds": 1, "corruption": {"target": "depth", "type": "scale", "views": [3]}, "floor": "rgb_K", "ceiling": "rgb_K_depth2"}
+ ]
+}
