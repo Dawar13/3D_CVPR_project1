@@ -1,0 +1,28 @@
+===== s2/ma_0.json
+2610.25345 | MCSplat: Multi-View Photometric and Geometric Consistent Feed-Forward Gaussian Splatting for Driving Scenes || unreliable local geometric supervision arises from normal-based constraints near depth
+2610.11857 | Pose-Free Feed-Forward 3D Inpainting via Learnable Mask Attention and Support Token Refinement || corrupt cross-view correspondence reasoning, degrading pose
+2610.07883 | Revar3r: gauge-aware perturbation uncertainty for feed-forward 3d reconstruction || poses a weakness of trainingfree perturbation
+2610.05531 | Deep Prior Learning for Embodied Perception || noisy poses, preserving accurate prior ## pose corruptions ## noise formulation targets camera poses; supplied intrinsics and depth ## corrupted pose
+2609.24525 | Bridge3D: Enabling Vision-Language-Action Models to See and Act in 3D || Conditioning, which integrates action denoising
+2609.21498 | VoxelTTO: Voxel-Aligned Feed-Forward 3D Gaussian Splatting with Test-Time Optimization || inaccuracies in predicted camera pose
+2608.23549 | FixAnything: 3D-Consistent Rendering Refinement via Video Generative Priors || noisily-rendered sequences preserve camera
+2608.17553 | Scalix: Uncertainty-Aware Scale-Consistent Monocular SLAM || depths maps are often noisy
+2608.12203 | GeoFlow: Efficient Driving Video Generation via Geometry-Aligned Priors || noise injection to construct a Geometry-Aligned Prior
+2607.15912 | HETA++: Global Structure-from-Motion with Hybrid Explicit Translation Averaging || inaccurate camera rotations can severely limit the accuracy of camera
+2607.07168 | NoDrift3R: Raymap-Guided Coupling for Drift-Robust Unposed Feed-Forward 3D Reconstruction || poses introduce sensor noise
+2606.15162 | GeoStream: Toward Precise Camera Controlled Streaming Video Generation || camera motion implicitly, leading to inaccurate ## prior work that uses off-policy condition noising
+2606.00307 | ScaRF-SLAM: Scale-Consistent Reconstruction with Feed-Forward Models and Classical Visual SLAM || inaccuracies in the predictions can adversely affect pose ## posed design avoids propagating inaccuracies
+2605.30060 | Towards Consistent Video Geometry Estimation || conditions on sparse and noisy
+2604.14795 | Keep It CALM: Toward Calibration-Free Kilometer-Level SLAM with Visual Geometry Foundation Models via an Assistant Eye || inaccurate intrinsic
+2603.25053 | GaussFusion: Improving 3D Reconstruction in the Wild with A Geometry-Informed Video Generator || camera pose errors, incomplete coverage, and noisy
+2603.12655 | VGGT-World: Transforming VGGT into an Autoregressive Geometry World Model || conditions the model on its own partially denoised
+2603.05078 | MoRe: Motion-aware Feed-forward 4D Reconstruction Transformer || corrupt camera pose
+2603.05330 | Dark3R: Learning Structure from Motion in the Dark || noise model applied to well-expose
+2603.00560 | Geometry OR Tracker: Universal Geometric Operating Room Tracking || calibration and RGB-D registration are always unreliable
+2602.10101 | Robo3R: Enhancing Robotic Manipulation with Accurate Feed-Forward 3D Reconstruction || Depth sensors suffer from noise
+2601.22551 | Hybrid Cross-Device Localization via Neural Metric Learning and Feature Fusion || unreliable map frames based on translation consistency, while depth-condition
+2601.22376 | FlexMap: Robust HD Map Construction under Flexible Camera Configurations || pose estimates are inaccurate
+2601.13664 | VIAFormer: Voxel-Image Alignment Transformer for High-Fidelity Voxel Refinement || noisy voxels using calibrat
+2512.23042 | 3D sans 3D Scans: Scalable Pre-training from Video-Generated Point Clouds || pose a noise
+===== s2/ov_0.json
+2610.05531 | Deep Prior Learning for Embodied Perception || noisy poses, preserving accurate prior ## pose corruptions ## noise formulation targets camera poses; supplied intrinsics and depth ## corrupted pose

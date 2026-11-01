@@ -1,6 +1,6 @@
 # E2-E data plan: real device hints (SceneFun3D on ARKitScenes Validation)
 
-Research notes from 2026-10-30. Sources were opened by a research agent; the small files it fetched (READMEs, scripts, split CSVs, sample `.traj` files, the size survey) are kept outside the repo. Items marked *unverified* must be checked before the E2-E preregistration. Nothing here is a result.
+Research notes from 2026-10-30. Sources were opened by a research agent. Our own outputs (size survey, picks, URL list, analysis scripts) are in `experiments/e2e_research/`; third-party files (READMEs, download scripts, split CSVs) are not kept and can be fetched again from the sources below. Items marked *unverified* must be checked before the E2-E preregistration. Nothing here is a result.
 
 ## Decision
 Use the **SceneFun3D test split**, not raw ARKitScenes.

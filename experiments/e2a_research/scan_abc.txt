@@ -1,0 +1,65 @@
+2610.36150 | Any3R: Feedforward 3D Reconstruction from Any Camera Type
+2610.30340 | Foundation4D: Towards a unified perception and reconstruction model for autonomous vehicles
+2610.28631 | AEON: Unifying Video and 3D World Models
+2610.22311 | Velox: Spatial Memory Makes World Models Efficient
+2610.22371 | Gen4P: Video Generators are 4D Perceivers
+2610.17630 | From Pixels to Executable Physics: Behavior-Grounded World Models for Embodied Action Consequence Prediction
+None | PanoGS: Foundation-Depth-Guided High-Resolution Gaussian Splatting from Sparse Panoramic Images for Interactive Web3D Exploration
+2610.11857 | Pose-Free Feed-Forward 3D Inpainting via Learnable Mask Attention and Support Token Refinement
+2610.11612 | PointVGGT: Zero-Shot Multiview RGB-D Point Cloud Registration with Visual Geometry Foundation Priors
+2610.07883 | Revar3r: gauge-aware perturbation uncertainty for feed-forward 3d reconstruction
+2610.08780 | DepthWorld: 3D World Model for Robot Manipulation
+2610.07381 | GeoWM: Efficient Direct World Modeling in Explicit Geometry
+2610.05531 | Deep Prior Learning for Embodied Perception
+2609.27702 | DAVIO: Dense Monocular-Inertial SLAM with Feed-Forward Initialization and Pose-Conditioned Mapping
+2609.23286 | RegVGGT: Sustainable Visual Geometry Grounding for Streaming via Regulated Memory
+2609.22941 | D3GS: Depth, DINO, and RGB Diffusion Co-Guided 3D Gaussian Splatting for Sparse-View Reconstruction
+2609.21498 | VoxelTTO: Voxel-Aligned Feed-Forward 3D Gaussian Splatting with Test-Time Optimization
+2609.03824 | VI3: Grounding Pretrained 3D Foundation Models with Inertial Cues
+2608.28288 | GeoFF3D: Coordinate-Anchored Feed-Forward Reconstruction for Large-Scale UAV Mapping
+2608.23549 | FixAnything: 3D-Consistent Rendering Refinement via Video Generative Priors
+2608.23290 | Spotter: Efficient Urban Visual Localization via Geo-Referenced Facade Landmarks in GPS-Degraded Environments
+2608.17389 | GeoWeaver: Accurate Long-Sequence 3D Reconstruction via Hierarchical Geometric Assembly
+2607.17171 | VIDAR: Visual-Inertial Dense Alignment and Reconstruction via a Geometric Foundation Model
+2607.14639 | Image-to-Point Cloud Registration Made Easy with Rectified Flow-based LiDAR Upsampling
+2607.12429 | More Than Where You Are: Learning Semantics, Structure, and Geometry from Cross-View Localization
+2607.09225 | Glob3R: Global Structure-from-Motion with 3D Foundation Models
+2606.31488 | DrivingDepth: Sparse-Prompted Pixel-wise Scale Correction for Driving Depth Estimation
+2606.31919 | MVP-Nav: Multi-layer Value Map Planner Navigator
+2606.24829 | GeoT2V-Bench: Benchmarking 3D Consistency in Text-to-Video Models via 3D Reconstruction
+2606.16960 | SurroundNEXO: Ego-Centric Metric Bridging for Spatially Consistent Geometry in Autonomous Driving
+2606.17046 | Geometric Action Model for Robot Policy Learning
+2606.07366 | Dash2Sim: Closed-Loop Driving Simulation from in-the-wild Dashcam Videos
+2605.30060 | Towards Consistent Video Geometry Estimation
+2605.30115 | Large Depth Completion Model from Sparse Observations
+2605.26103 | Global Structure-from-Motion Meets Feedforward Reconstruction
+2605.22536 | SpaceDG: Benchmarking Spatial Intelligence under Visual Degradation
+2605.17327 | Efficient Feature-Free Initialization for Monocular Visual-Inertial Systems Using a Feed-Forward 3D Model
+2605.12774 | WildPose: A Unified Framework for Robust Pose Estimation in the Wild
+2605.10525 | GemDepth: Geometry-Embedded Features for 3D-Consistent Video Depth
+2604.19702 | Face Anything: 4D Face Reconstruction from Any Image Sequence
+2604.14795 | Keep It CALM: Toward Calibration-Free Kilometer-Level SLAM with Visual Geometry Foundation Models via an Assistant Eye
+2604.09429 | Rays as Pixels: Learning A Joint Distribution of Videos and Camera Trajectories
+2604.04667 | ZeD-MAP: Bundle Adjustment Guided Zero-Shot Depth Maps for Real-Time Aerial Imaging
+2604.03878 | Learning 3D Reconstruction with Priors in Test Time
+2603.29192 | Efficient Camera Pose Augmentation for View Generalization in Robotic Policy Learning
+2603.25053 | GaussFusion: Improving 3D Reconstruction in the Wild with A Geometry-Informed Video Generator
+None | In-Orbit MapAnything: An Enhanced Feed-Forward Metric Framework for 3D Reconstruction of Non-Cooperative Space Targets Under Complex Lighting
+2603.16211 | Leveling3D: Leveling Up 3D Reconstruction with Feed-Forward 3D Gaussian Splatting and Geometry-Aware Generation
+2603.10893 | S2D: Sparse to Dense Lifting for 3D Reconstruction with Minimal Inputs
+2603.05330 | Dark3R: Learning Structure from Motion in the Dark
+2603.03765 | LiDAR Prompted Spatio-Temporal Multi-View Stereo for Autonomous Driving
+2603.00697 | TokenSplat: Token-aligned 3D Gaussian Splatting for Feed-forward Pose-free Reconstruction
+2602.23224 | UniScale: Unified Scale-Aware 3D Reconstruction for Multi-View Understanding via Prior Injection for Robotic Perception
+2601.11514 | ShapeR: Robust Conditional 3D Shape Generation from Casual Captures
+2601.08831 | 3AM: 3egment Anything with Adaptive Geometric Consistency in Videos
+2601.04090 | Gen3R: 3D Scene Generation Meets Feed-Forward Reconstruction
+2512.19402 | Real2Edit2Real: Generating Robotic Demonstrations via a 3D Control Interface
+2512.10935 | Any4D: Unified Feed-Forward Metric 4D Reconstruction
+2512.04315 | SyncTrack4D: Cross-Video Motion Alignment and Video Synchronization with Multi-Video 4D Gaussian Splatting
+2511.21688 | G2VLM: Geometry Grounded Vision Language Model with Unified 3D Reconstruction and Spatial Reasoning
+2511.15396 | ShelfOcc: Native 3D Supervision beyond LiDAR for Vision-Based Occupancy Estimation
+2510.15386 | PFGS: Pose-Fused 3D Gaussian Splatting for Complete Multi-Pose Object Reconstruction
+2509.15880 | eVGGT: An Efficient Geometry-Aware Vision Encoder for Visuomotor Policies
+2506.09278 | UFM: A Simple Path towards Unified Dense Correspondence with Flow
+SpatialBench/UAVFF3D present: ['Any3R: Feedforward 3D Reconstruction from Any Camera Type', 'Revar3r: gauge-aware perturbation uncertainty for feed-forward 3d reconstruction', 'VI3: Grounding Pretrained 3D Foundation Models with Inertial Cues', 'UAVFF3D: A Geometry-Aware Benchmark for Feed-Forward UAV 3D Reconstruction']

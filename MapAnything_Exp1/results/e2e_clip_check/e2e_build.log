@@ -1,0 +1,105 @@
+[ok] data/clips_e2e\dev__sf422803__c0.npz  frames 277431.618..277437.199  GT depth valid 92%  LiDAR valid 93%  turn 0 (measured 0.9, residual 0.87 deg)
+[ok] data/clips_e2e\dev__sf434650__c0.npz  frames 167471.420..167482.999  GT depth valid 92%  LiDAR valid 89%  turn 180 (measured 179.8, residual 0.96 deg)
+[ok] data/clips_e2e\eval__sf468712__c0.npz  frames 26107.551..26114.232  GT depth valid 95%  LiDAR valid 85%  turn 180 (measured 179.6, residual 0.86 deg)
+[ok] data/clips_e2e\eval__sf422015__c0.npz  frames 347864.676..347872.773  GT depth valid 80%  LiDAR valid 88%  turn 0 (measured 1.0, residual 1.00 deg)
+[ok] data/clips_e2e\dev__sf422391__c0.npz  frames 197484.887..197489.869  GT depth valid 97%  LiDAR valid 92%  turn 0 (measured 1.0, residual 1.02 deg)
+[ok] data/clips_e2e\eval__sf472297__c0.npz  frames 96557.012..96561.627  GT depth valid 98%  LiDAR valid 74%  turn 0 (measured 1.0, residual 1.00 deg)
+[ok] data/clips_e2e\dev__sf422803__c1.npz  frames 277456.908..277460.006  GT depth valid 95%  LiDAR valid 95%  turn 0 (measured 0.9, residual 0.87 deg)
+[ok] data/clips_e2e\dev__sf434650__c1.npz  frames 167516.401..167524.798  GT depth valid 81%  LiDAR valid 98%  turn 180 (measured 179.8, residual 0.96 deg)
+[ok] data/clips_e2e\eval__sf468712__c1.npz  frames 26131.725..26138.639  GT depth valid 98%  LiDAR valid 95%  turn 180 (measured 179.6, residual 0.86 deg)
+[ok] data/clips_e2e\dev__sf422391__c1.npz  frames 197544.280..197550.877  GT depth valid 98%  LiDAR valid 96%  turn 0 (measured 1.0, residual 1.02 deg)
+[ok] data/clips_e2e\eval__sf422015__c1.npz  frames 347907.775..347919.270  GT depth valid 86%  LiDAR valid 84%  turn 0 (measured 1.0, residual 1.00 deg)
+[ok] data/clips_e2e\eval__sf472297__c1.npz  frames 96663.319..96668.617  GT depth valid 99%  LiDAR valid 94%  turn 0 (measured 1.0, residual 1.00 deg)
+[ok] data/clips_e2e\dev__sf434650__c2.npz  frames 167554.885..167563.299  GT depth valid 94%  LiDAR valid 85%  turn 180 (measured 179.8, residual 0.96 deg)
+     42898811: 59 MB fetched
+done: 3 clips
+[ok] data/clips_e2e\dev__sf422803__c2.npz  frames 277477.899..277483.697  GT depth valid 91%  LiDAR valid 96%  turn 0 (measured 0.9, residual 0.87 deg)
+     42897559: 57 MB fetched
+done: 3 clips
+[ok] data/clips_e2e\eval__sf468712__c2.npz  frames 26169.627..26176.524  GT depth valid 93%  LiDAR valid 90%  turn 180 (measured 179.6, residual 0.86 deg)
+     45662970: 58 MB fetched
+[ok] data/clips_e2e\dev__sf422391__c2.npz  frames 197595.375..197602.472  GT depth valid 99%  LiDAR valid 91%  turn 0 (measured 1.0, residual 1.02 deg)
+     42446519: 65 MB fetched
+done: 3 clips
+done: 3 clips
+[ok] data/clips_e2e\eval__sf422015__c2.npz  frames 347957.971..347961.669  GT depth valid 83%  LiDAR valid 99%  turn 0 (measured 1.0, residual 1.00 deg)
+     42446038: 61 MB fetched
+done: 3 clips
+[ok] data/clips_e2e\eval__sf472297__c2.npz  frames 96767.127..96769.226  GT depth valid 57%  LiDAR valid 97%  turn 0 (measured 1.0, residual 1.00 deg)
+     47895350: 64 MB fetched
+done: 3 clips
+[ok] data/clips_e2e\eval__sf470541__c0.npz  frames 17254.657..17258.156  GT depth valid 97%  LiDAR valid 90%  turn 0 (measured 1.3, residual 1.35 deg)
+[ok] data/clips_e2e\eval__sf434641__c0.npz  frames 168098.203..168106.083  GT depth valid 93%  LiDAR valid 94%  turn 180 (measured 179.7, residual 0.70 deg)
+[ok] data/clips_e2e\eval__sf466193__c0.npz  frames 626.297..635.777  GT depth valid 89%  LiDAR valid 78%  turn 180 (measured 179.7, residual 0.49 deg)
+[ok] data/clips_e2e\eval__sf469319__c0.npz  frames 183397.851..183403.132  GT depth valid 93%  LiDAR valid 82%  turn 0 (measured 1.2, residual 1.18 deg)
+[ok] data/clips_e2e\eval__sf422381__c0.npz  frames 201550.462..201555.243  GT depth valid 95%  LiDAR valid 79%  turn 0 (measured 1.3, residual 1.26 deg)
+[ok] data/clips_e2e\eval__sf422829__c0.npz  frames 273954.897..273962.194  GT depth valid 97%  LiDAR valid 95%  turn 0 (measured 1.1, residual 1.13 deg)
+[ok] data/clips_e2e\eval__sf470541__c1.npz  frames 17263.753..17267.252  GT depth valid 98%  LiDAR valid 88%  turn 0 (measured 1.3, residual 1.35 deg)
+[ok] data/clips_e2e\eval__sf434641__c1.npz  frames 168118.478..168123.776  GT depth valid 98%  LiDAR valid 96%  turn 180 (measured 179.7, residual 0.70 deg)
+[ok] data/clips_e2e\eval__sf469319__c1.npz  frames 183415.727..183419.726  GT depth valid 96%  LiDAR valid 87%  turn 0 (measured 1.2, residual 1.18 deg)
+[ok] data/clips_e2e\eval__sf466193__c1.npz  frames 678.792..683.990  GT depth valid 97%  LiDAR valid 89%  turn 180 (measured 179.7, residual 0.49 deg)
+[ok] data/clips_e2e\eval__sf470541__c2.npz  frames 17273.449..17278.148  GT depth valid 92%  LiDAR valid 87%  turn 0 (measured 1.3, residual 1.35 deg)
+     47429998: 53 MB fetched
+done: 3 clips
+[ok] data/clips_e2e\eval__sf422829__c1.npz  frames 273982.402..273986.900  GT depth valid 96%  LiDAR valid 96%  turn 0 (measured 1.1, residual 1.13 deg)
+[ok] data/clips_e2e\eval__sf422381__c1.npz  frames 201628.147..201635.743  GT depth valid 99%  LiDAR valid 87%  turn 0 (measured 1.3, residual 1.26 deg)
+[ok] data/clips_e2e\eval__sf434641__c2.npz  frames 168136.887..168144.284  GT depth valid 98%  LiDAR valid 88%  turn 180 (measured 179.7, residual 0.70 deg)
+     42898826: 55 MB fetched
+done: 3 clips
+[ok] data/clips_e2e\eval__sf469319__c2.npz  frames 183431.921..183434.620  GT depth valid 96%  LiDAR valid 87%  turn 0 (measured 1.2, residual 1.18 deg)
+     47331339: 53 MB fetched
+[ok] data/clips_e2e\eval__sf466193__c2.npz  frames 726.189..729.988  GT depth valid 96%  LiDAR valid 94%  turn 180 (measured 179.7, residual 0.49 deg)
+     45260856: 67 MB fetched
+done: 3 clips
+[ok] data/clips_e2e\eval__sf422829__c2.npz  frames 274008.392..274013.689  GT depth valid 95%  LiDAR valid 76%  turn 0 (measured 1.1, residual 1.13 deg)
+     42897521: 59 MB fetched
+[ok] data/clips_e2e\eval__sf468079__c0.npz  frames 77516.524..77522.205  GT depth valid 84%  LiDAR valid 86%  turn 180 (measured 179.7, residual 0.80 deg)
+[ok] data/clips_e2e\eval__sf422381__c2.npz  frames 201705.348..201709.546  GT depth valid 98%  LiDAR valid 84%  turn 0 (measured 1.3, residual 1.26 deg)
+     42446541: 72 MB fetched
+[ok] data/clips_e2e\eval__sf483618__c0.npz  frames 3469.827..3473.226  GT depth valid 78%  LiDAR valid 92%  turn 0 (measured 0.9, residual 0.91 deg)
+[ok] data/clips_e2e\eval__sf468079__c1.npz  frames 77554.408..77564.604  GT depth valid 97%  LiDAR valid 95%  turn 180 (measured 179.7, residual 0.80 deg)
+[ok] data/clips_e2e\eval__sf483618__c1.npz  frames 3484.921..3489.719  GT depth valid 97%  LiDAR valid 92%  turn 0 (measured 0.9, residual 0.91 deg)
+[ok] data/clips_e2e\eval__sf468079__c2.npz  frames 77602.505..77607.203  GT depth valid 96%  LiDAR valid 90%  turn 180 (measured 179.7, residual 0.80 deg)
+     45261581: 56 MB fetched
+[ok] data/clips_e2e\eval__sf483618__c2.npz  frames 3500.715..3503.813  GT depth valid 85%  LiDAR valid 91%  turn 0 (measured 0.9, residual 0.91 deg)
+     48018737: 51 MB fetched
+concurrent.futures.process._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "C:\Python312\Lib\concurrent\futures\process.py", line 263, in _process_worker
+    r = call_item.fn(*call_item.args, **call_item.kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\concurrent\futures\process.py", line 212, in _process_chunk
+    return [fn(*args) for args in chunk]
+            ^^^^^^^^^
+  File "C:\Users\djtde\Downloads\3D-CVPR_Exp\MapAnything_Exp1\exp1\arkit_clips.py", line 291, in _build
+    return build_video(*args, log=lambda m: print(m, flush=True))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\djtde\Downloads\3D-CVPR_Exp\MapAnything_Exp1\exp1\arkit_clips.py", line 233, in build_video
+    raise ValueError(f"{video}: device frame does not match GT frame after a {v.turn} deg turn "
+ValueError: 47895364: device frame does not match GT frame after a 0 deg turn (median residual 89.6 deg)
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\djtde\Downloads\3D-CVPR_Exp\MapAnything_Exp1\exp1\arkit_clips.py", line 295, in <module>
+    main()
+  File "C:\Users\djtde\Downloads\3D-CVPR_Exp\MapAnything_Exp1\exp1\arkit_clips.py", line 286, in main
+    for paths in ex.map(_build, [(*s, a.out) for s in todo]):
+  File "C:\Python312\Lib\concurrent\futures\process.py", line 642, in _chain_from_iterable_of_lists
+    for element in iterable:
+  File "C:\Python312\Lib\concurrent\futures\_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\concurrent\futures\_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\concurrent\futures\_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Python312\Lib\concurrent\futures\_base.py", line 401, in __get_result
+    raise self._exception
+ValueError: 47895364: device frame does not match GT frame after a 0 deg turn (median residual 89.6 deg)

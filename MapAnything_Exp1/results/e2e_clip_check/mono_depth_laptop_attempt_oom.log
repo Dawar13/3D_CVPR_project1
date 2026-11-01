@@ -1,0 +1,3 @@
+To support symlinks on Windows, you either need to activate Developer Mode or to run Python as an administrator. In order to activate developer mode, see this article: https://docs.microsoft.com/en-us/windows/apps/get-started/enable-your-device-for-development
+memory allocation of 4096000 bytes failed
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

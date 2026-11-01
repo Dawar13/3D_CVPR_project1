@@ -1,0 +1,20 @@
+[ok] data/clips_e2e\eval__sf467305__c0.npz  frames 83913.716..83922.212  GT depth valid 92%  LiDAR valid 90%  turn 0 (measured 0.9, residual 0.93 deg)
+[ok] data/clips_e2e\eval__sf422014__c0.npz  frames 79716.331..79724.528  GT depth valid 91%  LiDAR valid 91%  turn 180 (measured 179.0, residual 2.13 deg)
+[ok] data/clips_e2e\eval__sf467311__c0.npz  frames 82545.269..82554.465  GT depth valid 96%  LiDAR valid 76%  turn 0 (measured 0.8, residual 0.78 deg)
+[ok] data/clips_e2e\eval__sf467305__c1.npz  frames 83950.301..83956.398  GT depth valid 96%  LiDAR valid 92%  turn 0 (measured 0.9, residual 0.93 deg)
+[ok] data/clips_e2e\eval__sf422014__c1.npz  frames 79755.932..79762.230  GT depth valid 97%  LiDAR valid 89%  turn 180 (measured 179.0, residual 2.13 deg)
+[ok] data/clips_e2e\eval__sf467311__c1.npz  frames 82603.661..82608.459  GT depth valid 96%  LiDAR valid 90%  turn 0 (measured 0.8, residual 0.78 deg)
+[ok] data/clips_e2e\eval__sf467305__c2.npz  frames 83982.405..83987.303  GT depth valid 94%  LiDAR valid 81%  turn 0 (measured 0.9, residual 0.93 deg)
+     47333931: 61 MB fetched
+[ok] data/clips_e2e\eval__sf422014__c2.npz  frames 79793.134..79797.532  GT depth valid 98%  LiDAR valid 91%  turn 180 (measured 179.0, residual 2.13 deg)
+     42446165: 64 MB fetched
+[ok] data/clips_e2e\eval__sf467311__c2.npz  frames 82663.054..82667.952  GT depth valid 94%  LiDAR valid 92%  turn 0 (measured 0.8, residual 0.78 deg)
+     47333920: 69 MB fetched
+done 47333920: 3 clips
+done 47333931: 3 clips
+done 42446165: 3 clips
+[ok] data/clips_e2e\eval__sf466183__c0.npz  frames 2467.435..2472.816  GT depth valid 94%  LiDAR valid 77%  turn 0 (measured 1.0, residual 0.98 deg)
+[ok] data/clips_e2e\eval__sf466183__c1.npz  frames 2505.420..2511.618  GT depth valid 86%  LiDAR valid 88%  turn 0 (measured 1.0, residual 0.98 deg)
+[ok] data/clips_e2e\eval__sf466183__c2.npz  frames 2545.321..2551.019  GT depth valid 79%  LiDAR valid 84%  turn 0 (measured 1.0, residual 0.98 deg)
+     45260920: 62 MB fetched
+done 45260920: 3 clips
