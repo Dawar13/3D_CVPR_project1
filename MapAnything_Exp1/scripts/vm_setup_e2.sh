@@ -105,7 +105,7 @@ case "${1:-main}" in
     conda env list | grep -q '^omnivggt ' || conda create -y -q -n omnivggt python=3.10
     conda env list | grep -q '^aidepth ' || conda create -y -q -n aidepth python=3.11
     for s in setup_ma setup_ov setup_ai gpu; do
-      tmux has-session -t "$s" 2>/dev/null ||
+      tmux has-session -t "=$s" 2>/dev/null ||   # "=": exact name (setup_ma is a prefix of setup_main)
         tmux new-session -d -s "$s" "bash ~/vm_setup_e2.sh ${s#setup_} 2>&1 | tee -a ~/logs/$s.txt"
     done
     log "started: setup_ma, setup_ov, setup_ai, gpu"
