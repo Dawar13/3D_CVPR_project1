@@ -1,5 +1,5 @@
 {
- "_comment": "E2-E MapAnything (experiments/E2.md section 5; data experiments/E2E_data.md): images only, ground-truth hints (ceiling) and the real ARKit/LiDAR hints, plus the E2-F remedies R2/R3 on the real pose hints.",
+ "_comment": "E2-E MapAnything (experiments/E2.md section 5; data experiments/E2E_data.md): images only, ground-truth hints (ceiling) and the real ARKit/LiDAR hints, plus the E2-F remedies R2/R3 on the real pose hints. AI depth (user-approved 2026-11-01): ai_depth = ARKit intrinsics + Depth Anything V2 metric-indoor depth (exp1/mono_depth.py, computed on the clips' own images); dev_pose_ai_depth adds the ARKit poses.",
  "checkpoint": "facebook/map-anything",
  "seeds": [0],
  "depth_views": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
@@ -15,6 +15,8 @@
   {"name": "dev_K", "family": "device", "inputs": ["intrinsics"], "corruption": {"target": "device", "use": ["K"]}},
   {"name": "dev_pose", "family": "device", "inputs": ["intrinsics", "pose"], "corruption": {"target": "device", "use": ["pose", "K"]}, "controls": ["filter_rgbcheck", "drop_lowconf"]},
   {"name": "dev_depth", "family": "device", "inputs": ["intrinsics", "depth"], "corruption": {"target": "device", "use": ["depth", "K"]}},
-  {"name": "dev_all", "family": "device", "inputs": ["intrinsics", "pose", "depth"], "corruption": {"target": "device", "use": ["pose", "K", "depth"]}, "controls": ["filter_rgbcheck", "drop_lowconf"]}
+  {"name": "dev_all", "family": "device", "inputs": ["intrinsics", "pose", "depth"], "corruption": {"target": "device", "use": ["pose", "K", "depth"]}, "controls": ["filter_rgbcheck", "drop_lowconf"]},
+  {"name": "ai_depth", "family": "ai", "inputs": ["intrinsics", "depth"], "corruption": {"target": "device", "use": ["mono_depth", "K"]}},
+  {"name": "dev_pose_ai_depth", "family": "ai", "inputs": ["intrinsics", "pose", "depth"], "corruption": {"target": "device", "use": ["pose", "K", "mono_depth"]}, "controls": ["filter_rgbcheck", "drop_lowconf"]}
  ]
 }

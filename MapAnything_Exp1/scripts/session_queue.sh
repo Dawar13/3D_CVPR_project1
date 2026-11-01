@@ -70,6 +70,8 @@ fi
 # ---------------------------------------------------------------- 3-4  MapAnything dev, gates, eval
 log "3 MapAnything dev runs"
 shard "$H" --config configs/e2df_mapanything.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2df_dev --save_extras
+until [ -f ~/logs/ready_mono ] || [ -f ~/logs/FAILED_mono ]; do sleep 10; done   # the AI depth hint (setup_ai)
+[ -f ~/logs/FAILED_mono ] && log "AI depth FAILED (see ~/logs/setup_ai.txt): its E2-E conditions fail, so the E2-E gates skip the eval runs"
 shard "$H" --config configs/e2e_mapanything.json --clips 'data/clips_e2e/dev__*.npz' --out results/e2e_ma_dev --save_extras
 log "4 MapAnything eval runs"
 if gate ma_e2df --run results/e2df_dev --config configs/e2df_mapanything.json; then

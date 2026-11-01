@@ -4,6 +4,7 @@
 #   bash ~/vm_setup_e2.sh        unpack, install miniconda, create both envs, then start three tmux sessions:
 #     setup_ma  MapAnything env for the frozen e2-prereg-C tree   -> ~/logs/ready_mapanything
 #     setup_ov  OmniVGGT env for the HEAD tree (E2-D)             -> ~/logs/ready_omnivggt
+#     setup_ai  small env: the E2-E AI depth hint on the clips      -> ~/logs/ready_mono (Amendment 13)
 #     gpu       waits for ready_mapanything, then scripts/session_queue.sh (the GPU never waits for OmniVGGT)
 # Trees: ~/3D-CVPR_Exp = tag e2-prereg-C (+ E2C_FROZEN_COMMIT); ~/e2d = tag e2-prereg-DEF (+ E2DEF_FROZEN_COMMIT). Both share ~/3D-CVPR_Exp/.../data.
 set -euo pipefail
@@ -54,6 +55,16 @@ setup_ov() {
   touch ~/logs/ready_omnivggt
 }
 
+setup_ai() {  # Depth Anything V2 on the E2-E clips; ~1-2 GPU-minutes while MapAnything runs
+  trap 'touch ~/logs/FAILED_mono' ERR
+  source ~/miniconda3/etc/profile.d/conda.sh && conda activate aidepth
+  PIP_CACHE_DIR=~/.cache/pip_ai pip install -q torch==2.7.0 torchvision==0.22.0 --index-url https://download.pytorch.org/whl/cu128
+  PIP_CACHE_DIR=~/.cache/pip_ai pip install -q "transformers>=4.45,<5" pillow numpy
+  until [ -f ~/logs/ready_clips ]; do sleep 10; done
+  cd "$H" && python -m exp1.mono_depth --clips 'data/clips_e2e/*.npz' --record results/e2e_mono/mono_depth.csv
+  touch ~/logs/ready_mono
+}
+
 gpu() {
   until [ -f ~/logs/ready_mapanything ] && [ -f ~/logs/ready_clips ]; do
     [ -f ~/logs/FAILED_mapanything ] && { echo "MapAnything setup failed, see ~/logs/setup_ma.txt"; exit 1; }
@@ -65,6 +76,7 @@ gpu() {
 case "${1:-main}" in
   ma) setup_ma ;;
   ov) setup_ov ;;
+  ai) setup_ai ;;
   gpu) gpu ;;
   clips)  # after clips_all.tgz has arrived (uploaded while the envs install)
     [ -d "$F/data/clips_e2" ] || tar xzf ~/clips_all.tgz -C "$F"
@@ -91,11 +103,12 @@ case "${1:-main}" in
     # envs are created one after the other (shared package cache), then filled in parallel
     conda env list | grep -q '^mapanything ' || conda create -y -q -n mapanything python=3.12
     conda env list | grep -q '^omnivggt ' || conda create -y -q -n omnivggt python=3.10
-    for s in setup_ma setup_ov gpu; do
+    conda env list | grep -q '^aidepth ' || conda create -y -q -n aidepth python=3.11
+    for s in setup_ma setup_ov setup_ai gpu; do
       tmux has-session -t "$s" 2>/dev/null ||
         tmux new-session -d -s "$s" "bash ~/vm_setup_e2.sh ${s#setup_} 2>&1 | tee -a ~/logs/$s.txt"
     done
-    log "started: setup_ma, setup_ov, gpu"
+    log "started: setup_ma, setup_ov, setup_ai, gpu"
     tmux ls
     ;;
 esac

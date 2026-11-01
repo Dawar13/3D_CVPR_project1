@@ -58,7 +58,7 @@ def clips(tmp_path_factory):
         dev[i][:3, :3] = dev[i][:3, :3] @ so3_exp(np.radians(0.5) * rng.normal(size=3) / np.sqrt(3))
         dev[i][:3, 3] += 0.01 * rng.normal(size=3)
     c.update(dev_poses=dev, dev_K=c["K"] * np.array([[1.01, 1, 1], [1, 1.01, 1], [1, 1, 1]]),
-             dev_depth=(c["depth"] * 0.98).astype(np.float32))
+             dev_depth=(c["depth"] * 0.98).astype(np.float32), mono_depth=(c["depth"] * 1.3).astype(np.float32))
     dpath = os.path.join(root, "e2e", "dev__synthdev__c0.npz")
     os.makedirs(os.path.dirname(dpath))
     np.savez_compressed(dpath, **c)
@@ -110,7 +110,7 @@ def test_e2e_device_hints_replace_ground_truth(clips):
     pr, pv = _run(mp, "e2e_mapanything.json", dpath, os.path.join(root, "e2e_ma"))
     pr2, pv2 = _run(mp, "e2e_omnivggt.json", dpath, os.path.join(root, "e2e_ov"), backend="omnivggt")
     mp.undo()
-    for p, n in ((pr, 13), (pr2, 7)):
+    for p, n in ((pr, 17), (pr2, 9)):
         runs = p[(p.view_subset == "all") & ~p.control.str.startswith("ref:")]
         assert (runs.status == "ok").all() and len(runs) == n
     clip = load_clip(dpath)
@@ -125,6 +125,10 @@ def test_e2e_device_hints_replace_ground_truth(clips):
     d = pv[(pv.condition == "dev_depth")]
     assert (d.has_depth_hint == 1).all() and np.allclose(d.hint_depth_scale, 0.98, atol=1e-6)
     assert np.allclose(pv[pv.condition == "dev_K"].hint_focal_rel_err, 0.01, atol=1e-9)
+    for cond in ("ai_depth", "dev_pose_ai_depth"):  # the AI depth estimate reaches the model as the depth hint
+        a = pv[(pv.condition == cond) & (pv.control == "none")]
+        assert (a.has_depth_hint == 1).all() and np.allclose(a.hint_depth_scale, 1.3, atol=1e-6)
+    assert man["dev_pose_ai_depth"]["affected_views"] == list(range(1, 10))
 
 
 # ---------------------------------------------------------------- ARKit / SceneFun3D geometry

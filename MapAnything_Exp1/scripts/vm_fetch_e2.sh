@@ -7,7 +7,7 @@ set -euo pipefail
 T=$1; P=${2:-22}
 SSH="ssh -p $P -o StrictHostKeyChecking=accept-new -o ServerAliveInterval=30"
 F_RUNS="parity_rtx parity_single e2c_eval e2c_n4_eval e2c_n20_eval"
-H_RUNS="e2df_dev e2df_eval e2e_ma_dev e2e_ma_eval e2d_checks e2d_dev e2d_eval e2e_ov_dev e2e_ov_eval"
+H_RUNS="e2df_dev e2df_eval e2e_ma_dev e2e_ma_eval e2d_checks e2d_dev e2d_eval e2e_ov_dev e2e_ov_eval e2e_mono"
 $SSH "$T" "cd ~/3D-CVPR_Exp/MapAnything_Exp1 && tar czf - --exclude=_shards \$(cd results && for r in $F_RUNS; do [ -d \$r ] && echo results/\$r; done)" \
   | tar xzf - -C MapAnything_Exp1
 $SSH "$T" "cd ~/e2d/MapAnything_Exp1 && tar czf - --exclude=_shards \$(cd results && for r in $H_RUNS; do [ -d \$r ] && echo results/\$r; done)" \

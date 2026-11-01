@@ -288,3 +288,7 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
   - **E2-F:** the R3 confidence threshold τ = 0.4572 is set on the E2-C dev runs (5% of good views dropped). R2/R3/oracle are controls in `configs/e2df_mapanything.json`, which is shared with the E2-D MapAnything companion.
   - **Queue:** `scripts/session_queue.sh` with automatic dev gates (`scripts/dev_gates.py`): a part's eval run starts only if its dev run passes. Bundle: `scripts/vm_launch_e2.sh build` / `send`; results back: `scripts/vm_fetch_e2.sh`.
   - Optional, awaiting the user: an AI depth hint (Depth Anything V2 metric indoor, `exp1/mono_depth.py`, laptop CPU).
+- 2026-11-01 (later): **E2-D/E/F preregistered at tag `e2-prereg-DEF`** (user approved D, E, F and the AI depth hint; Amendment 13).
+  - E2-E data final: 49 clips (8 dev / 3 scenes, 41 eval / 15 scenes). 5 portrait visits were skipped and 5 clips failing the GT check excluded (`results/e2e_clip_check/`).
+  - The AI depth hint (Depth Anything V2 metric-indoor Large) is computed on the VM (env `aidepth`), because the laptop ran out of memory (0.4 of 11.7 GB RAM free; Windows page file up to 23 GB, disk down to < 1 GB). The clips stream to the VM.
+  - Ready for the one session: `bash MapAnything_Exp1/scripts/vm_launch_e2.sh build`, then `send user@host port` once the VM is on.
