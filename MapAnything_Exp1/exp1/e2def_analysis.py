@@ -168,7 +168,8 @@ def e_tests(runs):
     df["clear"] = df.p_holm < ALPHA
     df["harmful"] = df.clear & (df.delta >= df.threshold)
     df["helpful"] = df.clear & (df.delta <= -df.threshold)
-    df["verdict"] = np.where(df.harmful, "HURTS", np.where(df.helpful, "HELPS", "no clear effect"))
+    df["verdict"] = np.where(df.harmful, "HURTS", np.where(df.helpful, "HELPS", np.where(
+        df.clear, "clear but below the practical threshold", "no clear effect")))
     return df
 
 
@@ -246,6 +247,8 @@ def f_gaps(run, dh_ma):
                "R1 drop poses": cell(R1_OF[fam].format(sev)) if depth else cell("rgb_K"),
                "R2 E1 filter": cell(cond, "filter_rgbcheck"), "R3 confidence drop": cell(cond, "drop_lowconf"),
                "ORACLE drop bad views": cell(cond, "drop_oracle")}
+        if depth:  # EXPLORATORY, not preregistered: the obvious fix for a bad depth hint is to drop it
+            rem["EXPLORATORY drop depth hints"] = cell("clean_pose")
         sm = lambda d: d.groupby("scene")[col].mean()
         c_s, d_s = sm(clean), sm(dmg)
         scenes = d_s.index.intersection(c_s.index)
@@ -266,7 +269,7 @@ def f_gaps(run, dh_ma):
                          "ci_lo": lo, "ci_hi": hi, "n_scenes": len(scenes)})
     df = pd.DataFrame(rows)
     if len(df):
-        best = (df[~df.remedy.str.startswith("ORACLE")].sort_values("gap").groupby(["condition", "metric"]).head(1)
+        best = (df[df.remedy.str.match(r"R[0-3] ")].sort_values("gap")  # preregistered: best of R0-R3.groupby(["condition", "metric"]).head(1)
                 .rename(columns={"remedy": "best_remedy", "gap": "best_gap"})[["condition", "metric", "best_remedy", "best_gap"]])
         df = df.merge(best, on=["condition", "metric"], how="left")
         df["criterion_c_gap_ge_0.5"] = df.best_gap >= 0.5

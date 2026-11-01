@@ -28,7 +28,7 @@ def main():
         for k, v in e.items():
             if k.startswith("max_abs_diff_vs_"):
                 print(f"  {e['clip_id']:24s} {e['condition']:22s} {v:.3g}")
-    m = runs.set_index(["clip_id", "condition"])[M]
+    m = runs.groupby(["clip_id", "condition"])[M].mean()  # mean over seeds (outlier_rot has 3)
     print("\nper clip (lower is better):")
     print(m.unstack("condition").round(4).T.to_string())
     d = (m.xs("inv_depth2_x1.5", level="condition") - m.xs("rgb_depth2", level="condition")).abs().max().max()
