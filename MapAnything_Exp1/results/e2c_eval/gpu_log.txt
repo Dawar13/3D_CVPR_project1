@@ -1,0 +1,4 @@
+shard=0 start=2026-11-01 16:27:17 end=2026-11-01 17:01:44 config=configs/e2c_full.json clips=/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/results/e2c_eval/_shards/0/clips/*.npz runs_recorded=792 peak_mem_gb=8.24 mem_fraction=0.25
+shard=1 start=2026-11-01 16:27:37 end=2026-11-01 17:02:01 config=configs/e2c_full.json clips=/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/results/e2c_eval/_shards/1/clips/*.npz runs_recorded=792 peak_mem_gb=8.24 mem_fraction=0.25
+shard=2 start=2026-11-01 16:27:57 end=2026-11-01 17:02:39 config=configs/e2c_full.json clips=/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/results/e2c_eval/_shards/2/clips/*.npz runs_recorded=792 peak_mem_gb=8.24 mem_fraction=0.25
+shard=3 start=2026-11-01 16:28:17 end=2026-11-01 17:03:09 config=configs/e2c_full.json clips=/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/results/e2c_eval/_shards/3/clips/*.npz runs_recorded=792 peak_mem_gb=8.24 mem_fraction=0.25

@@ -1,0 +1,31 @@
+runs 39  all ok True  failures file False
+runtime median 1.12 s  peak GPU memory 7.74 GB
+
+exact output checks (max |pts3d - clean_pose pts3d| over all pixels; 0 = identical):
+  dev__delivery_area__c0   repeat_clean           0
+  dev__delivery_area__c0   inv_scale_x1.5         0.00271
+  dev__delivery_area__c0   inv_principal_0.05     0
+  dev__facade__c0          repeat_clean           0
+  dev__facade__c0          inv_scale_x1.5         0.00184
+  dev__facade__c0          inv_principal_0.05     0
+  dev__terrace__c0         repeat_clean           0
+  dev__terrace__c0         inv_scale_x1.5         0.00515
+  dev__terrace__c0         inv_principal_0.05     0
+
+per clip (lower is better):
+Traceback (most recent call last):
+  File "/home/gpunet/e2d/MapAnything_Exp1/scripts/e2d_checks.py", line 41, in <module>
+    main()
+  File "/home/gpunet/e2d/MapAnything_Exp1/scripts/e2d_checks.py", line 33, in main
+    print(m.unstack("condition").round(4).T.to_string())
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/frame.py", line 9955, in unstack
+    result = unstack(self, level, fill_value, sort)
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/reshape/reshape.py", line 504, in unstack
+    return _unstack_frame(obj, level, fill_value=fill_value, sort=sort)
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/reshape/reshape.py", line 529, in _unstack_frame
+    unstacker = _Unstacker(
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/reshape/reshape.py", line 154, in __init__
+    self._make_selectors()
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/reshape/reshape.py", line 210, in _make_selectors
+    raise ValueError("Index contains duplicate entries, cannot reshape")
+ValueError: Index contains duplicate entries, cannot reshape

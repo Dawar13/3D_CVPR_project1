@@ -1,0 +1,4 @@
+shard=0 start=2026-11-01 15:32:56 end=2026-11-01 15:33:34 config=configs/e2e_mapanything.json clips=/home/gpunet/e2d/MapAnything_Exp1/results/e2e_ma_dev/_shards/0/clips/*.npz runs_recorded=34 peak_mem_gb=8.86 mem_fraction=0.25
+shard=1 start=2026-11-01 15:33:16 end=2026-11-01 15:33:58 config=configs/e2e_mapanything.json clips=/home/gpunet/e2d/MapAnything_Exp1/results/e2e_ma_dev/_shards/1/clips/*.npz runs_recorded=34 peak_mem_gb=8.86 mem_fraction=0.25
+shard=2 start=2026-11-01 15:33:36 end=2026-11-01 15:34:15 config=configs/e2e_mapanything.json clips=/home/gpunet/e2d/MapAnything_Exp1/results/e2e_ma_dev/_shards/2/clips/*.npz runs_recorded=34 peak_mem_gb=8.86 mem_fraction=0.25
+shard=3 start=2026-11-01 15:33:56 end=2026-11-01 15:34:35 config=configs/e2e_mapanything.json clips=/home/gpunet/e2d/MapAnything_Exp1/results/e2e_ma_dev/_shards/3/clips/*.npz runs_recorded=34 peak_mem_gb=8.86 mem_fraction=0.25

@@ -1,0 +1,26 @@
+2026-11-01 15:27:19 start, 4 processes per job, DEF tree ce30bb7a229ba8add541dc1988d3f73e423e6146
+2026-11-01 15:27:19 1 parity gate
+            metric  n_runs  n_identical  median_abs_diff  max_abs_diff  median_rel_diff  max_rel_diff
+  pts_relerr_scale     420            0         0.000058      0.020859         0.000940      0.069036
+           rre_deg     420            0         0.001727      0.062664         0.001192      0.043957
+ pts_relerr_metric     420            0         0.000321      0.002732         0.003392      0.077625
+depth_absrel_scale     420            0         0.000033      0.001565         0.001456      0.014979
+metric_scale_ratio     420            0         0.000530      0.010743         0.000498      0.022414
+PARALLEL_IDENTICAL True (276 rows compared)
+PARITY FAIL pts_relerr_scale,rre_deg
+2026-11-01 15:30:05 PARITY FAIL: E2-C eval NOT started (needs a decision)
+2026-11-01 15:30:05 3 MapAnything dev runs
+2026-11-01 15:34:36 4 MapAnything eval runs
+GATE ma_e2df results/e2df_dev: PASS
+2026-11-01 15:49:47 E2DF_MA_EVAL_DONE
+GATE e2e results/e2e_ma_dev: PASS
+2026-11-01 15:53:47 E2E_MA_EVAL_DONE
+2026-11-01 15:53:47 5 OmniVGGT checks and dev runs
+GATE ov_e2d results/e2d_dev: PASS
+2026-11-01 16:27:16 2 E2-C eval (amended parity gate, Amendment 14) from b232c09a5c02d6e5ab096e5e0011ef7e5aac4119
+2026-11-01 17:06:06 E2C_EVAL_DONE
+2026-11-01 17:06:06 SESSION_ALL_DONE
+2026-11-01 17:24:28 E2D_OV_EVAL_DONE
+GATE e2e results/e2e_ov_dev: PASS
+2026-11-01 17:34:01 E2E_OV_EVAL_DONE
+2026-11-01 17:34:01 SESSION_GPU_DONE

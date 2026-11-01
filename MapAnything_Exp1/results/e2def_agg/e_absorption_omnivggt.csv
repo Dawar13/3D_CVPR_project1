@@ -1,0 +1,4 @@
+condition,mean,count
+dev_all,1.1388246554503172,15
+dev_pose,1.22927265863079,15
+dev_pose_ai_depth,1.6673725430125776,15

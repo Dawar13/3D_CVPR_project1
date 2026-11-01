@@ -1,0 +1,4389 @@
+[
+ {
+  "clip_id": "eval__sf422014__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422014__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422015__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422381__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf422829__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf434641__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466183__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf466193__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467305__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467305__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467305__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467305__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467305__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf467311__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468079__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf468712__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf469319__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf470541__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf472297__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "eval__sf483618__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ }
+]

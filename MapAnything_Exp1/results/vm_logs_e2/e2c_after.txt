@@ -1,0 +1,6 @@
+2026-11-01 16:27:16 2 E2-C eval (amended parity gate, Amendment 14) from b232c09a5c02d6e5ab096e5e0011ef7e5aac4119
+{'per_run.csv': 12528, 'per_view.csv': 31680}
+{'per_run.csv': 160, 'per_view.csv': 160}
+{'per_run.csv': 96, 'per_view.csv': 480}
+2026-11-01 17:06:06 E2C_EVAL_DONE
+2026-11-01 17:06:06 SESSION_ALL_DONE

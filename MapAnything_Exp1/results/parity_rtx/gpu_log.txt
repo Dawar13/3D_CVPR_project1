@@ -1,0 +1,4 @@
+shard=0 start=2026-11-01 15:27:20 end=2026-11-01 15:29:06 config=configs/e2b_audit.json clips=/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/results/parity_rtx/_shards/0/clips/*.npz runs_recorded=126 peak_mem_gb=8.24 mem_fraction=0.25
+shard=1 start=2026-11-01 15:27:40 end=2026-11-01 15:29:15 config=configs/e2b_audit.json clips=/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/results/parity_rtx/_shards/1/clips/*.npz runs_recorded=126 peak_mem_gb=8.24 mem_fraction=0.25
+shard=2 start=2026-11-01 15:28:00 end=2026-11-01 15:29:06 config=configs/e2b_audit.json clips=/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/results/parity_rtx/_shards/2/clips/*.npz runs_recorded=84 peak_mem_gb=8.24 mem_fraction=0.25
+shard=3 start=2026-11-01 15:28:20 end=2026-11-01 15:29:32 config=configs/e2b_audit.json clips=/home/gpunet/3D-CVPR_Exp/MapAnything_Exp1/results/parity_rtx/_shards/3/clips/*.npz runs_recorded=84 peak_mem_gb=8.24 mem_fraction=0.25

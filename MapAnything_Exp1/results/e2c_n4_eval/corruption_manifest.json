@@ -1,0 +1,742 @@
+[
+ {
+  "clip_id": "eval__courtyard__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 1914306836,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.6233692218993687,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.0669138495742457,
+     -0.9709467947423738,
+     -0.2297495560706612
+    ],
+    "trans_dir_world": [
+     0.10313761848959366,
+     0.1003274193958169,
+     -0.9895943818401916
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__courtyard__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 1096507086,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.6233692218993687,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.37180360629740605,
+     0.9244020038506885,
+     -0.0851058965117889
+    ],
+    "trans_dir_world": [
+     0.3768533870774692,
+     0.512188677891518,
+     0.7717799446007768
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__electro__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 2646671762,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 1.1154030581803918,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.34841573719392027,
+     0.45983687502523063,
+     -0.8167965000186076
+    ],
+    "trans_dir_world": [
+     -0.035372225752131656,
+     -0.7475872372512345,
+     0.6632210252581009
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__electro__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 3224322560,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 1.1154030581803918,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.2036382447351544,
+     0.9614569773971158,
+     0.18474833123897832
+    ],
+    "trans_dir_world": [
+     0.036438423215275774,
+     -0.9796140747532709,
+     0.19755633591175265
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__kicker__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 4217292667,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.8602278059498658,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.13599514804643817,
+     -0.6181108301076588,
+     0.7742378971682078
+    ],
+    "trans_dir_world": [
+     0.7645226389673418,
+     -0.5029601691455049,
+     0.4031577889109135
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__kicker__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 1190568705,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.8602278059498658,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.822049377436464,
+     0.36922138055994963,
+     -0.43348632411383714
+    ],
+    "trans_dir_world": [
+     -0.8326568580316426,
+     0.40089267918474225,
+     0.38205708545838074
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__meadow__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 3783136023,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 2.7319687120649974,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.8309338943162312,
+     0.13730770901277475,
+     0.5391618090352147
+    ],
+    "trans_dir_world": [
+     0.18139459925220713,
+     -0.16941333289168894,
+     0.968707965281932
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__meadow__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 3544961638,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 2.7319687120649974,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.6614065306651808,
+     -0.5734742858080414,
+     0.48339284718581244
+    ],
+    "trans_dir_world": [
+     0.57779894968988,
+     0.44046777933982373,
+     -0.6871219026495342
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__office__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 1276267039,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.26786147910468705,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.4214581616570737,
+     -0.9018079007857496,
+     0.09547527456383463
+    ],
+    "trans_dir_world": [
+     0.5109963960416891,
+     0.4706667790099848,
+     0.7192742636635704
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__office__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 3874487722,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.26786147910468705,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.8358694797432745,
+     0.5194628167301043,
+     -0.17742771730632598
+    ],
+    "trans_dir_world": [
+     -0.014056929134995521,
+     -0.33342709921745617,
+     0.942671083809579
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__pipes__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 699999851,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.5754256816425872,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.026650326995379066,
+     0.8125063860382691,
+     -0.5823427965709463
+    ],
+    "trans_dir_world": [
+     0.08810475678187628,
+     0.9960093311730155,
+     0.014246545149214697
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__pipes__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 4053513295,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.5754256816425872,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.9837383510362526,
+     -0.03239161590644412,
+     -0.17666250286759733
+    ],
+    "trans_dir_world": [
+     0.8143302850619869,
+     -0.5626282868088234,
+     0.14253279522071952
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__playground__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 3140179203,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.34381839060272057,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.20567497549515112,
+     0.8936320742636171,
+     0.39889788204799265
+    ],
+    "trans_dir_world": [
+     -0.7740047183096526,
+     -0.5566477118409289,
+     0.30176152991502003
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__playground__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 2833225942,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.34381839060272057,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.5832326825112836,
+     -0.7558842958473019,
+     0.29745347424785784
+    ],
+    "trans_dir_world": [
+     -0.6584324119568481,
+     0.6339223871090276,
+     -0.40572055161980586
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__relief_2__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 127780878,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.4965269014402526,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.5567616497300552,
+     -0.7308183276042306,
+     0.39486837987818524
+    ],
+    "trans_dir_world": [
+     0.9713625919808461,
+     -0.16685935883222594,
+     -0.16915279858858553
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__relief_2__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 1889097684,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.4965269014402526,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.8943416003669674,
+     -0.15927337951229112,
+     -0.41807307068476096
+    ],
+    "trans_dir_world": [
+     0.21183775978770192,
+     -0.32621341409290905,
+     -0.9212543470692424
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__relief__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 2569688140,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.632616361071562,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     0.4483723638178102,
+     0.16814872828114277,
+     -0.8778885057579144
+    ],
+    "trans_dir_world": [
+     0.0002446781704245198,
+     -0.649492549040919,
+     -0.7603679167830022
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__relief__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 256942908,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.632616361071562,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.4436495515670667,
+     -0.23490951596452858,
+     0.8648656512451234
+    ],
+    "trans_dir_world": [
+     0.6317821584417841,
+     0.7737020199569666,
+     0.047291527667758564
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__terrains__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 0,
+  "rng_seed": 42828875,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.35997998849903706,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.24797951394249848,
+     -0.917006425407097,
+     0.31241859167940117
+    ],
+    "trans_dir_world": [
+     -0.6594033218325345,
+     0.6577154816094498,
+     -0.3641395397474275
+    ]
+   }
+  }
+ },
+ {
+  "clip_id": "eval__terrains__c0",
+  "condition": "c5_rot15_v3_level=1",
+  "target": "pose",
+  "type": "perturb",
+  "base_seed": 1,
+  "rng_seed": 3041326521,
+  "spec": {
+   "views": [
+    3
+   ],
+   "rot_deg": 15,
+   "trans_frac": 0.0
+  },
+  "scene_length_L_m": 0.35997998849903706,
+  "rot_deg": 15.0,
+  "trans_m": 0.0,
+  "affected_views": [
+   3
+  ],
+  "actual_fraction": 0.25,
+  "params": {},
+  "per_view": {
+   "3": {
+    "rot_axis_cam": [
+     -0.12265575197540607,
+     -0.35391429588440326,
+     -0.9272002144499293
+    ],
+    "trans_dir_world": [
+     0.1469979208788261,
+     0.8239128669571195,
+     0.5473200150915387
+    ]
+   }
+  }
+ }
+]

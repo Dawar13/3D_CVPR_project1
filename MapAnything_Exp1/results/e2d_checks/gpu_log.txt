@@ -1,0 +1,1 @@
+start=2026-11-01 15:53:48 end=2026-11-01 15:55:13 config=configs/e2d_checks.json clips=data/clips/dev__*.npz runs_recorded=39 peak_mem_gb=7.74 mem_fraction=0.25

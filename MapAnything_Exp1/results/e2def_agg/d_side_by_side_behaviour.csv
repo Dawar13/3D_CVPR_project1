@@ -1,0 +1,8 @@
+test,ma_mean,ma_finding,ov_mean,ov_finding,class
+P1_rot_override,0.0277569733237524,False,0.020380979658167587,False,neither
+P2_trans_override,0.1123692269235121,False,0.07403212724817707,False,neither
+P3_conf_flags_bad_view,0.43125,True,0.07916666666666666,False,MapAnything only
+P4_bad_view_own_shape,0.0056923208718824,False,9.874774049133438e-05,False,neither
+P5_good_views_shape,0.0004278397119941,False,3.219355559226821e-05,False,neither
+P10_shared_vs_indep_conf_5deg,0.2518889006817228,True,0.0023426377327118277,False,MapAnything only
+P11_drift_vs_jitter_conf_level2,0.2803788385748835,True,-0.0016220425340569135,False,MapAnything only

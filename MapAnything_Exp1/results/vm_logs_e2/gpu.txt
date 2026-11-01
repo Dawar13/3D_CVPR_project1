@@ -1,0 +1,82 @@
+2026-11-01 15:27:19 start, 4 processes per job, DEF tree ce30bb7a229ba8add541dc1988d3f73e423e6146
+2026-11-01 15:27:19 1 parity gate
+{'per_run.csv': 2760, 'per_view.csv': 4200}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+[done] eval__courtyard__c0
+            metric  n_runs  n_identical  median_abs_diff  max_abs_diff  median_rel_diff  max_rel_diff
+  pts_relerr_scale     420            0         0.000058      0.020859         0.000940      0.069036
+           rre_deg     420            0         0.001727      0.062664         0.001192      0.043957
+ pts_relerr_metric     420            0         0.000321      0.002732         0.003392      0.077625
+depth_absrel_scale     420            0         0.000033      0.001565         0.001456      0.014979
+metric_scale_ratio     420            0         0.000530      0.010743         0.000498      0.022414
+PARALLEL_IDENTICAL True (276 rows compared)
+PARITY FAIL pts_relerr_scale,rre_deg
+2026-11-01 15:30:05 PARITY FAIL: E2-C eval NOT started (needs a decision)
+2026-11-01 15:30:05 3 MapAnything dev runs
+{'per_run.csv': 1281, 'per_view.csv': 5490}
+{'per_run.csv': 136, 'per_view.csv': 1360}
+2026-11-01 15:34:36 4 MapAnything eval runs
+GATE ma_e2df results/e2df_dev: PASS
+{'per_run.csv': 10248, 'per_view.csv': 43920}
+2026-11-01 15:49:47 E2DF_MA_EVAL_DONE
+GATE e2e results/e2e_ma_dev: PASS
+{'per_run.csv': 697, 'per_view.csv': 6970}
+2026-11-01 15:53:47 E2E_MA_EVAL_DONE
+2026-11-01 15:53:47 5 OmniVGGT checks and dev runs
+fatal: cannot change to 'third_party/map-anything': No such file or directory
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main
+/home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/swiglu_ffn.py:51: UserWarning: xFormers is not available (SwiGLU)
+  warnings.warn("xFormers is not available (SwiGLU)")
+/home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/attention.py:33: UserWarning: xFormers is not available (Attention)
+  warnings.warn("xFormers is not available (Attention)")
+/home/gpunet/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py:40: UserWarning: xFormers is not available (Block)
+  warnings.warn("xFormers is not available (Block)")
+[93mInitialized new /home/gpunet/.evo/settings.json[39m
+Downloading: "https://dl.fbaipublicfiles.com/dinov2/dinov2_vitl14/dinov2_vitl14_reg4_pretrain.pth" to /home/gpunet/.cache/torch/hub/checkpoints/dinov2_vitl14_reg4_pretrain.pth
+  0%|          | 0.00/1.13G [00:00<?, ?B/s]  0%|          | 2.75M/1.13G [00:00<00:43, 28.0MB/s]  1%|          | 11.0M/1.13G [00:00<00:19, 60.6MB/s]  2%|▏         | 19.2M/1.13G [00:00<00:16, 72.2MB/s]  2%|▏         | 27.4M/1.13G [00:00<00:16, 73.6MB/s]  3%|▎         | 35.4M/1.13G [00:00<00:15, 77.1MB/s]  4%|▎         | 42.8M/1.13G [00:00<00:15, 77.2MB/s]  4%|▍         | 50.5M/1.13G [00:00<00:14, 78.4MB/s]  5%|▍         | 58.0M/1.13G [00:00<00:14, 77.8MB/s]  6%|▌         | 65.5M/1.13G [00:00<00:14, 76.8MB/s]  6%|▋         | 73.2M/1.13G [00:01<00:14, 78.1MB/s]  7%|▋         | 80.8M/1.13G [00:01<00:15, 74.8MB/s]  8%|▊         | 88.0M/1.13G [00:01<00:15, 72.6MB/s]  8%|▊         | 95.8M/1.13G [00:01<00:14, 74.9MB/s]  9%|▉         | 103M/1.13G [00:01<00:15, 73.5MB/s]  10%|▉         | 112M/1.13G [00:01<00:14, 77.7MB/s] 10%|█         | 119M/1.13G [00:01<00:14, 73.9MB/s] 11%|█         | 127M/1.13G [00:01<00:14, 76.1MB/s] 12%|█▏        | 135M/1.13G [00:01<00:13, 79.4MB/s] 12%|█▏        | 143M/1.13G [00:02<00:14, 73.1MB/s] 13%|█▎        | 150M/1.13G [00:02<00:14, 74.4MB/s] 14%|█▎        | 158M/1.13G [00:02<00:13, 75.7MB/s] 14%|█▍        | 166M/1.13G [00:02<00:13, 75.7MB/s] 15%|█▍        | 173M/1.13G [00:02<00:13, 75.3MB/s] 16%|█▌        | 180M/1.13G [00:02<00:14, 70.6MB/s] 16%|█▌        | 188M/1.13G [00:02<00:13, 74.5MB/s] 17%|█▋        | 196M/1.13G [00:02<00:13, 73.6MB/s] 17%|█▋        | 203M/1.13G [00:02<00:13, 72.1MB/s] 18%|█▊        | 211M/1.13G [00:02<00:13, 75.5MB/s] 19%|█▉        | 218M/1.13G [00:03<00:13, 75.4MB/s] 19%|█▉        | 225M/1.13G [00:03<00:13, 73.2MB/s] 20%|██        | 234M/1.13G [00:03<00:13, 74.3MB/s] 21%|██        | 242M/1.13G [00:03<00:12, 78.0MB/s] 21%|██▏       | 250M/1.13G [00:03<00:12, 77.0MB/s] 22%|██▏       | 257M/1.13G [00:03<00:13, 72.8MB/s] 23%|██▎       | 265M/1.13G [00:03<00:12, 76.9MB/s] 23%|██▎       | 273M/1.13G [00:03<00:12, 77.3MB/s] 24%|██▍       | 280M/1.13G [00:03<00:11, 77.3MB/s] 25%|██▍       | 288M/1.13G [00:04<00:11, 76.6MB/s] 25%|██▌       | 295M/1.13G [00:04<00:12, 75.4MB/s] 26%|██▌       | 304M/1.13G [00:04<00:11, 79.2MB/s] 27%|██▋       | 311M/1.13G [00:04<00:11, 74.3MB/s] 28%|██▊       | 320M/1.13G [00:04<00:11, 78.4MB/s] 28%|██▊       | 328M/1.13G [00:04<00:11, 76.1MB/s] 29%|██▉       | 335M/1.13G [00:04<00:11, 76.3MB/s] 30%|██▉       | 343M/1.13G [00:04<00:11, 77.3MB/s] 30%|███       | 350M/1.13G [00:04<00:10, 77.8MB/s] 31%|███       | 358M/1.13G [00:04<00:11, 74.8MB/s] 31%|███▏      | 365M/1.13G [00:05<00:11, 74.7MB/s] 32%|███▏      | 372M/1.13G [00:05<00:11, 72.9MB/s] 33%|███▎      | 381M/1.13G [00:05<00:10, 78.1MB/s] 34%|███▎      | 389M/1.13G [00:05<00:10, 76.8MB/s] 34%|███▍      | 398M/1.13G [00:05<00:10, 79.9MB/s] 35%|███▍      | 406M/1.13G [00:05<00:10, 78.7MB/s] 36%|███▌      | 413M/1.13G [00:05<00:10, 77.9MB/s] 36%|███▋      | 422M/1.13G [00:05<00:09, 80.9MB/s] 37%|███▋      | 430M/1.13G [00:05<00:09, 80.6MB/s] 38%|███▊      | 437M/1.13G [00:06<00:09, 76.2MB/s] 38%|███▊      | 445M/1.13G [00:06<00:09, 75.6MB/s] 39%|███▉      | 452M/1.13G [00:06<00:09, 74.6MB/s] 40%|███▉      | 459M/1.13G [00:06<00:10, 72.9MB/s] 40%|████      | 467M/1.13G [00:06<00:10, 72.6MB/s] 41%|████      | 475M/1.13G [00:06<00:09, 74.4MB/s] 42%|████▏     | 484M/1.13G [00:06<00:09, 77.3MB/s] 42%|████▏     | 491M/1.13G [00:06<00:09, 75.8MB/s] 43%|████▎     | 499M/1.13G [00:06<00:08, 77.6MB/s] 44%|████▎     | 506M/1.13G [00:07<00:09, 76.2MB/s] 44%|████▍     | 514M/1.13G [00:07<00:08, 75.9MB/s] 45%|████▍     | 522M/1.13G [00:07<00:08, 74.7MB/s] 46%|████▌     | 529M/1.13G [00:07<00:09, 70.2MB/s] 46%|████▌     | 536M/1.13G [00:07<00:09, 68.9MB/s] 47%|████▋     | 544M/1.13G [00:07<00:09, 70.6MB/s] 47%|████▋     | 552M/1.13G [00:07<00:08, 72.6MB/s] 48%|████▊     | 558M/1.13G [00:07<00:08, 71.1MB/s] 49%|████▊     | 566M/1.13G [00:07<00:08, 71.9MB/s] 49%|████▉     | 572M/1.13G [00:08<00:08, 70.0MB/s] 50%|█████     | 581M/1.13G [00:08<00:08, 74.6MB/s] 51%|█████     | 588M/1.13G [00:08<00:08, 71.0MB/s] 51%|█████▏    | 595M/1.13G [00:08<00:08, 72.0MB/s] 52%|█████▏    | 604M/1.13G [00:08<00:07, 76.4MB/s] 53%|█████▎    | 611M/1.13G [00:08<00:07, 72.9MB/s] 53%|█████▎    | 620M/1.13G [00:08<00:07, 77.6MB/s] 54%|█████▍    | 627M/1.13G [00:08<00:07, 79.0MB/s] 55%|█████▍    | 635M/1.13G [00:08<00:06, 79.9MB/s] 55%|█████▌    | 643M/1.13G [00:08<00:06, 80.3MB/s] 56%|█████▌    | 651M/1.13G [00:09<00:06, 79.3MB/s] 57%|█████▋    | 658M/1.13G [00:09<00:06, 78.8MB/s] 57%|█████▋    | 666M/1.13G [00:09<00:06, 79.6MB/s] 58%|█████▊    | 674M/1.13G [00:09<00:06, 80.4MB/s] 59%|█████▊    | 682M/1.13G [00:09<00:06, 76.5MB/s] 59%|█████▉    | 689M/1.13G [00:09<00:06, 75.8MB/s] 60%|██████    | 698M/1.13G [00:09<00:06, 78.2MB/s] 61%|██████    | 705M/1.13G [00:09<00:06, 78.7MB/s] 61%|██████▏   | 713M/1.13G [00:09<00:05, 79.6MB/s] 62%|██████▏   | 721M/1.13G [00:10<00:06, 72.9MB/s] 63%|██████▎   | 728M/1.13G [00:10<00:09, 46.7MB/s] 63%|██████▎   | 736M/1.13G [00:10<00:08, 54.0MB/s] 64%|██████▍   | 743M/1.13G [00:10<00:07, 59.6MB/s] 65%|██████▍   | 750M/1.13G [00:10<00:07, 61.6MB/s] 65%|██████▌   | 758M/1.13G [00:10<00:06, 68.0MB/s] 66%|██████▌   | 766M/1.13G [00:10<00:06, 68.3MB/s] 67%|██████▋   | 773M/1.13G [00:10<00:05, 69.1MB/s] 67%|██████▋   | 780M/1.13G [00:11<00:05, 71.4MB/s] 68%|██████▊   | 789M/1.13G [00:11<00:05, 73.9MB/s] 69%|██████▊   | 797M/1.13G [00:11<00:05, 74.0MB/s] 69%|██████▉   | 804M/1.13G [00:11<00:04, 75.0MB/s] 70%|██████▉   | 812M/1.13G [00:11<00:04, 75.6MB/s] 71%|███████   | 819M/1.13G [00:11<00:05, 71.6MB/s] 71%|███████   | 826M/1.13G [00:11<00:04, 72.5MB/s] 72%|███████▏  | 834M/1.13G [00:11<00:04, 76.0MB/s] 73%|███████▎  | 843M/1.13G [00:11<00:04, 80.7MB/s] 73%|███████▎  | 851M/1.13G [00:12<00:04, 76.3MB/s] 74%|███████▍  | 860M/1.13G [00:12<00:03, 81.3MB/s] 75%|███████▍  | 868M/1.13G [00:12<00:03, 82.7MB/s] 75%|███████▌  | 876M/1.13G [00:12<00:03, 79.0MB/s] 76%|███████▌  | 885M/1.13G [00:12<00:03, 80.2MB/s] 77%|███████▋  | 893M/1.13G [00:12<00:03, 83.4MB/s] 78%|███████▊  | 902M/1.13G [00:12<00:03, 79.6MB/s] 78%|███████▊  | 909M/1.13G [00:12<00:03, 77.0MB/s] 79%|███████▉  | 917M/1.13G [00:12<00:03, 77.3MB/s] 80%|███████▉  | 924M/1.13G [00:13<00:03, 72.3MB/s] 80%|████████  | 933M/1.13G [00:13<00:03, 76.5MB/s] 81%|████████  | 940M/1.13G [00:13<00:03, 70.8MB/s] 82%|████████▏ | 948M/1.13G [00:13<00:03, 71.7MB/s] 82%|████████▏ | 955M/1.13G [00:13<00:03, 71.2MB/s] 83%|████████▎ | 962M/1.13G [00:13<00:02, 70.4MB/s] 83%|████████▎ | 970M/1.13G [00:13<00:02, 73.0MB/s] 84%|████████▍ | 977M/1.13G [00:13<00:02, 73.9MB/s] 85%|████████▍ | 984M/1.13G [00:13<00:02, 70.1MB/s] 85%|████████▌ | 991M/1.13G [00:13<00:02, 70.2MB/s] 86%|████████▌ | 997M/1.13G [00:14<00:02, 66.3MB/s] 86%|████████▋ | 0.98G/1.13G [00:14<00:02, 65.6MB/s] 87%|████████▋ | 0.99G/1.13G [00:14<00:02, 67.3MB/s] 88%|████████▊ | 0.99G/1.13G [00:14<00:02, 67.5MB/s] 88%|████████▊ | 1.00G/1.13G [00:14<00:02, 67.6MB/s] 89%|████████▊ | 1.01G/1.13G [00:14<00:02, 66.6MB/s] 89%|████████▉ | 1.01G/1.13G [00:14<00:01, 72.1MB/s] 90%|█████████ | 1.02G/1.13G [00:14<00:01, 74.1MB/s] 91%|█████████ | 1.03G/1.13G [00:14<00:01, 69.6MB/s] 91%|█████████▏| 1.04G/1.13G [00:15<00:01, 72.1MB/s] 92%|█████████▏| 1.04G/1.13G [00:15<00:01, 72.4MB/s] 93%|█████████▎| 1.05G/1.13G [00:15<00:01, 67.9MB/s] 93%|█████████▎| 1.06G/1.13G [00:15<00:01, 73.8MB/s] 94%|█████████▍| 1.07G/1.13G [00:15<00:00, 74.2MB/s] 95%|█████████▍| 1.07G/1.13G [00:15<00:00, 72.1MB/s] 95%|█████████▌| 1.08G/1.13G [00:15<00:00, 76.2MB/s] 96%|█████████▌| 1.09G/1.13G [00:15<00:00, 72.5MB/s] 97%|█████████▋| 1.10G/1.13G [00:15<00:00, 74.6MB/s] 97%|█████████▋| 1.10G/1.13G [00:16<00:00, 71.5MB/s] 98%|█████████▊| 1.11G/1.13G [00:16<00:00, 70.7MB/s] 99%|█████████▊| 1.12G/1.13G [00:16<00:00, 70.7MB/s] 99%|█████████▉| 1.12G/1.13G [00:16<00:00, 67.4MB/s]100%|█████████▉| 1.13G/1.13G [00:16<00:00, 67.9MB/s]100%|██████████| 1.13G/1.13G [00:16<00:00, 73.7MB/s]
+[done] dev__delivery_area__c0
+[done] dev__facade__c0
+[done] dev__terrace__c0
+runs 39  all ok True  failures file False
+runtime median 1.12 s  peak GPU memory 7.74 GB
+
+exact output checks (max |pts3d - clean_pose pts3d| over all pixels; 0 = identical):
+  dev__delivery_area__c0   repeat_clean           0
+  dev__delivery_area__c0   inv_scale_x1.5         0.00271
+  dev__delivery_area__c0   inv_principal_0.05     0
+  dev__facade__c0          repeat_clean           0
+  dev__facade__c0          inv_scale_x1.5         0.00184
+  dev__facade__c0          inv_principal_0.05     0
+  dev__terrace__c0         repeat_clean           0
+  dev__terrace__c0         inv_scale_x1.5         0.00515
+  dev__terrace__c0         inv_principal_0.05     0
+
+per clip (lower is better):
+Traceback (most recent call last):
+  File "/home/gpunet/e2d/MapAnything_Exp1/scripts/e2d_checks.py", line 41, in <module>
+    main()
+  File "/home/gpunet/e2d/MapAnything_Exp1/scripts/e2d_checks.py", line 33, in main
+    print(m.unstack("condition").round(4).T.to_string())
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/frame.py", line 9955, in unstack
+    result = unstack(self, level, fill_value, sort)
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/reshape/reshape.py", line 504, in unstack
+    return _unstack_frame(obj, level, fill_value=fill_value, sort=sort)
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/reshape/reshape.py", line 529, in _unstack_frame
+    unstacker = _Unstacker(
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/reshape/reshape.py", line 154, in __init__
+    self._make_selectors()
+  File "/home/gpunet/miniconda3/envs/omnivggt/lib/python3.10/site-packages/pandas/core/reshape/reshape.py", line 210, in _make_selectors
+    raise ValueError("Index contains duplicate entries, cannot reshape")
+ValueError: Index contains duplicate entries, cannot reshape
+{'per_run.csv': 1386, 'per_view.csv': 4140}
+{'per_run.csv': 72, 'per_view.csv': 720}
+GATE ov_e2d results/e2d_dev: PASS
+{'per_run.csv': 11088, 'per_view.csv': 33120}
+2026-11-01 17:24:28 E2D_OV_EVAL_DONE
+GATE e2e results/e2e_ov_dev: PASS
+{'per_run.csv': 369, 'per_view.csv': 3690}
+2026-11-01 17:34:01 E2E_OV_EVAL_DONE
+2026-11-01 17:34:01 SESSION_GPU_DONE

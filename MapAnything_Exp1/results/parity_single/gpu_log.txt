@@ -1,0 +1,1 @@
+start=2026-11-01 15:29:34 end=2026-11-01 15:30:04 config=configs/e2b_audit.json clips=data/clips/eval__courtyard__c0.npz runs_recorded=42 peak_mem_gb=8.24 mem_fraction=0.25

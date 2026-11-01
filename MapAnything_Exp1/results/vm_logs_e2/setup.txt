@@ -1,0 +1,1 @@
+2026-11-01 15:20:39 started: setup_ma, setup_ov, setup_ai, gpu
