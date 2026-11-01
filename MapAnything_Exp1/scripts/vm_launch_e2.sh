@@ -41,10 +41,11 @@ send() {
   [ -f "$B/e2_head.tgz" ] || { echo "run '$0 build' first" >&2; exit 1; }
   $SSH "$T" 'command -v tmux >/dev/null || (sudo apt-get -qq update && sudo apt-get -qq install -y tmux)'
   $SCP "$B/e2c_frozen.tgz" "$B/e2_head.tgz" "$B/e1_eval_per_run.csv" "$B/vm_setup_e2.sh" "$T:~/"
-  $SSH "$T" 'bash ~/vm_setup_e2.sh'
+  # setup runs detached on the VM, so the clip upload below starts at once and overlaps the installs
+  $SSH "$T" 'tmux new-session -d -s setup_main "bash ~/vm_setup_e2.sh 2>&1 | tee -a ~/setup_main.txt"'
   # clips streamed straight to the VM (no local archive: the laptop is short of disk); globs expand in MapAnything_Exp1
-  (cd MapAnything_Exp1 && tar czf - $CLIPS) | $SSH "$T" 'cat > ~/clips_all.tgz'
-  $SSH "$T" 'bash ~/vm_setup_e2.sh clips && tmux ls'
+  (cd MapAnything_Exp1 && tar czf - $CLIPS) | $SSH "$T" 'cat > ~/clips_all.tgz.part && mv ~/clips_all.tgz.part ~/clips_all.tgz'
+  $SSH "$T" 'until [ -d ~/3D-CVPR_Exp/MapAnything_Exp1 ]; do sleep 5; done; bash ~/vm_setup_e2.sh clips && tmux ls'
   echo "started. progress: $SSH $T 'cd ~/e2d/MapAnything_Exp1 && ~/miniconda3/envs/mapanything/bin/python scripts/session_progress.py; tail -5 ~/logs/session.txt'"
 }
 
