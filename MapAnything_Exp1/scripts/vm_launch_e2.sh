@@ -5,9 +5,9 @@
 # `send` uploads the code (~0.5 MB) first and starts scripts/vm_setup_e2.sh, so installing begins at once; the
 # clips (~0.7 GB) upload while the envs install, and the GPU queue waits for them.
 set -euo pipefail
-B=${BUNDLE:-../3D-CVPR_Exp_bundle}   # outside the repo
+B=${BUNDLE:-$(cd .. && pwd)/3D-CVPR_Exp_bundle}   # absolute, outside the repo
 CODE="MapAnything_Exp1/exp1 MapAnything_Exp1/configs MapAnything_Exp1/scripts MapAnything_Exp1/tests"
-CLIPS="data/clips data/clips_e2 data/clips_n4 data/clips_n20 data/clips_e2e"
+CLIPS="data/clips data/clips_e2 data/clips_n4 data/clips_n20 data/clips_e2e/*.npz data/clips_e2e/*.csv"
 
 build() {
   rm -rf "$B" && mkdir -p "$B/frozen" "$B/def"
@@ -26,9 +26,11 @@ build() {
   cp MapAnything_Exp1/results/e1_eval/per_run.csv "$B/e1_eval_per_run.csv"
   git show "$def:MapAnything_Exp1/scripts/vm_setup_e2.sh" > "$B/vm_setup_e2.sh"
   local n
+  local x
   n=$(ls MapAnything_Exp1/data/clips_e2e/*__c*.npz | wc -l)
-  [ "$n" -eq 54 ] || { echo "data/clips_e2e has $n clips, expected 54" >&2; exit 1; }
-  tar czf "$B/clips_all.tgz" -C MapAnything_Exp1 $CLIPS
+  x=$(tail -n +2 MapAnything_Exp1/data/clips_e2e/excluded.csv | wc -l)   # clips that failed the GT check (E2.md)
+  [ "$n" -eq $(( 54 - x )) ] || { echo "data/clips_e2e has $n clips, expected 54 - $x excluded" >&2; exit 1; }
+  (cd MapAnything_Exp1 && tar czf "$B/clips_all.tgz" $CLIPS)   # globs expand inside MapAnything_Exp1
   ls -la "$B"
   echo "bundle ready in $B  (e2-prereg-C $(git rev-parse --short e2-prereg-C), e2-prereg-DEF ${def:0:7})"
 }

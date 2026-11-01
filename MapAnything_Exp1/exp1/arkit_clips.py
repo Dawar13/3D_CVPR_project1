@@ -13,7 +13,9 @@ lowres_depth + confidence. Only the frames a clip uses are downloaded (exp1/remo
 
 Fixed rules (set before any model run; E2-E preregistration):
   - Videos: the longest video of each visit (SceneFun3D's own "one video" rule); visits in a seeded random order
-    (SEED); a video is used if it yields CLIPS_PER_VIDEO clips; the first N_DEV used visits are dev, the next N_EVAL eval.
+    (SEED); a video is used if it yields CLIPS_PER_VIDEO clips and its device camera frame matches the GT frame
+    after a 0 or 180 deg turn (median residual <= 5 deg; this excludes portrait captures, stored 1440x1920);
+    the first N_DEV used visits are dev, the next N_EVAL eval. Every visit looked at is logged (selection_log.csv).
   - Frames: only frames stored upright (SceneFun3D decide_pose == 0) with a device pose within 5 ms, a LiDAR frame
     within 20 ms and all files present; keyframes along the ground-truth path whenever the camera moved KF_TRANS m
     or turned KF_ROT deg since the last keyframe; clips = N_VIEWS consecutive keyframes, CLIPS_PER_VIDEO
@@ -128,8 +130,11 @@ def usable_frames(gt_ts, gt_P, dev_ts, depth_ts, have):
     return ok
 
 
-def select_videos(test_csv, n_dev=N_DEV, n_eval=N_EVAL, seed=SEED, traj_of=None):
-    """[(split, visit, video)] by the fixed rule. traj_of(visit, video) -> (ts, c2w) of the GT trajectory."""
+def select_videos(test_csv, n_dev=N_DEV, n_eval=N_EVAL, seed=SEED, traj_of=None, aligned=None, log=None):
+    """[(split, visit, video)] by the fixed rule. traj_of(visit, video) -> (ts, c2w) of the GT trajectory.
+    aligned(visit, video) -> (ok, reason): the device camera frame matches the GT frame after a 0/180 deg turn
+    (excludes portrait captures, whose SceneFun3D frames are stored 1440x1920 and turned 90 deg). log gets
+    (visit, video, decision) for every visit looked at."""
     rows = list(csv.DictReader(open(test_csv)))
     by_visit = {}
     for r in rows:
@@ -143,8 +148,15 @@ def select_videos(test_csv, n_dev=N_DEV, n_eval=N_EVAL, seed=SEED, traj_of=None)
         ts, P = traj_of(v, video)
         up = [i for i in range(len(P)) if orientation(P[i]) == 0]
         if len(keyframes(P[up])) < N_VIEWS * CLIPS_PER_VIDEO:
+            log and log((v, video, "skipped: too few upright keyframes"))
             continue
+        if aligned is not None:
+            ok, reason = aligned(v, video)
+            if not ok:
+                log and log((v, video, f"skipped: {reason}"))
+                continue
         out.append(("dev" if len(out) < n_dev else "eval", v, video))
+        log and log((v, video, out[-1][0]))
         if len(out) == n_dev + n_eval:
             break
     return out
@@ -277,18 +289,43 @@ def main():
             open(p, "wb").write(remote_zip.fetch(SF_URL.format(visit=visit, video=video) + "hires_poses.traj"))
         return parse_traj(open(p).read())
 
-    sel = select_videos(a.test_csv, traj_of=traj_of)
+    def cached(name, url):
+        p = os.path.join(a.traj_cache, name)
+        if not os.path.exists(p):
+            open(p, "wb").write(remote_zip.fetch(url))
+        return p
+
+    def aligned(visit, video):
+        sf, akurl = SF_URL.format(visit=visit, video=video), AK_URL.format(video=video)
+        dev_ts, dev_P = parse_traj(open(cached(f"{video}_lowres_wide.traj", akurl + "lowres_wide.traj")).read())
+        T = np.load(cached(f"{video}_transform.npy", sf + f"{video}_refined_transform.npy"))
+        gt_ts, gt_P = traj_of(visit, video)
+        turn, measured, resid = device_turn(gt_ts, gt_P, dev_ts, dev_P, T)
+        return resid <= 5.0, f"device frame off by {measured:.1f} deg (residual {resid:.1f} after a {turn} deg turn)"
+
+    decisions = []
+    sel = select_videos(a.test_csv, traj_of=traj_of, aligned=aligned, log=decisions.append)
     with open(os.path.join(a.out, "selection.csv"), "w", newline="") as f:
         csv.writer(f).writerows([("split", "visit_id", "video_id"), *sel])
+    with open(os.path.join(a.out, "selection_log.csv"), "w", newline="") as f:
+        csv.writer(f).writerows([("visit_id", "video_id", "decision"), *decisions])
     todo = [s for s in sel if (not a.only or s[2] in a.only) and not all(
         os.path.exists(os.path.join(a.out, f"{s[0]}__sf{s[1]}__c{c}.npz")) for c in range(CLIPS_PER_VIDEO))]
+    failed = []
     with ProcessPoolExecutor(a.workers) as ex:  # network latency dominates: videos in parallel
-        for paths in ex.map(_build, [(*s, a.out) for s in todo]):
-            print(f"done: {len(paths)} clips", flush=True)
+        for s, (paths, err) in zip(todo, ex.map(_build, [(*s, a.out) for s in todo])):
+            print(f"done {s[2]}: {len(paths)} clips" + (f"  FAILED: {err}" if err else ""), flush=True)
+            if err:
+                failed.append(s[2])
+    if failed:
+        raise SystemExit(f"failed videos: {failed}")
 
 
 def _build(args):
-    return build_video(*args, log=lambda m: print(m, flush=True))
+    try:
+        return build_video(*args, log=lambda m: print(m, flush=True)), None
+    except Exception as e:  # one bad video must not stop the others
+        return [], repr(e)
 
 
 if __name__ == "__main__":

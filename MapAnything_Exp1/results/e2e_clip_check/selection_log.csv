@@ -1,0 +1,24 @@
+visit_id,video_id,decision
+434650,42898811,dev
+422803,42897559,dev
+422391,42446519,dev
+468712,45662970,eval
+422015,42446038,eval
+472297,47895350,eval
+470541,47429998,eval
+434641,42898826,eval
+466193,45260856,eval
+472483,47895364,skipped: device frame off by 89.6 deg (residual 89.6 after a 0 deg turn)
+484543,48458650,skipped: device frame off by 90.2 deg (residual 89.8 after a 180 deg turn)
+422381,42446541,eval
+469319,47331339,eval
+422829,42897521,eval
+468079,45261581,eval
+422034,42446114,skipped: device frame off by 89.6 deg (residual 89.6 after a 0 deg turn)
+468646,45662921,skipped: device frame off by 90.0 deg (residual 90.0 after a 0 deg turn)
+483618,48018737,eval
+467311,47333920,eval
+467305,47333931,eval
+422014,42446165,eval
+470508,47430045,skipped: device frame off by 90.1 deg (residual 89.9 after a 180 deg turn)
+466183,45260920,eval

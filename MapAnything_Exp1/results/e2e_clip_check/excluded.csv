@@ -1,0 +1,6 @@
+clip_id,reason
+dev__sf422803__c2,failed the E0 ground-truth check (worst median_rel 0.3282 >= 0.03 on a pair with >5% overlap; results/e2e_clip_check)
+eval__sf422381__c1,failed the E0 ground-truth check (worst median_rel 0.2765 >= 0.03 on a pair with >5% overlap; results/e2e_clip_check)
+eval__sf467305__c1,failed the E0 ground-truth check (worst median_rel 0.0352 >= 0.03 on a pair with >5% overlap; results/e2e_clip_check)
+eval__sf467305__c2,failed the E0 ground-truth check (worst median_rel 1.9275 >= 0.03 on a pair with >5% overlap; results/e2e_clip_check)
+eval__sf468079__c1,failed the E0 ground-truth check (worst median_rel 0.9829 >= 0.03 on a pair with >5% overlap; results/e2e_clip_check)
