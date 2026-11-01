@@ -292,3 +292,21 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
   - E2-E data final: 49 clips (8 dev / 3 scenes, 41 eval / 15 scenes). 5 portrait visits were skipped and 5 clips failing the GT check excluded (`results/e2e_clip_check/`).
   - The AI depth hint (Depth Anything V2 metric-indoor Large) is computed on the VM (env `aidepth`), because the laptop ran out of memory (0.4 of 11.7 GB RAM free; Windows page file up to 23 GB, disk down to < 1 GB). The clips stream to the VM.
   - Ready for the one session: `bash MapAnything_Exp1/scripts/vm_launch_e2.sh build`, then `send user@host port` once the VM is on.
+- 2026-11-01/02: **E2 DONE (all GPU parts in one session). Proposed decision: GO to E3, narrowed to depth-hint trust (awaiting the team's confirmation).** Report: `MapAnything_Exp1/reports/e2_results/e2_results.pdf` / `.html`, built by `scripts/e2_make_report.py` from `results/e2c_eval/agg/` and `results/e2def_agg/`.
+  - Session: RTX PRO 6000, 2026-11-01 15:27–17:34 UTC, 13,674 runs, 0 failures (`results/vm_logs_e2/`).
+    - Parity vs E1: median 0.006 pp shape and 0.0017° rotation; one extreme run (relief, 10 L GPS jump) +2.1 pp. Gate judged by its 99th percentile with the user's approval (Amendment 14).
+    - Parallel processes are bit-identical to one process.
+  - **E2-C (MapAnything):** 3 of 12 preregistered tests are findings.
+    - It copies a bad rotation at every size (absorption 0.77 at 1°, 0.96 at 30°; no override).
+    - Its confidence flags the bad camera (AUROC 0.93): it knows but obeys.
+    - It notices agreeing errors (shared heading, drift) much less (P10 +0.25, P11 +0.28).
+    - The mean→median scale probe changes nothing. **H2 answered: the damage is inside the network, not the averaging step.**
+  - **E2-D (OmniVGGT):** it copies about 60% of rotation errors and almost none of position errors, with no override. Its confidence does not flag bad cameras and does not react to camera hints at all.
+    - None of the 9 synthetic error types is harmful under the strict test: its photos-only mode is unstable (meadow 16.8°, terrains 32.6°), and it is scale-blind by design. Every family is "MapAnything only".
+  - **E2-E (real hints, 15 rooms):** phone poses and LiDAR help both models. **AI depth (Depth Anything V2, typically ×1.42) hurts both**: shape +10.0 / +9.1 pp, rotation +0.90° / +1.07°.
+    - Real ARKit errors are small (median 0.87°) and drift-like.
+    - One SceneFun3D ground-truth pose is mis-registered (eval__sf422829__c1 view 1); excluding that clip changes 0 verdicts (`results/e2def_agg/sensitivity/`).
+  - **E2-F:** E1's filter fixes single gross outliers (1–5% of the damage left) but drops 12% of good views and slightly hurts real phone data. For agreeing errors only "drop all poses" helps (10–21% left). For depth, R0–R3 make it worse; exploratory "drop depth" leaves 10–15%, but only if you know the depth is bad.
+  - **Photos alone (C8):** ~0.8° rotation and ~13% scale uncertainty (worst 10%: 2.0°, 52%).
+  - Decision rule: only depth hints pass all four tests (a)–(d), with two judgment calls listed in the report §10. Read strictly the other way, the result is the analysis paper.
+  - Open: R4 (robust BA, CPU); E3 plan around trusting depth hints.

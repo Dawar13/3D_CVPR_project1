@@ -269,7 +269,8 @@ def f_gaps(run, dh_ma):
                          "ci_lo": lo, "ci_hi": hi, "n_scenes": len(scenes)})
     df = pd.DataFrame(rows)
     if len(df):
-        best = (df[df.remedy.str.match(r"R[0-3] ")].sort_values("gap")  # preregistered: best of R0-R3.groupby(["condition", "metric"]).head(1)
+        # preregistered: the best remedy is the lowest gap among R0-R3
+        best = (df[df.remedy.str.match(r"R[0-3] ")].sort_values("gap").groupby(["condition", "metric"]).head(1)
                 .rename(columns={"remedy": "best_remedy", "gap": "best_gap"})[["condition", "metric", "best_remedy", "best_gap"]])
         df = df.merge(best, on=["condition", "metric"], how="left")
         df["criterion_c_gap_ge_0.5"] = df.best_gap >= 0.5
