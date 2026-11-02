@@ -163,3 +163,69 @@ def official_example(model, image_paths, device):
     runtime = time.time() - t0
     peak = torch.cuda.max_memory_allocated() / 2**30 if device.startswith("cuda") else 0.0
     return preds, runtime, peak
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Gate track (experiments/G.md). Additive: nothing above changes, and with no gate set the model is untouched.
+# ---------------------------------------------------------------------------------------------------------------------
+def _gated_fuse(orig, gamma):
+    """F_in + gamma * (F_out - F_in) around a fuse method, whose 4th positional argument is F_in (B*V, C, h, w):
+    _encode_and_fuse_depths (model.py:871-878, sum at 1048-1052), _encode_and_fuse_cam_quats_and_trans (1056-1065,
+    sum at 1168-1173). gamma: (V,) per view or (V, h, w) per patch. gamma = 0 removes exactly what this fuse added."""
+    def wrapped(*args, **kwargs):
+        feats = args[3]
+        fused = orig(*args, **kwargs)
+        g = torch.as_tensor(np.asarray(gamma), device=fused.device, dtype=fused.dtype)
+        if fused.shape[0] != g.shape[0]:
+            raise ValueError(f"gate has {g.shape[0]} views, features have {fused.shape[0]} (batch size must be 1)")
+        if g.ndim == 1:
+            g = g[:, None, None, None]
+        elif g.ndim == 3:
+            if g.shape[1:] != fused.shape[2:]:
+                raise ValueError(f"gate grid {tuple(g.shape[1:])} != feature grid {tuple(fused.shape[2:])}")
+            g = g[:, None]
+        else:
+            raise ValueError("gamma must be (V,) or (V, h, w)")
+        return feats + g * (fused - feats)
+    return wrapped
+
+
+def set_hint_gate(model, views=None, gamma_depth=None, gamma_pose=None):
+    """Install the hint gate for the next run; `views` is unused here (same signature as model_io_omnivggt).
+    Call clear_hint_gate afterwards. Instance attributes shadow the methods; third_party is not edited."""
+    clear_hint_gate(model)
+    if gamma_depth is not None:
+        model._encode_and_fuse_depths = _gated_fuse(type(model)._encode_and_fuse_depths.__get__(model), gamma_depth)
+    if gamma_pose is not None:
+        model._encode_and_fuse_cam_quats_and_trans = _gated_fuse(
+            type(model)._encode_and_fuse_cam_quats_and_trans.__get__(model), gamma_pose)
+
+
+def clear_hint_gate(model):
+    for name in ("_encode_and_fuse_depths", "_encode_and_fuse_cam_quats_and_trans"):
+        model.__dict__.pop(name, None)
+
+
+class TokenCapture:
+    """Patch tokens after chosen GLOBAL attention blocks, as {layer: (V, T, C) float32 on CPU}.
+    MapAnything: even indices of info_sharing.self_attention_blocks are global (N, V*T + extra, C)
+    (uniception 0.1.7 alternating_attention_transformer.py:397-401); the scale token sits at the end."""
+
+    def __init__(self, model, layers, n_views):
+        self.tokens, self.n_views, self.handles = {}, n_views, []
+        blocks = model.info_sharing.self_attention_blocks
+        for k in layers:
+            if k % 2:
+                raise ValueError(f"block {k} is frame attention; only even (global) blocks are captured")
+            self.handles.append(blocks[k].register_forward_hook(self._hook(k)))
+
+    def _hook(self, k):
+        def fn(_module, _inputs, out):
+            V = self.n_views
+            T = (out.shape[1] - 1) // V    # one extra token: the scale token (model.py:1584-1596)
+            self.tokens[k] = out[0, :V * T].reshape(V, T, -1).detach().float().cpu()
+        return fn
+
+    def remove(self):
+        for h in self.handles:
+            h.remove()

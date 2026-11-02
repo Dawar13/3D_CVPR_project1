@@ -122,3 +122,73 @@ def run(model, views, device):
 def set_pose_scale_statistic(stat):
     if stat != "mean":
         raise NotImplementedError("the median pose-scale probe exists for MapAnything only (E2-C4)")
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# Gate track (experiments/G.md). Additive: with no gate set the model is untouched.
+# ---------------------------------------------------------------------------------------------------------------------
+_GATE_HANDLES = "_exp1_gate_handles"
+
+
+def set_hint_gate(model, views=None, gamma_depth=None, gamma_pose=None):
+    """Depth: blend the depth tokens of each hinted view with the learned placeholder (omnivggt_aggregator.py:63, 366-376),
+    so gamma = 0 is the placeholder a missing depth gets. gamma_depth: (V,) or (V, h, w).
+    Pose: scale the pose embedding before the adapters, at every injection (pose_embeddings[k]; 344-346 and
+    _process_frame_attention), so gamma = 0 is the zero token a missing camera gets. gamma_pose: (V,).
+    NOT removed by a gate: hinted poses and depths are normalised together BEFORE this point (aggregator 90-133), so a
+    bad view with gamma = 0 still moves the normalisation of the others. run_gate.py runs input-level drops as well."""
+    clear_hint_gate(model)
+    ag, handles = model.aggregator, []
+    if gamma_depth is not None:
+        idx = list(views["depth_gt_index"])
+        g_all = np.asarray(gamma_depth)
+
+        def depth_hook(_m, _inp, out):
+            g = torch.as_tensor(g_all[idx], device=out.device, dtype=out.dtype)
+            if g.ndim == 1:
+                g = g[:, None, None]
+            elif g.ndim == 3:
+                if g.shape[1] * g.shape[2] != out.shape[1]:
+                    raise ValueError(f"gate grid {tuple(g.shape[1:])} does not match {out.shape[1]} patches")
+                g = g.reshape(g.shape[0], -1, 1)
+            else:
+                raise ValueError("gamma_depth must be (V,) or (V, h, w)")
+            return g * out + (1 - g) * ag.depth_placeholder.to(out.dtype)
+        handles.append(ag.depth_patch_embed.register_forward_hook(depth_hook))
+    if gamma_pose is not None:
+        idx = list(views["camera_gt_index"])
+        g_pose = np.asarray(gamma_pose)
+        if g_pose.ndim != 1:
+            raise ValueError("gamma_pose must be (V,)")
+
+        def pose_hook(_m, _inp, out):
+            g = torch.as_tensor(g_pose[idx], device=out.device, dtype=out.dtype)
+            return out * g.view(1, -1, 1)
+        handles += [m.register_forward_hook(pose_hook) for m in ag.pose_embeddings]
+    setattr(model, _GATE_HANDLES, handles)
+
+
+def clear_hint_gate(model):
+    for h in model.__dict__.pop(_GATE_HANDLES, []):
+        h.remove()
+
+
+class TokenCapture:
+    """Patch tokens after chosen GLOBAL blocks, as {layer: (V, T, C) float32 on CPU}. Global blocks output
+    (B, S*P, C) with camera and register tokens first in each view (omnivggt_aggregator.py, patch_start_idx)."""
+
+    def __init__(self, model, layers, n_views):
+        self.tokens, self.n_views, self.handles = {}, n_views, []
+        self.start = model.aggregator.patch_start_idx
+        for k in layers:
+            self.handles.append(model.aggregator.global_blocks[k].register_forward_hook(self._hook(k)))
+
+    def _hook(self, k):
+        def fn(_module, _inputs, out):
+            V = self.n_views
+            self.tokens[k] = out.reshape(V, out.shape[-2] // V, -1)[:, self.start:].detach().float().cpu()
+        return fn
+
+    def remove(self):
+        for h in self.handles:
+            h.remove()

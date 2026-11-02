@@ -1,5 +1,7 @@
 # Experiment 1: MapAnything geometric-prior corruption audit
 
+> **Gate tests (November 2026):** see `../RUN_GATE_TESTS.md` and `../experiments/G.md`. The status line below dates from the first import; E0 to E2 have since run (`../context.md` section 10).
+
 Inference only. No Self-Healing Attention, no gates, no fine-tuning, no bundle adjustment.
 
 **Status: none of this code has been run yet.** It compiles; nothing has executed
