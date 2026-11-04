@@ -36,6 +36,7 @@ import torch
 
 INFER_KW = dict(dtype="fp32", autocast=False, points="depth_unprojection")
 INPUT_GROUPS = {"intrinsics", "pose", "depth"}
+INTRINSICS_ALONE = False  # a camera hint is pose AND intrinsics (build_views)
 REPO = os.environ.get("OMNIVGGT_REPO", os.path.join(os.path.dirname(__file__), "..", "third_party",
                                                      "OmniVGGT-official"))
 

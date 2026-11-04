@@ -1,0 +1,6 @@
+iphone/arkit.csv: conv(wfirst_dev, wfirst_gt, body_dev, body_gt)=(False, False, False, False)  C(deg)=[-0.   0.7  0.2]
+   1 s relative-rotation diff vs GT: median 0.26  p90 0.47  max 1.0 deg  (GT motion median 8.3 deg/s)  n=185  span 1-94s
+pixel/arcore.csv: conv(wfirst_dev, wfirst_gt, body_dev, body_gt)=(False, False, False, False)  C(deg)=[ 1.5  1.7 -0. ]
+   1 s relative-rotation diff vs GT: median 0.28  p90 0.58  max 3.4 deg  (GT motion median 8.8 deg/s)  n=172  span 6-92s
+tango/raw.csv: conv(wfirst_dev, wfirst_gt, body_dev, body_gt)=(False, False, True, True)  C(deg)=[176.1  -0.6 -97.3]
+   1 s relative-rotation diff vs GT: median 3.08  p90 8.66  max 17.0 deg  (GT motion median 8.5 deg/s)  n=180  span 2-93s

@@ -49,7 +49,7 @@ import traceback
 
 import numpy as np
 
-from . import model_io
+from . import e3, model_io
 from .controls import rgbcheck_mask
 from .corrupt_geometry import _seed_for, corrupt_poses
 from .corrupt_inputs import corrupt_depth, corrupt_intrinsics
@@ -141,6 +141,81 @@ def apply_corruption(clip, cond, seed, depth_views, base_mask=None):
     return poses, K, depth, entry
 
 
+E3_CONTROLS = ("witness", "witness_drop")
+
+
+def run_e3(ctrl, cond, cfg, clip, poses, K, depth, depth_views, base, run_views, witness_for, intrinsics_alone=True):
+    """E3 control (exp1/e3.py): check the condition's hints against the photos, repair or drop, rerun.
+    Returns the final prediction, the pose mask, the hints actually given (poses, K, depth) and the decisions.
+    intrinsics_alone=False (OmniVGGT): a backend that takes intrinsics only together with poses loses both."""
+    N = len(clip["images"])
+    inputs = list(cond["inputs"])
+    variant = "drop" if ctrl == "witness_drop" else "repair"
+    ens, confs, first = witness_for()
+    wmean = e3.witness_mean(ens)
+    sig_v, sig = e3.witness_sigma(ens, wmean)
+    dec = {"variant": variant, "sigma_view_deg": sig_v.tolist(), "sigma_group_deg": sig,
+           "witness_conf": confs.mean(0).tolist()}
+    new_poses, mask = poses, np.ones(N, bool)
+    if "pose" in inputs:
+        hint_rel = e3._rel(poses)                       # what the model sees: poses relative to view 0
+        pd = e3.pose_decision(hint_rel, wmean, sig_v, sig, cfg)
+        f, fired = pd["fit"], e3.group_fired(pd)
+        if variant == "repair":
+            new_poses = np.stack([poses[0] @ T for T in e3.repair_poses(hint_rel, pd)])
+            mask = ~pd["drop_views"]
+        elif fired:
+            inputs.remove("pose")                       # drop variant: a group error drops every pose hint
+            if not intrinsics_alone and "intrinsics" in inputs:
+                inputs.remove("intrinsics")
+        else:
+            mask = ~pd["drop_views"]
+        dec.update(shared_deg=f["shared_deg"], mount_deg=f["mount_deg"], drift_total_deg=f["drift_total_deg"],
+                   pose_scale=f["scale"], rot_res_deg=f["rot_res_deg"].tolist(),
+                   th_group={k: float(v) for k, v in pd["th"].items()}, th_view=pd["th_view"].tolist(),
+                   fire_shared=pd["fire_shared"], fire_mount=pd["fire_mount"], fire_drift=pd["fire_drift"],
+                   drop_pose_views=np.flatnonzero(pd["drop_views"]).tolist(), pose_hints_dropped=fired and variant == "drop")
+    new_depth, dviews = depth, tuple(depth_views)
+    if "depth" in inputs:
+        dv = list(depth_views)
+        d_pass, scale_from = None, "skipped"
+        if "pose" in inputs:                            # scale from the (repaired) pose hints, in the hints' units
+            p = run_views(mask, poses_=new_poses, inputs_=[x for x in inputs if x != "depth"])
+            s_pose = e3.pose_units(new_poses, p["pose"], mask)
+            if np.isfinite(s_pose):
+                d_pass, scale_from = p["depth_z"] * s_pose, "pose"
+            dec["pose_units"] = s_pose
+        elif np.isfinite(first["metric_scaling_factor"]):   # scale from the photos alone (less certain)
+            d_pass, scale_from = first["depth_z"], "images"
+        dd = e3.depth_decision(depth, d_pass, dv, cfg) if d_pass is not None else e3.no_depth_decision(len(depth))
+        if variant == "repair":
+            new_depth = depth / dd["k"] if dd["fire_scale"] else depth
+            dviews = tuple(i for i in dv if not dd["drop_views"][i])
+        elif dd["fire_scale"]:
+            dviews = ()
+        else:
+            dviews = tuple(i for i in dv if not dd["drop_views"][i])
+        if not dviews:
+            inputs.remove("depth")
+        dec.update(depth_k=dd["k"], depth_ratios=[None if not np.isfinite(r) else float(r) for r in dd["ratios"]],
+                   fire_depth_scale=dd["fire_scale"], drop_depth_views=np.flatnonzero(dd["drop_views"]).tolist(),
+                   depth_scale_from=scale_from)
+    final = run_views(mask if "pose" in inputs else None, poses_=new_poses, depth_=new_depth, inputs_=inputs,
+                      dviews_=dviews)
+    dec["inputs_final"] = inputs
+    used = mask if "pose" in inputs else (np.zeros(N, bool) if "pose" in cond["inputs"] else None)
+    return final, used, (new_poses, K, new_depth), _jsonable(dec)
+
+
+def _jsonable(d):
+    out = {}
+    for k, v in d.items():
+        if isinstance(v, (np.floating, np.integer, np.bool_)):
+            v = v.item()
+        out[k] = v
+    return out
+
+
 def image_hash(images):
     return hashlib.sha256(np.ascontiguousarray(images).tobytes()).hexdigest()[:16]
 
@@ -157,7 +232,7 @@ FIELDS = ["run_key", "clip_id", "scene", "split", "condition", "family", "severi
           "seed", "control", "view_subset", "metric_flag", "n_views", "n_affected", "frac_affected",
           "n_pose_dropped", "dropped_are_corrupted", "image_hash", "status",
           "runtime_s", "peak_mem_gb", "n_valid_px", "scale_factor", "metric_scale_ratio",
-          "model_scale_factor", *LOWER_IS_BETTER, "mean_conf"]
+          "model_scale_factor", *LOWER_IS_BETTER, "mean_conf", "auc30"]
 VIEW_FIELDS = ["run_key", "clip_id", "scene", "split", "condition", "family", "severity", "realistic",
                "seed", "control", "view_idx", "was_corrupted", "has_pose_hint", "has_K_hint",
                "has_depth_hint", "conf_mean", "conf_median", "hint_rot_err", "hint_trans_err_m",
@@ -292,8 +367,9 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--device", default="cuda")
     ap.add_argument("--mapanything_repo", default="third_party/map-anything")
-    ap.add_argument("--backend", default="mapanything", choices=["mapanything", "omnivggt"],
-                    help="omnivggt: exp1/model_io_omnivggt.py (E2-D); checkpoint and repo from the config")
+    ap.add_argument("--backend", default="mapanything", choices=["mapanything", "omnivggt", "pi3x"],
+                    help="omnivggt: exp1/model_io_omnivggt.py (E2-D); pi3x: exp1/model_io_pi3x.py (extended E2); "
+                         "checkpoint and repo from the config")
     ap.add_argument("--only", nargs="*", help="run only these condition names (smoke tests)")
     ap.add_argument("--save_extras", action="store_true", help="write <out>/extras/<run_key>.npz")
     ap.add_argument("--mem_fraction", type=float, default=0.25,
@@ -303,6 +379,8 @@ def main():
     global model_io  # rebound on every call, so one process can run both backends in turn (tests)
     if a.backend == "omnivggt":
         from . import model_io_omnivggt as model_io
+    elif a.backend == "pi3x":
+        from . import model_io_pi3x as model_io
     else:
         from . import model_io
 
@@ -326,7 +404,7 @@ def main():
     info = {"config": cfg, "clips": clips, "checkpoint": cfg["checkpoint"],
             "backend": a.backend,
             "mapanything_commit": git_commit(a.mapanything_repo),
-            "model_repo_commit": git_commit(model_io.REPO) if a.backend == "omnivggt" else None,
+            "model_repo_commit": git_commit(model_io.REPO) if a.backend != "mapanything" else None,
             "torch": torch.__version__, "cuda": torch.version.cuda,
             "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else "cpu",
             "infer_kwargs": model_io.INFER_KW}
@@ -348,6 +426,18 @@ def main():
 
         def infer(views):
             return model_io.run(model, views, a.device)
+
+        def witness_for():
+            """E3 witness ensemble, once per clip (hint-free): images-only passes in n_orders view orders."""
+            if "e3_witness" not in cache:
+                def run_images_only(order):
+                    if np.array_equal(order, np.arange(N)) and "rgb_only" in cache:
+                        return cache["rgb_only"]                 # identical pass (deterministic), reuse it
+                    views = model_io.build_views(clip["images"][order], clip["K"][order], clip["poses"][order],
+                                                 [], None, True, None, ())
+                    return infer(views)
+                cache["e3_witness"] = e3.witness_ensemble(run_images_only, N, e3.cfg_get(cfg, "e3_n_orders"))
+            return cache["e3_witness"]
 
         def record(cond, seed, control, pred, entry, pose_mask, hints):
             nonlocal peak, n_new
@@ -410,11 +500,14 @@ def main():
                         manifest.append(entry)
                     assert image_hash(clip["images"]) == h_img, "images changed!"
 
-                    def run_views(pose_mask):
+                    def run_views(pose_mask, poses_=None, depth_=None, inputs_=None, dviews_=None):
+                        """The condition's hints, or (E3) repaired ones passed explicitly."""
                         if base is not None:
                             pose_mask = base if pose_mask is None else pose_mask & base
-                        views = model_io.build_views(clip["images"], K, poses, cond["inputs"],
-                                                     pose_mask, metric, depth, depth_views)
+                        views = model_io.build_views(
+                            clip["images"], K, poses if poses_ is None else poses_,
+                            cond["inputs"] if inputs_ is None else inputs_, pose_mask, metric,
+                            depth if depth_ is None else depth_, depth_views if dviews_ is None else dviews_)
                         stat = cond.get("scale_stat", "mean")
                         if stat != "mean":
                             model_io.set_pose_scale_statistic(stat)
@@ -441,8 +534,18 @@ def main():
                     record(cond, seed, "none", pred, entry, base, hints)
 
                     for ctrl in cond.get("controls", []):
-                        if entry is None or entry["target"] != "pose":
+                        if ctrl in E3_CONTROLS:  # E3 (exp1/e3.py): any hint set, clean ones included
+                            p3, mask3, hints3, dec = run_e3(ctrl, cond, cfg, clip, poses, K, depth, depth_views,
+                                                            base, run_views, witness_for,
+                                                            getattr(model_io, "INTRINSICS_ALONE", True))
+                            with open(os.path.join(a.out, "e3_decisions.jsonl"), "a") as f:
+                                f.write(json.dumps({"run_key": f"{base_key}|{ctrl}", **dec}) + "\n")
+                            record(cond, seed, ctrl, p3, entry, mask3 if base is None or mask3 is None else mask3 & base, hints3)
+                            continue
+                        if ctrl == "drop_oracle" and (entry is None or entry["target"] != "pose"):
                             raise ValueError(f"{ctrl} needs a pose corruption")
+                        if "pose" not in cond["inputs"]:   # R2/R3 act on pose hints, of any hint set (E2X)
+                            raise ValueError(f"{ctrl} needs pose hints")
                         if ctrl == "drop_oracle":
                             if 0 in entry["affected_views"]:
                                 raise ValueError("drop_oracle cannot drop view 0")

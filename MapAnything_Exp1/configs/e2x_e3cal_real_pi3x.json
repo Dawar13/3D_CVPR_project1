@@ -1,0 +1,203 @@
+{
+ "_comment": "E3 calibration, real hints (experiments/E2X.md): the E2-E conditions with the E3 controls and baselines. cal and dev clips only.",
+ "checkpoint": "yyfz233/Pi3X",
+ "seeds": [
+  0
+ ],
+ "depth_views": [
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9
+ ],
+ "filter_rot_tau_deg": 10.0,
+ "filter_dir_tau_deg": 15.0,
+ "lowconf_tau": 0.4572,
+ "conditions": [
+  {
+   "name": "rgb_only",
+   "family": "reference",
+   "inputs": []
+  },
+  {
+   "name": "gt_K",
+   "family": "gt",
+   "inputs": [
+    "intrinsics"
+   ],
+   "controls": [
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "gt_pose",
+   "family": "gt",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "gt_depth",
+   "family": "gt",
+   "inputs": [
+    "intrinsics",
+    "depth"
+   ],
+   "controls": [
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "gt_all",
+   "family": "gt",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "dev_K",
+   "family": "device",
+   "inputs": [
+    "intrinsics"
+   ],
+   "corruption": {
+    "target": "device",
+    "use": [
+     "K"
+    ]
+   },
+   "controls": [
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "dev_pose",
+   "family": "device",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "corruption": {
+    "target": "device",
+    "use": [
+     "pose",
+     "K"
+    ]
+   },
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "dev_depth",
+   "family": "device",
+   "inputs": [
+    "intrinsics",
+    "depth"
+   ],
+   "corruption": {
+    "target": "device",
+    "use": [
+     "depth",
+     "K"
+    ]
+   },
+   "controls": [
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "dev_all",
+   "family": "device",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "device",
+    "use": [
+     "pose",
+     "K",
+     "depth"
+    ]
+   },
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "ai_depth",
+   "family": "ai",
+   "inputs": [
+    "intrinsics",
+    "depth"
+   ],
+   "corruption": {
+    "target": "device",
+    "use": [
+     "mono_depth",
+     "K"
+    ]
+   },
+   "controls": [
+    "witness",
+    "witness_drop"
+   ]
+  },
+  {
+   "name": "dev_pose_ai_depth",
+   "family": "ai",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "device",
+    "use": [
+     "pose",
+     "K",
+     "mono_depth"
+    ]
+   },
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "witness",
+    "witness_drop"
+   ]
+  }
+ ]
+}

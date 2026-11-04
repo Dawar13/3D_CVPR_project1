@@ -1,0 +1,3 @@
+121 videos, 73512 GT frames
+gt  : frames that jump away from their neighbours by >5 deg: 493, >30 deg: 80; position spikes >0.3 m: 136; videos with a >5 deg spike: 80
+dev : frames that jump away from their neighbours by >5 deg: 13, >30 deg: 0; position spikes >0.3 m: 2; videos with a >5 deg spike: 11

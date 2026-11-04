@@ -1,0 +1,12 @@
+iphone/arkit.csv   R=world2cam  span  3s n= 62 | rot max-view median  0.63 p90  1.24 max   2.12 deg | dir median  16.2 max-view p90  54.8 deg | scale med 0.757 [p10 0.108, p90 1.265] | GT extent med 2.2 m
+iphone/arkit.csv   R=world2cam  span 10s n= 18 | rot max-view median  1.55 p90  3.41 max   4.27 deg | dir median  13.9 max-view p90  72.3 deg | scale med 0.814 [p10 0.229, p90 1.112] | GT extent med 6.7 m
+iphone/arkit.csv   R=world2cam  span 30s n=  5 | rot max-view median  3.85 p90  8.36 max   9.20 deg | dir median  14.7 max-view p90  34.4 deg | scale med 0.871 [p10 0.686, p90 0.916] | GT extent med 12.6 m
+iphone/arkit.csv   R=cam2world  span  3s n= 62 | rot max-view median  9.87 p90 41.49 max 100.57 deg | dir median  27.3 max-view p90  53.9 deg | scale med 0.757 [p10 0.108, p90 1.265] | GT extent med 2.2 m
+iphone/arkit.csv   R=cam2world  span 10s n= 18 | rot max-view median 19.16 p90 122.80 max 158.35 deg | dir median  28.4 max-view p90  70.5 deg | scale med 0.814 [p10 0.229, p90 1.112] | GT extent med 6.7 m
+iphone/arkit.csv   R=cam2world  span 30s n=  5 | rot max-view median 33.16 p90 125.64 max 141.01 deg | dir median  29.5 max-view p90  54.8 deg | scale med 0.871 [p10 0.686, p90 0.916] | GT extent med 12.6 m
+pixel/arcore.csv   R=world2cam  span  3s n= 58 | rot max-view median  1.08 p90  1.84 max   3.54 deg | dir median  17.7 max-view p90  52.8 deg | scale med 0.871 [p10 0.435, p90 1.372] | GT extent med 2.2 m
+pixel/arcore.csv   R=world2cam  span 10s n= 16 | rot max-view median  2.73 p90  4.46 max   4.59 deg | dir median  15.4 max-view p90  59.2 deg | scale med 0.886 [p10 0.533, p90 1.161] | GT extent med 7.8 m
+pixel/arcore.csv   R=world2cam  span 30s n=  4 | rot max-view median  7.80 p90  8.21 max   8.27 deg | dir median  17.4 max-view p90  33.8 deg | scale med 0.913 [p10 0.859, p90 1.035] | GT extent med 13.8 m
+pixel/arcore.csv   R=cam2world  span  3s n= 58 | rot max-view median  9.42 p90 44.88 max 102.14 deg | dir median  27.4 max-view p90  56.8 deg | scale med 0.871 [p10 0.435, p90 1.372] | GT extent med 2.2 m
+pixel/arcore.csv   R=cam2world  span 10s n= 16 | rot max-view median 20.65 p90 119.54 max 147.05 deg | dir median  29.4 max-view p90  63.1 deg | scale med 0.886 [p10 0.533, p90 1.161] | GT extent med 7.8 m
+pixel/arcore.csv   R=cam2world  span 30s n=  4 | rot max-view median 126.86 p90 143.42 max 147.05 deg | dir median  36.9 max-view p90  77.6 deg | scale med 0.913 [p10 0.859, p90 1.035] | GT extent med 13.8 m

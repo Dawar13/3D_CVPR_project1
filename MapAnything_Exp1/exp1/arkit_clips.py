@@ -26,6 +26,14 @@ Fixed rules (set before any model run; E2-E preregistration):
     pose, intrinsics and LiDAR map together.
   - Size: TW x TH = 518 x 392 (MapAnything's 4:3 resolution, image.py:43), cropped and resized exactly like the
     ETH3D clips (datasets.resize_crop_params / adjust_K / resize_depth_nearest).
+
+Extended E2 (experiments/E2X.md), set before any model run on these clips:
+  - --mode room: per video, N_VIEWS keyframes evenly spread over the whole recording (r0), its first half (r1) and
+    its second half (r2), so the device hints carry a whole room scan's drift. GT frames that jump away from their
+    neighbours (> SPIKE_ROT deg or > SPIKE_TRANS m; gt_spikes) or disagree with the device by > GROSS_DEG after one
+    video-wide alignment (gt_gross) are removed before keyframing: both are GT failures (results/e2x_survey).
+  - --n_cal K: the next K visits of the same seeded order after the 3 dev + 15 eval ones, labelled 'cal'. They are
+    for calibrating E3 thresholds and are never evaluated.
 """
 
 import argparse
@@ -50,6 +58,7 @@ KF_TRANS, KF_ROT = 0.30, 15.0
 TW, TH = 518, 392
 HW, HH, LW, LH = 1920, 1440, 256, 192        # hires_wide and lowres (LiDAR) image sizes
 POSE_TOL, DEPTH_TOL = 0.005, 0.020           # s
+SPIKE_ROT, SPIKE_TRANS, GROSS_DEG = 2.0, 0.10, 30.0   # "room" mode GT frame filters (extended E2)
 R180 = np.diag([-1.0, -1.0, 1.0, 1.0])       # camera turned 180 deg about its optical axis
 Z_ORIEN = np.array([[0, -1, 0], [-1, 0, 0], [0, 1, 0], [1, 0, 0]], float)  # SceneFun3D decide_pose
 
@@ -117,6 +126,43 @@ def device_turn(gt_ts, gt_P, dev_ts, dev_P, laser_to_arkit):
     snap = Rot.from_matrix(R180[:3, :3]) if turn else Rot.identity()
     resid = np.degrees(np.linalg.norm((snap.inv() * R).as_rotvec(), axis=1))
     return turn, float(np.median(ang)), float(np.median(resid))
+
+
+def gt_spikes(ts, P, rot_deg=SPIKE_ROT, trans_m=SPIKE_TRANS):
+    """GT frames that jump away from their neighbours (COLMAP misregistrations; extended E2): the frame differs
+    from the interpolation of frames i-1 and i+1 at its timestamp by > rot_deg or > trans_m."""
+    R, x, bad = Rot.from_matrix(P[:, :3, :3]), P[:, :3, 3], set()
+    for i in range(1, len(P) - 1):
+        a = (ts[i] - ts[i - 1]) / max(ts[i + 1] - ts[i - 1], 1e-9)
+        Ri = R[i - 1] * Rot.from_rotvec(a * (R[i - 1].inv() * R[i + 1]).as_rotvec())
+        if (np.degrees((Ri.inv() * R[i]).magnitude()) > rot_deg
+                or np.linalg.norm(x[i] - ((1 - a) * x[i - 1] + a * x[i + 1])) > trans_m):
+            bad.add(i)
+    return bad
+
+
+def gt_gross(gt_ts, gt_P, dev_ts, dev_P, laser_to_arkit, turn, deg=GROSS_DEG):
+    """GT frames whose orientation, mapped into the ARKit world, is > deg from the device's after removing one
+    robust video-wide alignment. ARKit tracks smoothly (no frame of 73,512 jumps > 30 deg from its neighbours,
+    results/e2x_survey/sf_gt_spikes.log), so these are GT failures; device errors > deg cannot be studied."""
+    idx, W = [], []
+    for i, t in enumerate(gt_ts):
+        j, d = nearest(dev_ts, t)
+        if d <= POSE_TOL:
+            Pd = dev_P[j] @ R180 if turn else dev_P[j]
+            idx.append(i)
+            W.append(((laser_to_arkit @ gt_P[i]) @ np.linalg.inv(Pd))[:3, :3])
+    if not idx:
+        return set()
+    W = Rot.from_matrix(np.array(W))
+    m = W.mean()
+    for _ in range(5):                                      # robust: refit on the frames within deg
+        ang = np.degrees((m.inv() * W).magnitude())
+        if (ang <= deg).sum() == 0:
+            break
+        m = W[ang <= deg].mean()
+    ang = np.degrees((m.inv() * W).magnitude())
+    return {i for i, a in zip(idx, ang) if a > deg}
 
 
 def usable_frames(gt_ts, gt_P, dev_ts, depth_ts, have):
@@ -239,18 +285,35 @@ class Video:
                     dev_depth=lidar_on_grid(ld, self.turn, nw, nh, left, top), stamp=key)
 
 
-def build_video(split, visit, video, out_dir, log=print):
+def room_windows(n_kf):
+    """'room' mode (extended E2): N_VIEWS keyframes evenly spread over the whole recording (r0), its first half
+    (r1) and its second half (r2), so the device hints carry the drift of a whole room scan."""
+    if n_kf < 2 * N_VIEWS:
+        raise ValueError(f"{n_kf} usable keyframes (room mode needs {2 * N_VIEWS})")
+    return [np.linspace(a, b - 1, N_VIEWS).round().astype(int) for a, b in ((0, n_kf), (0, n_kf // 2), (n_kf // 2, n_kf))]
+
+
+def build_video(split, visit, video, out_dir, log=print, mode="consec"):
     v = Video(visit, video)
     if v.turn_resid > 5.0:
         raise ValueError(f"{video}: device frame does not match GT frame after a {v.turn} deg turn "
                          f"(median residual {v.turn_resid:.1f} deg)")
-    kf = [v.frames[i] for i in keyframes(v.gt_P[v.frames])]
-    if len(kf) < N_VIEWS * CLIPS_PER_VIDEO:
-        raise ValueError(f"{video}: {len(kf)} usable keyframes")
+    frames, n_bad = v.frames, 0
+    if mode == "room":
+        bad = gt_spikes(v.gt_ts, v.gt_P) | gt_gross(v.gt_ts, v.gt_P, v.dev_ts, v.dev_P, v.T, v.turn)
+        frames = [i for i in v.frames if i not in bad]
+        n_bad = len(v.frames) - len(frames)
+    kf = [frames[i] for i in keyframes(v.gt_P[frames])]
+    if mode == "room":
+        sels, tag = [[kf[k] for k in w] for w in room_windows(len(kf))], "r"
+    else:
+        if len(kf) < N_VIEWS * CLIPS_PER_VIDEO:
+            raise ValueError(f"{video}: {len(kf)} usable keyframes")
+        sels, tag = [kf[s:s + N_VIEWS] for s in clip_starts(len(kf), N_VIEWS, CLIPS_PER_VIDEO, non_overlapping=True)], "c"
     nw, nh, left, top = resize_crop_params(HW, HH, TW, TH)
     paths = []
-    for c, s in enumerate(clip_starts(len(kf), N_VIEWS, CLIPS_PER_VIDEO, non_overlapping=True)):
-        fr = [v.frame(i, nw, nh, left, top) for i in kf[s:s + N_VIEWS]]
+    for c, sel in enumerate(sels):
+        fr = [v.frame(i, nw, nh, left, top) for i in sel]
         st = lambda k: np.stack([f[k] for f in fr])
         poses, dev_poses = relative_to_first(st("pose")), relative_to_first(st("dev_pose"))
         for i in range(N_VIEWS):
@@ -261,13 +324,14 @@ def build_video(split, visit, video, out_dir, log=print):
                     dev_K=st("dev_K"), dev_poses=dev_poses, dev_depth=st("dev_depth").astype(np.float32),
                     names=np.array([f["stamp"] for f in fr]), scene=np.array(scene), video_id=np.array(video),
                     device_turn_deg=np.array(v.turn), device_turn_measured_deg=np.array(v.turn_deg),
-                    device_turn_residual_deg=np.array(v.turn_resid))
-        path = os.path.join(out_dir, f"{split}__{scene}__c{c}.npz")
+                    device_turn_residual_deg=np.array(v.turn_resid), mode=np.array(mode),
+                    n_gt_frames_dropped=np.array(n_bad))
+        path = os.path.join(out_dir, f"{split}__{scene}__{tag}{c}.npz")
         np.savez_compressed(path, **clip)
         paths.append(path)
         log(f"[ok] {path}  frames {fr[0]['stamp']}..{fr[-1]['stamp']}  GT depth valid {(clip['depth'] > 0).mean():.0%}  "
             f"LiDAR valid {(clip['dev_depth'] > 0).mean():.0%}  turn {v.turn} (measured {v.turn_deg:.1f}, "
-            f"residual {v.turn_resid:.2f} deg)")
+            f"residual {v.turn_resid:.2f} deg)" + (f"  GT frames dropped {n_bad}" if mode == "room" else ""))
     log(f"     {video}: {v.bytes_fetched() / 1e6:.0f} MB fetched")
     return paths
 
@@ -279,21 +343,26 @@ def main():
     ap.add_argument("--traj_cache", required=True, help="folder for the GT trajectories used for selection")
     ap.add_argument("--only", nargs="*", help="video ids (debugging)")
     ap.add_argument("--workers", type=int, default=6)
+    ap.add_argument("--mode", default="consec", choices=["consec", "room"],
+                    help="consec: E2-E clips (c0-c2); room: clips spread over the whole recording (r0-r2, extended E2)")
+    ap.add_argument("--n_cal", type=int, default=0,
+                    help="extra visits after the 3 dev + 15 eval ones, labelled 'cal' (calibration; never eval)")
     a = ap.parse_args()
     os.makedirs(a.out, exist_ok=True)
     os.makedirs(a.traj_cache, exist_ok=True)
 
-    def traj_of(visit, video):
-        p = os.path.join(a.traj_cache, f"{video}_hires.traj")
-        if not os.path.exists(p):
-            open(p, "wb").write(remote_zip.fetch(SF_URL.format(visit=visit, video=video) + "hires_poses.traj"))
-        return parse_traj(open(p).read())
-
     def cached(name, url):
         p = os.path.join(a.traj_cache, name)
-        if not os.path.exists(p):
-            open(p, "wb").write(remote_zip.fetch(url))
+        if not os.path.exists(p) or os.path.getsize(p) == 0:
+            data = remote_zip.fetch(url)   # fetch BEFORE opening: a failed fetch must not leave an empty file
+            with open(p + ".part", "wb") as f:
+                f.write(data)
+            os.replace(p + ".part", p)
         return p
+
+    def traj_of(visit, video):
+        return parse_traj(open(cached(f"{video}_hires.traj",
+                                      SF_URL.format(visit=visit, video=video) + "hires_poses.traj")).read())
 
     def aligned(visit, video):
         sf, akurl = SF_URL.format(visit=visit, video=video), AK_URL.format(video=video)
@@ -304,16 +373,20 @@ def main():
         return resid <= 5.0, f"device frame off by {measured:.1f} deg (residual {resid:.1f} after a {turn} deg turn)"
 
     decisions = []
-    sel = select_videos(a.test_csv, traj_of=traj_of, aligned=aligned, log=decisions.append)
+    sel = select_videos(a.test_csv, n_eval=N_EVAL + a.n_cal, traj_of=traj_of, aligned=aligned, log=decisions.append)
+    sel = [("cal" if k >= N_DEV + N_EVAL else s[0], *s[1:]) for k, s in enumerate(sel)]  # same first 18 as E2-E
+    cal = {s[2] for s in sel if s[0] == "cal"}
+    decisions = [(v, vid, "cal" if vid in cal else d) for v, vid, d in decisions]
     with open(os.path.join(a.out, "selection.csv"), "w", newline="") as f:
         csv.writer(f).writerows([("split", "visit_id", "video_id"), *sel])
     with open(os.path.join(a.out, "selection_log.csv"), "w", newline="") as f:
         csv.writer(f).writerows([("visit_id", "video_id", "decision"), *decisions])
+    tag = "r" if a.mode == "room" else "c"
     todo = [s for s in sel if (not a.only or s[2] in a.only) and not all(
-        os.path.exists(os.path.join(a.out, f"{s[0]}__sf{s[1]}__c{c}.npz")) for c in range(CLIPS_PER_VIDEO))]
+        os.path.exists(os.path.join(a.out, f"{s[0]}__sf{s[1]}__{tag}{c}.npz")) for c in range(CLIPS_PER_VIDEO))]
     failed = []
     with ProcessPoolExecutor(a.workers) as ex:  # network latency dominates: videos in parallel
-        for s, (paths, err) in zip(todo, ex.map(_build, [(*s, a.out) for s in todo])):
+        for s, (paths, err) in zip(todo, ex.map(_build, [(*s, a.out, a.mode) for s in todo])):
             print(f"done {s[2]}: {len(paths)} clips" + (f"  FAILED: {err}" if err else ""), flush=True)
             if err:
                 failed.append(s[2])
@@ -323,7 +396,8 @@ def main():
 
 def _build(args):
     try:
-        return build_video(*args, log=lambda m: print(m, flush=True)), None
+        *rest, mode = args
+        return build_video(*rest, log=lambda m: print(m, flush=True), mode=mode), None
     except Exception as e:  # one bad video must not stop the others
         return [], repr(e)
 

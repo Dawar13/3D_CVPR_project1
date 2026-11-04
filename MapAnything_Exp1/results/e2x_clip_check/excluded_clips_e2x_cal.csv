@@ -1,0 +1,5 @@
+clip_id,reason
+cal__sf422826__c1,"GT view(s) fail the photo check: view 2 2.39 px (device 0.83 px), view 6 385.65 px (device 0.58 px)"
+cal__sf471425__c0,failed the E0 ground-truth check (worst median_rel 0.2790 >= 0.03 on a pair with >5% overlap)
+cal__sf471952__c1,failed the E0 ground-truth check (worst median_rel 0.3679 >= 0.03 on a pair with >5% overlap)
+cal__sf471952__c2,failed the E0 ground-truth check (worst median_rel 0.0918 >= 0.03 on a pair with >5% overlap)

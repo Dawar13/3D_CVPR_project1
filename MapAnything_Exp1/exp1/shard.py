@@ -101,7 +101,15 @@ def merge(out, clips):
             f.writelines(line + "\n" for c in order for line in fails.get(c, []))
     elif os.path.exists(os.path.join(out, "failures.jsonl")):
         os.remove(os.path.join(out, "failures.jsonl"))
-    infos = [json.load(open(os.path.join(r, "run_info.json"))) for r in runs]
+    dec = {}  # E3 decisions (run_exp1.run_e3), in clip order then run order
+    for r in runs:
+        p = os.path.join(r, "e3_decisions.jsonl")
+        for line in (open(p).read().splitlines() if os.path.exists(p) else []):
+            dec.setdefault(_clip_of_key(json.loads(line)["run_key"]), []).append(line)
+    if dec:
+        with open(os.path.join(out, "e3_decisions.jsonl"), "w") as f:
+            f.writelines(line + "\n" for c in order for line in dec.get(c, []))
+    infos =[json.load(open(os.path.join(r, "run_info.json"))) for r in runs]
     for i in infos[1:]:
         assert {k: v for k, v in i.items() if k != "clips"} == {k: v for k, v in infos[0].items() if k != "clips"}, \
             "shards ran with different settings"

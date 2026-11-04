@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project status and E2X plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>/* E2 knowledge-transfer report. Same tokens as the E1 report (scripts/e1_report_template.html), light only:
+   the document is made for reading and printing, and its figures are rendered on white. */
+:root {
+  color-scheme: light;
+  --bg: #f6f7f8; --surface: #fdfdfc; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781; --line: #e1e0d9;
+  --accent: #2a78d6; --hurt: #9a2b2b; --hurt-soft: #fbe4e2; --help: #2f6b2f; --help-soft: #e3f1e3;
+  --neutral: #52514e; --neutral-soft: #efeee9;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; }
+.page { padding: 40px max(16px, 3vw) 72px; display: grid; gap: 44px; }
+.col { max-width: 46rem; margin-inline: auto; width: 100%; min-width: 0; }
+.wide { max-width: 64rem; margin-inline: auto; width: 100%; min-width: 0; }
+.stack { display: grid; gap: 14px; }
+h1, h2, h3 { margin: 0; line-height: 1.2; text-wrap: balance; }
+h1 { font-size: clamp(1.9rem, 4vw, 2.5rem); font-weight: 600; }
+h2 { font-size: 1.4rem; font-weight: 600; padding-top: 6px; border-top: 1px solid var(--line); }
+h3 { font-size: 1.08rem; font-weight: 600; margin-top: 6px; }
+p { margin: 0; }
+.eyebrow { font-family: var(--font-data); font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.lead { font-size: 1.1rem; color: var(--ink-2); }
+.verdict { display: grid; gap: 14px; padding: 22px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.decision { font-size: 1.5rem; font-weight: 600; line-height: 1.25; }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.tiles > div { display: grid; gap: 2px; padding: 12px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+.tiles .big { font-family: var(--font-data); font-size: 1.35rem; font-weight: 500; }
+.tiles span:last-child { font-size: 0.8rem; color: var(--ink-2); line-height: 1.35; }
+.chip { font-family: var(--font-data); font-size: 0.72rem; font-weight: 500; padding: 1px 7px; border-radius: 999px; white-space: nowrap; }
+.chip.hurt, .chip.no { background: var(--hurt-soft); color: var(--hurt); }
+.chip.help, .chip.yes { background: var(--help-soft); color: var(--help); }
+.chip.neutral { background: var(--neutral-soft); color: var(--neutral); }
+figure { margin: 0; display: grid; gap: 8px; }
+figure img { width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+figure.diagram svg { width: 100%; height: auto; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 6px; box-sizing: border-box; }
+figcaption, .src { font-size: 0.84rem; color: var(--muted); }
+figcaption .src { display: block; }
+.table-scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.84rem; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 500; color: var(--muted); font-size: 0.76rem; }
+td.num, th.num { text-align: right; font-family: var(--font-data); font-variant-numeric: tabular-nums; }
+td.muted { color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+.how { padding-left: 14px; border-left: 2px solid var(--line); color: var(--ink-2); font-size: 0.94rem; }
+.list { margin: 0; padding-left: 1.2rem; display: grid; gap: 8px; }
+.list.small { font-size: 0.88rem; color: var(--ink-2); }
+code { font-family: var(--font-data); font-size: 0.85em; overflow-wrap: anywhere; }
+@page { size: A4; margin: 13mm 12mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: #fff; font-size: 10pt; }
+  .page { padding: 0; display: block; }
+  .page > * + * { margin-top: 18px; }
+  .stack, .verdict { display: block; }
+  .stack > * + *, .verdict > * + * { margin-top: 9px; }
+  .table-scroll { overflow: visible; }
+  table { font-size: 7.6pt; }
+  th, td { padding: 3px 5px; }
+  figure, .verdict, tr, .how, .tiles > div { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  h2 { margin-top: 6px; }
+}
+.decision-table td:first-child { min-width: 8rem; }
+.decision-table .chip { white-space: normal; display: inline-block; line-height: 1.3; }
+.decision-table table { table-layout: fixed; }
+
+.box { padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: grid; gap: 10px; }
+.box.key { border-left: 4px solid var(--accent); }
+.box.warn { border-left: 4px solid var(--hurt); }
+.box.ok { border-left: 4px solid var(--help); }
+.qa h3 { color: var(--accent); }
+ol.steps { margin: 0; padding-left: 1.3rem; display: grid; gap: 8px; }
+.small { font-size: 0.88rem; color: var(--ink-2); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .two { grid-template-columns: 1fr; } }
+td b { font-weight: 600; }
+.status { font-family: var(--font-data); font-size: 0.72rem; padding: 1px 7px; border-radius: 999px; white-space: nowrap; }
+.status.done { background: var(--help-soft); color: var(--help); }
+.status.next { background: #e3ecf8; color: #1f5fae; }
+.status.gap { background: var(--hurt-soft); color: var(--hurt); }
+@media print { .two { display: grid; } .box { break-inside: avoid; } }
+</style></head>
+<body><main class="page">
+<header class="col stack">
+  <p class="eyebrow">Project status &middot; 4 November 2026 &middot; plain-language version</p>
+  <h1>Do 3D models trust bad hints? Where we stand, and what comes next</h1>
+  <p class="lead">What has been found, how the experiments are set up, what the planned fix does, why bad hints
+  matter in the real world, and how the next GPU sessions decide the final paper.</p>
+</header>
+
+<section class="col stack">
+  <div class="box key">
+    <h3 style="margin:0">The whole paper in three sentences</h3>
+    <ol class="steps">
+      <li><b>The problem.</b> Programs that build 3D models from photos accept extra <i>hints</i> (where each camera was,
+      lens settings, depth maps) and <b>obey them, even when they are wrong, and even when the program itself can tell</b>.</li>
+      <li><b>It matters.</b> Real hint sources (AI depth estimates, phone compasses, GPS, long phone recordings) make
+      errors of the size that hurts.</li>
+      <li><b>A fix.</b> A cheap check that compares the hints with what the photos alone say can repair or drop bad hints
+      without retraining, and leave good hints alone.</li>
+    </ol>
+    <div class="table-scroll "><table><thead><tr><th>Part</th><th>Status</th></tr></thead><tbody><tr><td>1. The problem</td><td><span class="status done">shown</span> for MapAnything; partly for OmniVGGT; <span class="status next">next</span> &pi;3-X</td></tr><tr><td>2. It matters in practice</td><td><span class="status done">shown</span> for AI depth; <span class="status next">next</span> camera directions over whole rooms; error sizes from published studies</td></tr><tr><td>3. The fix</td><td><span class="status next">built and tested on trial data</span>; final test after the next GPU session</td></tr></tbody></table></div>
+  </div>
+</section>
+
+<section class="col stack">
+  <h2>1. The question</h2>
+  <p>Programs like MapAnything turn a handful of photos into a 3D model. They can also take <b>hints</b>: where each
+  camera was (position and direction), lens settings, and depth maps. Correct hints make them much better. Real hints
+  come from phones, GPS, drones or AI depth estimators, and these are sometimes wrong. We ask three things:</p>
+  <ol class="list">
+    <li>Do wrong hints make the result <b>worse than using no hints at all</b>?</li>
+    <li><b>Why</b> does it happen?</li>
+    <li>Can we <b>catch and fix</b> bad hints automatically, using only the photos, with no retraining?</li>
+  </ol>
+</section>
+
+<section class="col stack">
+  <h2>2. What is done so far</h2>
+  <div class="table-scroll "><table><thead><tr><th>Step</th><th>Question</th><th>Answer</th></tr></thead><tbody><tr><td><b>E0</b></td><td>Does our pipeline work?</td><td>Yes. The setup checks passed, runs repeat bit for bit, and one 10-photo run takes 0.26 s.</td></tr><tr><td><b>E1</b></td><td>Do wrong hints hurt?</td><td><b>Yes, badly, for camera-direction errors.</b> One camera turned 15&deg; more than doubles the program's direction error compared with photos only (+114%, all 10 scenes). Slow drift: +142%. All cameras sharing one 5&deg; compass error: +108%. Wrong camera <i>positions</i> are mostly shrugged off.</td></tr><tr><td><b>E2</b></td><td>What exactly happens, and does it happen elsewhere?</td><td>MapAnything <b>copies</b> wrong directions (77% of a 1&deg; error, 96% of a 30&deg; error) and never overrules them. It <b>knows</b> something is off: in 93 of 100 random pairs of one bad and one good camera, the bad one gets lower confidence. It obeys anyway. The damage happens inside the network, not in a simple averaging step. A second program (OmniVGGT) copies about half of a direction error. Real iPad hints <b>helped</b> both programs; <b>AI-guessed depth hurt both</b>. E1's simple filter catches one very wrong camera but throws away 12% of good cameras.</td></tr><tr><td><b>Now</b></td><td>Extended E2 and the first version of the fix (E3)</td><td>Laptop work done; GPU session prepared. Sections 3&ndash;8.</td></tr></tbody></table></div>
+  <p class="src">Source: <code>reports/e0_logs/8_det_*.txt</code>; <code>reports/e1_results.md</code>; <code>results/e1_eval/agg/signals.json</code>; <code>reports/e2_results/e2_results.pdf</code></p>
+</section>
+
+<section class="col stack">
+  <h2>3. The setup</h2>
+  <h3>3.1 The programs (three)</h3>
+  <div class="table-scroll "><table><thead><tr><th>Program</th><th>Role</th><th>Why it is included</th></tr></thead><tbody><tr><td><b>MapAnything</b> (Meta)</td><td>Main subject</td><td>Takes every kind of hint, camera by camera. This is where we found the problem.</td></tr><tr><td><b>OmniVGGT</b></td><td>Second program</td><td>Built differently (on VGGT). Shows whether the problem belongs to one program only.</td></tr><tr><td><b>&pi;3-X</b> (new)</td><td>Third program</td><td>Also takes all kinds of hints, camera by camera. A benchmark paper (SpatialBench) reports that it <i>partly overrules</i> wrong camera hints, the opposite of MapAnything, so it is a real test.</td></tr><tr><td>Depth Anything V2</td><td>Not tested itself</td><td>Only produces the <b>AI depth hints</b>, the way a phone without a depth sensor would.</td></tr></tbody></table></div>
+
+  <h3>3.2 The datasets (two, for different jobs)</h3>
+  <div class="table-scroll "><table><thead><tr><th>Dataset</th><th>What it is</th><th>Why we use it</th><th>How</th></tr></thead><tbody><tr><td><b>ETH3D</b></td><td>13 scenes, high-quality photos, laser-scanned exact ground truth</td><td>Exact truth lets us <b>break hints on purpose</b> by known amounts (turn one camera 15&deg;, add drift, scale depth &times;1.5) and measure the damage precisely</td><td>3 trial scenes, 10 final scenes; 10 photos per clip</td></tr><tr><td><b>SceneFun3D / ARKitScenes</b> (iPad room scans)</td><td>Real iPad recordings with the iPad's <b>own</b> camera tracking (ARKit) and depth sensor (LiDAR), plus separately computed ground truth</td><td>Real-world hints with real mistakes</td><td><b>Short</b> clips (E2-E, about 0.8 m of walking) and new <b>whole-room</b> clips (10 photos spread over the whole recording)</td></tr></tbody></table></div>
+  <p><b>Why the whole-room clips?</b> Over a short walk the iPad's tracking is almost perfect, so its hints helped. Across a
+  whole room it drifts. Measured on 150 recordings:</p>
+  <div class="table-scroll "><table><thead><tr><th>10 photos spread over&hellip;</th><th>Typical size of the area</th><th>Worst camera's direction error (typical)</th><th>1 clip in 10 is worse than</th><th>Clips over 5&deg;</th></tr></thead><tbody><tr><td>a short stretch (E2-E style)</td><td>0.80 m</td><td>1.23&deg;</td><td>2.71&deg;</td><td>4.6%</td></tr><tr><td>the whole recording</td><td>3.36 m</td><td>2.88&deg;</td><td>13.46&deg;</td><td>20.7%</td></tr></tbody></table></div>
+  <p>Photos alone get camera directions right to about 0.8&deg;. So across a room, <b>the iPad's hint is often worse than the
+  photos</b>, which is exactly where obeying should hurt.</p>
+  <p class="src">Source: <code>results/e2x_survey/sf_device_survey.log</code>; <code>results/e2x_survey/sf_device_survey_clean.csv</code>; <code>reports/e2_results/e2_results.pdf (photos-only uncertainty)</code></p>
+
+  <div class="box">
+    <p><b>Data checked and set aside:</b></p>
+    <ul class="list small">
+      <li><b>ADVIO</b> (phone): its "truth" comes from the same phone's motion sensor, so it cannot judge the phone.</li>
+      <li><b>Zurich drone:</b> GPS is typically 4.69 m off (worst 42.67 m) while the drone moves about 0.71 m per second.
+      But the logged orientation is the drone's, not the camera's, which turns on its own. Kept as an option for GPS tests.</li>
+      <li><b>ScanNet++</b>: access not granted. <b>LaMAR</b>: access must be requested.</li>
+    </ul>
+    <p class="src">Source: <code>results/e2x_survey/advio_probe.log</code>; <code>results/e2x_survey/zurich_probe.log</code></p>
+  </div>
+  <div class="box warn">
+    <p><b>Quality control.</b> The iPad dataset's "truth" is itself sometimes wrong: 493 of 73,512 frames jump away from
+    their neighbours by more than 5&deg; (80 by more than 30&deg;), while the iPad's own tracking never jumps more than
+    30&deg;. Every new clip therefore went through two checks (depth consistency, and whether the "true" poses fit the
+    photos). <b>21 of 114 new clips failed and were set aside before any program saw them.</b></p>
+    <p class="src">Source: <code>results/e2x_survey/sf_gt_spikes.log</code>; <code>results/e2x_clip_check/</code></p>
+  </div>
+
+  <h3>3.3 How a test works</h3>
+  <p>Each clip is 10 photos plus hints. Each program runs several ways on the <b>same</b> clip:</p>
+  <ol class="list">
+    <li><b>Photos only</b>, no hints.</li>
+    <li><b>Correct hints</b>, the best case.</li>
+    <li><b>Wrong hints</b>: errors put in on purpose (ETH3D) or real iPad / AI hints (SceneFun3D).</li>
+    <li><b>Wrong hints plus a remedy</b>: the existing remedies (3.4), and later our fix.</li>
+  </ol>
+  <p>Errors are compared clip by clip, with the <b>room or scene</b> as the unit, so ten clips of one room cannot count as
+  ten pieces of evidence. With many comparisons a statistical correction is applied, and an effect only counts if it is
+  also <b>big enough to matter</b>: 1 percentage point for shape, 0.25&deg; for direction, 5% for size.</p>
+  <p><b>What is measured:</b> shape error of the 3D points; camera-direction error between camera pairs and the share of
+  pairs within 5&deg;; the standard pose score other papers report (AUC@30, now computed for 11,938 finished runs);
+  depth error; real-world size error. For the fix also: how much damage it repairs, how often it wrongly touches good
+  hints, and the extra running time.</p>
+  <p class="src">Source: <code>results/e2c_eval/auc30.csv</code>; <code>results/e2df_eval/auc30.csv</code>; <code>results/e2d_eval/auc30.csv</code>; <code>results/e2e_ma_eval/auc30.csv</code>; <code>results/e2e_ov_eval/auc30.csv</code></p>
+
+  <h3>3.4 The existing remedies (what the fix must beat)</h3>
+  <div class="table-scroll "><table><thead><tr><th>Name</th><th>What it does</th><th>What we know</th></tr></thead><tbody><tr><td>Use all hints</td><td>Trust everything</td><td>This is the problem itself</td></tr><tr><td><b>R0</b> photos only</td><td>Ignore all hints</td><td>Safe, but throws away everything good hints add</td></tr><tr><td><b>R1</b> drop camera hints</td><td>Keep lens and depth, drop camera positions/directions</td><td></td></tr><tr><td><b>R2</b> E1's filter</td><td>Compare each camera hint with the photos-only answer; drop it if it differs by more than 10&deg; in direction or 15&deg; in movement direction</td><td>Catches one very wrong camera, but drops 12% of good cameras and misses errors shared by all cameras</td></tr><tr><td><b>R3</b> confidence drop</td><td>Drop cameras the program itself is unsure about, then rerun</td><td>Same weakness on shared errors</td></tr><tr><td><b>R4</b> classic geometry check</td><td>The traditional non-AI method (robust bundle adjustment)</td><td>Planned (CPU only)</td></tr><tr><td><b>ORACLE</b></td><td>Drop exactly the bad hints, using the truth</td><td>Cheating upper bound, for reference only</td></tr><tr><td>VPGGT, TCO</td><td>Methods from other papers</td><td>VPGGT: no public code. TCO: about 160 s per scene and no licence, so not run</td></tr></tbody></table></div>
+</section>
+
+<section class="col stack">
+  <h2>4. Do bad hints really happen? (the question a reviewer will ask first)</h2>
+  <p>If bad hints were rare, the paper would be about an exotic problem. So here is what is known about each real hint
+  source: the size of its errors, and whether errors of that size hurt in our tests.</p>
+  <div class="table-scroll "><table><thead><tr><th>Hint source</th><th>Typical real error</th><th>Where the number comes from</th><th>Does that size hurt?</th></tr></thead><tbody><tr><td><b>AI depth</b> (cameras and phones without a depth sensor)</td><td>&times;1.42 too far, range &times;1.13&ndash;&times;1.85, on <b>every</b> iPad clip</td><td>Measured by us (E2-E)</td><td><span class="status gap">yes, measured</span> shape +10.0 / +9.1 pp worse (MapAnything / OmniVGGT)</td></tr><tr><td>AI depth networks in general</td><td>34&ndash;55% average depth error on ETH3D</td><td>Metric3D v2 paper (TPAMI 2024), Table 3</td><td>depth &times;1.5 hurts (E2-B)</td></tr><tr><td><b>Phone compass</b> (camera direction)</td><td>indoors: 12.45&deg; average, single readings 13&ndash;25&deg;; outdoors after calibration 1&ndash;3&deg;, 2&ndash;3&times; worse later; mean deviations 5.5&ndash;6.9&deg;</td><td>Abadi et al. (IPIN 2013); Tartachynska &amp; Pylypyak (2026)</td><td>one camera 15&deg;, shared 5&ndash;10&deg; and first camera 15&deg; all hurt (E1, E2-B)</td></tr><tr><td><b>Phone GPS</b> (camera position)</td><td>4.9 m open sky; 7&ndash;13 m in cities; up to 99.7 m. Our drone data: 4.69 m typical, 42.67 m worst</td><td>GPS.gov; Merry &amp; Bettinger (PLOS ONE 2019); our Zurich survey</td><td>positions are mostly shrugged off; only big jumps hurt (E1)</td></tr><tr><td><b>Phone tracking</b> over a whole room (ARKit)</td><td>worst camera 2.88&deg; typical, over 5&deg; in 20.7% of clips</td><td>Measured by us (150 recordings)</td><td><span class="status next">being tested</span> (Part X-B)</td></tr><tr><td>Single-camera 3D tracking (monocular SLAM)</td><td>scale changed by 1 : 0.37 over one loop</td><td>Strasdat et al. (RSS 2010)</td><td>scale &times;2 hurts (E2-B)</td></tr><tr><td>Lens data in photo files (EXIF)</td><td>"usually good, but can occasionally be off by more than a factor of two"</td><td>Snavely et al. (TOG 2006)</td><td>lens errors not yet shown to hurt</td></tr><tr><td>3D reconstruction software (COLMAP), often used to make hints</td><td>493 of 73,512 frames jump by more than 5&deg; in a curated dataset</td><td>Measured by us (SceneFun3D)</td><td>same as the camera-direction rows</td></tr></tbody></table></div>
+  <p class="src">Source: <code>reports/e2_literature.md (literature sizes, with page numbers)</code>; <code>reports/e2_audit.md (E2-B: 7 error families harmful at literature-realistic sizes)</code>; <code>results/e2e_mono/</code>; <code>results/e2x_survey/</code></p>
+  <div class="box key">
+    <p><b>Our answer to "isn't this rare?"</b></p>
+    <ol class="steps">
+      <li><b>Not for AI depth.</b> Every iPad clip had a scale error between 13% and 85%, and it hurt both programs.</li>
+      <li><b>For camera directions it depends on the source</b>, and we say so openly: phone tracking over a short walk is
+      good (it helped), while compass-based directions, GPS and long recordings are not.</li>
+      <li><b>The fix is a seatbelt.</b> If it costs almost nothing on good hints and never makes them worse, it is worth
+      having even when failures are uncommon. So the paper must show, and report, how rarely it touches good hints.</li>
+    </ol>
+    <p class="small"><b>Honest gap:</b> the only real-world harm we have <i>measured ourselves</i> so far is AI depth. Measured
+    real-world harm from wrong camera directions depends on Part X-B (whole-room iPad clips).</p>
+  </div>
+</section>
+
+<section class="col stack">
+  <h2>5. The fix (E3), explained step by step</h2>
+  <h3>5.1 Why does the fix run "photos only", if that is a baseline?</h3>
+  <p>The photos-only run has <b>two different jobs</b>, and only one of them is the baseline:</p>
+  <figure class="diagram"><svg viewBox="0 0 780 272" role="img" aria-label="Two roles of the photos-only run"><text x="15" y="22" font-size="12.5" fill="#0b0b0b" text-anchor="start" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">A. Photos only as a BASELINE (R0): its answer is the final answer; all hints are thrown away</text><rect x="15" y="34" width="150" height="62" rx="8" fill="#fff" stroke="#c9c7bf"/><text x="90.0" y="56" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">10 photos</text><text x="90.0" y="75" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">hints ignored</text><line x1="165" y1="65" x2="209" y2="65" stroke="#898781" stroke-width="1.6"/><polygon points="215,65 207,61 207,69" fill="#898781"/><rect x="215" y="34" width="150" height="62" rx="8" fill="#fff" stroke="#c9c7bf"/><text x="290.0" y="56" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">3D program</text><text x="290.0" y="75" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">photos only</text><line x1="365" y1="65" x2="409" y2="65" stroke="#898781" stroke-width="1.6"/><polygon points="415,65 407,61 407,69" fill="#898781"/><rect x="415" y="34" width="345" height="62" rx="8" fill="#efeee9" stroke="#c9c7bf"/><text x="587.5" y="56" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">Final 3D model</text><text x="587.5" y="75" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">safe, but loses everything good hints add</text><text x="15" y="128" font-size="12.5" fill="#2a78d6" text-anchor="start" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">B. Photos only INSIDE THE FIX: its answer is only a reference to check each hint against</text><rect x="15" y="140" width="150" height="96" rx="8" fill="#fff" stroke="#c9c7bf"/><text x="90.0" y="162" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">10 photos</text><text x="90.0" y="181" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">+ the hints</text><text x="90.0" y="196" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">(camera directions,</text><text x="90.0" y="211" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">depth, lens)</text><line x1="165" y1="165" x2="209" y2="165" stroke="#2a78d6" stroke-width="1.6"/><polygon points="215,165 207,161 207,169" fill="#2a78d6"/><rect x="215" y="140" width="150" height="50" rx="8" fill="#e3ecf8" stroke="#2a78d6"/><text x="290.0" y="162" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">3D program</text><text x="290.0" y="181" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">photos only (x3)</text><line x1="365" y1="165" x2="409" y2="165" stroke="#2a78d6" stroke-width="1.6"/><polygon points="415,165 407,161 407,169" fill="#2a78d6"/><rect x="415" y="140" width="160" height="50" rx="8" fill="#e3ecf8" stroke="#2a78d6"/><text x="495.0" y="162" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">Check the hints</text><text x="495.0" y="181" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">repair / drop / keep</text><line x1="575" y1="165" x2="609" y2="165" stroke="#2a78d6" stroke-width="1.6"/><polygon points="615,165 607,161 607,169" fill="#2a78d6"/><rect x="615" y="140" width="150" height="96" rx="8" fill="#e3f1e3" stroke="#2f6b2f"/><text x="690.0" y="162" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">3D program</text><text x="690.0" y="181" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">photos + checked</text><text x="690.0" y="196" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">hints: the final</text><text x="690.0" y="211" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">3D model</text><path d="M90,242 L90,250 L690,250 L690,242" fill="none" stroke="#2f6b2f" stroke-width="1.2"/><text x="390" y="266" font-size="11" fill="#2f6b2f" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">the good (or repaired) hints still reach the final run</text></svg></figure>
+  <p>The reason the fix needs it: <b>no fixed choice wins everywhere.</b> With good hints, using them is much better
+  (MapAnything's own paper, two-photo benchmark: relative point error 0.08 with photos only versus 0.02 with all hints). With bad hints,
+  ignoring them is better (E1). A real system does not know which case it is in. So the fix decides <b>clip by clip and
+  hint by hint</b>, and the photos-only answer is the <b>referee</b> it uses to decide, not the final answer.</p>
+  <div class="table-scroll "><table><thead><tr><th></th><th>Use all hints</th><th>Photos only (R0)</th><th>The fix (goal)</th></tr></thead><tbody><tr><td><b>Hints are good</b></td><td>best</td><td>clearly worse</td><td>as good as using all hints</td></tr><tr><td><b>Hints are bad</b></td><td>much worse (E1, E2)</td><td>safe</td><td>as good as photos only, or better (it keeps the good hints)</td></tr></tbody></table></div>
+  <p class="src">Source: <code>context.md section 3 (MapAnything paper, Table 2)</code>; <code>reports/e1_results.md</code></p>
+
+  <h3>5.2 The three ways hints go wrong</h3>
+  <p>Picture 10 cameras along a walk. Each hint says which way a camera was pointing. Hints can be wrong in three typical ways:</p>
+  <figure class="diagram"><svg viewBox="0 0 805 215" role="img" aria-label="Three ways hints go wrong"><rect x="15" y="8" width="250" height="199" rx="8" fill="#fbfbf9" stroke="#c9c7bf"/><text x="27" y="30" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">1. One shared tilt</text><text x="27" y="47" font-size="11" fill="#898781" text-anchor="start" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">every camera off by the same angle</text><line x1="37.0" y1="168.0" x2="37.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="37.0,110.0 41.0,117.0 33.0,117.0" fill="#a9a69e"/><line x1="37.0" y1="168.0" x2="49.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="49.1,111.3 51.5,118.9 43.7,117.3" fill="#9a2b2b"/><circle cx="37" cy="168" r="4" fill="#0b0b0b"/><text x="37" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">1</text><line x1="60.0" y1="168.0" x2="60.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="60.0,110.0 64.0,117.0 56.0,117.0" fill="#a9a69e"/><line x1="60.0" y1="168.0" x2="72.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="72.1,111.3 74.5,118.9 66.7,117.3" fill="#9a2b2b"/><circle cx="60" cy="168" r="4" fill="#0b0b0b"/><text x="60" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">2</text><line x1="83.0" y1="168.0" x2="83.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="83.0,110.0 87.0,117.0 79.0,117.0" fill="#a9a69e"/><line x1="83.0" y1="168.0" x2="95.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="95.1,111.3 97.5,118.9 89.7,117.3" fill="#9a2b2b"/><circle cx="83" cy="168" r="4" fill="#0b0b0b"/><text x="83" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">3</text><line x1="106.0" y1="168.0" x2="106.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="106.0,110.0 110.0,117.0 102.0,117.0" fill="#a9a69e"/><line x1="106.0" y1="168.0" x2="118.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="118.1,111.3 120.5,118.9 112.7,117.3" fill="#9a2b2b"/><circle cx="106" cy="168" r="4" fill="#0b0b0b"/><text x="106" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">4</text><line x1="129.0" y1="168.0" x2="129.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="129.0,110.0 133.0,117.0 125.0,117.0" fill="#a9a69e"/><line x1="129.0" y1="168.0" x2="141.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="141.1,111.3 143.5,118.9 135.7,117.3" fill="#9a2b2b"/><circle cx="129" cy="168" r="4" fill="#0b0b0b"/><text x="129" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">5</text><line x1="152.0" y1="168.0" x2="152.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="152.0,110.0 156.0,117.0 148.0,117.0" fill="#a9a69e"/><line x1="152.0" y1="168.0" x2="164.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="164.1,111.3 166.5,118.9 158.7,117.3" fill="#9a2b2b"/><circle cx="152" cy="168" r="4" fill="#0b0b0b"/><text x="152" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">6</text><line x1="175.0" y1="168.0" x2="175.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="175.0,110.0 179.0,117.0 171.0,117.0" fill="#a9a69e"/><line x1="175.0" y1="168.0" x2="187.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="187.1,111.3 189.5,118.9 181.7,117.3" fill="#9a2b2b"/><circle cx="175" cy="168" r="4" fill="#0b0b0b"/><text x="175" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">7</text><line x1="198.0" y1="168.0" x2="198.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="198.0,110.0 202.0,117.0 194.0,117.0" fill="#a9a69e"/><line x1="198.0" y1="168.0" x2="210.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="210.1,111.3 212.5,118.9 204.7,117.3" fill="#9a2b2b"/><circle cx="198" cy="168" r="4" fill="#0b0b0b"/><text x="198" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">8</text><line x1="221.0" y1="168.0" x2="221.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="221.0,110.0 225.0,117.0 217.0,117.0" fill="#a9a69e"/><line x1="221.0" y1="168.0" x2="233.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="233.1,111.3 235.5,118.9 227.7,117.3" fill="#9a2b2b"/><circle cx="221" cy="168" r="4" fill="#0b0b0b"/><text x="221" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">9</text><line x1="244.0" y1="168.0" x2="244.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="244.0,110.0 248.0,117.0 240.0,117.0" fill="#a9a69e"/><line x1="244.0" y1="168.0" x2="256.1" y2="111.3" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="256.1,111.3 258.5,118.9 250.7,117.3" fill="#9a2b2b"/><circle cx="244" cy="168" r="4" fill="#0b0b0b"/><text x="244" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">10</text><rect x="277" y="8" width="250" height="199" rx="8" fill="#fbfbf9" stroke="#c9c7bf"/><text x="289" y="30" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">2. Drift</text><text x="289" y="47" font-size="11" fill="#898781" text-anchor="start" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">the error grows along the recording</text><line x1="299.0" y1="168.0" x2="299.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="299.0,110.0 303.0,117.0 295.0,117.0" fill="#a9a69e"/><line x1="299.0" y1="168.0" x2="299.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="299.0,110.0 303.0,117.0 295.0,117.0" fill="#9a2b2b"/><circle cx="299" cy="168" r="4" fill="#0b0b0b"/><text x="299" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">1</text><line x1="322.0" y1="168.0" x2="322.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="322.0,110.0 326.0,117.0 318.0,117.0" fill="#a9a69e"/><line x1="322.0" y1="168.0" x2="324.5" y2="110.1" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="324.5,110.1 328.2,117.2 320.2,116.9" fill="#9a2b2b"/><circle cx="322" cy="168" r="4" fill="#0b0b0b"/><text x="322" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">2</text><line x1="345.0" y1="168.0" x2="345.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="345.0,110.0 349.0,117.0 341.0,117.0" fill="#a9a69e"/><line x1="345.0" y1="168.0" x2="350.1" y2="110.2" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="350.1,110.2 353.4,117.5 345.5,116.8" fill="#9a2b2b"/><circle cx="345" cy="168" r="4" fill="#0b0b0b"/><text x="345" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">3</text><line x1="368.0" y1="168.0" x2="368.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="368.0,110.0 372.0,117.0 364.0,117.0" fill="#a9a69e"/><line x1="368.0" y1="168.0" x2="375.6" y2="110.5" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="375.6,110.5 378.6,118.0 370.7,116.9" fill="#9a2b2b"/><circle cx="368" cy="168" r="4" fill="#0b0b0b"/><text x="368" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">4</text><line x1="391.0" y1="168.0" x2="391.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="391.0,110.0 395.0,117.0 387.0,117.0" fill="#a9a69e"/><line x1="391.0" y1="168.0" x2="401.1" y2="110.9" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="401.1,110.9 403.8,118.5 395.9,117.1" fill="#9a2b2b"/><circle cx="391" cy="168" r="4" fill="#0b0b0b"/><text x="391" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">5</text><line x1="414.0" y1="168.0" x2="414.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="414.0,110.0 418.0,117.0 410.0,117.0" fill="#a9a69e"/><line x1="414.0" y1="168.0" x2="426.6" y2="111.4" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="426.6,111.4 428.9,119.1 421.1,117.3" fill="#9a2b2b"/><circle cx="414" cy="168" r="4" fill="#0b0b0b"/><text x="414" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">6</text><line x1="437.0" y1="168.0" x2="437.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="437.0,110.0 441.0,117.0 433.0,117.0" fill="#a9a69e"/><line x1="437.0" y1="168.0" x2="452.0" y2="112.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="452.0,112.0 454.1,119.8 446.3,117.7" fill="#9a2b2b"/><circle cx="437" cy="168" r="4" fill="#0b0b0b"/><text x="437" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">7</text><line x1="460.0" y1="168.0" x2="460.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="460.0,110.0 464.0,117.0 456.0,117.0" fill="#a9a69e"/><line x1="460.0" y1="168.0" x2="477.4" y2="112.7" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="477.4,112.7 479.2,120.6 471.5,118.2" fill="#9a2b2b"/><circle cx="460" cy="168" r="4" fill="#0b0b0b"/><text x="460" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">8</text><line x1="483.0" y1="168.0" x2="483.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="483.0,110.0 487.0,117.0 479.0,117.0" fill="#a9a69e"/><line x1="483.0" y1="168.0" x2="502.8" y2="113.5" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="502.8,113.5 504.2,121.4 496.7,118.7" fill="#9a2b2b"/><circle cx="483" cy="168" r="4" fill="#0b0b0b"/><text x="483" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">9</text><line x1="506.0" y1="168.0" x2="506.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="506.0,110.0 510.0,117.0 502.0,117.0" fill="#a9a69e"/><line x1="506.0" y1="168.0" x2="528.2" y2="114.4" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="528.2,114.4 529.2,122.4 521.8,119.4" fill="#9a2b2b"/><circle cx="506" cy="168" r="4" fill="#0b0b0b"/><text x="506" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">10</text><rect x="539" y="8" width="250" height="199" rx="8" fill="#fbfbf9" stroke="#c9c7bf"/><text x="551" y="30" font-size="13" fill="#0b0b0b" text-anchor="start" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">3. One bad camera</text><text x="551" y="47" font-size="11" fill="#898781" text-anchor="start" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">one camera far off, the rest correct</text><line x1="561.0" y1="168.0" x2="561.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="561.0,110.0 565.0,117.0 557.0,117.0" fill="#a9a69e"/><line x1="561.0" y1="168.0" x2="561.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="561.0,110.0 565.0,117.0 557.0,117.0" fill="#9a2b2b"/><circle cx="561" cy="168" r="4" fill="#0b0b0b"/><text x="561" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">1</text><line x1="584.0" y1="168.0" x2="584.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="584.0,110.0 588.0,117.0 580.0,117.0" fill="#a9a69e"/><line x1="584.0" y1="168.0" x2="584.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="584.0,110.0 588.0,117.0 580.0,117.0" fill="#9a2b2b"/><circle cx="584" cy="168" r="4" fill="#0b0b0b"/><text x="584" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">2</text><line x1="607.0" y1="168.0" x2="607.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="607.0,110.0 611.0,117.0 603.0,117.0" fill="#a9a69e"/><line x1="607.0" y1="168.0" x2="607.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="607.0,110.0 611.0,117.0 603.0,117.0" fill="#9a2b2b"/><circle cx="607" cy="168" r="4" fill="#0b0b0b"/><text x="607" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">3</text><line x1="630.0" y1="168.0" x2="630.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="630.0,110.0 634.0,117.0 626.0,117.0" fill="#a9a69e"/><line x1="630.0" y1="168.0" x2="630.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="630.0,110.0 634.0,117.0 626.0,117.0" fill="#9a2b2b"/><circle cx="630" cy="168" r="4" fill="#0b0b0b"/><text x="630" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">4</text><line x1="653.0" y1="168.0" x2="653.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="653.0,110.0 657.0,117.0 649.0,117.0" fill="#a9a69e"/><line x1="653.0" y1="168.0" x2="686.3" y2="120.5" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="686.3,120.5 685.5,128.5 679.0,123.9" fill="#9a2b2b"/><circle cx="653" cy="168" r="4" fill="#0b0b0b"/><text x="653" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">5</text><line x1="676.0" y1="168.0" x2="676.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="676.0,110.0 680.0,117.0 672.0,117.0" fill="#a9a69e"/><line x1="676.0" y1="168.0" x2="676.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="676.0,110.0 680.0,117.0 672.0,117.0" fill="#9a2b2b"/><circle cx="676" cy="168" r="4" fill="#0b0b0b"/><text x="676" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">6</text><line x1="699.0" y1="168.0" x2="699.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="699.0,110.0 703.0,117.0 695.0,117.0" fill="#a9a69e"/><line x1="699.0" y1="168.0" x2="699.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="699.0,110.0 703.0,117.0 695.0,117.0" fill="#9a2b2b"/><circle cx="699" cy="168" r="4" fill="#0b0b0b"/><text x="699" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">7</text><line x1="722.0" y1="168.0" x2="722.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="722.0,110.0 726.0,117.0 718.0,117.0" fill="#a9a69e"/><line x1="722.0" y1="168.0" x2="722.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="722.0,110.0 726.0,117.0 718.0,117.0" fill="#9a2b2b"/><circle cx="722" cy="168" r="4" fill="#0b0b0b"/><text x="722" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">8</text><line x1="745.0" y1="168.0" x2="745.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="745.0,110.0 749.0,117.0 741.0,117.0" fill="#a9a69e"/><line x1="745.0" y1="168.0" x2="745.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="745.0,110.0 749.0,117.0 741.0,117.0" fill="#9a2b2b"/><circle cx="745" cy="168" r="4" fill="#0b0b0b"/><text x="745" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">9</text><line x1="768.0" y1="168.0" x2="768.0" y2="110.0" stroke="#a9a69e" stroke-width="2.0" stroke-dasharray="4 3"/><polygon points="768.0,110.0 772.0,117.0 764.0,117.0" fill="#a9a69e"/><line x1="768.0" y1="168.0" x2="768.0" y2="110.0" stroke="#9a2b2b" stroke-width="2.2"/><polygon points="768.0,110.0 772.0,117.0 764.0,117.0" fill="#9a2b2b"/><circle cx="768" cy="168" r="4" fill="#0b0b0b"/><text x="768" y="186" font-size="9.5" fill="#898781" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">10</text><text x="15" y="215" font-size="1" fill="#0b0b0b" text-anchor="start" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif"></text></svg><figcaption><span style="color:#7d7a72">- - - true direction</span> &nbsp; <span style="color:#9a2b2b">&#8212; direction the hint gives</span> &nbsp; (all cameras drawn pointing the same way; angles exaggerated so they are visible)</figcaption></figure>
+  <div class="table-scroll "><table><thead><tr><th>Kind</th><th>Plain example</th><th>What the photos-only answer shows</th></tr></thead><tbody><tr><td><b>1. One shared tilt</b></td><td>The phone's compass is off by 5&deg;, the camera is mounted slightly crooked, or the first camera's direction is wrong (every other camera is measured relative to it)</td><td>Every hint differs from the photos by the <b>same</b> angle. Each one looks only a little off; together they are consistently off.</td></tr><tr><td><b>2. Drift</b></td><td>Tracking adds a tiny mistake at every step: camera 2 is 0.5&deg; off, camera 3 1&deg;, &hellip; camera 10 4.5&deg;</td><td>The difference <b>grows steadily</b> from camera to camera.</td></tr><tr><td><b>3. One bad camera</b></td><td>A GPS jump or a compass glitch next to metal</td><td><b>One</b> camera disagrees strongly; the others agree.</td></tr></tbody></table></div>
+
+  <h3>5.3 What the fix does in each case</h3>
+  <div class="table-scroll "><table><thead><tr><th>Kind</th><th>What the fix does</th><th>Why this way</th></tr></thead><tbody><tr><td>One shared tilt</td><td>Measures the common angle and <b>turns all hints back</b> by it</td><td>The hints are still correct <i>relative to each other</i>, so all of that information is kept</td></tr><tr><td>Drift</td><td>Measures how fast the error grows and <b>undoes</b> it</td><td>Same: the rest of each hint is kept</td></tr><tr><td>One bad camera</td><td><b>Drops that one camera's hint</b></td><td>Its hint has nothing worth keeping</td></tr><tr><td>Depth too far or too near</td><td>Predicts depth from the camera hints alone, compares, and <b>rescales</b> the depth hints (e.g. divides AI depth by about 1.4)</td><td>AI depth is usually wrong in overall scale, not in shape</td></tr></tbody></table></div>
+  <div class="box">
+    <p><b>Worked example (shared tilt).</b> The photos-only answer says camera 2 turned 10&deg; and camera 3 turned 20&deg;
+    from camera 1. The hints say 15&deg; and 25&deg;. Every hint is 5&deg; more than the photos, so the fix subtracts 5&deg;
+    from all hints. They now agree with the photos, and the final run uses <b>all 10 corrected hints</b>. E1's filter would
+    have kept all of them unchanged, because each one is only 5&deg; off, under its 10&deg; limit, and the damage stays.</p>
+  </div>
+
+  <h3>5.4 "Act only when the photos are sure"</h3>
+  <p>The photos-only answer is not perfect either: typically 0.8&deg; off (2.0&deg; in the worst 10% of clips), and on some
+  iPad trial clips 2&ndash;4.5&deg; off overall, or 15&deg; on a single camera, even when the hints were correct. If hints
+  and photos disagree by 1&deg;, we cannot tell who is wrong.</p>
+  <p>So the fix first measures <b>how sure the photos are on this clip</b>: it runs photos-only three times with the photos
+  in a different order. If the three answers agree, the photos are a reliable witness here; if they wobble, they are not.
+  A hint is repaired or dropped <b>only if it disagrees with the photos by several times the photos' own wobble</b>.
+  Otherwise it is left alone.</p>
+  <p class="small">Think of two witnesses. If one of them is unsure of what they saw, you do not use their story to overrule the other.</p>
+  <figure class="diagram"><svg viewBox="0 0 780 150" role="img" aria-label="Steps of the fix"><rect x="10" y="20" width="116" height="80" rx="8" fill="#fff" stroke="#c9c7bf"/><text x="68.0" y="42" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">1. Ask the photos</text><text x="68.0" y="61" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">photos-only run,</text><text x="68.0" y="76" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">3 photo orders</text><line x1="126" y1="60" x2="136" y2="60" stroke="#898781" stroke-width="1.6"/><polygon points="142,60 134,56 134,64" fill="#898781"/><rect x="142" y="20" width="116" height="80" rx="8" fill="#fff" stroke="#c9c7bf"/><text x="200.0" y="42" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">2. How sure?</text><text x="200.0" y="61" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">do the 3 answers</text><text x="200.0" y="76" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">agree?</text><line x1="258" y1="60" x2="268" y2="60" stroke="#898781" stroke-width="1.6"/><polygon points="274,60 266,56 266,64" fill="#898781"/><rect x="274" y="20" width="116" height="80" rx="8" fill="#fff" stroke="#c9c7bf"/><text x="332.0" y="42" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">3. Compare</text><text x="332.0" y="61" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">fit: shared tilt,</text><text x="332.0" y="76" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">drift, one bad</text><line x1="390" y1="60" x2="400" y2="60" stroke="#898781" stroke-width="1.6"/><polygon points="406,60 398,56 398,64" fill="#898781"/><rect x="406" y="20" width="116" height="80" rx="8" fill="#fff" stroke="#c9c7bf"/><text x="464.0" y="42" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">4. Decide</text><text x="464.0" y="61" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">repair / drop,</text><text x="464.0" y="76" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">or keep if unsure</text><line x1="522" y1="60" x2="532" y2="60" stroke="#898781" stroke-width="1.6"/><polygon points="538,60 530,56 530,64" fill="#898781"/><rect x="538" y="20" width="116" height="80" rx="8" fill="#fff" stroke="#c9c7bf"/><text x="596.0" y="42" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">5. Depth check</text><text x="596.0" y="61" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">rescale depth that</text><text x="596.0" y="76" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">is too far / near</text><line x1="654" y1="60" x2="664" y2="60" stroke="#898781" stroke-width="1.6"/><polygon points="670,60 662,56 662,64" fill="#898781"/><rect x="670" y="20" width="116" height="80" rx="8" fill="#e3f1e3" stroke="#2f6b2f"/><text x="728.0" y="42" font-size="12.5" fill="#0b0b0b" text-anchor="middle" font-weight="600" font-family="IBM Plex Sans, Segoe UI, sans-serif">6. Final run</text><text x="728.0" y="61" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">photos + checked</text><text x="728.0" y="76" font-size="11" fill="#52514e" text-anchor="middle" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">hints</text><text x="10" y="130" font-size="11" fill="#898781" text-anchor="start" font-weight="400" font-family="IBM Plex Sans, Segoe UI, sans-serif">Extra cost: 3 photos-only runs per clip (once), plus 1-2 runs per hint set. One run takes about 0.26 s.</text></svg></figure>
+
+  <h3>5.5 First trial numbers (trial clips only, not results)</h3>
+  <p>Rows are the error put in on purpose. "Fix measured" is what the fix's comparison found, without being told.</p>
+  <div class="table-scroll "><table><thead><tr><th>Error put in</th><th>Fix measured</th><th>Same check with correct hints</th></tr></thead><tbody><tr><td>One camera 15&deg;</td><td>15.0&deg; on that camera</td><td>under 1&deg; on the others</td></tr><tr><td>First camera 15&deg;</td><td>14.8&deg; shared</td><td>0.6&deg;</td></tr><tr><td>Shared 5&deg; compass error</td><td>4.7&deg;</td><td>0.6&deg;</td></tr><tr><td>Drift levels 1 / 2 / 3</td><td>4.2 / 7.7 / 15.1&deg;</td><td>0.9&deg;</td></tr></tbody></table></div>
+  <p class="src">Source: <code>results/e2x_survey/e3_witness_dev.csv (3 ETH3D trial clips and 8 iPad trial clips; first prototype)</code></p>
+  <div class="box warn"><p><b>The open risk.</b> On the iPad trial clips the photos themselves were sometimes unreliable
+  (above). If the "how sure" measurement does not catch those cases, the fix would damage good hints. This is exactly what
+  the calibration in the next GPU session checks first.</p></div>
+</section>
+
+<section class="col stack">
+  <h2>6. Extended E2: what the next GPU session does</h2>
+  <div class="two">
+    <div class="box"><h3 style="margin:0">Part X-A: is obeying common?</h3>
+    <p class="small">&pi;3-X gets exactly the same broken ETH3D hints as MapAnything and OmniVGGT (identical down to the
+    random numbers). Does it copy wrong hints, or overrule them as SpatialBench suggests? Either answer is informative.</p></div>
+    <div class="box"><h3 style="margin:0">Part X-B: do real hints hurt when the error is bigger?</h3>
+    <p class="small">All three programs on the whole-room iPad clips (&pi;3-X also on the short clips): photos only, true
+    hints, iPad poses, iPad depth sensor, AI depth, and remedies R2/R3. Do real iPad poses still help across a whole room?
+    Does AI depth hurt again?</p></div>
+  </div>
+  <div class="box key">
+    <h3 style="margin:0">Part E3-calibration: setting the fix's cut-offs without peeking</h3>
+    <ul class="list small">
+      <li>The fix runs on <b>calibration rooms</b> (10 rooms never used for final results) and the ETH3D <b>trial</b> clips,
+      with every kind of broken hint and with real hints. Every decision it makes is logged.</li>
+      <li><b>Rule, fixed in advance:</b> choose the cut-off so that, <b>on correct hints</b>, the fix acts on at most 5% of
+      clips (shared/drift repairs) and drops at most 2% of cameras. "Do no harm" comes first.</li>
+      <li>How well it catches errors is recorded but <b>not</b> used to choose the cut-off, so the choice cannot be tuned
+      toward a nice-looking result.</li>
+    </ul>
+  </div>
+  <p>Jobs run most important first, so an early stop only loses the least important ones. Each final run starts only if
+  its trial run passes automatic checks. Estimate (not measured): about 2.5&ndash;3.5 GPU-hours; &pi;3-X's speed is
+  unknown until its trial run.</p>
+  <p class="src">Source: <code>experiments/E2X.md (sections 4-6)</code>; <code>configs/e2x_*.json</code>; <code>scripts/session_queue_e2x.sh</code></p>
+</section>
+
+<section class="col stack">
+  <h2>7. How E3 gets decided</h2>
+  <ol class="steps">
+    <li><b>After the GPU session</b> (laptop): analyse X-A, X-B and the calibration.</li>
+    <li><b>Lock the E3 plan</b> before the final E3 run: the cut-offs from calibration, the final clips, the remedies to
+    beat, and the success rules.</li>
+    <li><b>Second GPU session:</b> the fix against all remedies on the <b>final</b> clips: ETH3D final scenes with every
+    kind of broken hint, whole-room iPad clips with real iPad hints, iPad clips with AI depth.</li>
+  </ol>
+  <p><b>Proposed success rules</b> (fixed in step 2, so not final yet):</p>
+  <ul class="list">
+    <li><b>Repairs damage:</b> on errors shared by all cameras (compass, drift, first camera, depth scale), where the existing
+    remedies leave at least half of the damage, the fix removes clearly more. The original target was about 70% of what
+    the cheating ORACLE removes.</li>
+    <li><b>Does no harm:</b> on correct hints and on good real iPad hints, any change stays below the "big enough to matter"
+    thresholds.</li>
+    <li><b>Beats the best existing remedy</b> on those error types.</li>
+  </ul>
+  <div class="table-scroll "><table><thead><tr><th>Outcome</th><th>Paper</th></tr></thead><tbody><tr><td>&pi;3-X also obeys; whole-room iPad hints or AI depth hurt; the fix passes</td><td><b>Strongest workshop paper:</b> a general problem, real-world evidence and a working fix</td></tr><tr><td>The fix passes for some error types only (e.g. depth scale and shared errors)</td><td>Paper scoped to those types, stated honestly</td></tr><tr><td>The fix touches good hints too often, even at strict cut-offs</td><td>Analysis paper (problem + mechanism + why simple fixes fail); the fix becomes future work</td></tr></tbody></table></div>
+</section>
+
+<section class="col stack">
+  <h2>8. One story, not a mix of everything</h2>
+  <p>Every experiment answers one of three questions; anything that does not goes to the appendix or is dropped.</p>
+  <div class="table-scroll "><table><thead><tr><th>The paper's question</th><th>Main paper</th><th>Appendix</th><th>Not in the paper</th></tr></thead><tbody><tr><td><b>1. Do the programs obey wrong hints?</b></td><td>Trust curves: how much of a wrong hint is copied; "knows but obeys" (confidence); three programs side by side</td><td>The E1 audit; the averaging (mean vs median) check showing the damage is inside the network; 4- and 20-photo clips; partial hints</td><td>&mdash;</td></tr><tr><td><b>2. Does it matter in practice?</b></td><td>Real error sizes of each hint source (section 4); AI depth harm; whole-room iPad hints</td><td>Ground-truth quality checks and excluded clips</td><td>ADVIO; Zurich drone (unless a GPS test is added)</td></tr><tr><td><b>3. Can it be fixed without retraining?</b></td><td>The fix vs all remedies; harm on good hints; extra time</td><td>Settings of the fix; the drop-only variant</td><td>&mdash;</td></tr></tbody></table></div>
+  <div class="box ok"><p><b>Figure 1 of the paper (planned):</b> three approaches (use all hints, photos only, the fix) on
+  good hints and on bad hints. Using all hints wins on good hints and loses badly on bad ones; photos only is the reverse;
+  the fix aims to be close to the best in both. That one picture is the whole paper.</p></div>
+</section>
+
+<section class="col stack">
+  <h2>9. What is needed next</h2>
+  <ol class="list">
+    <li>Approval of the plan in <code>experiments/E2X.md</code> (section 5), so it can be locked.</li>
+    <li>The RTX PRO 6000 VM for one session (estimate 2.5&ndash;3.5 GPU-hours).</li>
+    <li>A LaMAR access request (lamar.ethz.ch), which only the project owner can submit.</li>
+  </ol>
+</section>
+</main></body></html>

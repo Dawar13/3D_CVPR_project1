@@ -2,6 +2,7 @@
 clip uses are downloaded. zipfile reads the central directory from the end of the file and then each
 member's local header and data, so a seekable file object that fetches byte ranges is enough."""
 
+import http.client
 import io
 import os
 import time
@@ -21,7 +22,7 @@ def _get(url, start=None, end=None, tries=5):
                 if start is not None and r.status != 206:
                     raise IOError(f"server ignored the range request ({r.status}) for {url}")
                 return r.read(), r.headers
-        except (OSError, IOError):
+        except (OSError, IOError, http.client.HTTPException):   # incl. IncompleteRead (dropped connection)
             if k == tries - 1:
                 raise
             time.sleep(2 ** k)

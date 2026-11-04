@@ -1,0 +1,59 @@
+[ok] data/clips_e2x_cal\cal__sf471425__c0.npz  frames 136632.253..136635.951  GT depth valid 97%  LiDAR valid 81%  turn 0 (measured 1.4, residual 1.40 deg)
+[ok] data/clips_e2x_cal\cal__sf460417__c0.npz  frames 43605.908..43615.287  GT depth valid 94%  LiDAR valid 89%  turn 0 (measured 0.5, residual 0.53 deg)
+[ok] data/clips_e2x_cal\cal__sf470352__c0.npz  frames 131149.453..131154.167  GT depth valid 91%  LiDAR valid 67%  turn 180 (measured 179.6, residual 0.78 deg)
+[ok] data/clips_e2x_cal\cal__sf483632__c0.npz  frames 1913.575..1919.173  GT depth valid 97%  LiDAR valid 91%  turn 0 (measured 1.0, residual 1.03 deg)
+[ok] data/clips_e2x_cal\cal__sf471425__c1.npz  frames 136643.548..136646.947  GT depth valid 98%  LiDAR valid 80%  turn 0 (measured 1.4, residual 1.40 deg)
+[ok] data/clips_e2x_cal\cal__sf460417__c1.npz  frames 43654.488..43661.285  GT depth valid 97%  LiDAR valid 92%  turn 0 (measured 0.5, residual 0.53 deg)
+[ok] data/clips_e2x_cal\cal__sf470352__c1.npz  frames 131215.159..131221.657  GT depth valid 99%  LiDAR valid 97%  turn 180 (measured 179.6, residual 0.78 deg)
+[ok] data/clips_e2x_cal\cal__sf471425__c2.npz  frames 136652.045..136654.843  GT depth valid 84%  LiDAR valid 56%  turn 0 (measured 1.4, residual 1.40 deg)
+     47429922: 53 MB fetched
+[ok] data/clips_e2x_cal\cal__sf483632__c1.npz  frames 1957.774..1965.870  GT depth valid 98%  LiDAR valid 93%  turn 0 (measured 1.0, residual 1.03 deg)
+[ok] data/clips_e2x_cal\cal__sf470352__c2.npz  frames 131263.656..131266.055  GT depth valid 75%  LiDAR valid 95%  turn 180 (measured 179.6, residual 0.78 deg)
+     47331069: 60 MB fetched
+[ok] data/clips_e2x_cal\cal__sf483632__c2.npz  frames 1991.277..1995.875  GT depth valid 99%  LiDAR valid 85%  turn 0 (measured 1.0, residual 1.03 deg)
+     48018732: 61 MB fetched
+[ok] data/clips_e2x_cal\cal__sf468711__c0.npz  frames 27937.116..27943.697  GT depth valid 97%  LiDAR valid 76%  turn 180 (measured 179.6, residual 0.84 deg)
+[ok] data/clips_e2x_cal\cal__sf460417__c2.npz  frames 43705.283..43715.896  GT depth valid 97%  LiDAR valid 68%  turn 0 (measured 0.5, residual 0.53 deg)
+     44358451: 64 MB fetched
+done 44358451: 3 clips
+done 47331069: 3 clips
+done 47429922: 3 clips
+done 48018732: 3 clips
+[ok] data/clips_e2x_cal\cal__sf422826__c0.npz  frames 275380.833..275383.232  GT depth valid 71%  LiDAR valid 90%  turn 0 (measured 1.3, residual 1.26 deg)
+[ok] data/clips_e2x_cal\cal__sf468711__c1.npz  frames 27995.293..27998.592  GT depth valid 96%  LiDAR valid 88%  turn 180 (measured 179.6, residual 0.84 deg)
+[ok] data/clips_e2x_cal\cal__sf467172__c0.npz  frames 55008.133..55032.323  GT depth valid 96%  LiDAR valid 89%  turn 0 (measured 1.2, residual 1.16 deg)
+done 45662981: 0 clips  FAILED: IncompleteRead(751782 bytes read, 34650 more expected)
+done 42446532: 0 clips  FAILED: IncompleteRead(207782 bytes read, 316506 more expected)
+done 42897541: 0 clips  FAILED: IncompleteRead(663785 bytes read, 122647 more expected)
+done 47333456: 0 clips  FAILED: IncompleteRead(119783 bytes read, 666649 more expected)
+[ok] data/clips_e2x_cal\cal__sf467306__c0.npz  frames 83660.811..83669.008  GT depth valid 75%  LiDAR valid 89%  turn 0 (measured 1.1, residual 1.13 deg)
+[ok] data/clips_e2x_cal\cal__sf467306__c1.npz  frames 83687.101..83693.515  GT depth valid 94%  LiDAR valid 96%  turn 0 (measured 1.1, residual 1.13 deg)
+[ok] data/clips_e2x_cal\cal__sf471952__c0.npz  frames 3356.093..3361.990  GT depth valid 96%  LiDAR valid 62%  turn 180 (measured 179.8, residual 0.76 deg)
+[ok] data/clips_e2x_cal\cal__sf467306__c2.npz  frames 83722.903..83726.701  GT depth valid 73%  LiDAR valid 82%  turn 0 (measured 1.1, residual 1.13 deg)
+     47333924: 58 MB fetched
+done 47333924: 3 clips
+[ok] data/clips_e2x_cal\cal__sf471952__c1.npz  frames 3440.591..3448.788  GT depth valid 87%  LiDAR valid 96%  turn 180 (measured 179.8, residual 0.76 deg)
+[ok] data/clips_e2x_cal\cal__sf471952__c2.npz  frames 3485.389..3493.186  GT depth valid 99%  LiDAR valid 85%  turn 180 (measured 179.8, residual 0.76 deg)
+     47204552: 66 MB fetched
+done 47204552: 3 clips
+failed videos: ['45662981', '42446532', '42897541', '47333456']
+[ok] data/clips_e2x_cal\cal__sf468711__c0.npz  frames 27937.116..27943.697  GT depth valid 97%  LiDAR valid 76%  turn 180 (measured 179.6, residual 0.84 deg)
+[ok] data/clips_e2x_cal\cal__sf422386__c0.npz  frames 198808.960..198813.441  GT depth valid 95%  LiDAR valid 96%  turn 0 (measured 0.9, residual 0.93 deg)
+[ok] data/clips_e2x_cal\cal__sf422826__c0.npz  frames 275380.833..275383.232  GT depth valid 71%  LiDAR valid 90%  turn 0 (measured 1.3, residual 1.26 deg)
+[ok] data/clips_e2x_cal\cal__sf468711__c1.npz  frames 27995.293..27998.592  GT depth valid 96%  LiDAR valid 88%  turn 180 (measured 179.6, residual 0.84 deg)
+[ok] data/clips_e2x_cal\cal__sf422826__c1.npz  frames 275406.439..275409.938  GT depth valid 100%  LiDAR valid 73%  turn 0 (measured 1.3, residual 1.26 deg)
+[ok] data/clips_e2x_cal\cal__sf422826__c2.npz  frames 275439.926..275446.340  GT depth valid 90%  LiDAR valid 77%  turn 0 (measured 1.3, residual 1.26 deg)
+     42897541: 56 MB fetched
+[ok] data/clips_e2x_cal\cal__sf422386__c1.npz  frames 198867.236..198869.934  GT depth valid 97%  LiDAR valid 82%  turn 0 (measured 0.9, residual 0.93 deg)
+[ok] data/clips_e2x_cal\cal__sf468711__c2.npz  frames 28038.393..28041.692  GT depth valid 87%  LiDAR valid 86%  turn 180 (measured 179.6, residual 0.84 deg)
+     45662981: 61 MB fetched
+done 45662981: 3 clips
+[ok] data/clips_e2x_cal\cal__sf422386__c2.npz  frames 198912.234..198917.648  GT depth valid 96%  LiDAR valid 75%  turn 0 (measured 0.9, residual 0.93 deg)
+     42446532: 68 MB fetched
+done 42446532: 3 clips
+done 42897541: 3 clips
+[ok] data/clips_e2x_cal\cal__sf467172__c0.npz  frames 55008.133..55032.323  GT depth valid 96%  LiDAR valid 89%  turn 0 (measured 1.2, residual 1.16 deg)
+[ok] data/clips_e2x_cal\cal__sf467172__c1.npz  frames 55057.013..55064.210  GT depth valid 93%  LiDAR valid 88%  turn 0 (measured 1.2, residual 1.16 deg)
+[ok] data/clips_e2x_cal\cal__sf467172__c2.npz  frames 55080.020..55084.618  GT depth valid 99%  LiDAR valid 91%  turn 0 (measured 1.2, residual 1.16 deg)
+     47333456: 58 MB fetched
+done 47333456: 3 clips

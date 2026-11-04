@@ -1,0 +1,6 @@
+220 test videos
+150 videos used
+consec  clips  1457 | extent median  0.80 m | worst-view rot err: median 1.23, p90 2.71, p99 178.53, max 180.0 deg; clips >2 deg 19.1%, >5 deg 4.6% | move-dir median 1.6 deg | length ratio p10-p90 0.952-1.031 | videos with any clip >5 deg: 31%
+25%     clips  1008 | extent median  1.41 m | worst-view rot err: median 1.63, p90 4.19, p99 179.80, max 180.0 deg; clips >2 deg 34.5%, >5 deg 8.9% | move-dir median 1.4 deg | length ratio p10-p90 0.958-1.026 | videos with any clip >5 deg: 30%
+50%     clips   414 | extent median  2.24 m | worst-view rot err: median 2.05, p90 5.36, p99 179.75, max 180.0 deg; clips >2 deg 52.7%, >5 deg 10.6% | move-dir median 1.4 deg | length ratio p10-p90 0.965-1.022 | videos with any clip >5 deg: 22%
+100%    clips   150 | extent median  3.36 m | worst-view rot err: median 2.88, p90 13.46, p99 179.23, max 179.9 deg; clips >2 deg 72.7%, >5 deg 20.7% | move-dir median 1.6 deg | length ratio p10-p90 0.953-1.021 | videos with any clip >5 deg: 21%

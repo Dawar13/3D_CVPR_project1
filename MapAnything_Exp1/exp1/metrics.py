@@ -136,7 +136,18 @@ def pose_metrics(pred_poses, gt_poses, views=None):
             rte.append(float(np.degrees(np.arccos(np.clip(c, -1, 1)))))
     rre, rte = np.array(rre), np.array(rte)
     return {"rre_deg": float(rre.mean()), "rte_deg": float(rte.mean()),
-            "rra5": float((rre < 5).mean()), "rta5": float((rte < 5).mean())}
+            "rra5": float((rre < 5).mean()), "rta5": float((rte < 5).mean()), "auc30": auc(rre, rte)}
+
+
+def auc(rre, rte, max_deg=30):
+    """Pose AUC@max_deg as in the VGGT / MapAnything evaluations: per pair the larger of the rotation and the
+    translation-direction error, accuracy at 1, 2, ..., max_deg degrees, averaged (higher is better). Not in
+    LOWER_IS_BETTER, so the E1/E2 aggregations are unchanged; written as an extra per-run column (E2X)."""
+    err = np.maximum(np.asarray(rre, float), np.asarray(rte, float))
+    if not len(err):
+        return float("nan")
+    hist, _ = np.histogram(err, bins=np.arange(max_deg + 1))
+    return float(np.mean(np.cumsum(hist) / len(err)))
 
 
 def evaluate(pred, clip, views=None):

@@ -1,0 +1,15 @@
+2708 GT frames; imgid range 1 81211
+GPS - GT position (m): median |err| 4.69, p90 9.71, max 42.67; mean offset [-0.07 -0.13  0.13]
+GT motion per GT frame (1/30 imgs): median 0.71 m, p90 1.08 m
+best convention GT=zyx attitude=att^-1; mount C (xyz deg) [-82.1 -77.   82.7]
+  3 s relative-rotation diff autopilot vs GT: median 2.18, p75 4.00, p90 10.46, max 100.4 deg (GT 3 s rotation median 1.2 deg)
+  k= 3s GT rot   0-  2 deg: n=1835  residual median  1.74  p90  4.21  | |rot| autopilot median  1.48 vs GT  0.83
+  k= 3s GT rot   2-  5 deg: n= 572  residual median  3.35  p90  8.83  | |rot| autopilot median  1.85 vs GT  2.85
+  k= 3s GT rot   5- 10 deg: n= 123  residual median  7.08  p90 14.32  | |rot| autopilot median  2.61 vs GT  6.84
+  k= 3s GT rot  10- 30 deg: n= 147  residual median 14.89  p90 25.78  | |rot| autopilot median  2.66 vs GT 16.95
+  k= 3s GT rot  30-180 deg: n=  25  residual median 33.56  p90 54.46  | |rot| autopilot median  3.37 vs GT 36.89
+  k=10s GT rot   0-  2 deg: n=1092  residual median  2.19  p90  4.93  | |rot| autopilot median  1.92 vs GT  1.11
+  k=10s GT rot   2-  5 deg: n= 924  residual median  3.44  p90  7.24  | |rot| autopilot median  2.19 vs GT  2.94
+  k=10s GT rot   5- 10 deg: n= 229  residual median  6.50  p90 21.80  | |rot| autopilot median  3.26 vs GT  6.70
+  k=10s GT rot  10- 30 deg: n= 284  residual median 11.12  p90 28.14  | |rot| autopilot median 13.71 vs GT 16.65
+  k=10s GT rot  30-180 deg: n= 166  residual median 22.71  p90 55.34  | |rot| autopilot median 29.62 vs GT 44.33
