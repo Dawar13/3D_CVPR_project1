@@ -84,7 +84,7 @@ for d in data/clips_e2x_room data/clips_e2x_cal data/clips_e2e data/clips_e2 dat
 
 ```bash
 cd ..   # repo root
-git add experiments/E2X.md experiments/E2X_instructions.md \
+git add README.md docs/figures experiments/E2X.md experiments/E2X_instructions.md \
   MapAnything_Exp1/exp1 MapAnything_Exp1/configs MapAnything_Exp1/scripts MapAnything_Exp1/tests \
   MapAnything_Exp1/results/e2x_survey MapAnything_Exp1/results/e2x_photo_check MapAnything_Exp1/results/e2x_clip_check \
   MapAnything_Exp1/results/e2x_angle_preview MapAnything_Exp1/results/*/auc30.csv MapAnything_Exp1/reports/e2x_plan
