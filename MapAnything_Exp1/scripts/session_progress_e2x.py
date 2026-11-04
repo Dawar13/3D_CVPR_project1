@@ -30,15 +30,18 @@ JOBS = [("MA E3-cal synth ETH3D", "configs/e2x_e3cal_synth_mapanything.json", "d
         ("PX E3-cal real cal", "configs/e2x_e3cal_real_pi3x.json", CAL, "results/e2x_e3cal_real_px_cal"),
         ("OV room dev", "configs/e2x_real_omnivggt.json", RD, "results/e2x_room_ov_dev"),
         ("OV room eval", "configs/e2x_real_omnivggt.json", RE, "results/e2x_room_ov_eval"),
-        ("OV E3-cal synth ETH3D", "configs/e2x_e3cal_synth_omnivggt.json", "data/clips_e2/dev__*__c0.npz", "results/e2x_e3cal_synth_ov_eth3d"),
-        ("OV E3-cal synth cal", "configs/e2x_e3cal_synth_omnivggt.json", CAL, "results/e2x_e3cal_synth_ov_cal"),
-        ("OV E3-cal real cal", "configs/e2x_e3cal_real_omnivggt.json", CAL, "results/e2x_e3cal_real_ov_cal")]
+        ("OV E3-cal synth ETH3D (opt-in)", "configs/e2x_e3cal_synth_omnivggt.json", "data/clips_e2/dev__*__c0.npz", "results/e2x_e3cal_synth_ov_eth3d"),
+        ("OV E3-cal synth cal (opt-in)", "configs/e2x_e3cal_synth_omnivggt.json", CAL, "results/e2x_e3cal_synth_ov_cal"),
+        ("OV E3-cal real cal (opt-in)", "configs/e2x_e3cal_real_omnivggt.json", CAL, "results/e2x_e3cal_real_ov_cal")]
 
 if __name__ == "__main__":
     tot_d = tot_t = 0
     for name, cfg, clips, out in JOBS:
         d, nf = done(T, out)
         t = expected(T, cfg, clips)
+        if "opt-in" in name and d == 0:   # not counted unless it was switched on
+            print(f"{name:<20} (opt-in, not running)")
+            continue
         tot_d, tot_t = tot_d + d, tot_t + t
         print(bar(name, d, t, w=24) + (f"   FAILED: {nf}" if nf else ""))
     print(bar("ALL", tot_d, tot_t, w=24))

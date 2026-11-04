@@ -6,7 +6,7 @@
 # streamed (no local archive) while the envs install, and the GPU queue waits for them.
 set -euo pipefail
 B=${BUNDLE:-$(cd .. && pwd)/3D-CVPR_Exp_bundle_e2x}
-CODE="MapAnything_Exp1/exp1 MapAnything_Exp1/configs MapAnything_Exp1/scripts MapAnything_Exp1/tests"
+CODE="MapAnything_Exp1/exp1 MapAnything_Exp1/configs MapAnything_Exp1/scripts MapAnything_Exp1/tests MapAnything_Exp1/results/e2e_mono/mono_depth.csv"   # the E2-E AI depth record, to verify the regenerated depth
 CLIPS="data/clips data/clips_e2 data/clips_e2e/*.npz data/clips_e2e/*.csv data/clips_e2x_room data/clips_e2x_cal"
 
 build() {

@@ -5,7 +5,7 @@
 #     setup_ma  MapAnything env                      -> ~/logs/ready_mapanything
 #     setup_px  Pi3X env + weights                   -> ~/logs/ready_pi3x
 #     setup_ov  OmniVGGT env + weights               -> ~/logs/ready_omnivggt
-#     setup_ai  AI depth on the room and cal clips   -> ~/logs/ready_mono
+#     setup_ai  AI depth on the E2-E, room and cal clips -> ~/logs/ready_mono
 #     gpu       waits for MapAnything and the clips, then scripts/session_queue_e2x.sh
 #   bash ~/vm_setup_e2x.sh clips  after clips_e2x.tgz has arrived (vm_launch_e2x.sh does this)
 set -euo pipefail
@@ -63,6 +63,18 @@ setup_ai() {  # Depth Anything V2 (E2-E's AI depth hint) on the room and cal cli
   PIP_CACHE_DIR=~/.cache/pip_ai pip install -q "transformers>=4.45,<5" pillow numpy
   until [ -f ~/logs/ready_clips ]; do sleep 10; done
   cd "$T"
+  # E2-E clips first: the laptop copies have no AI depth (it was made on the E2 VM). It must match E2-E's record.
+  python -m exp1.mono_depth --clips 'data/clips_e2e/*.npz' --record results/e2x_mono/mono_depth_e2e.csv
+  python - <<'PY' 2>&1 | tee ~/logs/mono_verify.txt
+import csv
+new = {r["clip"]: r for r in csv.DictReader(open("results/e2x_mono/mono_depth_e2e.csv"))}
+ref = {r["clip"]: r for r in csv.DictReader(open("results/e2e_mono/mono_depth.csv"))}
+same = sum(new[c]["mono_depth_sha256"] == ref[c]["mono_depth_sha256"] for c in new if c in ref)
+rev = all(new[c]["model"] == ref[c]["model"] for c in new if c in ref)
+print(f"AI depth on the E2-E clips: {same}/{len(new)} bit-identical to E2-E; same model revision: {rev}")
+if not rev:
+    raise SystemExit("different Depth Anything revision from E2-E: stop and report")
+PY
   python -m exp1.mono_depth --clips 'data/clips_e2x_room/*.npz' --record results/e2x_mono/mono_depth_room.csv
   python -m exp1.mono_depth --clips 'data/clips_e2x_cal/*.npz' --record results/e2x_mono/mono_depth_cal.csv
   touch ~/logs/ready_mono

@@ -76,6 +76,8 @@ E2 left three gaps a reviewer would hit first:
   - For the finished E2 eval runs it is computed from the saved predicted poses (`scripts/e2x/auc_from_extras.py` → `results/<run>/auc30.csv`).
   - The recomputed RRA@5 matches `per_run.csv` to 1e-16 on all 11,938 runs.
 - `scripts/e2x/check_clips.py` applies the exclusion rule of 3.2.
+- `exp1/e3_calibrate.py` applies the calibration rule of §5 to the logged decisions (tested: it recomputes every logged decision exactly). `scripts/e2x/analyse_e2x.py` runs X-A/X-B with the frozen E2 code plus the descriptive angles.
+- Step-by-step instructions for the rest: `experiments/E2X_instructions.md`.
 
 ## 3. Data
 
@@ -113,7 +115,7 @@ The E2 clips: 24 eval clips (10 scenes) and 3 dev c0 clips.
 | X-A | Pi3X | ETH3D dev → eval | `e2x_pi3x_eth3d.json` (= `e2d_full.json`) | 138 |
 | X-B | Pi3X | E2-E clips dev → eval | `e2x_real_pi3x.json` | 11 + baselines |
 | X-B | MapAnything, OmniVGGT, Pi3X | room clips dev → eval | `e2x_real_<model>.json` | E2-E conditions + R2/R3 |
-| E3-cal synthetic | MapAnything (Pi3X, OmniVGGT if time) | ETH3D dev c0 + `cal` clips | `e2x_e3cal_synth_<model>.json` | 27 conditions with R2, R3, `witness`, `witness_drop`, ORACLE |
+| E3-cal synthetic | MapAnything, Pi3X (OmniVGGT opt-in) | ETH3D dev c0 + `cal` clips | `e2x_e3cal_synth_<model>.json` | 27 conditions with R2, R3, `witness`, `witness_drop`, ORACLE |
 | E3-cal real | same | SceneFun3D dev + `cal` clips | `e2x_e3cal_real_<model>.json` | E2-E conditions with the same controls |
 
 - Same condition names as E2-D, so every model gets identical corrupted inputs.
@@ -153,16 +155,45 @@ The E2 clips: 24 eval clips (10 scenes) and 3 dev c0 clips.
   - accuracy after repair vs R2/R3/ORACLE at the default setting.
 - The E3 eval grid and its tests are preregistered separately (`e3-prereg`) after calibration and before any E3 eval run.
 
+### Angles that make the paper stronger (added 2026-11-04, after the user chose "strengthen, don't pivot")
+- These are **descriptive** analyses, computed by `scripts/e2x/analyse_e2x.py` and labelled DESCRIPTIVE in every output. They add no preregistered test and change no grid.
+- **A. Break-even ("fused as if perfect").**
+  - Principle: weighing each source by its reliability (Gauss's least squares; inverse-variance weighting; Kalman 1960) is never worse than the better source alone. A model that gives hints near-full weight instead gets worse than images only once the hint's error passes the photos' own error.
+  - Measured: per model and C1 family, the error size at which a hint stops helping. MapAnything, ETH3D eval, already finished, post hoc (`results/e2x_angle_preview/`):
+    - one wrong camera still helps at 5° (Δ −1.06°), breaks even near 10° (−0.08°) and hurts clearly at 30° (+3.88°, CI 2.06–4.96);
+    - depth scale hurts at ×0.5/×0.63 and ×1.587/×2 (CI above 0), not at ×0.794–×1.26;
+    - OmniVGGT is never worse than its images-only mode.
+  - Pi3X comes from X-A.
+  - Weaker photos, already run: the same 15° case on 4- and 20-photo clips (`results/e2c_n4_eval`, `e2c_n20_eval`).
+- **B. Reality map.** Every real hint source placed on these curves by its measured or published error size (§2.1–2.2, `reports/e2_literature.md`). Phone VIO and LiDAR fall below break-even, which is why they helped. AI depth (×1.42) falls above, which is why it hurt. Compass headings (indoors 12.45° average) straddle it. Whole-room VIO is measured in X-B. This answers "is it rare?" source by source.
+- **C. Knows but obeys, blind to agreement.** E2-C's AUROC 0.93 vs absorption 0.96, with P10/P11, for three models (X-A). Real errors are mostly *agreeing*: one shared AI-depth scale, drift-like ARKit errors (E2-E Spearman 0.52 with view order), compass bias. That is exactly where model confidence and per-view filters are blind, and what E3's shared/mount/drift model targets.
+- **D. Safety vs benefit.** For every remedy, two numbers on the same clips:
+  - the share of the good-hint benefit kept, (E_rgb − E_remedy) / (E_rgb − E_clean) on correct hints;
+  - the share of the bad-hint damage removed.
+  
+  Existing remedies sit at corners (use all hints: keeps all, removes nothing; drop all poses: removes 80–90% but keeps nothing). The honest target for E3 is the top-right. Preview on calibration runs (X-cal); final in session B.
+- **E. Benchmark release.** Error families at literature-sourced sizes (each with its citation), real device hints (whole-room ARKit, LiDAR, AI depth), GT-audited clips, three models and standard metrics (AUC@30, RRA/RTA@5, AbsRel, δ1.25) packaged as a reusable stress test. SpatialBench injects only correct priors.
+- **Optional, laptop only: real compass hints from ADVIO.** ADVIO records the raw magnetometer and accelerometer. Its reference orientation comes from gyroscope integration with fix points, and the device trackers agree with it to < 2° on average (paper p. 13), well below typical compass errors of 5–20°. A tilt-compensated compass heading per frame would give *measured* phone-compass rotation errors indoors, and later real compass-hint clips scored on rotation only (ADVIO positions are too rough).
+
+### Continue / stop rules after session A (fixed before it runs)
+- **GO for the method paper** if both hold:
+  - in X-B, real whole-room pose hints are **harmful** (E-H verdict HURTS on rotation or shape) for at least one model, or E3-cal shows E3 removing more bad-hint damage than the best of R1–R3 at equal or better benefit kept;
+  - E3 is **calibrated** for MapAnything (`exp1/e3_calibrate.py` finds a z on the grid; not "NOT CALIBRATED").
+- **Analysis paper (no method claim)** if E3 is NOT CALIBRATED for MapAnything, i.e. the photo witness cannot be made safe on correct hints. E3 is then reported as a negative result.
+- **Inside-the-network direction (trust dial / learned gate)** only if Shubh's G1 oracle dial removes most of the damage (experiments/G.md thresholds).
+- Whatever the outcome, X-A (three models) and angles A–E are written up.
+
 ## 6. VM session A (one session; queue ordered by priority so an early stop loses only the tail)
 1. Setup in parallel: envs `mapanything`, `pi3x`, `omnivggt`, `aidepth` (`scripts/vm_setup_e2x.sh`). The GPU starts when MapAnything is ready.
-2. AI depth for the room and `cal` clips.
-3. MapAnything: E3-cal synthetic + real; room dev → gate → room eval.
+2. AI depth for the E2-E clips (the laptop copies have none; checked against E2-E's record `results/e2e_mono/mono_depth.csv`), then the room and `cal` clips.
+3. MapAnything: E3-cal synthetic + real; room dev → gate → room eval; then Shubh's gate test (G0–G2, dev clips only, `experiments/G.md`; about 10 minutes; a failure there is logged and the queue goes on).
 4. Pi3X: checks; ETH3D dev → gate → eval; E2-E dev → gate → eval; room dev → gate → eval; E3-cal.
-5. OmniVGGT: room dev → gate → eval; E3-cal (lowest priority).
+5. OmniVGGT: room dev → gate → eval. Its E3-cal is opt-in (`RUN_OV_E3CAL=1`): about 9,000 runs at OmniVGGT's measured fp32 speed would add 3.5–4 hours, and its images-only witness is unstable.
 
-**Projection, not measured:**
-- About 40k forward passes. At E0's 0.26 s per 10-view pass with 4 processes per GPU, that is roughly 1.5–3 GPU-hours.
-- Pi3X's speed is unknown until the dev run. OmniVGGT runs in fp32.
+**Size and time** (run counts from the configs and clip folders, `scripts/session_progress_e2x.py`; speeds measured in the E2 session on the same GPU type, `results/*/gpu_log.txt`):
+- Recorded runs: MapAnything 10,554; Pi3X 15,061; OmniVGGT 817, plus 9,064 if opt-in. E3 controls add hidden passes: two witness passes per clip and one depth pass per depth hint set.
+- Measured E2 speeds: MapAnything about 18,000 runs/h (e2df eval: 4,392 runs in 14.5 min); OmniVGGT about 2,500 runs/h (e2d eval: 3,312 runs in 77 min).
+- **Estimate, not measured:** setup about 0.3 h, MapAnything about 0.75 h, Pi3X 1–1.75 h (speed unknown until its dev run), OmniVGGT rooms about 0.35 h. **About 2.5–3.5 GPU-hours in total**, plus 3.5–4 h with the OmniVGGT E3-cal.
 
 ## 7. Open items
 - **User:** approve §5, then the tag `e2x-prereg` is set.

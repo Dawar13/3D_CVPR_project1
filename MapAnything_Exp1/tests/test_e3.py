@@ -202,3 +202,30 @@ def test_e3cal_config_runs_completely(tmp_path, backend, kind):
         d = json.loads(line)
         if backend == "omnivggt":   # dropping all poses also drops intrinsics (OmniVGGT cannot take them alone)
             assert not ("intrinsics" in d["inputs_final"] and "pose" not in d["inputs_final"]), d["run_key"]
+
+
+def test_calibration_recomputes_the_logged_decisions(e3_run):
+    """exp1/e3_calibrate recomputes every logged decision exactly at the logged settings (default z, taus)."""
+    from exp1 import e3, e3_calibrate as cal
+    rows = cal.load_decisions([e3_run])
+    assert rows
+    for r in rows:
+        if "shared_deg" in r:
+            g, nd, _ = cal.pose_actions(r, e3.DEFAULTS["e3_z"])
+            assert g == (r["fire_shared"] or r["fire_mount"] or r["fire_drift"]) and nd == len(r["drop_pose_views"])
+        if r.get("depth_scale_from") in ("pose", "images"):
+            s, dd, _ = cal.depth_actions(r, e3.DEFAULTS["e3_tau_depth_shared"], e3.DEFAULTS["e3_tau_depth_view"])
+            assert s == r["fire_depth_scale"] and dd == len(r["drop_depth_views"])
+
+
+def test_calibration_rule_picks_the_smallest_safe_value():
+    from exp1 import e3_calibrate as cal
+    base = {"control": "witness", "condition": "gt_pose", "sigma_group_deg": {"shared": 0.0, "mount": 0.0, "drift": 0.0},
+            "mount_deg": 0.0, "drift_total_deg": 0.0, "sigma_view_deg": [0.0] * 10, "rot_res_deg": [0.0] * 10}
+    # 100 clean clips; the shared fit is 1.2 deg on 10 of them: z = 2 (threshold 1.0 deg) acts on 10% of clips,
+    # z = 2.5 (1.25 deg) on none
+    rows = [dict(base, clip_id=f"cal__x{i}__c0", shared_deg=1.2 if i < 10 else 0.1) for i in range(100)]
+    table, chosen = cal.calibrate(rows)
+    assert chosen["e3_z"] == 2.5
+    rows = [dict(base, clip_id=f"cal__x{i}__c0", shared_deg=9.0) for i in range(100)]   # never safe
+    assert cal.calibrate(rows)[1]["e3_z"] == "NOT CALIBRATED"
