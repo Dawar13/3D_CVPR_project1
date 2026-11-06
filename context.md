@@ -1,6 +1,6 @@
 # Project context: Do 3D foundation models trust bad hints?
 
-Last updated: 27 Oct 2026. Update the "Status and decisions log" at the bottom after every experiment.
+Last updated: 7 Nov 2026 (see also `NEXT_STEPS.md` and `docs/VISION.md`). Update the "Status and decisions log" at the bottom after every experiment.
 
 ## 1. One-paragraph summary
 
@@ -73,7 +73,7 @@ Everything is free to download for research. Nothing requires payment or private
 
 ## 5. Codebase
 
-- `MapAnything_Exp1/` holds Shubh's Experiment-1 harness, imported as-is. It is inference only. **It has never been run.**
+- `MapAnything_Exp1/` holds Shubh's Experiment-1 harness, imported as-is. It is inference only. (At import it had never been run; E0–E2 have since run on it, see §10.)
   - `exp1/datasets.py`: ETH3D → fixed 10-view clips (`.npz`: images, K, poses relative to view 0, GT depth). The dev/eval split is by scene-name hash (3 dev / 10 eval).
   - `exp1/corrupt_geometry.py`: exact-magnitude, random-direction pose corruption, logged to a manifest. View 0 is never corrupted.
   - `exp1/model_io.py`: the ONLY file that calls the MapAnything API.
@@ -310,3 +310,8 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
   - **Photos alone (C8):** ~0.8° rotation and ~13% scale uncertainty (worst 10%: 2.0°, 52%).
   - Decision rule: only depth hints pass all four tests (a)–(d), with two judgment calls listed in the report §10. Read strictly the other way, the result is the analysis paper.
   - Open: R4 (robust BA, CPU); E3 plan around trusting depth hints.
+- 2026-11-03/04: **E2X prepared on the laptop, not run** (plan and preregistration draft: `experiments/E2X.md`; runbook: `experiments/E2X_instructions.md`). Third model Pi3X, whole-room iPad clips (21 of 114 excluded before any model run), E3 witness and calibration code, gate tests G0–G2 in the session-A queue. Target changed to a CVPR 2027 workshop (team preference, 2026-11-02). Waiting for approval of `E2X.md` §5 and the tag `e2x-prereg`.
+- 2026-11-07: **Docs synced with the research vision; no experiment, config or rule changed.**
+  - `docs/VISION.md` maps the vision's five requirements (clean hints help; harm; filtering not enough; method beats baselines; safe and general) onto the evidence: 1–2 shown, 3 partly, 4–5 open until E2X session A. It also records where the plan moved (training-free E3 outside the network as the main method; in-network gate kept as the G track).
+  - `NEXT_STEPS.md`: one checklist from now to the paper.
+  - Found: (1) GitHub has **no tags**, so `e1-prereg`, `e2-prereg-C`, `e2-prereg-DEF` must be pushed; (2) `3D-CVPR_gate_tests_only/` is an older copy whose `model_io_omnivggt.py` lacks `INTRINSICS_ALONE = False`, so copying it over the repo (as its old note said) would change E3 on OmniVGGT; it is now marked superseded; (3) per-view shape errors use one clip-wide scale fitted over all views (`exp1/metrics.py:195-214`); a sensitivity check is listed as a to-do. Rotation readouts are unaffected.

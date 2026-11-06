@@ -1,7 +1,9 @@
 # They Know, but They Obey
 ### When should a 3D foundation model trust its hints?
 
-*Working title. Target: a CVPR 2027 workshop. Status, 4 Nov 2026: E0–E2 done, extended E2 (E2X) prepared, fix (E3) prototyped. Nothing below is final; every number links to the file it came from.*
+*Working title. Target: a CVPR 2027 workshop. Status, 7 Nov 2026: E0–E2 done, extended E2 (E2X) prepared but not run, fix (E3) prototyped. Nothing below is final; every number links to the file it came from.*
+
+> **Start here:** [`NEXT_STEPS.md`](NEXT_STEPS.md) is the checklist from now to the paper. [`docs/VISION.md`](docs/VISION.md) maps the original research vision onto the evidence so far and says where the plan changed.
 
 > **TL;DR.**
 > - Feed-forward 3D models such as MapAnything accept *hints*: camera poses, lens settings, depth maps.
@@ -175,6 +177,8 @@ flowchart LR
 | E2 | [`experiments/E2.md`](experiments/E2.md) | [E2 report](MapAnything_Exp1/reports/e2_results/e2_results.pdf) |
 | E2X | [`experiments/E2X.md`](experiments/E2X.md), runbook [`experiments/E2X_instructions.md`](experiments/E2X_instructions.md) | plain-language overview: [`reports/e2x_plan/e2x_plan.pdf`](MapAnything_Exp1/reports/e2x_plan/e2x_plan.pdf) |
 | E3 | preregistered after E2X calibration | — |
+| G (gate inside the network) | [`experiments/G.md`](experiments/G.md), runner [`RUN_GATE_TESTS.md`](RUN_GATE_TESTS.md); dev-only pilot, runs in E2X session A | — |
+| Next steps | [`NEXT_STEPS.md`](NEXT_STEPS.md) | vision vs evidence: [`docs/VISION.md`](docs/VISION.md) |
 
 **Continue/stop rules for E2X are fixed before it runs** ([`E2X.md` §5](experiments/E2X.md)):
 - **Method paper** if real whole-room hints hurt, or the fix beats the existing remedies on the safety-vs-benefit plot, **and** the fix can be calibrated without touching correct hints.
@@ -260,6 +264,7 @@ python -m pytest -q tests --ignore=tests/test_gate.py      # CPU, fake models, a
 - The only real-world harm measured by us so far is AI depth. Harm from real camera-direction errors is what E2X tests next (whole-room iPad clips).
 - Simple remedies already remove most of the damage from errors put in on purpose. The fix must win on *keeping good hints*, not only on removing damage.
 - The break-even curves above are descriptive, computed after the fact on finished runs.
+- Per-view shape errors use one scale fitted over all views, the corrupted one included; a sensitivity check is still to do ([`docs/VISION.md`](docs/VISION.md) §2). Rotation errors are not affected.
 
 ## Acknowledgements
 
