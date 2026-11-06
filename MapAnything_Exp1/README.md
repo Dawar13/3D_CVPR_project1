@@ -4,8 +4,11 @@
 
 Inference only. No Self-Healing Attention, no gates, no fine-tuning, no bundle adjustment.
 
-**Status: none of this code has been run yet.** It compiles; nothing has executed
-against the real MapAnything package. Run it on the GPU server, not the Mac.
+**Status (7 Nov 2026):** E0, E1 and E2 have run on real weights; see `../context.md` §10 and
+`../NEXT_STEPS.md`. The sentence below is from the first import and is kept for the record.
+
+~~**Status: none of this code has been run yet.** It compiles; nothing has executed
+against the real MapAnything package.~~ Run it on the GPU server, not the Mac.
 
 ## Layout
 

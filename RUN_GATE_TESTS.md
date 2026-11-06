@@ -1,5 +1,7 @@
 # For Dawar: running the gate tests
 
+> **Update, 7 Nov 2026:** the gate code is now committed in the main tree (`dfe9f1a`), and E2X session A runs G0–G2 on MapAnything automatically (queue step 4, `experiments/E2X_instructions.md` §7). Use this file only to run the gate tests **on their own** or on OmniVGGT. Where it says "this zip", read "this repo". §1's push-access point is resolved (`Shubhf` can push); the tags still need pushing (`NEXT_STEPS.md` §0). Do not copy `3D-CVPR_gate_tests_only/` over the repo (see its `HOW_TO_USE.md`).
+
 This zip is the repo at `610f30f` plus new, **uncommitted** code for the gate tests. Plan and pass conditions are in `experiments/G.md`. Please read that first; nothing is preregistered yet.
 
 **Dev clips only.** Please do not use `--allow_eval`.
