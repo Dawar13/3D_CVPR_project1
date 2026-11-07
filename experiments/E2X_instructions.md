@@ -134,11 +134,15 @@ GPU_BUDGET_GB=32 bash MapAnything_Exp1/scripts/vm_launch_e2x.sh send user@HOST P
 (`SSH_KEY=/path/key.pem` in front if the VM needs its own key.)
 What happens, in order:
 1. The code is uploaded (~1 MB) and `vm_setup_e2x.sh` starts **at once** in tmux (`e2x_main`). It installs its own Miniconda in `~/e2x_conda`, creates four envs there (`mapanything`, `pi3x`, `omnivggt`, `aidepth`) and installs them in parallel. No other conda, env or shell profile on the machine is touched.
-2. The clips are **streamed** (1.1 GB, no local archive) while the envs install.
+2. The clips (1.1 GB) are uploaded while the envs install, **resumably**: the VM checks every file's sha256 (`clips.sha`, made by `build`) and only missing or broken files are sent, in batches of at most 40 MB, until all verify. A dropped connection loses nothing; rerun `send` if it stops (every step is idempotent).
 3. The tmux session `e2x_gpu` waits for MapAnything and the clips, then starts `scripts/session_queue_e2x.sh`.
 4. `setup_ai` first regenerates the AI depth on the E2-E clips. The laptop copies have none, because it was made on the E2 VM. It checks the new depth against E2-E's record (`~/e2x_logs/mono_verify.txt`), then does the room and cal clips. No job touches the SceneFun3D clips before this is finished.
 
-The command ends by printing the progress command for step 6.
+The command ends by printing the progress command for step 6 and the backup command. **Start the backup right away** (laptop, keep it running):
+```bash
+SSH_KEY=... bash MapAnything_Exp1/scripts/vm_autofetch_e2x.sh user@HOST PORT
+```
+Every 20 minutes it copies every new or changed result file (shard folders included) and the VM logs to `../3D-CVPR_Exp_vm_backup_e2x/`, so a lost VM costs at most 20 minutes of GPU work. At `SESSION_GPU_DONE` it runs the real fetch (`vm_fetch_e2x.sh`, step 8) and stops.
 
 ---
 
