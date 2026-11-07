@@ -1,0 +1,8 @@
+check,condition,auroc,n_runs,scored_bad_views,median_k,clean_median_k
+pose: bad view vs good views (within run),dev_all,0.43003663003663,26,0.38803418803418804,,
+pose: bad view vs good views (within run),dev_pose,0.43003663003663,26,0.38803418803418804,,
+pose: hint set vs clean hint sets (median_view_px),dev_all,0.9901859504132231,65,,,
+pose: hint set vs clean hint sets (max_view_px),dev_all,0.9669421487603306,65,,,
+depth: |log k| vs clean hint sets,dev_all,0.9416322314049587,65,,1.0090829424595409,0.9990250101425506
+pose: hint set vs clean hint sets (median_view_px),dev_pose,0.9901859504132231,65,,,
+pose: hint set vs clean hint sets (max_view_px),dev_pose,0.9669421487603306,65,,,

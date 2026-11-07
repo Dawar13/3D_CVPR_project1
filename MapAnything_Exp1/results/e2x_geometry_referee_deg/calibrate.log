@@ -1,0 +1,45 @@
+{
+ "min_view_pairs": 3,
+ "min_set_pairs": 10,
+ "tau_view_deg": null,
+ "tau_set_deg": null,
+ "view_status": "NOT CALIBRATED",
+ "set_status": "NOT CALIBRATED",
+ "gt_views": 344,
+ "gt_hint_sets": 42,
+ "gt_view_drop_rate": null,
+ "gt_set_action_rate": null,
+ "coverage_views_scored": 0.1675213675213675,
+ "coverage_sets_scored": 0.199023199023199
+}
+                     condition              family  n_sets  set_scored  median_set_deg  auroc_set_vs_gt  auroc_bad_vs_good_view  bad_view_scored
+          anchor_error_level=1        anchor_error      53    0.207547        7.028549         0.469697                     NaN              NaN
+          anchor_error_level=2        anchor_error      53    0.207547        7.837954         0.493506                     NaN              NaN
+       c6_shared_rot_rot_deg=2       c6_shared_rot      53    0.207547        6.986185         0.506494                     NaN              NaN
+       c6_shared_rot_rot_deg=5       c6_shared_rot      53    0.207547        6.490052         0.476190                     NaN              NaN
+    depth_one_scale_factor=1.5     depth_one_scale      53    0.207547        7.028549         0.469697                0.510317         0.188679
+       depth_scale_factor=0.67         depth_scale      53    0.207547        7.028549         0.469697                0.521062         0.216981
+        depth_scale_factor=1.5         depth_scale      53    0.207547        7.028549         0.469697                0.521062         0.216981
+                       dev_all              device      65    0.153846        9.717457         0.609524                     NaN              NaN
+                      dev_pose              device      65    0.153846        9.717457         0.609524                     NaN              NaN
+                 drift_level=1               drift      53    0.207547        6.789433         0.450216                     NaN              NaN
+                 drift_level=2               drift      53    0.207547        7.869151         0.502165                     NaN              NaN
+                 drift_level=3               drift      53    0.207547        8.132315         0.536797                     NaN              NaN
+                        gt_all                  gt      65    0.153846        9.337179              NaN                     NaN              NaN
+                       gt_pose                  gt      65    0.153846        9.337179              NaN                     NaN              NaN
+         noise_rot_rot_deg=0.5           noise_rot      53    0.207547        7.117478         0.493506                     NaN              NaN
+           noise_rot_rot_deg=1           noise_rot      53    0.207547        6.807328         0.476190                     NaN              NaN
+           noise_rot_rot_deg=2           noise_rot      53    0.207547        5.799911         0.458874                     NaN              NaN
+           noise_rot_rot_deg=5           noise_rot      53    0.207547        7.639349         0.558442                     NaN              NaN
+         outlier_frac_frac=0.1        outlier_frac      53    0.207547        9.206825         0.549784                0.968750         0.150943
+         outlier_frac_frac=0.2        outlier_frac      53    0.207547       11.171168         0.696970                0.994048         0.179245
+         outlier_frac_frac=0.4        outlier_frac      53    0.207547       18.374408         0.809524                0.832440         0.188679
+        outlier_rot_rot_deg=15         outlier_rot      53    0.207547        7.028549         0.510823                0.984375         0.150943
+        outlier_rot_rot_deg=30         outlier_rot      53    0.207547        7.028549         0.515152                1.000000         0.207547
+         outlier_rot_rot_deg=5         outlier_rot      53    0.207547        7.028549         0.504329                0.866667         0.245283
+        outlier_rot_rot_deg=90         outlier_rot      53    0.207547        7.837954         0.562771                1.000000         0.207547
+                    clean_pose           reference      53    0.207547        7.028549              NaN                     NaN              NaN
+             clean_pose_depth2           reference      53    0.207547        7.028549              NaN                     NaN              NaN
+shared_heading_bias_rot_deg=10 shared_heading_bias      53    0.207547       12.105620         0.683983                     NaN              NaN
+ shared_heading_bias_rot_deg=2 shared_heading_bias      53    0.207547        6.897689         0.489177                     NaN              NaN
+ shared_heading_bias_rot_deg=5 shared_heading_bias      53    0.207547        7.484931         0.541126                     NaN              NaN

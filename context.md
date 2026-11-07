@@ -310,3 +310,10 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
   - **Photos alone (C8):** ~0.8° rotation and ~13% scale uncertainty (worst 10%: 2.0°, 52%).
   - Decision rule: only depth hints pass all four tests (a)–(d), with two judgment calls listed in the report §10. Read strictly the other way, the result is the analysis paper.
   - Open: R4 (robust BA, CPU); E3 plan around trusting depth hints.
+- 2026-11-03 to 11-07: **E2X (extended E2) prepared and preregistered at tag `e2x-prereg` (`ab5bc73`)**, plan `experiments/E2X.md`, runbook `experiments/E2X_instructions.md`. User decision: strengthen the paper rather than pivot.
+  - Ready: Pi3X connector (third model), the E3 witness and its calibration rule, whole-room SceneFun3D clips (67 room, 26 cal; GT-checked, exclusions in `data/clips_e2x_*/excluded.csv`), configs, analysis scripts; tests pass on CPU.
+  - Laptop-only results (dev/cal or post hoc, no preregistered test): break-even preview `results/e2x_angle_preview/`; geometry referee first look `results/e2x_geometry_referee/README.md`; training-hint audit `reports/e2x_m7_training_hints.md`; S2 scale caveat `results/e2x_checks/scale_caveat_S2.md`.
+- 2026-11-07: **E2X session A attempt lost with the VM; no results kept.** User's H100 PCIe 80 GB (shared, 32 GB budget), scripts `edfa2ec` (job scripts only; experiment code = `e2x-prereg`).
+  - Setup and AI depth worked; the queue started 09:12 UTC. SSH stopped answering at ~09:50 UTC and the user then lost the VM. Nothing was fetched.
+  - Only E3-calibration jobs on dev/cal clips and Shubh's dev-only gate tests had run; **no eval run had started and no metric was read**, so the preregistration is intact. Session A restarts from zero on the next VM.
+  - Seen in the VM logs before the loss (files not kept): AI depth matched E2-E's record (same revision; depth ratios within 7e-5); Shubh's G1/G2 jobs stopped at their own check (gamma = 1 changed the output), likely bf16 rounding in `model_io._gated_fuse`, reported to Shubh, code not changed.

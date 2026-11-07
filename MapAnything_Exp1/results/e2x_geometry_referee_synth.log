@@ -1,0 +1,129 @@
+[ok] dev__delivery_area__c0: 29 matched pairs
+[ok] dev__facade__c0: 35 matched pairs
+[ok] dev__terrace__c0: 13 matched pairs
+[ok] cal__sf422386__c0: 2 matched pairs
+[ok] cal__sf422386__c1: 5 matched pairs
+[ok] cal__sf422386__c2: 10 matched pairs
+[ok] cal__sf422826__c0: 0 matched pairs
+[ok] cal__sf422826__c2: 10 matched pairs
+[ok] cal__sf460417__c0: 22 matched pairs
+[ok] cal__sf460417__c1: 5 matched pairs
+[ok] cal__sf460417__c2: 13 matched pairs
+[ok] cal__sf467172__c0: 8 matched pairs
+[ok] cal__sf467172__c1: 8 matched pairs
+[ok] cal__sf467172__c2: 3 matched pairs
+[ok] cal__sf467306__c0: 10 matched pairs
+[ok] cal__sf467306__c1: 9 matched pairs
+[ok] cal__sf467306__c2: 5 matched pairs
+[ok] cal__sf468711__c0: 27 matched pairs
+[ok] cal__sf468711__c1: 2 matched pairs
+[ok] cal__sf468711__c2: 1 matched pairs
+[ok] cal__sf470352__c0: 6 matched pairs
+[ok] cal__sf470352__c1: 4 matched pairs
+[ok] cal__sf470352__c2: 38 matched pairs
+[ok] cal__sf471425__c1: 0 matched pairs
+[ok] cal__sf471425__c2: 0 matched pairs
+[ok] cal__sf471952__c0: 17 matched pairs
+[ok] cal__sf483632__c0: 37 matched pairs
+[ok] cal__sf483632__c1: 2 matched pairs
+[ok] cal__sf483632__c2: 12 matched pairs
+[ok] cal__sf422826__r0: 1 matched pairs
+[ok] cal__sf422826__r1: 0 matched pairs
+[ok] cal__sf422826__r2: 3 matched pairs
+[ok] cal__sf460417__r0: 0 matched pairs
+[ok] cal__sf460417__r1: 1 matched pairs
+[ok] cal__sf460417__r2: 0 matched pairs
+[ok] cal__sf467172__r0: 1 matched pairs
+[ok] cal__sf467172__r1: 2 matched pairs
+[ok] cal__sf467172__r2: 0 matched pairs
+[ok] cal__sf467306__r1: 0 matched pairs
+[ok] cal__sf467306__r2: 1 matched pairs
+[ok] cal__sf468711__r1: 0 matched pairs
+[ok] cal__sf468711__r2: 0 matched pairs
+[ok] cal__sf470352__r0: 1 matched pairs
+[ok] cal__sf470352__r1: 0 matched pairs
+[ok] cal__sf470352__r2: 2 matched pairs
+[ok] cal__sf471425__r0: 0 matched pairs
+[ok] cal__sf471425__r1: 0 matched pairs
+[ok] cal__sf471425__r2: 0 matched pairs
+[ok] cal__sf471952__r0: 0 matched pairs
+[ok] cal__sf471952__r2: 0 matched pairs
+[ok] cal__sf483632__r0: 0 matched pairs
+[ok] cal__sf483632__r1: 1 matched pairs
+[ok] cal__sf483632__r2: 0 matched pairs
+                                             check                      condition    auroc  n_runs  scored_bad_views  median_k  clean_median_k
+         pose: bad view vs good views (within run)           anchor_error_level=1 0.893506      22          0.415094       NaN             NaN
+         pose: bad view vs good views (within run)           anchor_error_level=2 0.894318      22          0.415094       NaN             NaN
+         pose: bad view vs good views (within run)        c6_shared_rot_rot_deg=2 0.159343      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)        c6_shared_rot_rot_deg=5 0.185227      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)     depth_one_scale_factor=1.5 0.493687      22          0.415094       NaN             NaN
+         pose: bad view vs good views (within run)        depth_scale_factor=0.67 0.424150      28          0.424528       NaN             NaN
+         pose: bad view vs good views (within run)         depth_scale_factor=1.5 0.424150      28          0.424528       NaN             NaN
+         pose: bad view vs good views (within run)                  drift_level=1 0.391558      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)                  drift_level=2 0.435101      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)                  drift_level=3 0.463690      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)          noise_rot_rot_deg=0.5 0.593723      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)            noise_rot_rot_deg=1 0.538222      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)            noise_rot_rot_deg=2 0.604455      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)            noise_rot_rot_deg=5 0.542082      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)          outlier_frac_frac=0.1 0.924561      19          0.358491       NaN             NaN
+         pose: bad view vs good views (within run)          outlier_frac_frac=0.2 0.882972      28          0.443396       NaN             NaN
+         pose: bad view vs good views (within run)          outlier_frac_frac=0.4 0.779127      35          0.410377       NaN             NaN
+         pose: bad view vs good views (within run)         outlier_rot_rot_deg=15 0.919224      18          0.339623       NaN             NaN
+         pose: bad view vs good views (within run)         outlier_rot_rot_deg=30 0.899603      24          0.452830       NaN             NaN
+         pose: bad view vs good views (within run)          outlier_rot_rot_deg=5 0.910714      22          0.415094       NaN             NaN
+         pose: bad view vs good views (within run)         outlier_rot_rot_deg=90 0.932540      21          0.396226       NaN             NaN
+         pose: bad view vs good views (within run) shared_heading_bias_rot_deg=10 0.207576      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)  shared_heading_bias_rot_deg=2 0.232576      22          0.398323       NaN             NaN
+         pose: bad view vs good views (within run)  shared_heading_bias_rot_deg=5 0.286869      22          0.398323       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)           anchor_error_level=1 0.640000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)           anchor_error_level=1 0.797959      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)           anchor_error_level=2 0.625306      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)           anchor_error_level=2 0.789388      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)        c6_shared_rot_rot_deg=2 1.000000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)        c6_shared_rot_rot_deg=2 0.971429      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)        c6_shared_rot_rot_deg=5 1.000000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)        c6_shared_rot_rot_deg=5 0.972245      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)     depth_one_scale_factor=1.5 0.500000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)     depth_one_scale_factor=1.5 0.500000      53               NaN       NaN             NaN
+                 depth: |log k| vs clean hint sets     depth_one_scale_factor=1.5 0.844800      53               NaN  1.248829        0.998871
+pose: hint set vs clean hint sets (median_view_px)        depth_scale_factor=0.67 0.500000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)        depth_scale_factor=0.67 0.500000      53               NaN       NaN             NaN
+                 depth: |log k| vs clean hint sets        depth_scale_factor=0.67 1.000000      53               NaN  0.669244        0.998871
+pose: hint set vs clean hint sets (median_view_px)         depth_scale_factor=1.5 0.500000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)         depth_scale_factor=1.5 0.500000      53               NaN       NaN             NaN
+                 depth: |log k| vs clean hint sets         depth_scale_factor=1.5 1.000000      53               NaN  1.498306        0.998871
+pose: hint set vs clean hint sets (median_view_px)                  drift_level=1 0.990204      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)                  drift_level=1 0.948571      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)                  drift_level=2 0.995102      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)                  drift_level=2 0.957551      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)                  drift_level=3 1.000000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)                  drift_level=3 0.971429      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)          noise_rot_rot_deg=0.5 0.998367      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)          noise_rot_rot_deg=0.5 0.962449      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)            noise_rot_rot_deg=1 0.985306      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)            noise_rot_rot_deg=1 0.946939      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)            noise_rot_rot_deg=2 1.000000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)            noise_rot_rot_deg=2 0.972245      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)            noise_rot_rot_deg=5 1.000000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)            noise_rot_rot_deg=5 0.972245      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)          outlier_frac_frac=0.1 0.589388      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)          outlier_frac_frac=0.1 0.753469      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)          outlier_frac_frac=0.2 0.731020      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)          outlier_frac_frac=0.2 0.887755      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)          outlier_frac_frac=0.4 0.986531      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)          outlier_frac_frac=0.4 0.986531      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)         outlier_rot_rot_deg=15 0.586122      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)         outlier_rot_rot_deg=15 0.757959      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)         outlier_rot_rot_deg=30 0.629388      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)         outlier_rot_rot_deg=30 0.860000      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)          outlier_rot_rot_deg=5 0.627755      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)          outlier_rot_rot_deg=5 0.802041      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)         outlier_rot_rot_deg=90 0.601224      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)         outlier_rot_rot_deg=90 0.812245      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px) shared_heading_bias_rot_deg=10 1.000000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px) shared_heading_bias_rot_deg=10 0.973061      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)  shared_heading_bias_rot_deg=2 0.997551      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)  shared_heading_bias_rot_deg=2 0.963265      53               NaN       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)  shared_heading_bias_rot_deg=5 1.000000      53               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)  shared_heading_bias_rot_deg=5 0.972245      53               NaN       NaN             NaN

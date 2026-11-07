@@ -1,0 +1,73 @@
+[ok] dev__sf422391__c0: 13 matched pairs
+[ok] dev__sf422391__c1: 9 matched pairs
+[ok] dev__sf422391__c2: 3 matched pairs
+[ok] dev__sf422803__c0: 10 matched pairs
+[ok] dev__sf422803__c1: 4 matched pairs
+[ok] dev__sf434650__c0: 19 matched pairs
+[ok] dev__sf434650__c1: 5 matched pairs
+[ok] dev__sf434650__c2: 7 matched pairs
+[ok] cal__sf422386__c0: 2 matched pairs
+[ok] cal__sf422386__c1: 5 matched pairs
+[ok] cal__sf422386__c2: 10 matched pairs
+[ok] cal__sf422826__c0: 0 matched pairs
+[ok] cal__sf422826__c2: 10 matched pairs
+[ok] cal__sf460417__c0: 22 matched pairs
+[ok] cal__sf460417__c1: 5 matched pairs
+[ok] cal__sf460417__c2: 13 matched pairs
+[ok] cal__sf467172__c0: 8 matched pairs
+[ok] cal__sf467172__c1: 8 matched pairs
+[ok] cal__sf467172__c2: 3 matched pairs
+[ok] cal__sf467306__c0: 10 matched pairs
+[ok] cal__sf467306__c1: 9 matched pairs
+[ok] cal__sf467306__c2: 5 matched pairs
+[ok] cal__sf468711__c0: 27 matched pairs
+[ok] cal__sf468711__c1: 2 matched pairs
+[ok] cal__sf468711__c2: 1 matched pairs
+[ok] cal__sf470352__c0: 6 matched pairs
+[ok] cal__sf470352__c1: 4 matched pairs
+[ok] cal__sf470352__c2: 38 matched pairs
+[ok] cal__sf471425__c1: 0 matched pairs
+[ok] cal__sf471425__c2: 0 matched pairs
+[ok] cal__sf471952__c0: 17 matched pairs
+[ok] cal__sf483632__c0: 37 matched pairs
+[ok] cal__sf483632__c1: 2 matched pairs
+[ok] cal__sf483632__c2: 12 matched pairs
+[ok] cal__sf422826__r0: 1 matched pairs
+[ok] cal__sf422826__r1: 0 matched pairs
+[ok] cal__sf422826__r2: 3 matched pairs
+[ok] cal__sf460417__r0: 0 matched pairs
+[ok] cal__sf460417__r1: 1 matched pairs
+[ok] cal__sf460417__r2: 0 matched pairs
+[ok] cal__sf467172__r0: 1 matched pairs
+[ok] cal__sf467172__r1: 2 matched pairs
+[ok] cal__sf467172__r2: 0 matched pairs
+[ok] cal__sf467306__r1: 0 matched pairs
+[ok] cal__sf467306__r2: 1 matched pairs
+[ok] cal__sf468711__r1: 0 matched pairs
+[ok] cal__sf468711__r2: 0 matched pairs
+[ok] cal__sf470352__r0: 1 matched pairs
+[ok] cal__sf470352__r1: 0 matched pairs
+[ok] cal__sf470352__r2: 2 matched pairs
+[ok] cal__sf471425__r0: 0 matched pairs
+[ok] cal__sf471425__r1: 0 matched pairs
+[ok] cal__sf471425__r2: 0 matched pairs
+[ok] cal__sf471952__r0: 0 matched pairs
+[ok] cal__sf471952__r2: 0 matched pairs
+[ok] cal__sf483632__r0: 0 matched pairs
+[ok] cal__sf483632__r1: 1 matched pairs
+[ok] cal__sf483632__r2: 0 matched pairs
+[ok] dev__sf422391__r1: 0 matched pairs
+[ok] dev__sf422391__r2: 0 matched pairs
+[ok] dev__sf422803__r0: 1 matched pairs
+[ok] dev__sf422803__r1: 1 matched pairs
+[ok] dev__sf422803__r2: 3 matched pairs
+[ok] dev__sf434650__r1: 0 matched pairs
+[ok] dev__sf434650__r2: 2 matched pairs
+                                             check condition    auroc  n_runs  scored_bad_views  median_k  clean_median_k
+         pose: bad view vs good views (within run)   dev_all 0.430037      26          0.388034       NaN             NaN
+         pose: bad view vs good views (within run)  dev_pose 0.430037      26          0.388034       NaN             NaN
+pose: hint set vs clean hint sets (median_view_px)   dev_all 0.990186      65               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)   dev_all 0.966942      65               NaN       NaN             NaN
+                 depth: |log k| vs clean hint sets   dev_all 0.941632      65               NaN  1.009083        0.999025
+pose: hint set vs clean hint sets (median_view_px)  dev_pose 0.990186      65               NaN       NaN             NaN
+   pose: hint set vs clean hint sets (max_view_px)  dev_pose 0.966942      65               NaN       NaN             NaN

@@ -1,0 +1,14 @@
+{
+ "min_view_pairs": 3,
+ "min_set_pairs": 10,
+ "tau_view_deg": null,
+ "tau_set_deg": null,
+ "view_status": "NOT CALIBRATED",
+ "set_status": "NOT CALIBRATED",
+ "gt_views": 344,
+ "gt_hint_sets": 42,
+ "gt_view_drop_rate": null,
+ "gt_set_action_rate": null,
+ "coverage_views_scored": 0.1675213675213675,
+ "coverage_sets_scored": 0.199023199023199
+}
