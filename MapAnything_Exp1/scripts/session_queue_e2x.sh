@@ -100,13 +100,13 @@ if wait_for ready_omnivggt FAILED_omnivggt OmniVGGT; then
   fi
   # OPT-IN (RUN_OV_E3CAL=1): about 9,000 runs at OmniVGGT's fp32 speed (~2,500 runs/h in the E2 session), i.e. 3.5-4 h,
   # and its images-only witness is unstable (E2-D). Off by default; E3 generality to OmniVGGT can come later.
-  if [ "${RUN_OV_E3CAL:-0}" = 1 ]; then
+  if [ "${RUN_OV_E3CAL:-0}" = 1 ] || [ -f ~/logs/RUN_OV_E3CAL ]; then   # env var, or: touch ~/logs/RUN_OV_E3CAL
     log "OV 2 E3-cal"
     shard --backend omnivggt --config configs/e2x_e3cal_synth_omnivggt.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_e3cal_synth_ov_eth3d
     shard --backend omnivggt --config configs/e2x_e3cal_synth_omnivggt.json --clips "$CAL" --out results/e2x_e3cal_synth_ov_cal
     shard --backend omnivggt --config configs/e2x_e3cal_real_omnivggt.json --clips "$CAL" --out results/e2x_e3cal_real_ov_cal
   else
-    log "OV E3-cal skipped (opt-in: RUN_OV_E3CAL=1)"
+    log "OV E3-cal skipped (opt-in: RUN_OV_E3CAL=1 or touch ~/logs/RUN_OV_E3CAL)"
   fi
 fi
 log "SESSION_GPU_DONE"

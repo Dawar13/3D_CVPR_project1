@@ -183,6 +183,40 @@ The E2 clips: 24 eval clips (10 scenes) and 3 dev c0 clips.
 - **Inside-the-network direction (trust dial / learned gate)** only if Shubh's G1 oracle dial removes most of the damage (experiments/G.md thresholds).
 - Whatever the outcome, X-A (three models) and angles A–E are written up.
 
+### X-M: inside the model, how does it decide to obey? (DRAFT, for session A2; not part of session A or of the e2x-prereg grid)
+- **Why.** E2 showed *that* MapAnything copies wrong hints while its confidence flags them, and that the damage is inside the network (not the averaging step). It did not show *where* or *how*.
+  - Probes alone are not proof (a readable signal can be unused). So every claim here needs a cause-and-effect test: turn something up or down, or swap it, and watch the output move.
+- **Tools.** Already in `exp1/model_io.py`:
+  - `set_hint_gate`: a dial on each hint's contribution at the fusion step, 0 to 1, per view or per patch;
+  - `TokenCapture`: the internal state after the global-attention layers.
+  
+  To add (laptop, with tests): a hook that **replaces** one view's internal state at a chosen layer with the state from another run (activation patching), and the same hooks for Pi3X and OmniVGGT. Hooks go only in the `model_io*` files.
+- **Experiments**, each with a hypothesis stated before running. Data: ETH3D eval clips and the room clips. Errors: one camera 15°, shared 5°, drift level 2, depth ×1.5. Models: MapAnything and Pi3X (OmniVGGT optional).
+  - **M1, dial sweep (dose-response).** Turn the wrong hint from 0 to 1 in 7 steps and record the output error.
+    - H: the output moves *linearly*, so the hint acts as a fixed-weight vote, not a switch.
+    - A switch-like response would mean "any hint is treated as truth". Either way, it tells whether a soft dial can be a fix.
+  - **M2, where does it notice?** A layer-by-layer readout of "this camera's hint is wrong" from the internal state (extends G2 from dev to eval, all global layers, same probe protocol).
+    - H: the signal is strong in early-to-middle layers, earlier than the final confidence.
+  - **M3, where does it decide?** Replace the bad camera's internal state with its state from the correct-hint run (and from the no-hint run), one layer at a time.
+    - The deepest layer where this still fixes the output is the "point of no return".
+    - H: patching after that layer no longer helps, so the decision is made early.
+  - **M4, the copy path.** Does the hint's signal travel through the network nearly unchanged to the camera output? Measure how much of the final-layer difference (wrong vs correct hint) points the same way as the input difference, layer by layer. Then remove that component at the last layers and check whether the output returns to the photo-based answer.
+    - H: yes. Obeying is a short "copy path" through the residual connections that bypasses the cross-view evidence.
+  - **M5, how the damage spreads.** Patch only the bad camera vs all other cameras, layer by layer.
+    - E1 measured +20% rotation error on good cameras with 20% of views wrong. This finds the layers through which it spreads.
+  - **M6, three injection designs.** MapAnything adds hints at the input; Pi3X injects camera hints again at 5 depths (layers 1, 9, 17, 25, 33); OmniVGGT uses zero-initialised adapters with a learned placeholder.
+    - Compare M1–M4 across them. H: where and how a hint enters predicts how much it is obeyed.
+  - **M7, why (no GPU).** Did each model ever see a *wrong* hint during training? Read papers and code. MapAnything's paper describes no hint noise (context §3).
+    - H: models trained only on correct hints learned to copy them, a shortcut that is always right in training.
+    - Prediction: noise-trained models (VPGGT) copy less.
+  - **M8, hint-vs-hint conflict.** When two hints disagree, whom does the model follow: the poses, the depth or the photos?
+    - Grid on ETH3D eval clips: pose-hint scale {×0.67, ×1, ×1.5} × depth-hint scale {×0.67, ×1, ×1.5}, correct images. Readout: the output scale vs each hint's scale and vs images only.
+    - E2-E's `dev_pose_ai_depth` is the real instance: metric iPad poses vs AI depth ×1.42. Shape was +8.5 pp worse while rotation improved by 1.04° (`results/e2def_agg/e_tests.csv`).
+    - H: the model follows one hint wholesale instead of letting the photos referee.
+    - Needs two corruptions in one condition (a small runner change, with a test). About 220 passes.
+- **Size (estimate, not measured):** about 2,500 passes per model (M1 ~670, M2 ~240, M3 ~1,150, M4 ~400), i.e. well under an hour of GPU for MapAnything and Pi3X together at E2 speeds, plus setup.
+- These analyses are exploratory. Hypotheses and metrics are written down before the A2 run, and every claim needs its cause-and-effect test (M1, M3, M4), not only a probe (M2).
+
 ## 6. VM session A (one session; queue ordered by priority so an early stop loses only the tail)
 1. Setup in parallel: envs `mapanything`, `pi3x`, `omnivggt`, `aidepth` (`scripts/vm_setup_e2x.sh`). The GPU starts when MapAnything is ready.
 2. AI depth for the E2-E clips (the laptop copies have none; checked against E2-E's record `results/e2e_mono/mono_depth.csv`), then the room and `cal` clips.
@@ -194,6 +228,50 @@ The E2 clips: 24 eval clips (10 scenes) and 3 dev c0 clips.
 - Recorded runs: MapAnything 10,554; Pi3X 15,061; OmniVGGT 817, plus 9,064 if opt-in. E3 controls add hidden passes: two witness passes per clip and one depth pass per depth hint set.
 - Measured E2 speeds: MapAnything about 18,000 runs/h (e2df eval: 4,392 runs in 14.5 min); OmniVGGT about 2,500 runs/h (e2d eval: 3,312 runs in 77 min).
 - **Estimate, not measured:** setup about 0.3 h, MapAnything about 0.75 h, Pi3X 1–1.75 h (speed unknown until its dev run), OmniVGGT rooms about 0.35 h. **About 2.5–3.5 GPU-hours in total**, plus 3.5–4 h with the OmniVGGT E3-cal.
+
+## 6b. The whole of E2X in one place (added 2026-11-07; GPU time is now free, from a friend's machine)
+
+**Session A** (frozen at `e2x-prereg`, ready):
+- X-A: Pi3X on ETH3D, the E2-D grid.
+- X-B: three models on the whole-room iPad clips; Pi3X on the E2-E clips.
+- E3 calibration: MapAnything and Pi3X, and OmniVGGT too since GPU time is free (`touch ~/logs/RUN_OV_E3CAL` on the VM).
+- G0–G2 (MapAnything, dev clips).
+- About 6–7 GPU-hours with the OmniVGGT calibration (estimate).
+
+**Laptop work during session A** (about 1–2 days):
+- **L1.** Activation-patching hooks for the three models (`model_io*` only) and two corruptions in one condition (M8), with tests.
+- **L2.** Geometry referee (`exp1/photo_check.py`) as a deployable detector and a new baseline **R5**: drop camera hints whose epipolar fit is poor, plus a depth-scale check by triangulating matches with the camera hints. Thresholds set on `cal` clips with the same false-action rule as E3.
+- **L3.** R4 robust bundle adjustment (CPU), defined before it is run.
+- **L4.** Scale-fit sensitivity check for the "damage spreads" result (E1 S2), using `view_shape_err_sim3` (`docs/VISION.md` §2 caveat). Descriptive.
+- **L5.** M7: training-recipe audit (were hints ever wrong in training?), from papers and code.
+- **L6 (optional).** DA3 connector (fourth model; camera hints only, all views or none; SpatialBench reports strong adherence).
+- **L7 (optional).** ADVIO real-compass error study.
+- Then preregister X-M, R4, R5 and the M8 grid as tag `e2x-a2-prereg`.
+
+**Session A2** (about 1–2 GPU-hours, estimate):
+- X-M (M1–M6, M8) on MapAnything and Pi3X, OmniVGGT if time;
+- R5 runs on the calibration clips;
+- DA3 X-A if L6 was done.
+
+**Then `e3-prereg` and session B:**
+- The fix against every baseline (use all hints, R0–R5, ORACLE), on ETH3D eval families, whole-room iPad eval clips and AI-depth clips, for three models.
+- A step-by-step ablation ladder: drop single cameras → + shared/drift repair → + uncertainty-aware cut-offs → + depth rescale → + geometry referee.
+- The safety-vs-benefit plot.
+
+**Metrics throughout:**
+- pose: rotation error, RRA@5, RTA@5, AUC@30;
+- 3D: relative point error (shape) and real size;
+- depth: AbsRel, δ<1.25;
+- detection: AUROC, false alarms on good cameras, action rate on correct hints;
+- the fix: damage removed and benefit kept;
+- cost: runtime and extra passes.
+
+**Paper map:**
+- obeying, three models (E2, X-A);
+- when it hurts: break-even and reality map (C1 curves, X-B, literature);
+- inside the network (X-M);
+- the fix (E3);
+- benchmark (appendix).
 
 ## 7. Open items
 - **User:** approve §5, then the tag `e2x-prereg` is set.
