@@ -217,6 +217,42 @@ The E2 clips: 24 eval clips (10 scenes) and 3 dev c0 clips.
 - **Size (estimate, not measured):** about 2,500 passes per model (M1 ~670, M2 ~240, M3 ~1,150, M4 ~400), i.e. well under an hour of GPU for MapAnything and Pi3X together at E2 speeds, plus setup.
 - These analyses are exploratory. Hypotheses and metrics are written down before the A2 run, and every claim needs its cause-and-effect test (M1, M3, M4), not only a probe (M2).
 
+#### A2 grid and readouts (DRAFT 2026-11-08, branch `e2x-a2-dev`; frozen as tag `e2x-a2-prereg` only after the user's approval)
+- **Code** (CPU-tested with fake models that have the real block layouts: `tests/test_xm_hooks.py`, `tests/test_run_xm.py`):
+  - `exp1/run_xm.py`;
+  - `TokenPatch` in all three `model_io*` files;
+  - `TokenCapture(full=True)` for OmniVGGT and Pi3X;
+  - M8 support in `run_exp1.apply_corruption` (`corruption.also`).
+- **Gate fix:** `model_io._gated_fuse` now mixes in fp32, so γ = 1 and γ = 0 are exact in bf16 (tested). The session-A gate check had failed because γ = 1 changed the output. The M1 dial depends on this fix, and so does Shubh's G1.
+- **Configs:** `scripts/e2x/make_xm_configs.py` writes `configs/e2x_xm_{mapanything,pi3x}.json` and `configs/e2x_m8_{mapanything,pi3x}.json`. The corruption specs are copied from the frozen E3-cal grid.
+- **Cases:**
+  - one camera 15° (`outlier_rot`);
+  - shared heading 5° (`shared_heading_bias`);
+  - drift level 2;
+  - depth ×1.5 on views 3 and 7.
+- **Layers:** every capturable layer, read from the loaded model rather than assumed:
+  - MapAnything: the even (global) blocks;
+  - Pi3X: the odd (global) blocks 1 … 33, read after the camera-hint injection.
+- **Dial:** γ ∈ {0, 1/6, …, 1} on the bad views (pose cases) or the depth views (depth case). MapAnything only: Pi3X has no fusion gate.
+- **Clips:** the dev c0 clips first, then the ETH3D eval clips once. Dev gate:
+  - 0 failures;
+  - γ = 1 equals no gate within 1e-3;
+  - `ref/clean` beats `ref/rgb_only` on rotation in ≥ 2 of 3 dev clips.
+- **Size (estimate, not measured):**
+  - per clip and case: 4 references + 7 dial steps + 3 passes per layer;
+  - MapAnything: about 35 passes per case (8 global layers if the model has 16 blocks);
+  - Pi3X: about 55 passes per case (17 layers);
+  - M8: 11 runs per clip.
+- **Readouts** (all DESCRIPTIVE: scene means with bootstrap CIs, no Holm family):
+  - **M1:** bad-view rotation error vs γ. "Linear" = a straight line fits with R² ≥ 0.95. "Switch-like" = more than half of the γ = 1 error is already present at γ = 1/6.
+  - **M3:** the share of the bad-hint damage removed by patching at layer k, (E_bad − E_patch) / (E_bad − E_clean), for the sources "clean" and "drop". The point of no return is the first layer where this share falls below 0.5.
+  - **M5:** the same share when only the other views are patched, plus the good-view rotation error per layer.
+  - **M2/M4:** the relative size of the bad − clean state difference per layer, and its cosine with the first layer. "Copy path" = the cosine stays ≥ 0.8 up to the last layer.
+  - **M8:** the output scale vs the pose-hint scale, the depth-hint scale and images only.
+- **What counts as a finding:**
+  - MapAnything: a pattern seen in ≥ 7 of 10 eval scenes, with a CI that excludes the opposite;
+  - three-design comparison (M6): the same readout differs between MapAnything and Pi3X with non-overlapping CIs.
+
 ## 6. VM session A (one session; queue ordered by priority so an early stop loses only the tail)
 1. Setup in parallel: envs `mapanything`, `pi3x`, `omnivggt`, `aidepth` (`scripts/vm_setup_e2x.sh`). The GPU starts when MapAnything is ready.
 2. AI depth for the E2-E clips (the laptop copies have none; checked against E2-E's record `results/e2e_mono/mono_depth.csv`), then the room and `cal` clips.
