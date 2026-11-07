@@ -17,7 +17,8 @@ For every clip and case (a hint corruption: e.g. one camera 15 deg, shared 5 deg
 Every pass is scored with metrics.evaluate (all views) plus the bad views' rotation error vs ground truth and vs the
 hint. Writes (resumable): <out>/per_run.csv, <out>/state_stats.csv, <out>/failures.jsonl, <out>/run_info.json.
 
-Config: checkpoint, backend, inputs (hint groups of the clean/bad runs), depth_views, layers, dial,
+Config: checkpoint, backend, inputs (hint groups of the clean/bad runs), depth_views, layers ("all": read
+from the model, all_layers), dial,
 cases: [{name, corruption (run_exp1 spec, "also" allowed), inputs (optional, overrides)}], seeds (default [0]).
 """
 
@@ -50,6 +51,17 @@ def get_backend(name):
     else:
         from . import model_io as m
     return m
+
+
+def all_layers(backend, model):
+    """Every layer whose state can be captured and patched, read from the loaded model (not assumed):
+    MapAnything even (global) blocks of info_sharing.self_attention_blocks; Pi3X odd (global) decoder blocks with a
+    block after them; OmniVGGT every aggregator global block."""
+    if backend == "pi3x":
+        return [k for k in range(1, len(model.decoder) - 1, 2)]
+    if backend == "omnivggt":
+        return list(range(len(model.aggregator.global_blocks)))
+    return list(range(0, len(model.info_sharing.self_attention_blocks), 2))
 
 
 def _rel(poses):
@@ -109,7 +121,9 @@ def main():
     W = Writer(os.path.join(a.out, "per_run.csv"), FIELDS)
     S = Writer(os.path.join(a.out, "state_stats.csv"), STAT_FIELDS)
     fail_path = os.path.join(a.out, "failures.jsonl")
-    layers = list(cfg["layers"])
+    layers = all_layers(cfg.get("backend", "mapanything"), model) if cfg["layers"] == "all" else list(cfg["layers"])
+    json.dump({**json.load(open(os.path.join(a.out, "run_info.json"))), "layers": layers},
+              open(os.path.join(a.out, "run_info.json"), "w"), indent=1)
     depth_views = tuple(cfg.get("depth_views", ()))
     for path in clips:
         clip = load_clip(path)
