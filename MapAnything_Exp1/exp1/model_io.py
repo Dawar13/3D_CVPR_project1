@@ -216,7 +216,8 @@ class TokenCapture:
     MapAnything: even indices of info_sharing.self_attention_blocks are global (N, V*T + extra, C)
     (uniception 0.1.7 alternating_attention_transformer.py:397-401); the scale token sits at the end."""
 
-    def __init__(self, model, layers, n_views):
+    def __init__(self, model, layers, n_views, full=False):
+        # full: accepted for the same signature as the other backends; MapAnything views have patch tokens only
         self.tokens, self.n_views, self.handles = {}, n_views, []
         blocks = model.info_sharing.self_attention_blocks
         for k in layers:
