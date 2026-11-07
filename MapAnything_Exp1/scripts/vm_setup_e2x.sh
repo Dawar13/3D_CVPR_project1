@@ -27,8 +27,10 @@ cu_build() {  # Blackwell (sm_120) needs CUDA >= 12.8 wheels: cu130 needs driver
 setup_ma() {
   trap 'touch "$L/FAILED_mapanything"' ERR
   source "$C/etc/profile.d/conda.sh" && conda activate mapanything
+  # torch 2.14.1 (E0-E2) has cu126 and cu130 wheels but no cu128 (download.pytorch.org, checked 2026-11-07): driver
+  # 570-579 gets cu126 (as E2-C's first VM, parity with E1 checked), which runs on Ampere/Hopper but not on Blackwell
   python -c "import torch" 2>/dev/null ||
-    pip install -q torch==2.14.1 torchvision --index-url "https://download.pytorch.org/whl/$(cu_build)"
+    pip install -q torch==2.14.1 torchvision --index-url "https://download.pytorch.org/whl/$(cu_build | sed 's/cu128/cu126/')"
   cd "$T" && bash scripts/setup_server.sh
   python -c "from exp1 import model_io; model_io.load_model('facebook/map-anything', 'cpu'); print('checkpoint cached')"
   local snap
