@@ -105,7 +105,7 @@ git rev-parse --short e2x-prereg
 ```bash
 bash MapAnything_Exp1/scripts/vm_launch_e2x.sh build
 ```
-- **Expected:** a folder `../3D-CVPR_Exp_bundle_e2x/` with `e2x_tree.tgz` (code at the tag, plus the E2-E AI-depth record) and `vm_setup_e2x.sh`. The last line says `bundle ready ... (e2x-prereg <commit>)`.
+- **Expected:** a folder `../3D-CVPR_Exp_bundle_e2x/` with `e2x_tree.tgz` and `vm_setup_e2x.sh`. The experiment code, configs and tests come from the tag `e2x-prereg`; the job scripts (`scripts/`) come from the current commit. The build refuses to run if `exp1/`, `configs/` or `tests/` differ from the tag, or if `scripts/` has uncommitted changes. Both commits are written into the tree (`E2X_FROZEN_COMMIT`, `E2X_SCRIPTS_COMMIT`). The last line says `bundle ready ... (experiment e2x-prereg <commit>, scripts <commit>)`.
 - **"tag e2x-prereg missing":** do step 2 first.
 - **"excluded.csv missing":** the clip checks were not run. Do not continue; ask.
 
@@ -115,10 +115,10 @@ bash MapAnything_Exp1/scripts/vm_launch_e2x.sh build
 
 | Need | Why |
 |---|---|
-| 1 GPU with **≥ 80 GB**: RTX PRO 6000 (96 GB, used in E2) or A100/H100 80 GB | Up to 4 model processes share the GPU |
+| 1 GPU with a **budget of ≥ 11 GB for us** (32 GB is the plan for the shared H100 80 GB, 2026-11-07: two other experiments use ~45 GB) | One model process needs ~10.5 GB (measured peaks: MapAnything 8.9 GB, OmniVGGT 8.3 GB, plus headroom; Pi3X is measured by its first job). The queue runs `budget / 10.5 GB` processes, at most 4, and never more than the free memory allows |
 | NVIDIA driver **≥ 570** (≥ 580 is best) | Blackwell needs CUDA ≥ 12.8 wheels. The setup picks cu130 / cu128 / cu126 from the driver |
-| **≥ 16 CPU cores, ≥ 64 GB RAM** | Setup installs four environments in parallel; the queue runs one process per 16 GB of free GPU memory and per 4 CPUs, at most 4 |
-| **≥ 150 GB disk** | Weights (MapAnything ~5 GB, Pi3X ~5.4 GB, OmniVGGT ~5 GB, Depth Anything ~1.3 GB), four conda envs (~20 GB), clips (1.1 GB) and results |
+| **≥ 12 CPU cores, ≥ 48 GB RAM** for us | Setup installs four environments in parallel; the queue runs at most one process per 4 CPUs. While the AI depth or the gate tests use the GPU, the queue runs one process fewer |
+| **≥ 150 GB free disk** in `~` | Weights (MapAnything ~5 GB, Pi3X ~5.4 GB, OmniVGGT ~5 GB, Depth Anything ~1.3 GB), four conda envs (~20 GB), clips (1.1 GB) and results |
 | Ubuntu 22.04 or newer, SSH access | The scripts use `bash`, `tmux`, `wget` and `conda` (installed by the setup) |
 
 - The laptop key `~/.ssh/id_ed25519` is the one rented VMs accept.
@@ -129,13 +129,14 @@ bash MapAnything_Exp1/scripts/vm_launch_e2x.sh build
 ## 6. Step 5: send and start (about 5–15 minutes of laptop time; the rest runs by itself)
 
 ```bash
-bash MapAnything_Exp1/scripts/vm_launch_e2x.sh send user@HOST PORT
+GPU_BUDGET_GB=32 bash MapAnything_Exp1/scripts/vm_launch_e2x.sh send user@HOST PORT
 ```
+(`SSH_KEY=/path/key.pem` in front if the VM needs its own key.)
 What happens, in order:
-1. The code is uploaded (~1 MB) and `vm_setup_e2x.sh` starts **at once** in tmux. It creates four conda envs (`mapanything`, `pi3x`, `omnivggt`, `aidepth`) and installs them in parallel.
+1. The code is uploaded (~1 MB) and `vm_setup_e2x.sh` starts **at once** in tmux (`e2x_main`). It installs its own Miniconda in `~/e2x_conda`, creates four envs there (`mapanything`, `pi3x`, `omnivggt`, `aidepth`) and installs them in parallel. No other conda, env or shell profile on the machine is touched.
 2. The clips are **streamed** (1.1 GB, no local archive) while the envs install.
-3. The tmux session `gpu` waits for MapAnything and the clips, then starts `scripts/session_queue_e2x.sh`.
-4. `setup_ai` first regenerates the AI depth on the E2-E clips. The laptop copies have none, because it was made on the E2 VM. It checks the new depth against E2-E's record (`~/logs/mono_verify.txt`), then does the room and cal clips. No job touches the SceneFun3D clips before this is finished.
+3. The tmux session `e2x_gpu` waits for MapAnything and the clips, then starts `scripts/session_queue_e2x.sh`.
+4. `setup_ai` first regenerates the AI depth on the E2-E clips. The laptop copies have none, because it was made on the E2 VM. It checks the new depth against E2-E's record (`~/e2x_logs/mono_verify.txt`), then does the room and cal clips. No job touches the SceneFun3D clips before this is finished.
 
 The command ends by printing the progress command for step 6.
 
@@ -145,18 +146,18 @@ The command ends by printing the progress command for step 6.
 
 **Progress bars** (from the laptop):
 ```bash
-ssh -p PORT user@HOST 'cd ~/x/MapAnything_Exp1 && ~/miniconda3/envs/mapanything/bin/python scripts/session_progress_e2x.py; tail -8 ~/logs/session.txt'
+ssh -p PORT user@HOST 'cd ~/e2x/MapAnything_Exp1 && ~/e2x_conda/envs/mapanything/bin/python scripts/session_progress_e2x.py; tail -8 ~/e2x_logs/session.txt'
 ```
 
 **What else to look at** (on the VM):
 
 | File / command | Meaning |
 |---|---|
-| `tmux ls` | Sessions `setup_ma`, `setup_px`, `setup_ov`, `setup_ai`, `gpu` |
-| `~/logs/ready_*` / `~/logs/FAILED_*` | An env finished installing / failed (see the matching `~/logs/setup_*.txt`) |
-| `~/logs/mono_verify.txt` | `N/49 bit-identical to E2-E; same model revision: True`. Different bits are acceptable (another torch/GPU) but note the number. A different revision stops the AI-depth step |
-| `~/logs/session.txt` | One line per job, the dev-gate verdicts (`GATE ... PASS/FAIL`), and the markers `ROOM_MA_EVAL_DONE`, `GATE_MA_DONE`, `PX_ETH3D_EVAL_DONE`, `PX_E2E_EVAL_DONE`, `ROOM_PX_EVAL_DONE`, `ROOM_OV_EVAL_DONE`, `SESSION_GPU_DONE` |
-| `~/logs/gpu.txt` | Everything the queue printed (errors included) |
+| `tmux ls` | Ours: `e2x_main`, `e2x_ma`, `e2x_px`, `e2x_ov`, `e2x_ai`, `e2x_gpu`. Any other session belongs to someone else: do not touch it |
+| `~/e2x_logs/ready_*` / `~/e2x_logs/FAILED_*` | An env finished installing / failed (see the matching `~/e2x_logs/e2x_*.txt`) |
+| `~/e2x_logs/mono_verify.txt` | `N/49 bit-identical to E2-E; same model revision: True`. Different bits are acceptable (another torch/GPU) but note the number. A different revision stops the AI-depth step |
+| `~/e2x_logs/session.txt` | One line per job, the dev-gate verdicts (`GATE ... PASS/FAIL`), and the markers `ROOM_MA_EVAL_DONE`, `GATE_MA_DONE`, `PX_ETH3D_EVAL_DONE`, `PX_E2E_EVAL_DONE`, `ROOM_PX_EVAL_DONE`, `ROOM_OV_EVAL_DONE`, `SESSION_GPU_DONE`. Also `!! N runs reset after CUDA out-of-memory` (an automatic retry, see below) and `JOB_FAILED <folder>` |
+| `~/e2x_logs/e2x_gpu.txt` | Everything the queue printed (errors included) |
 
 **Order of the jobs** (most important first, so stopping early loses only the tail):
 
@@ -172,7 +173,9 @@ ssh -p PORT user@HOST 'cd ~/x/MapAnything_Exp1 && ~/miniconda3/envs/mapanything/
 | 8 | OmniVGGT | room dev → gate → eval | 133 + 684 | |
 | — | OmniVGGT | E3-cal (opt-in only) | 9,064 | adds 3.5–4 h; switch on with `RUN_OV_E3CAL=1` |
 
-**Time:** about 2.5–3.5 GPU-hours in total. This is an estimate: the speeds come from the E2 session on the same GPU type, and Pi3X's speed is unknown until its dev run (`E2X.md` §6). The final marker is `SESSION_GPU_DONE`.
+**Time:** about 2.5–3.5 h with 4 processes on an unshared GPU (estimate from the E2 session speeds). On the shared H100 with a 32 GB budget (3 processes) and two other jobs computing on the same card, expect longer; this is not measured, and Pi3X's speed is unknown until its first job (`E2X.md` §6). The final marker is `SESSION_GPU_DONE`.
+
+**GPU budget** (shared machine): `~/e2x_logs/gpu_budget_gb` holds our budget in GB (set from `GPU_BUDGET_GB` at the first start, default 32). Change it at any time with `echo N > ~/e2x_logs/gpu_budget_gb`; the next job uses it. `~/e2x_logs/machine.txt` records the GPU, the free memory and the other processes at start.
 
 ---
 
@@ -180,16 +183,18 @@ ssh -p PORT user@HOST 'cd ~/x/MapAnything_Exp1 && ~/miniconda3/envs/mapanything/
 
 | Symptom | What it means | What to do |
 |---|---|---|
-| `~/logs/FAILED_mapanything` | MapAnything env or weights failed (the `gpu` session exits) | Read `~/logs/setup_ma.txt`. Fix the install (often a driver/wheel mismatch: see `cu_build` in `vm_setup_e2x.sh`), then `bash ~/vm_setup_e2x.sh ma` and `tmux new -d -s gpu "bash ~/vm_setup_e2x.sh gpu 2>&1 \| tee -a ~/logs/gpu.txt"` |
-| `~/logs/FAILED_pi3x` or `FAILED_omnivggt` | That model's jobs are skipped; the rest run | Read `~/logs/setup_px.txt` / `setup_ov.txt`, fix, rerun `bash ~/vm_setup_e2x.sh px` (or `ov`), then rerun the queue (below). Finished jobs are skipped automatically |
-| `~/logs/FAILED_mono` or `mono_verify.txt` says "different revision" | AI depth could not be made, or differs from E2-E | The queue still runs, but every `ai_depth` condition fails. Stop and report. Do not change the Depth Anything model |
+| `~/e2x_logs/FAILED_mapanything` | MapAnything env or weights failed (the `e2x_gpu` session exits) | Read `~/e2x_logs/e2x_ma.txt`. Fix the install (often a driver/wheel mismatch: see `cu_build` in `vm_setup_e2x.sh`), then `bash ~/vm_setup_e2x.sh ma` and `tmux new -d -s e2x_gpu "bash ~/vm_setup_e2x.sh gpu 2>&1 \| tee -a ~/e2x_logs/e2x_gpu.txt"` |
+| `~/e2x_logs/FAILED_pi3x` or `FAILED_omnivggt` | That model's jobs are skipped; the rest run | Read `~/e2x_logs/e2x_px.txt` / `e2x_ov.txt`, fix, rerun `bash ~/vm_setup_e2x.sh px` (or `ov`), then rerun the queue (below). Finished jobs are skipped automatically |
+| `~/e2x_logs/FAILED_mono` or `mono_verify.txt` says "different revision" | AI depth could not be made, or differs from E2-E | The queue still runs, but every `ai_depth` condition fails. Stop and report. Do not change the Depth Anything model |
 | `GATE ... FAIL` in `session.txt` | A dev run failed its automatic check, so its eval run was skipped **by design** | Do not patch. Copy the gate lines and the dev run's `failures.jsonl` (if any) and report |
 | `failures.jsonl` in a results folder | Some runs raised errors | `head -c 3000 results/<run>/failures.jsonl` and report. Do not rerun with changed settings |
-| Out of GPU memory, or the GPU is shared with someone else | Too many processes | Rerun the queue with fewer processes: `SHARDS=1 bash ~/x/MapAnything_Exp1/scripts/session_queue_e2x.sh` (in tmux) |
+| `!! N runs reset after CUDA out-of-memory` in `session.txt` | Another experiment held the GPU memory at that moment | Nothing. The queue resets those runs and runs them again with the same code and settings, up to 3 attempts per job; the result is byte-identical to a run without failures (`scripts/e2x/test_retry_oom.py`). Every reset is listed in `results/<run>/oom_retries.jsonl`, which is fetched with the results |
+| `JOB_FAILED <folder>` in `session.txt` | A model process crashed 3 times (often: no free GPU memory at model loading) | The queue goes on with the next job; a dev job's gate then fails, so its eval run is skipped. Check `<folder>/_shards/*/log.txt` and the free memory (`nvidia-smi`), then rerun the queue (below): finished runs are kept |
+| Out of GPU memory, or the other experiments need more room | Our budget is too large | `echo 20 > ~/e2x_logs/gpu_budget_gb` (GB). The queue re-reads it before every job; a running job keeps its processes until it ends. Each process is also capped by torch (`--mem_fraction`), so it fails with an out-of-memory error rather than taking memory from the others; such runs are retried automatically (row above). The clip split of a job is kept when the process count changes, so no clip runs twice |
 | SSH connection dropped | Nothing; jobs run in tmux | Reconnect and check progress |
-| The queue stopped half way (VM restart, crash) | | Rerun it in tmux: `tmux new -d -s gpu2 "bash ~/x/MapAnything_Exp1/scripts/session_queue_e2x.sh 2>&1 \| tee -a ~/logs/gpu.txt"`. Every job resumes from its shard folders; finished runs are not repeated |
-| `GATE_MA had errors` | Shubh's gate code failed on real weights (it was never run on them before) | Expected to be possible; the rest is unaffected. Send `~/logs/gpu.txt` and `results/g_*` to Shubh |
-| You want the OmniVGGT E3-cal after all | | After `SESSION_GPU_DONE`: `RUN_OV_E3CAL=1 bash ~/x/MapAnything_Exp1/scripts/session_queue_e2x.sh` (everything else is skipped as done) |
+| The queue stopped half way (VM restart, crash) | | Rerun it in tmux: `tmux new -d -s e2x_gpu2 "bash ~/e2x/MapAnything_Exp1/scripts/session_queue_e2x.sh 2>&1 \| tee -a ~/e2x_logs/e2x_gpu.txt"`. Every job resumes from its shard folders; finished runs are not repeated |
+| `GATE_MA had errors` | Shubh's gate code failed on real weights (it was never run on them before) | Expected to be possible; the rest is unaffected. Send `~/e2x_logs/e2x_gpu.txt` and `results/g_*` to Shubh |
+| You want the OmniVGGT E3-cal after all | | After `SESSION_GPU_DONE`: `RUN_OV_E3CAL=1 bash ~/e2x/MapAnything_Exp1/scripts/session_queue_e2x.sh` (everything else is skipped as done) |
 
 ---
 

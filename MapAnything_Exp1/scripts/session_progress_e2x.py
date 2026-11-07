@@ -1,4 +1,4 @@
-"""Progress of VM session A (scripts/session_queue_e2x.sh): one bar per job. Run on the VM from ~/x/MapAnything_Exp1:
+"""Progress of VM session A (scripts/session_queue_e2x.sh): one bar per job. Run on the VM from ~/e2x/MapAnything_Exp1:
   python scripts/session_progress_e2x.py
 Counting and bars are those of scripts/session_progress.py."""
 
@@ -9,7 +9,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from session_progress import bar, done, expected  # noqa: E402
 
-T = os.path.expanduser("~/x/MapAnything_Exp1")
+T = os.path.expanduser("~/e2x/MapAnything_Exp1")
 CAL = "data/clips_e2x_*/cal__*.npz"
 RD, RE = "data/clips_e2x_room/dev__*.npz", "data/clips_e2x_room/eval__*.npz"
 JOBS = [("MA E3-cal synth ETH3D", "configs/e2x_e3cal_synth_mapanything.json", "data/clips_e2/dev__*__c0.npz", "results/e2x_e3cal_synth_ma_eth3d"),

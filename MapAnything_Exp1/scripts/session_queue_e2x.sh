@@ -2,90 +2,191 @@
 # GPU queue of VM session A (experiments/E2X.md section 6). Started by vm_setup_e2x.sh when MapAnything and the clips
 # are ready; resumable (every job resumes from its shard folders). Ordered by priority, so an early stop loses only
 # the tail. A failed dev gate skips only the eval run it guards. mono_depth rewrites the SceneFun3D clips in place,
-# so no job touches them before ~/logs/ready_mono.
+# so no job touches them before $L/ready_mono.
+#
+# Shared GPU (2026-11-07): other experiments use part of the card. We stay inside a budget ($L/gpu_budget_gb, else
+# GPU_BUDGET_GB, else 32 GB; re-read before every job) with a
+# hard per-process cap (run_exp1 --mem_fraction), and before every job we also count the memory that is free right
+# now. Per-process need: MapAnything 10.5 GB, OmniVGGT 10 GB (peaks 8.9 / 8.3 GB measured in E2, + CUDA context and
+# headroom); Pi3X is measured on its first small job and set from that.
 set -euo pipefail
-source ~/miniconda3/etc/profile.d/conda.sh
+C=${E2X_CONDA:-~/e2x_conda}
+L=~/e2x_logs
+T=~/e2x/MapAnything_Exp1
+source "$C/etc/profile.d/conda.sh"
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
-T=~/x/MapAnything_Exp1
-log() { echo "$(date -u '+%F %T') $*" | tee -a ~/logs/session.txt; }
-if [ -z "${SHARDS:-}" ]; then  # one process per 16 GB free and per 4 CPUs, at most 4
-  free=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | sed -n 1p)
-  SHARDS=$(( free / 16384 )); c=$(( $(nproc) / 4 ))
-  [ "$c" -lt "$SHARDS" ] && SHARDS=$c
-  [ "$SHARDS" -gt 4 ] && SHARDS=4
-  [ "$SHARDS" -lt 1 ] && SHARDS=1
-fi
-shard() { python -m exp1.shard run --n "$SHARDS" --workdir "$T" -- "$@" --save_extras; }
-gate() { python scripts/dev_gates.py "$@" 2>&1 | tee -a ~/logs/session.txt; return "${PIPESTATUS[0]}"; }
+log() { echo "$(date -u '+%F %T') $*" | tee -a "$L/session.txt"; }
+TOTAL_MB=$(nvidia-smi --query-gpu=memory.total --format=csv,noheader,nounits | sed -n 1p)
+budget_mb() {  # re-read before every job: lower it at any time with  echo 20 > ~/e2x_logs/gpu_budget_gb
+  local g; g=$(cat "$L/gpu_budget_gb" 2>/dev/null || echo "${GPU_BUDGET_GB:-32}"); echo $(( g * 1024 ))
+}
+BUDGET_MB=$(budget_mb)
+MA_MB=10752; OV_MB=10240; PX_MB=${PX_MB:-}
+free_mb() { nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits | sed -n 1p; }
+side_busy() {  # processes of ours running beside the queue (AI depth before ready_mono, the gate tests)
+  local k=0
+  [ -f "$L/ready_mono" ] || [ -f "$L/FAILED_mono" ] || k=$((k + 1))
+  [ -f "$L/gate_running" ] && k=$((k + 1))
+  echo $k
+}
+n_for() {  # processes that fit: inside the budget (minus side jobs), in the free memory now, and 1 per 4 CPUs; 1..4
+  local per=$1 a b c n
+  a=$(( $(budget_mb) / per - $(side_busy) )); b=$(( $(free_mb) / per )); c=$(( $(nproc) / 4 ))
+  n=$a; [ "$b" -lt "$n" ] && n=$b; [ "$c" -lt "$n" ] && n=$c
+  [ "$n" -gt 4 ] && n=4; [ "$n" -lt 1 ] && n=1; echo "$n"
+}
+frac_for() { python -c "print(round(($1 - 512) / $TOTAL_MB, 4))"; }   # torch cap; the CUDA context is outside it
+running() { local k=0 p; for p in "$@"; do kill -0 "$p" 2>/dev/null && k=$((k + 1)); done; echo $k; }
+argval() { local f=$1; shift; while [ $# -gt 0 ]; do [ "$1" = "$f" ] && { echo "$2"; return; }; shift; done; }
+# shard <per-process MB> <runner args...>   (P=1 shard ... forces one process)
+# One job split over several runner processes. Same building blocks as exp1.shard.run (prepare; one ordinary run_exp1
+# per shard; merge; tests/test_shard.py: merged files = one process), but launched here, so that on a shared GPU:
+#  - the clip split is fixed at the first attempt and reused by every later attempt or resume (a different process
+#    count would split the clips differently and run some twice);
+#  - how many shards run AT ONCE is decided again at every attempt, from the budget and the free memory;
+#  - runs that failed with CUDA out-of-memory (another experiment held the memory) are reset and run again, giving
+#    the same files as a run without failures (scripts/e2x/retry_oom.py, its test; logged in <out>/oom_retries.jsonl).
+#    At most 3 attempts; remaining failures stay in <out>/failures.jsonl and the dev gates see them.
+shard() {
+  local per=$1; shift
+  local clips out np f c k ok=0 attempt rest=()
+  clips=$(argval --clips "$@"); out=$(argval --out "$@")
+  while [ $# -gt 0 ]; do case "$1" in --clips|--out) shift 2 ;; *) rest+=("$1"); shift ;; esac; done
+  if [ -d "$out/_shards" ]; then np=$(ls -d "$out"/_shards/*/ | wc -l); else np=${P:-$(n_for "$per")}; fi
+  f=$(frac_for "$per")
+  python - "$out" "$clips" "$np" > "$L/jobs.txt" <<'PY'
+import glob, sys
+from exp1.shard import prepare
+clips = sorted(glob.glob(sys.argv[2]))
+if not clips:
+    raise SystemExit(f"no clips match {sys.argv[2]}")
+for cg, so in prepare(sys.argv[1], clips, int(sys.argv[3])):
+    print(cg, so)
+PY
+  sed -i 's/\r$//' "$L/jobs.txt"   # (a Windows test run prints CRLF)
+  np=$(wc -l < "$L/jobs.txt")
+  for attempt in 1 2 3; do
+    c=$(n_for "$per"); [ "$c" -gt "$np" ] && c=$np; [ -n "${P:-}" ] && c=1
+    log "  -> attempt $attempt: $np shards, $c at a time, cap $(( (per - 512) / 1024 )) GB each, free now $(( $(free_mb) / 1024 )) GB"
+    local pids=() i=0 cg so
+    while read -r cg so; do
+      while [ "$(running "${pids[@]}")" -ge "$c" ]; do sleep 5; done
+      OMP_NUM_THREADS=$(( $(nproc) / np > 0 ? $(nproc) / np : 1 )) python -m exp1.run_exp1 "${rest[@]}" \
+        --clips "$cg" --out "$so" --save_extras --mem_fraction "$f" >> "$(dirname "$so")/log.txt" 2>&1 &
+      pids+=($!); i=$((i + 1))
+      if [ "$i" -lt "$np" ]; then sleep 20; fi   # stagger model loading
+    done < "$L/jobs.txt"
+    ok=1
+    for p in "${pids[@]}"; do wait "$p" || ok=0; done
+    k=0
+    if [ "$attempt" -lt 3 ]; then k=$(python scripts/e2x/retry_oom.py reset "$out"); fi
+    if [ "$ok" = 1 ] && [ "$k" = 0 ]; then break; fi
+    if [ "$attempt" = 3 ]; then break; fi
+    log "  !! $k runs reset after CUDA out-of-memory; all processes ok: $ok (logs: $out/_shards/*/log.txt). Retry in 120 s"
+    sleep 120
+  done
+  python scripts/e2x/retry_oom.py dedupe "$out" > /dev/null
+  python -m exp1.shard merge --out "$out" --clips "$clips" --workdir . > /dev/null || ok=0
+  if [ -f "$out/failures.jsonl" ]; then log "  $(wc -l < "$out/failures.jsonl") failed runs remain: $out/failures.jsonl"; fi
+  if [ "$ok" = 1 ]; then return 0; fi
+  log "JOB_FAILED $out (a process exited with an error 3 times; see $out/_shards/*/log.txt). Queue continues"
+  return 1
+}
+gate() { python scripts/dev_gates.py "$@" 2>&1 | tee -a "$L/session.txt"; return "${PIPESTATUS[0]}"; }
 wait_for() {  # wait_for ready_x FAILED_x what
-  until [ -f ~/logs/$1 ] || [ -f ~/logs/$2 ]; do sleep 10; done
-  [ -f ~/logs/$1 ] || { log "$3 setup FAILED: its jobs are skipped"; return 1; }
+  until [ -f "$L/$1" ] || [ -f "$L/$2" ]; do sleep 10; done
+  [ -f "$L/$1" ] || { log "$3 setup FAILED: its jobs are skipped"; return 1; }
 }
 ROOM_DEV='data/clips_e2x_room/dev__*.npz'; ROOM_EVAL='data/clips_e2x_room/eval__*.npz'
 CAL='data/clips_e2x_*/cal__*.npz'
 cd "$T"
-log "start e2x session A, $SHARDS processes per job, tree $(cat E2X_FROZEN_COMMIT 2>/dev/null || echo '?')"
+log "start e2x session A, budget $(( BUDGET_MB / 1024 )) GB of $(( TOTAL_MB / 1024 )) GB, free now $(( $(free_mb) / 1024 )) GB," \
+    "tree $(cat E2X_FROZEN_COMMIT 2>/dev/null || echo '?'), scripts $(cat E2X_SCRIPTS_COMMIT 2>/dev/null || echo '?')"
+
+# Shubh's gate test (experiments/G.md), MapAnything only, DEV clips only, as scripts/g_run_dev.sh runs it. It runs as
+# ONE process beside the main MapAnything jobs (which then use one process fewer). Never run on real weights before:
+# a failure is logged and the queue goes on.
+gate_tests() {
+  touch "$L/gate_running"
+  local gfail=0
+  set +e
+  mkdir -p results/g0_dev
+  python -m exp1.g_analysis decompose --clips 'data/clips_e2e/dev__*.npz' --out results/g0_dev/depth_decompose.csv || gfail=1
+  for job in "g1_oracle g1" "g2_signal g2"; do
+    read -r cfg name <<<"$job"
+    python -m exp1.run_gate --config "configs/$cfg.json" --clips 'data/clips_e2e/dev__*.npz' \
+      --out "results/${name}_ma_rooms_dev" --backend mapanything || gfail=1
+    python -m exp1.run_gate --config "configs/$cfg.json" --clips 'data/clips_e2/dev__*.npz' \
+      --out "results/${name}_ma_eth_dev" --backend mapanything || gfail=1
+  done
+  python -m exp1.g_analysis oracle --runs 'results/g1_*_dev' --out results/g1_summary || gfail=1
+  python -m exp1.g_analysis signal --runs 'results/g2_*_dev' --out results/g2_summary || gfail=1
+  if [ "$gfail" -eq 0 ]; then log "GATE_MA_DONE"; else log "GATE_MA had errors: see $L/gate.txt (queue continues)"; fi
+  rm -f "$L/gate_running"
+}
 
 # ------------------------------------------------------------------ MapAnything
 conda activate mapanything
 log "MA 1 E3-cal synthetic on ETH3D dev"
-shard --config configs/e2x_e3cal_synth_mapanything.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_e3cal_synth_ma_eth3d
+shard $MA_MB --config configs/e2x_e3cal_synth_mapanything.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_e3cal_synth_ma_eth3d || true
 wait_for ready_mono FAILED_mono "AI depth" || true
+log "MA 4 gate tests start beside the main jobs (dev only)"
+( gate_tests ) > "$L/gate.txt" 2>&1 &
+GATE_PID=$!
+sleep 5
 log "MA 2 E3-cal on cal clips (synthetic, real) and SceneFun3D dev clips (real)"
-shard --config configs/e2x_e3cal_synth_mapanything.json --clips "$CAL" --out results/e2x_e3cal_synth_ma_cal
-shard --config configs/e2x_e3cal_real_mapanything.json --clips "$CAL" --out results/e2x_e3cal_real_ma_cal
-shard --config configs/e2x_e3cal_real_mapanything.json --clips 'data/clips_e2x_room/dev__*.npz' --out results/e2x_e3cal_real_ma_roomdev
+shard $MA_MB --config configs/e2x_e3cal_synth_mapanything.json --clips "$CAL" --out results/e2x_e3cal_synth_ma_cal || true
+shard $MA_MB --config configs/e2x_e3cal_real_mapanything.json --clips "$CAL" --out results/e2x_e3cal_real_ma_cal || true
+shard $MA_MB --config configs/e2x_e3cal_real_mapanything.json --clips 'data/clips_e2x_room/dev__*.npz' --out results/e2x_e3cal_real_ma_roomdev || true
 log "MA 3 room clips: dev, gate, eval"
-shard --config configs/e2x_real_mapanything.json --clips "$ROOM_DEV" --out results/e2x_room_ma_dev
+shard $MA_MB --config configs/e2x_real_mapanything.json --clips "$ROOM_DEV" --out results/e2x_room_ma_dev || true
 if gate e2e --run results/e2x_room_ma_dev --config configs/e2x_real_mapanything.json; then
-  shard --config configs/e2x_real_mapanything.json --clips "$ROOM_EVAL" --out results/e2x_room_ma_eval
-  log "ROOM_MA_EVAL_DONE"
+  if shard $MA_MB --config configs/e2x_real_mapanything.json --clips "$ROOM_EVAL" --out results/e2x_room_ma_eval; then
+    log "ROOM_MA_EVAL_DONE"
+  fi
 fi
-# Shubh's gate test (experiments/G.md), MapAnything only, DEV clips only, as scripts/g_run_dev.sh runs it: can turning
-# bad hints down INSIDE the network remove the damage (G1, oracle dial), and do its internal notes reveal bad hints
-# (G2)? Never run on real weights before, so a failure here is logged and the queue goes on.
-log "MA 4 gate tests (dev only)"
-set +e
-gfail=0
-mkdir -p results/g0_dev
-python -m exp1.g_analysis decompose --clips 'data/clips_e2e/dev__*.npz' --out results/g0_dev/depth_decompose.csv || gfail=1
-for job in "g1_oracle g1" "g2_signal g2"; do
-  read -r cfg name <<<"$job"
-  python -m exp1.run_gate --config "configs/$cfg.json" --clips 'data/clips_e2e/dev__*.npz'     --out "results/${name}_ma_rooms_dev" --backend mapanything || gfail=1
-  python -m exp1.run_gate --config "configs/$cfg.json" --clips 'data/clips_e2/dev__*.npz'     --out "results/${name}_ma_eth_dev" --backend mapanything || gfail=1
-done
-python -m exp1.g_analysis oracle --runs 'results/g1_*_dev' --out results/g1_summary || gfail=1
-python -m exp1.g_analysis signal --runs 'results/g2_*_dev' --out results/g2_summary || gfail=1
-if [ "$gfail" -eq 0 ]; then log "GATE_MA_DONE"; else log "GATE_MA had errors: see ~/logs/gpu.txt (queue continues)"; fi
-set -e
+wait "$GATE_PID" || true
 conda deactivate
 
 # ------------------------------------------------------------------ Pi3X
 if wait_for ready_pi3x FAILED_pi3x Pi3X; then
   conda activate pi3x
-  log "PX 1 checks, ETH3D dev, gate, eval"
-  python -m exp1.run_exp1 --backend pi3x --config configs/e2x_pi3x_checks.json --clips 'data/clips/dev__*.npz' \
-    --out results/e2x_pi3x_checks --save_extras
-  shard --backend pi3x --config configs/e2x_pi3x_eth3d.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_pi3x_eth3d_dev
+  log "PX 1 checks (one process; measures Pi3X's memory), ETH3D dev, gate, eval"
+  P=1 shard $(( $(budget_mb) < 20480 ? $(budget_mb) : 20480 )) --backend pi3x --config configs/e2x_pi3x_checks.json \
+    --clips 'data/clips/dev__*.npz' --out results/e2x_pi3x_checks || true
+  if [ -z "$PX_MB" ]; then
+    PX_MB=$(python -c "
+import pandas as pd
+try:
+    p = float(pd.read_csv('results/e2x_pi3x_checks/per_run.csv').peak_mem_gb.max())
+except Exception:
+    p = float('nan')
+print(int((p + 1.5) * 1024) if p == p and p > 0 else 12288)")   # 12 GB if it could not be measured
+  fi
+  log "  Pi3X peak measured: $(( PX_MB / 1024 - 1 )) GB + headroom -> $(( PX_MB / 1024 )) GB per process"
+  shard $PX_MB --backend pi3x --config configs/e2x_pi3x_eth3d.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_pi3x_eth3d_dev || true
   if gate ov_e2d --run results/e2x_pi3x_eth3d_dev --config configs/e2x_pi3x_eth3d.json --checks results/e2x_pi3x_checks; then
-    shard --backend pi3x --config configs/e2x_pi3x_eth3d.json --clips 'data/clips_e2/eval__*.npz' --out results/e2x_pi3x_eth3d_eval
-    log "PX_ETH3D_EVAL_DONE"
+    if shard $PX_MB --backend pi3x --config configs/e2x_pi3x_eth3d.json --clips 'data/clips_e2/eval__*.npz' --out results/e2x_pi3x_eth3d_eval; then
+      log "PX_ETH3D_EVAL_DONE"
+    fi
   fi
   log "PX 2 real hints: E2-E clips and room clips"
-  shard --backend pi3x --config configs/e2x_real_pi3x.json --clips 'data/clips_e2e/dev__*.npz' --out results/e2x_e2e_px_dev
+  shard $PX_MB --backend pi3x --config configs/e2x_real_pi3x.json --clips 'data/clips_e2e/dev__*.npz' --out results/e2x_e2e_px_dev || true
   if gate e2e --run results/e2x_e2e_px_dev --config configs/e2x_real_pi3x.json; then
-    shard --backend pi3x --config configs/e2x_real_pi3x.json --clips 'data/clips_e2e/eval__*.npz' --out results/e2x_e2e_px_eval
-    log "PX_E2E_EVAL_DONE"
+    if shard $PX_MB --backend pi3x --config configs/e2x_real_pi3x.json --clips 'data/clips_e2e/eval__*.npz' --out results/e2x_e2e_px_eval; then
+      log "PX_E2E_EVAL_DONE"
+    fi
   fi
-  shard --backend pi3x --config configs/e2x_real_pi3x.json --clips "$ROOM_DEV" --out results/e2x_room_px_dev
+  shard $PX_MB --backend pi3x --config configs/e2x_real_pi3x.json --clips "$ROOM_DEV" --out results/e2x_room_px_dev || true
   if gate e2e --run results/e2x_room_px_dev --config configs/e2x_real_pi3x.json; then
-    shard --backend pi3x --config configs/e2x_real_pi3x.json --clips "$ROOM_EVAL" --out results/e2x_room_px_eval
-    log "ROOM_PX_EVAL_DONE"
+    if shard $PX_MB --backend pi3x --config configs/e2x_real_pi3x.json --clips "$ROOM_EVAL" --out results/e2x_room_px_eval; then
+      log "ROOM_PX_EVAL_DONE"
+    fi
   fi
   log "PX 3 E3-cal"
-  shard --backend pi3x --config configs/e2x_e3cal_synth_pi3x.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_e3cal_synth_px_eth3d
-  shard --backend pi3x --config configs/e2x_e3cal_synth_pi3x.json --clips "$CAL" --out results/e2x_e3cal_synth_px_cal
-  shard --backend pi3x --config configs/e2x_e3cal_real_pi3x.json --clips "$CAL" --out results/e2x_e3cal_real_px_cal
+  shard $PX_MB --backend pi3x --config configs/e2x_e3cal_synth_pi3x.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_e3cal_synth_px_eth3d || true
+  shard $PX_MB --backend pi3x --config configs/e2x_e3cal_synth_pi3x.json --clips "$CAL" --out results/e2x_e3cal_synth_px_cal || true
+  shard $PX_MB --backend pi3x --config configs/e2x_e3cal_real_pi3x.json --clips "$CAL" --out results/e2x_e3cal_real_px_cal || true
   conda deactivate
 fi
 
@@ -93,20 +194,21 @@ fi
 if wait_for ready_omnivggt FAILED_omnivggt OmniVGGT; then
   conda activate omnivggt
   log "OV 1 room clips: dev, gate, eval"
-  shard --backend omnivggt --config configs/e2x_real_omnivggt.json --clips "$ROOM_DEV" --out results/e2x_room_ov_dev
+  shard $OV_MB --backend omnivggt --config configs/e2x_real_omnivggt.json --clips "$ROOM_DEV" --out results/e2x_room_ov_dev || true
   if gate e2e --run results/e2x_room_ov_dev --config configs/e2x_real_omnivggt.json; then
-    shard --backend omnivggt --config configs/e2x_real_omnivggt.json --clips "$ROOM_EVAL" --out results/e2x_room_ov_eval
-    log "ROOM_OV_EVAL_DONE"
+    if shard $OV_MB --backend omnivggt --config configs/e2x_real_omnivggt.json --clips "$ROOM_EVAL" --out results/e2x_room_ov_eval; then
+      log "ROOM_OV_EVAL_DONE"
+    fi
   fi
-  # OPT-IN (RUN_OV_E3CAL=1): about 9,000 runs at OmniVGGT's fp32 speed (~2,500 runs/h in the E2 session), i.e. 3.5-4 h,
-  # and its images-only witness is unstable (E2-D). Off by default; E3 generality to OmniVGGT can come later.
-  if [ "${RUN_OV_E3CAL:-0}" = 1 ] || [ -f ~/logs/RUN_OV_E3CAL ]; then   # env var, or: touch ~/logs/RUN_OV_E3CAL
+  # OPT-IN (RUN_OV_E3CAL=1 or touch $L/RUN_OV_E3CAL): about 9,000 runs at OmniVGGT's fp32 speed (~2,500 runs/h in the
+  # E2 session), and its images-only witness is unstable (E2-D).
+  if [ "${RUN_OV_E3CAL:-0}" = 1 ] || [ -f "$L/RUN_OV_E3CAL" ]; then
     log "OV 2 E3-cal"
-    shard --backend omnivggt --config configs/e2x_e3cal_synth_omnivggt.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_e3cal_synth_ov_eth3d
-    shard --backend omnivggt --config configs/e2x_e3cal_synth_omnivggt.json --clips "$CAL" --out results/e2x_e3cal_synth_ov_cal
-    shard --backend omnivggt --config configs/e2x_e3cal_real_omnivggt.json --clips "$CAL" --out results/e2x_e3cal_real_ov_cal
+    shard $OV_MB --backend omnivggt --config configs/e2x_e3cal_synth_omnivggt.json --clips 'data/clips_e2/dev__*__c0.npz' --out results/e2x_e3cal_synth_ov_eth3d || true
+    shard $OV_MB --backend omnivggt --config configs/e2x_e3cal_synth_omnivggt.json --clips "$CAL" --out results/e2x_e3cal_synth_ov_cal || true
+    shard $OV_MB --backend omnivggt --config configs/e2x_e3cal_real_omnivggt.json --clips "$CAL" --out results/e2x_e3cal_real_ov_cal || true
   else
-    log "OV E3-cal skipped (opt-in: RUN_OV_E3CAL=1 or touch ~/logs/RUN_OV_E3CAL)"
+    log "OV E3-cal skipped (opt-in: RUN_OV_E3CAL=1 or touch $L/RUN_OV_E3CAL)"
   fi
 fi
 log "SESSION_GPU_DONE"
