@@ -110,6 +110,10 @@ def posed_mask(n_views, frac, seed, clip_id):
 def apply_corruption(clip, cond, seed, depth_views, base_mask=None):
     poses, K, depth, entry = clip["poses"], clip["K"], clip["depth"], None
     spec = cond.get("corruption")
+    also = None
+    if spec and "also" in spec:  # E2X M8: a second corruption (pose, K or depth) in the same condition, applied after
+        spec = dict(spec)
+        also = spec.pop("also")
     if spec and base_mask is not None:  # corrupt only views that receive a pose
         spec = dict(spec, eligible=[int(i) for i in np.where(base_mask)[0] if i > 0])
     if spec:
@@ -138,6 +142,18 @@ def apply_corruption(clip, cond, seed, depth_views, base_mask=None):
                      "type": "device", "use": use, "affected_views": affected}
         else:
             raise ValueError(f"unknown corruption target {target!r}")
+    if also:
+        t2 = also.get("target", "pose")
+        sub = f"{cond['name']}|also"   # its own draw and manifest name
+        if t2 == "pose":
+            poses, e2 = corrupt_poses(poses, also, seed, clip["clip_id"], sub)
+        elif t2 == "K":
+            K, e2 = corrupt_intrinsics(K, also, seed, clip["clip_id"], sub, clip["images"].shape[2])
+        elif t2 == "depth":
+            depth, e2 = corrupt_depth(depth, depth_views, also, seed, clip["clip_id"], sub)
+        else:
+            raise ValueError(f"'also' takes a pose, K or depth corruption, not {t2!r}")
+        entry = dict(entry, also=e2, affected_views=sorted(set(entry["affected_views"]) | set(e2["affected_views"])))
     return poses, K, depth, entry
 
 

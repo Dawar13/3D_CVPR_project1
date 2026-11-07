@@ -186,7 +186,12 @@ def _gated_fuse(orig, gamma):
             g = g[:, None]
         else:
             raise ValueError("gamma must be (V,) or (V, h, w)")
-        return feats + g * (fused - feats)
+        # in fp32, then back: in bf16, feats + 1 * (fused - feats) is not fused (rounding of the difference); the
+        # E2X session-A gate check (gamma = 1 must change nothing) failed by up to 0.23 on ETH3D, likely for this
+        # reason (seen in the lost VM log). With the difference taken in fp32, gamma = 1 returns fused and
+        # gamma = 0 returns feats exactly.
+        out = feats.float() + g.float() * (fused.float() - feats.float())
+        return out.to(fused.dtype)
     return wrapped
 
 
@@ -229,3 +234,36 @@ class TokenCapture:
     def remove(self):
         for h in self.handles:
             h.remove()
+
+
+class TokenPatch:
+    """E2X X-M (activation patching): after GLOBAL block `layer`, replace the patch tokens of `views` with stored
+    ones, e.g. TokenCapture(...).tokens[layer] from another run of the same clip (same images, other hints).
+    tokens: (V, T, C). The scale token (last) and the other views are left as they are. Use as a context manager
+    or call remove(). Same block layout as TokenCapture."""
+
+    def __init__(self, model, layer, views, tokens):
+        if layer % 2:
+            raise ValueError(f"block {layer} is frame attention; only even (global) blocks are patched")
+        self.views, self.tokens = [int(v) for v in views], tokens
+        blocks = model.info_sharing.self_attention_blocks
+        self.handles = [blocks[layer].register_forward_hook(self._hook)]
+
+    def _hook(self, _module, _inputs, out):
+        V, T = self.tokens.shape[0], self.tokens.shape[1]
+        if out.shape[1] != V * T + 1:
+            raise ValueError(f"stored tokens ({V} views x {T}) do not match the block output {tuple(out.shape)}")
+        out = out.clone()
+        for v in self.views:
+            out[0, v * T:(v + 1) * T] = self.tokens[v].to(out.device, out.dtype)
+        return out
+
+    def remove(self):
+        for h in self.handles:
+            h.remove()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.remove()

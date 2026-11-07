@@ -113,6 +113,70 @@ def run(model, views, device):
             "runtime_s": runtime, "peak_mem_gb": peak}
 
 
+class TokenCapture:
+    """E2X X-M: the state after decoder block `layer` (odd = global attention), INCLUDING the camera-hint injection
+    that follows blocks 1, 9, 17, 25, 33 (pi3x.py:499-505), read as the input of block layer + 1 (a pre-hook; that
+    block is frame attention, input (B*N, hw, C) with 5 register tokens first in each view, pi3x.py:464-466,
+    489-491). Stored as {layer: (N, T, C) float32 on CPU}, patch tokens only unless full=True."""
+
+    def __init__(self, model, layers, n_views, full=False):
+        self.tokens, self.n_views, self.handles = {}, n_views, []
+        self.start = 0 if full else model.patch_start_idx
+        for k in layers:
+            _check_layer(model, k)
+            self.handles.append(model.decoder[k + 1].register_forward_pre_hook(self._hook(k)))
+
+    def _hook(self, k):
+        def fn(_module, args):
+            h = args[0]
+            self.tokens[k] = h.reshape(self.n_views, h.shape[-2], -1)[:, self.start:].detach().float().cpu()
+        return fn
+
+    def remove(self):
+        for h in self.handles:
+            h.remove()
+
+
+class TokenPatch:
+    """E2X X-M (activation patching): replace the state of `views` after decoder block `layer` (as TokenCapture
+    reads it) with stored tokens from another run of the same clip. tokens: (N, T, C), all tokens of a view
+    (TokenCapture full=True) or patch tokens only (register tokens kept). Pi3X injects the camera hint again after
+    blocks 1, 9, 17, 25, 33, so a patched state may receive the hint again later."""
+
+    def __init__(self, model, layer, views, tokens):
+        _check_layer(model, layer)
+        self.views, self.tokens, self.start_idx = [int(v) for v in views], tokens, model.patch_start_idx
+        self.handles = [model.decoder[layer + 1].register_forward_pre_hook(self._hook)]
+
+    def _hook(self, _module, args):
+        h = args[0]
+        V, T = self.tokens.shape[0], self.tokens.shape[1]
+        hw = h.shape[-2]
+        if h.shape[0] != V or T not in (hw, hw - self.start_idx):
+            raise ValueError(f"stored tokens ({V} x {T}) do not match the block input {tuple(h.shape)}")
+        s = 0 if T == hw else self.start_idx
+        o = h.clone().reshape(V, hw, -1)
+        for v in self.views:
+            o[v, s:] = self.tokens[v].to(o.device, o.dtype)
+        return (o.reshape(h.shape),) + tuple(args[1:])
+
+    def remove(self):
+        for h in self.handles:
+            h.remove()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.remove()
+
+
+def _check_layer(model, k):
+    if k % 2 == 0 or k + 1 >= len(model.decoder):
+        raise ValueError(f"layer {k}: use an odd (global) decoder block with a block after it "
+                         f"(1 .. {len(model.decoder) - 3}); pi3x.py:486-496")
+
+
 def set_pose_scale_statistic(stat):
     if stat != "mean":
         raise NotImplementedError("the median pose-scale probe exists for MapAnything only (E2-C4)")
