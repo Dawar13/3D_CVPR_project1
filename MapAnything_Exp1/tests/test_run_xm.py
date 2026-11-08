@@ -5,6 +5,7 @@ hints (test_runner_dryrun.fake_run_factory); its numbers mean nothing about any 
 import glob
 import json
 import os
+import subprocess
 import sys
 import types
 
@@ -105,6 +106,9 @@ def test_rows_resume_and_stats(setup):
     assert len(S) == 2 * len(LAYERS) * 6
     first = S[S.layer == LAYERS[0]]
     assert np.allclose(first.cos_with_first_layer, 1.0, atol=1e-6)
+    gate = subprocess.run([sys.executable, os.path.join(HERE, "..", "scripts", "e2x", "a2_gate.py"), "xm", "--run", out],
+                          capture_output=True, text=True)
+    assert gate.returncode == 0 and "PASS" in gate.stdout, gate.stdout + gate.stderr
     n = len(calls)
     _main(mp, io, cfgp, path, out)                           # resume: nothing is run again
     mp.undo()

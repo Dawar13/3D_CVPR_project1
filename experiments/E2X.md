@@ -217,7 +217,8 @@ The E2 clips: 24 eval clips (10 scenes) and 3 dev c0 clips.
 - **Size (estimate, not measured):** about 2,500 passes per model (M1 ~670, M2 ~240, M3 ~1,150, M4 ~400), i.e. well under an hour of GPU for MapAnything and Pi3X together at E2 speeds, plus setup.
 - These analyses are exploratory. Hypotheses and metrics are written down before the A2 run, and every claim needs its cause-and-effect test (M1, M3, M4), not only a probe (M2).
 
-#### A2 grid and readouts (DRAFT 2026-11-08, branch `e2x-a2-dev`; frozen as tag `e2x-a2-prereg` only after the user's approval)
+#### A2 grid and readouts (FROZEN at tag `e2x-a2-prereg`, 2026-11-08, after the user's go-ahead: "do everything to make this paper as strong as possible ... go ahead")
+- **Run:** `scripts/session_queue_a2.sh ma|px` (one lane per model, beside session A), from its own tree on the VM. Dev gates: `scripts/e2x/a2_gate.py` (X-M: 0 failures, every case complete, MapAnything γ = 1 equal to no gate within 1e-3, clean beats images only on ≥ 2 of 3 dev clips; M8: 0 failures, pose ×1 depth ×1 equal to `clean_pose_depth2` within 1e-6).
 - **Code** (CPU-tested with fake models that have the real block layouts: `tests/test_xm_hooks.py`, `tests/test_run_xm.py`):
   - `exp1/run_xm.py`;
   - `TokenPatch` in all three `model_io*` files;
