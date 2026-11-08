@@ -155,6 +155,24 @@ The E2 clips: 24 eval clips (10 scenes) and 3 dev c0 clips.
   - accuracy after repair vs R2/R3/ORACLE at the default setting.
 - The E3 eval grid and its tests are preregistered separately (`e3-prereg`) after calibration and before any E3 eval run.
 
+#### E3-cal amendment 1: secondary calibration on accurate ground truth (2026-11-08, written before any TUM run; tag `e3cal-amend1`)
+- **Why.** The primary calibration (above, unchanged) gave, for MapAnything (`results/e2x_e3cal_agg/mapanything/`):
+  - pose part NOT CALIBRATED: at e3_z = 5, 13.8% group actions and 3.3% view drops on 269 ground-truth decisions;
+  - depth part calibrated: τ_shared = 0.20, τ_view = 0.25.
+
+  Every false pose action came from SceneFun3D clips (ETH3D dev: 0 of 6). SceneFun3D ground truth is known to be partly unreliable (§2.2; the geometry referee; failed E0 checks of sibling clips). The primary rule therefore cannot separate "the witness is wrong" from "the ground truth is wrong".
+- **What.** The same rule, grids, code and E3-cal grid (`configs/e2x_e3cal_synth_<model>.json`), on calibration clips whose poses are independent of the photos and accurate:
+  - ETH3D dev c0 (laser-scan registered; the runs already exist);
+  - new TUM RGB-D freiburg3 clips (motion capture): `exp1/tum_clips.py`, 10 static sequences, up to 4 non-overlapping 10-view clips each, ids `cal__tum_*`.
+
+  TUM clips that fail the E0 ground-truth check (`scripts/e0_check_clips.py`, the same criterion as every clip set) are excluded before any model run. The photo-check half of `check_clips.py` needs device poses, which TUM does not have. Models: MapAnything, then Pi3X.
+- **How it is used.**
+  - **The primary verdict stands** (NOT CALIBRATED for MapAnything's pose part) and is reported first.
+  - The secondary verdict is reported next to it, labelled SECONDARY (accurate-GT calibration).
+  - If the secondary rule finds an e3_z, the E3 eval (`e3-prereg`) may use it, and the paper states both verdicts and why they differ.
+  - If it does not, E3's pose part is a negative result on both counts.
+- **Not changed:** thresholds, grids, the false-action budgets (≤ 5% group actions, ≤ 2% view drops), and the depth part (already calibrated by the primary rule).
+
 ### Angles that make the paper stronger (added 2026-11-04, after the user chose "strengthen, don't pivot")
 - These are **descriptive** analyses, computed by `scripts/e2x/analyse_e2x.py` and labelled DESCRIPTIVE in every output. They add no preregistered test and change no grid.
 - **A. Break-even ("fused as if perfect").**
