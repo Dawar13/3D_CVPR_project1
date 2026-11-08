@@ -327,8 +327,9 @@ def referee_section():
     return "\n".join(out)
 
 
-def decision_section(xb, e3):
-    out = ["<h2 id='decision'>7. Continue / stop signals (rules fixed before session A, E2X.md §5)</h2>"]
+def decision_section(xb, e3, e3v=None):
+    out = ["<h2 id='decision'>Decisions (rules fixed in advance)</h2>",
+           "<h3>E2X continue / stop rule (E2X.md §5; primary calibration)</h3>"]
     ma = e3.get("mapanything")
     calibrated = ma is not None and isinstance(ma.get("e3_z"), (int, float))
     sf = e3.get("safety")
@@ -366,9 +367,177 @@ def decision_section(xb, e3):
         verdict = ("Condition (i) does not hold: neither harmful real whole-room poses nor an E3 advantage over the "
                    "existing remedies. Not GO for the method paper under the fixed rule.")
     out.append(f"<p class='verdict'>{html.escape(verdict)}</p>")
-    out.append("<p>Inside-the-network direction (trust dial): needs Shubh's G1 oracle dial, which did not produce a "
-               "reading in session A (its own γ = 1 check failed; see the session section). Not decidable.</p>")
+    out.append("<h3>E3 method evaluation (E3.md; thresholds from the accurate-ground-truth calibration)</h3>")
+    if e3v is None:
+        out.append(missing("results/e3_eval_agg/e3_verdict.json"))
+    else:
+        out.append(f"<p class='verdict'>E3 method claim holds: {html.escape(str(e3v.get('method_claim_holds')))} "
+                   f"(SAFE: {html.escape(str(e3v.get('safe')))}). Both readings are reported: the primary rule above and "
+                   "this evaluation.</p>")
+    out.append("<p>Inside-the-network direction: Shubh's G1 oracle dial gave no reading in session A (its own γ = 1 "
+               "check failed). Session A2 measured the same dial (M1, section 6).</p>")
     return "\n".join(out), verdict
+
+
+XM, E3EVAL = P("results", "e2x_xm_agg"), P("results", "e3_eval_agg")
+CASE = {"one_cam_15": "one camera 15°", "shared_heading_5": "shared heading 5°", "drift_level2": "drift level 2",
+        "depth_x1.5": "depth ×1.5 (views 3, 7)"}
+
+
+def fig_m1(curve):
+    fig, axes = plt.subplots(1, 2, figsize=(9.6, 3.2))
+    for ax, (case, ylab) in zip(axes, (("one_cam_15", "bad camera rotation error (°)"),
+                                       ("depth_x1.5", "shape error (relative)"))):
+        g = curve[(curve.case == case) & (curve.model == "mapanything")].sort_values("gamma")
+        ax.plot(g.gamma, g.err, color=COL["mapanything"], linewidth=2, marker="o", markersize=4.5)
+        ax.annotate("MapAnything", (g.gamma.iloc[-1], g.err.iloc[-1]), xytext=(-60, 6), textcoords="offset points",
+                    fontsize=8, color=INK2)
+        ax.set_title(f"Hint dial, {CASE[case]}", fontsize=9, color=INK, loc="left")
+        style(ax, ylab, "γ (0 = hint off, 1 = hint as given)")
+    fig.subplots_adjust(wspace=0.32)
+    return save(fig, "fig_m1_dial.png")
+
+
+def fig_m3(patch):
+    fig, ax = plt.subplots(figsize=(6.4, 3.4))
+    for m in ("mapanything", "pi3x"):
+        g = patch[(patch.model == m) & (patch.case == "one_cam_15") & (patch.source == "clean")].sort_values("layer")
+        if not len(g):
+            continue
+        x = g.layer / g.layer.max()
+        ax.plot(x, g.share_removed, color=COL[m], linewidth=2, marker="o", markersize=4)
+        ax.annotate(NAME[m], (x.iloc[len(x) // 2], g.share_removed.iloc[len(x) // 2]), xytext=(0, 8),
+                    textcoords="offset points", fontsize=8, color=INK2)
+    for k in (1, 9, 17, 25, 33):   # Pi3X camera-hint injections (pi3x.py:499)
+        ax.axvline(k / 33, color=GRID, linewidth=1, linestyle=":")
+    ax.set_ylim(-0.1, 1.1)
+    style(ax, "share of the damage removed", "depth in the network (layer / last patched layer)")
+    ax.set_title("Swap the bad camera's state for its correct-hint state (one camera 15°)", fontsize=9, color=INK,
+                 loc="left")
+    return save(fig, "fig_m3_patch.png")
+
+
+def xm_section():
+    out = ["<h2 id='xm'>6. Inside the network (session A2, DESCRIPTIVE; ETH3D eval, 24 clips, 10 scenes)</h2>",
+           "<p>Frozen at <code>e2x-a2-prereg</code> (amendments 1–2: plumbing fixes before any eval run). Pi3X injects "
+           "the camera hint again after blocks 1, 9, 17, 25, 33, so a swapped state can be overwritten later "
+           "(stated before the run); the dotted lines mark those blocks.</p>"]
+    d1 = rd(os.path.join(XM, "m1_dial.csv"))
+    c1 = rd(os.path.join(XM, "m1_curve.csv"))
+    p3 = rd(os.path.join(XM, "m3_patch.csv"))
+    if d1 is None or p3 is None:
+        return "\n".join(out + [missing("results/e2x_xm_agg/")])
+    if c1 is not None:
+        out.append(f"<img src='{uri(fig_m1(c1))}' alt='Hint dial curves'>")
+    out.append("<h3>M1 hint dial</h3>" + table(d1, ["model", "case", "r2_mean", "r2_ci_lo", "r2_ci_hi", "n_scenes_linear",
+                                                   "switch_index_mean", "n_scenes_switch", "n_scenes", "err_gamma0",
+                                                   "err_gamma1"],
+                                              num={"r2_mean": 3, "r2_ci_lo": 3, "r2_ci_hi": 3, "n_scenes_linear": 0,
+                                                   "switch_index_mean": 3, "n_scenes_switch": 0, "n_scenes": 0,
+                                                   "err_gamma0": 3, "err_gamma1": 3}))
+    out.append(f"<img src='{uri(fig_m3(p3))}' alt='Share of damage removed by patching per layer'>")
+    pn = rd(os.path.join(XM, "m3_point_of_no_return.csv"))
+    if pn is not None:
+        out.append("<h3>M3 point of no return (first layer whose swap removes < 50% of the damage)</h3>" +
+                   table(pn, ["model", "case", "source", "point_of_no_return_layer"]))
+    piv = p3[p3.source == "clean"].pivot_table(index=["model", "case"], columns="layer", values="share_removed").round(2)
+    out.append("<details><summary>M3 share removed per layer (source: correct-hint run)</summary>" +
+               piv.to_html(classes="t", border=0) + "</details>")
+    m5 = rd(os.path.join(XM, "m5_spread.csv"))
+    if m5 is not None:
+        out.append("<details><summary>M5: swapping the OTHER cameras' states</summary>" +
+                   m5.pivot_table(index=["model", "case"], columns="layer", values="share_removed").round(2)
+                   .to_html(classes="t", border=0) + "</details>")
+    st = rd(os.path.join(XM, "m2_m4_state.csv"))
+    if st is not None:
+        out.append("<details><summary>M2/M4: size of the bad − correct state difference and its cosine with the first "
+                   "layer</summary>" + st.pivot_table(index=["model", "case"], columns="layer",
+                                                       values="cos_with_first_layer").round(2).to_html(classes="t", border=0)
+                   + "</details>")
+    m8 = rd(os.path.join(XM, "m8_scale.csv"))
+    if m8 is not None:
+        out.append("<h3>M8: two hints disagree (output scale vs ground truth)</h3>" + table(
+            m8, ["model", "condition", "pose_hint_scale", "depth_hint_scale", "output_scale_vs_gt", "ci_lo", "ci_hi",
+                 "shape_err", "n_scenes"],
+            num={"pose_hint_scale": 2, "depth_hint_scale": 2, "output_scale_vs_gt": 3, "ci_lo": 3, "ci_hi": 3,
+                 "shape_err": 3, "n_scenes": 0}))
+    return "\n".join(out)
+
+
+def secondary_section():
+    out = ["<h2 id='secondary'>5b. E3 calibration on accurate ground truth (E3-cal amendment 1, SECONDARY)</h2>",
+           "<p>Written before any TUM run (tag <code>e3cal-amend1</code>): the same rule on ETH3D dev (laser scan) and "
+           "TUM RGB-D fr3 (motion capture) clips; TUM clips failing the E0 ground-truth check were excluded first "
+           "(<code>results/e2x_tum_clip_check/excluded.csv</code>). The primary verdict (section 4) stands.</p>"]
+    rows = []
+    for m in ("mapanything", "pi3x"):
+        for kind in ("primary", "secondary"):
+            ch = rd(os.path.join(E3, m if kind == "primary" else f"{m}_secondary", "chosen.json"))
+            if ch is None:
+                continue
+            rows.append({"model": NAME[m], "calibration": kind, "e3_z": ch["e3_z"],
+                         "tau_depth_shared": ch["e3_tau_depth_shared"], "tau_depth_view": ch["e3_tau_depth_view"],
+                         "n_gt_pose_decisions": ch["n_gt_pose_decisions"],
+                         "n_gt_depth_decisions": ch["n_gt_depth_decisions"]})
+    if not rows:
+        return "\n".join(out + [missing("results/e2x_e3cal_agg/<model>_secondary/chosen.json")])
+    out.append(table(pd.DataFrame(rows), ["model", "calibration", "e3_z", "tau_depth_shared", "tau_depth_view",
+                                          "n_gt_pose_decisions", "n_gt_depth_decisions"],
+                     num={"n_gt_pose_decisions": 0, "n_gt_depth_decisions": 0}))
+    for m in ("mapanything", "pi3x"):
+        fa = rd(os.path.join(E3, f"{m}_secondary", "false_action_rates.csv"))
+        if fa is not None:
+            out.append(f"<details><summary>{NAME[m]}: secondary false-action rates</summary>" + table(
+                fa, ["part", "setting", "n", "group_action_rate", "view_drop_rate", "meets_rule"],
+                num={"n": 0, "group_action_rate": 3, "view_drop_rate": 3}) + "</details>")
+    return "\n".join(out)
+
+
+def fig_e3_safety(sb):
+    d = sb[sb.metric == "rre_deg"]
+    fig, ax = plt.subplots(figsize=(5.6, 3.9))
+    lab = {"none": "use all hints", "witness": "E3", "witness_drop": "E3-drop", "filter_rgbcheck": "R2",
+           "drop_lowconf": "R3", "rgb_only": "R0 images only", "drop_oracle": "ORACLE"}
+    for data, mk in (("synth", "o"), ("real_room", "s"), ("real_e2e", "^")):
+        g = d[d.data == data]
+        if not len(g):
+            continue
+        ax.scatter(g.benefit_kept, g.damage_removed, s=44, marker=mk, color=COL["mapanything"], edgecolor="white",
+                   linewidth=1.5, zorder=3, label=data)
+        for _, r in g.iterrows():
+            if np.isfinite(r.benefit_kept) and np.isfinite(r.damage_removed):
+                ax.annotate(lab.get(r.remedy, r.remedy), (r.benefit_kept, r.damage_removed), xytext=(5, 3),
+                            textcoords="offset points", fontsize=7, color=INK2)
+    ax.axhline(0, color=AXIS, linewidth=0.8)
+    ax.axvline(0, color=AXIS, linewidth=0.8)
+    ax.legend(frameon=False, fontsize=8, loc="lower left")
+    style(ax, "share of bad-hint damage removed", "share of correct-hint benefit kept")
+    ax.set_title("E3 evaluation: safety vs benefit (rotation, MapAnything)", fontsize=9, color=INK, loc="left")
+    return save(fig, "fig_e3_safety.png")
+
+
+def e3eval_section():
+    out = ["<h2 id='e3eval'>7. E3 method evaluation (experiments/E3.md, eval splits)</h2>"]
+    v = rd(os.path.join(E3EVAL, "e3_verdict.json"))
+    t = rd(os.path.join(E3EVAL, "e3_tests.csv"))
+    if t is None:
+        return "\n".join(out + [missing("results/e3_eval_agg/e3_tests.csv")]), None
+    if v is not None:
+        out.append(f"<p class='verdict'>E3 decision (fixed before the run): method claim holds = "
+                   f"{html.escape(str(v.get('method_claim_holds')))}; SAFE = {html.escape(str(v.get('safe')))}; "
+                   f"HELP on agreeing / AI-depth: {html.escape(', '.join(v.get('help_on_agreeing_or_ai_depth') or []) or 'none')}; "
+                   f"BEST on agreeing / AI-depth: {html.escape(', '.join(v.get('best_on_agreeing_or_ai_depth') or []) or 'none')}.</p>")
+    for test in ("SAFE", "HELP", "BEST"):
+        g = t[t.test == test]
+        out.append(f"<h3>{test}</h3>" + table(g, ["data", "condition", "metric", "vs", "delta", "ci_lo", "ci_hi",
+                                                    "n_scenes", "p_holm", "harmful" if test == "SAFE" else "better"],
+                                               num={"delta": 3, "ci_lo": 3, "ci_hi": 3, "n_scenes": 0, "p_holm": 4}))
+    sb = rd(os.path.join(E3EVAL, "e3_safety_benefit.csv"))
+    if sb is not None and len(sb):
+        out.append(f"<img src='{uri(fig_e3_safety(sb))}' alt='E3 safety vs benefit'>")
+        out.append(table(sb, ["data", "metric", "remedy", "benefit_kept", "damage_removed", "n_bad_conditions"],
+                         num={"benefit_kept": 3, "damage_removed": 3, "n_bad_conditions": 0}))
+    return "\n".join(out), v
 
 
 CSS = """body{font-family:Inter,Segoe UI,Arial,sans-serif;color:#0b0b0b;background:#fcfcfb;max-width:980px;margin:0 auto;
@@ -387,9 +556,12 @@ def main():
     ap.add_argument("--e3", help="override results/e2x_e3cal_agg (previews only)")
     ap.add_argument("--logs", help="override results/vm_logs_e2x (previews only)")
     ap.add_argument("--out", help="override reports/e2x_results (previews only)")
+    ap.add_argument("--xm", help="override results/e2x_xm_agg (previews only)")
+    ap.add_argument("--e3eval", help="override results/e3_eval_agg (previews only)")
     a = ap.parse_args()
-    global AGG, E3, LOGS, OUT
+    global AGG, E3, LOGS, OUT, XM, E3EVAL
     AGG, E3, LOGS, OUT = a.agg or AGG, a.e3 or E3, a.logs or LOGS, a.out or OUT
+    XM, E3EVAL = a.xm or XM, a.e3eval or E3EVAL
     os.makedirs(OUT, exist_ok=True)
     s_html, _ = session_section()
     xa_html, xa = xa_section()
@@ -397,7 +569,10 @@ def main():
     e3_html, e3 = e3_section()
     an_html = angles_section()
     rf_html = referee_section()
-    dc_html, verdict = decision_section(xb, e3)
+    sc_html = secondary_section()
+    xm_html = xm_section()
+    ev_html, e3v = e3eval_section()
+    dc_html, verdict = decision_section(xb, e3, e3v)
     files = "".join(f"<li><code>{html.escape(u)}</code></li>" for u in sorted(set(USED)))
     doc = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"
 content="width=device-width,initial-scale=1"><title>E2X Results</title><style>{CSS}</style></head><body>
@@ -406,7 +581,7 @@ content="width=device-width,initial-scale=1"><title>E2X Results</title><style>{C
 <code>e2x-prereg</code> (<code>experiments/E2X.md</code> §5). DESCRIPTIVE parts are labelled; calibration-clip
 numbers are not results.</p>
 <p class='verdict'>{html.escape(verdict)}</p>
-{dc_html}{s_html}{xa_html}{xb_html}{e3_html}{an_html}{rf_html}
+{dc_html}{s_html}{xa_html}{xb_html}{e3_html}{sc_html}{xm_html}{ev_html}{an_html}{rf_html}
 <h2 id='files'>8. Files</h2><ul>{files}</ul></body></html>"""
     out = os.path.join(OUT, "e2x_results.html")
     open(out, "w", encoding="utf-8").write(doc)
