@@ -1,0 +1,201 @@
+{
+ "_comment": "E3 calibration, synthetic hint errors (experiments/E2X.md): the E2-D families that stress E3's error model, from configs/e2d_full.json (same names, same corruptions), one seed, with the E3 controls (witness = repair, witness_drop = drop ablation), the baselines R2/R3 and the ORACLE drop. cal and dev clips only.",
+ "checkpoint": "facebook/map-anything",
+ "seeds": [
+  0
+ ],
+ "depth_views": [
+  3,
+  7
+ ],
+ "filter_rot_tau_deg": 10.0,
+ "filter_dir_tau_deg": 15.0,
+ "lowconf_tau": 0.4572,
+ "conditions": [
+  {
+   "name": "rgb_only",
+   "family": "reference",
+   "inputs": []
+  },
+  {
+   "name": "clean_pose_depth2",
+   "family": "reference",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ]
+  },
+  {
+   "name": "m8_pose0.67_depth0.67",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 0.67,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 0.67
+    }
+   }
+  },
+  {
+   "name": "m8_pose0.67_depth1.0",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 0.67,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 1.0
+    }
+   }
+  },
+  {
+   "name": "m8_pose0.67_depth1.5",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 0.67,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 1.5
+    }
+   }
+  },
+  {
+   "name": "m8_pose1.0_depth0.67",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 1.0,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 0.67
+    }
+   }
+  },
+  {
+   "name": "m8_pose1.0_depth1.0",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 1.0,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 1.0
+    }
+   }
+  },
+  {
+   "name": "m8_pose1.0_depth1.5",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 1.0,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 1.5
+    }
+   }
+  },
+  {
+   "name": "m8_pose1.5_depth0.67",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 1.5,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 0.67
+    }
+   }
+  },
+  {
+   "name": "m8_pose1.5_depth1.0",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 1.5,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 1.0
+    }
+   }
+  },
+  {
+   "name": "m8_pose1.5_depth1.5",
+   "family": "m8",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "corruption": {
+    "target": "pose",
+    "type": "scale",
+    "factor": 1.5,
+    "also": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 1.5
+    }
+   }
+  }
+ ]
+}

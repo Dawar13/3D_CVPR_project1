@@ -186,7 +186,12 @@ def _gated_fuse(orig, gamma):
             g = g[:, None]
         else:
             raise ValueError("gamma must be (V,) or (V, h, w)")
-        return feats + g * (fused - feats)
+        # Exact at the ends (A2 amendment 2): gamma = 1 returns fused and gamma = 0 returns feats bit for bit; only
+        # values in between are mixed (in fp32). feats + 1 * (fused - feats) is not fused in floating point: in bf16
+        # the session-A gate check failed by up to 0.23 on ETH3D; mixing in fp32 still left 0.0018 deg (A2 dev gate).
+        mix = (feats.float() + g.float() * (fused.float() - feats.float())).to(fused.dtype)
+        out = torch.where(g == 1, fused, torch.where(g == 0, feats.to(fused.dtype), mix))
+        return out
     return wrapped
 
 
@@ -211,7 +216,8 @@ class TokenCapture:
     MapAnything: even indices of info_sharing.self_attention_blocks are global (N, V*T + extra, C)
     (uniception 0.1.7 alternating_attention_transformer.py:397-401); the scale token sits at the end."""
 
-    def __init__(self, model, layers, n_views):
+    def __init__(self, model, layers, n_views, full=False):
+        # full: accepted for the same signature as the other backends; MapAnything views have patch tokens only
         self.tokens, self.n_views, self.handles = {}, n_views, []
         blocks = model.info_sharing.self_attention_blocks
         for k in layers:
@@ -229,3 +235,36 @@ class TokenCapture:
     def remove(self):
         for h in self.handles:
             h.remove()
+
+
+class TokenPatch:
+    """E2X X-M (activation patching): after GLOBAL block `layer`, replace the patch tokens of `views` with stored
+    ones, e.g. TokenCapture(...).tokens[layer] from another run of the same clip (same images, other hints).
+    tokens: (V, T, C). The scale token (last) and the other views are left as they are. Use as a context manager
+    or call remove(). Same block layout as TokenCapture."""
+
+    def __init__(self, model, layer, views, tokens):
+        if layer % 2:
+            raise ValueError(f"block {layer} is frame attention; only even (global) blocks are patched")
+        self.views, self.tokens = [int(v) for v in views], tokens
+        blocks = model.info_sharing.self_attention_blocks
+        self.handles = [blocks[layer].register_forward_hook(self._hook)]
+
+    def _hook(self, _module, _inputs, out):
+        V, T = self.tokens.shape[0], self.tokens.shape[1]
+        if out.shape[1] != V * T + 1:
+            raise ValueError(f"stored tokens ({V} views x {T}) do not match the block output {tuple(out.shape)}")
+        out = out.clone()
+        for v in self.views:
+            out[0, v * T:(v + 1) * T] = self.tokens[v].to(out.device, out.dtype)
+        return out
+
+    def remove(self):
+        for h in self.handles:
+            h.remove()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.remove()

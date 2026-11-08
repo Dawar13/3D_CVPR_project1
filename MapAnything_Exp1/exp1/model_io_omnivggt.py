@@ -178,9 +178,10 @@ class TokenCapture:
     """Patch tokens after chosen GLOBAL blocks, as {layer: (V, T, C) float32 on CPU}. Global blocks output
     (B, S*P, C) with camera and register tokens first in each view (omnivggt_aggregator.py, patch_start_idx)."""
 
-    def __init__(self, model, layers, n_views):
+    def __init__(self, model, layers, n_views, full=False):
+        """full=True (E2X X-M): keep every token of a view (camera and register tokens too), for TokenPatch."""
         self.tokens, self.n_views, self.handles = {}, n_views, []
-        self.start = model.aggregator.patch_start_idx
+        self.start = 0 if full else model.aggregator.patch_start_idx
         for k in layers:
             self.handles.append(model.aggregator.global_blocks[k].register_forward_hook(self._hook(k)))
 
@@ -193,3 +194,39 @@ class TokenCapture:
     def remove(self):
         for h in self.handles:
             h.remove()
+
+
+class TokenPatch:
+    """E2X X-M (activation patching): after global block `layer`, replace the tokens of `views` with stored ones
+    (TokenCapture(..., full=True).tokens[layer] of another run: all tokens of a view; or full=False: patch tokens
+    only, camera and register tokens kept). Note: OmniVGGT adds the camera hint again in every frame stage
+    (omnivggt_aggregator.py _process_frame_attention), so a patched state receives the hint again afterwards."""
+
+    def __init__(self, model, layer, views, tokens):
+        self.views, self.tokens = [int(v) for v in views], tokens
+        self.start_idx = model.aggregator.patch_start_idx
+        self.handles = [model.aggregator.global_blocks[layer].register_forward_hook(self._hook)]
+
+    def _hook(self, _module, _inputs, out):
+        V, T = self.tokens.shape[0], self.tokens.shape[1]
+        P = out.shape[-2] // V
+        if T == P:
+            s = 0
+        elif T == P - self.start_idx:
+            s = self.start_idx
+        else:
+            raise ValueError(f"stored tokens ({V} x {T}) do not match the block output {tuple(out.shape)}")
+        o = out.clone().reshape(V, P, -1)
+        for v in self.views:
+            o[v, s:] = self.tokens[v].to(o.device, o.dtype)
+        return o.reshape(out.shape)
+
+    def remove(self):
+        for h in self.handles:
+            h.remove()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.remove()
