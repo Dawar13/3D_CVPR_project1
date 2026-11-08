@@ -527,6 +527,14 @@ def e3eval_section():
                    f"{html.escape(str(v.get('method_claim_holds')))}; SAFE = {html.escape(str(v.get('safe')))}; "
                    f"HELP on agreeing / AI-depth: {html.escape(', '.join(v.get('help_on_agreeing_or_ai_depth') or []) or 'none')}; "
                    f"BEST on agreeing / AI-depth: {html.escape(', '.join(v.get('best_on_agreeing_or_ai_depth') or []) or 'none')}.</p>")
+    warn = t[(t.test == "SAFE") & (t.ci_lo > 0) & (t.delta >= t.threshold) & ~t.harmful]
+    if len(warn):
+        items = "; ".join(f"{r.data} {r.condition} {r.metric}: +{r.delta:.3f} (CI {r.ci_lo:.3f} to {r.ci_hi:.3f})"
+                          for _, r in warn.iterrows())
+        out.append("<p class='verdict' style='border-left-color:#e34948;background:#fdf0ef'>Caution: SAFE passes under "
+                   f"the strict rule, but {len(warn)} SAFE tests show harm whose 95% CI excludes 0 and whose estimate "
+                   f"exceeds the practical threshold, without surviving Holm: {html.escape(items)}. E3 is therefore not "
+                   "shown to be safe on these data.</p>")
     for test in ("SAFE", "HELP", "BEST"):
         g = t[t.test == test]
         out.append(f"<h3>{test}</h3>" + table(g, ["data", "condition", "metric", "vs", "delta", "ci_lo", "ci_hi",
