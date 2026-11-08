@@ -123,3 +123,18 @@ def test_eval_clips_need_allow_eval(setup, tmp_path):
     with pytest.raises(SystemExit):
         _main(mp, fake_io(load_clip(path), []), cfgp, str(ev), str(tmp_path / "o"))
     mp.undo()
+
+
+def test_backend_without_gate_like_pi3x(setup, tmp_path):
+    """Pi3X has no set_hint_gate / clear_hint_gate: no dial rows, no failures (A2 amendment 1)."""
+    root, path, cfgp = setup
+    calls = []
+    io = fake_io(load_clip(path), calls)
+    del io.set_hint_gate, io.clear_hint_gate
+    mp = pytest.MonkeyPatch()
+    out = str(tmp_path / "nogate")
+    _main(mp, io, cfgp, path, out)
+    mp.undo()
+    assert not os.path.exists(os.path.join(out, "failures.jsonl"))
+    R = pd.read_csv(os.path.join(out, "per_run.csv"))
+    assert (R.experiment == "m1_dial").sum() == 0 and len(R) == 2 * (4 + 3 * len(LAYERS))

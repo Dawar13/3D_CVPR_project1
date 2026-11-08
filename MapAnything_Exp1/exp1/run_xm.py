@@ -153,7 +153,8 @@ def main():
                         try:
                             pred = io.run(model, views, a.device)
                         finally:
-                            io.clear_hint_gate(model)
+                            if hasattr(io, "clear_hint_gate"):   # Pi3X has no fusion gate (A2 amendment 1)
+                                io.clear_hint_gate(model)
                             if pt:
                                 pt.remove()
                             if cap:
