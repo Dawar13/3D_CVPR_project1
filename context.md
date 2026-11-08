@@ -335,3 +335,12 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
     - **Method claim does not hold under the fixed rule.**
   - **Decision under the rules fixed in advance:** analysis paper (E2X §5 (ii): E3 NOT CALIBRATED for MapAnything on the primary rule). E3 is reported as a limited method: safe and helpful on well-overlapping captures (ETH3D), unsafe on whole-room phone captures, never significantly better than the best existing remedy.
   - **Not finished (paused for the GPU window):** OmniVGGT E3-cal (opt-in), the Pi3X E3 eval (amendment 2, at its dev stage), the TUM full-grid detection pass. Shubh's G1/G2 failed (γ = 1 check, then out of memory); the γ precision is fixed in `model_io._gated_fuse` (A2 amendment 2), and his gate runs can be repeated.
+  - **Pi3X E3 evaluation (E3 amendment 2; `results/e3_eval_agg_pi3x/`, 62 tests, 0 failures), 2026-11-08 15:55 UTC.**
+    - Same verdict as MapAnything: SAFE (strict), HELP on every ETH3D family and on E2-E AI depth, BEST on none; method claim does not hold.
+    - 14 SAFE tests show CI-excluding-0 harm without surviving Holm, mostly on whole-room clips (+5.7 to +6.7° rotation on correct and real phone hints).
+  - **POST HOC (`scripts/e2x/posthoc_e3.py`; labelled, changes no verdict).**
+    - Applied to every ETH3D bad-pose condition as a single deployable remedy, E3-drop has the lowest mean and worst-case rotation error for both models (`results/e3_eval_agg*/posthoc_fixed_remedies.csv`):
+      - MapAnything: 0.88° / 1.80°, vs 1.84° / 5.33° for R2 and 2.15° for images only;
+      - Pi3X: 0.38° / 0.43°, vs 0.53° / 1.07° for R2.
+    - On calibration data, E3's actions on correct hints concentrate where the photos barely match (`posthoc_support_vs_false_actions.csv`): 34% of clips with 0-2 verified pairs, 18% with 3-9, 0% with >= 10.
+    - This motivates the proposed E4 method ("Verify-then-Trust": act only where the photos can verify a hint; soft per-camera trust dial; model-confidence + geometry detectors). The user is deciding on it.

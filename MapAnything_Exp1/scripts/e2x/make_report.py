@@ -493,7 +493,7 @@ def secondary_section():
     return "\n".join(out)
 
 
-def fig_e3_safety(sb):
+def fig_e3_safety(sb, model="mapanything"):
     d = sb[sb.metric == "rre_deg"]
     fig, ax = plt.subplots(figsize=(5.6, 3.9))
     lab = {"none": "use all hints", "witness": "E3", "witness_drop": "E3-drop", "filter_rgbcheck": "R2",
@@ -512,14 +512,15 @@ def fig_e3_safety(sb):
     ax.axvline(0, color=AXIS, linewidth=0.8)
     ax.legend(frameon=False, fontsize=8, loc="lower left")
     style(ax, "share of bad-hint damage removed", "share of correct-hint benefit kept")
-    ax.set_title("E3 evaluation: safety vs benefit (rotation, MapAnything)", fontsize=9, color=INK, loc="left")
-    return save(fig, "fig_e3_safety.png")
+    ax.set_title(f"E3 evaluation: safety vs benefit (rotation, {NAME[model]})", fontsize=9, color=INK, loc="left")
+    return save(fig, f"fig_e3_safety_{model}.png")
 
 
-def e3eval_section():
-    out = ["<h2 id='e3eval'>7. E3 method evaluation (experiments/E3.md, eval splits)</h2>"]
-    v = rd(os.path.join(E3EVAL, "e3_verdict.json"))
-    t = rd(os.path.join(E3EVAL, "e3_tests.csv"))
+def e3eval_section(model="mapanything"):
+    d = E3EVAL if model == "mapanything" else E3EVAL + "_" + model
+    out = [f"<h2 id='e3eval_{model}'>7. E3 method evaluation, {NAME[model]} (experiments/E3.md, eval splits)</h2>"]
+    v = rd(os.path.join(d, "e3_verdict.json"))
+    t = rd(os.path.join(d, "e3_tests.csv"))
     if t is None:
         return "\n".join(out + [missing("results/e3_eval_agg/e3_tests.csv")]), None
     if v is not None:
@@ -540,12 +541,33 @@ def e3eval_section():
         out.append(f"<h3>{test}</h3>" + table(g, ["data", "condition", "metric", "vs", "delta", "ci_lo", "ci_hi",
                                                     "n_scenes", "p_holm", "harmful" if test == "SAFE" else "better"],
                                                num={"delta": 3, "ci_lo": 3, "ci_hi": 3, "n_scenes": 0, "p_holm": 4}))
-    sb = rd(os.path.join(E3EVAL, "e3_safety_benefit.csv"))
+    sb = rd(os.path.join(d, "e3_safety_benefit.csv"))
     if sb is not None and len(sb):
-        out.append(f"<img src='{uri(fig_e3_safety(sb))}' alt='E3 safety vs benefit'>")
+        out.append(f"<img src='{uri(fig_e3_safety(sb, model))}' alt='E3 safety vs benefit'>")
         out.append(table(sb, ["data", "metric", "remedy", "benefit_kept", "damage_removed", "n_bad_conditions"],
                          num={"benefit_kept": 3, "damage_removed": 3, "n_bad_conditions": 0}))
     return "\n".join(out), v
+
+
+def posthoc_section():
+    out = ["<h2 id='posthoc'>7b. POST HOC (after the preregistered verdicts; changes none of them)</h2>",
+           "<p>The preregistered BEST test compares E3 with the best existing remedy chosen per error type, which "
+           "needs knowledge of the error type. A deployable system applies one remedy to everything. "
+           "Tables: each remedy applied to every ETH3D bad-pose condition (rotation, scene means). "
+           "<code>scripts/e2x/posthoc_e3.py</code>.</p>"]
+    for m, d in (("mapanything", E3EVAL), ("pi3x", E3EVAL + "_pi3x")):
+        t = rd(os.path.join(d, "posthoc_fixed_remedies.csv"))
+        if t is not None:
+            out.append(f"<h3>{NAME[m]}</h3>" + table(t, ["remedy", "n_bad_conditions", "mean_bad_rot_deg",
+                                                         "worst_bad_rot_deg", "correct_hints_rot_deg"],
+                                                     num={"n_bad_conditions": 0, "mean_bad_rot_deg": 2,
+                                                          "worst_bad_rot_deg": 2, "correct_hints_rot_deg": 2}))
+    s = rd(os.path.join(E3EVAL, "posthoc_support_vs_false_actions.csv"))
+    if s is not None:
+        out.append("<h3>Where E3 acts on correct hints (calibration data only)</h3>" + table(
+            s, ["support", "clips", "acts_on_correct_hints", "rate"], num={"clips": 0, "acts_on_correct_hints": 0,
+                                                                           "rate": 3}))
+    return "\n".join(out)
 
 
 CSS = """body{font-family:Inter,Segoe UI,Arial,sans-serif;color:#0b0b0b;background:#fcfcfb;max-width:980px;margin:0 auto;
@@ -580,6 +602,8 @@ def main():
     sc_html = secondary_section()
     xm_html = xm_section()
     ev_html, e3v = e3eval_section()
+    ev_px_html, _ = e3eval_section("pi3x")
+    ph_html = posthoc_section()
     dc_html, verdict = decision_section(xb, e3, e3v)
     files = "".join(f"<li><code>{html.escape(u)}</code></li>" for u in sorted(set(USED)))
     doc = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport"
@@ -589,7 +613,7 @@ content="width=device-width,initial-scale=1"><title>E2X Results</title><style>{C
 <code>e2x-prereg</code> (<code>experiments/E2X.md</code> §5). DESCRIPTIVE parts are labelled; calibration-clip
 numbers are not results.</p>
 <p class='verdict'>{html.escape(verdict)}</p>
-{dc_html}{s_html}{xa_html}{xb_html}{e3_html}{sc_html}{xm_html}{ev_html}{an_html}{rf_html}
+{dc_html}{s_html}{xa_html}{xb_html}{e3_html}{sc_html}{xm_html}{ev_html}{ev_px_html}{ph_html}{an_html}{rf_html}
 <h2 id='files'>8. Files</h2><ul>{files}</ul></body></html>"""
     out = os.path.join(OUT, "e2x_results.html")
     open(out, "w", encoding="utf-8").write(doc)

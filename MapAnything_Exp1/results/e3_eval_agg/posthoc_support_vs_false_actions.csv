@@ -1,0 +1,4 @@
+label,support,clips,acts_on_correct_hints,rate
+"POST HOC, calibration data only, MapAnything E3 z = 5",0-2 pairs,38,13,0.34210526315789475
+"POST HOC, calibration data only, MapAnything E3 z = 5",3-9 pairs,11,2,0.18181818181818182
+"POST HOC, calibration data only, MapAnything E3 z = 5",>=10 pairs,8,0,0.0

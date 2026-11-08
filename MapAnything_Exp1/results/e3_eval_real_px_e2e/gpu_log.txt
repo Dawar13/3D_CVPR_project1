@@ -1,0 +1,3 @@
+shard=0 start=2026-11-08 15:05:34 end=2026-11-08 15:55:35 config=configs/e3_eval_real_pi3x.json clips=./results/e3_eval_real_px_e2e/_shards/0/clips/*.npz runs_recorded=574 peak_mem_gb=9.62 mem_fraction=0.13
+shard=1 start=2026-11-08 15:05:54 end=2026-11-08 15:55:25 config=configs/e3_eval_real_pi3x.json clips=./results/e3_eval_real_px_e2e/_shards/1/clips/*.npz runs_recorded=574 peak_mem_gb=9.62 mem_fraction=0.13
+shard=2 start=2026-11-08 15:06:14 end=2026-11-08 15:53:10 config=configs/e3_eval_real_pi3x.json clips=./results/e3_eval_real_px_e2e/_shards/2/clips/*.npz runs_recorded=533 peak_mem_gb=9.62 mem_fraction=0.13

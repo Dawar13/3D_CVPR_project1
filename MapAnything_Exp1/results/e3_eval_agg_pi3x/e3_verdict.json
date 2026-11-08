@@ -1,0 +1,17 @@
+{
+ "safe":true,
+ "help_on_agreeing_or_ai_depth":[
+  "ai_depth",
+  "c6_shared_rot_rot_deg=5",
+  "dev_pose_ai_depth",
+  "drift_level=2",
+  "drift_level=3",
+  "shared_heading_bias_rot_deg=10",
+  "shared_heading_bias_rot_deg=5"
+ ],
+ "best_on_agreeing_or_ai_depth":[
+
+ ],
+ "method_claim_holds":false,
+ "n_tests":62
+}
