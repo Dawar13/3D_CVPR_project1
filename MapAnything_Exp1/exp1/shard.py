@@ -101,14 +101,16 @@ def merge(out, clips):
             f.writelines(line + "\n" for c in order for line in fails.get(c, []))
     elif os.path.exists(os.path.join(out, "failures.jsonl")):
         os.remove(os.path.join(out, "failures.jsonl"))
-    dec = {}  # E3 decisions (run_exp1.run_e3), in clip order then run order
-    for r in runs:
-        p = os.path.join(r, "e3_decisions.jsonl")
-        for line in (open(p).read().splitlines() if os.path.exists(p) else []):
-            dec.setdefault(_clip_of_key(json.loads(line)["run_key"]), []).append(line)
-    if dec:
-        with open(os.path.join(out, "e3_decisions.jsonl"), "w") as f:
-            f.writelines(line + "\n" for c in order for line in dec.get(c, []))
+    for fname in ("e3_decisions.jsonl", "vtt_decisions.jsonl"):  # E3 / E4-A decisions, clip order then run order
+        dec = {}
+        for r in runs:
+            p = os.path.join(r, fname)
+            for line in (open(p).read().splitlines() if os.path.exists(p) else []):
+                key = json.loads(line)["run_key"]
+                dec.setdefault(_clip_of_key(key), {})[key] = line   # a rerun's line replaces the earlier one
+        if dec:
+            with open(os.path.join(out, fname), "w") as f:
+                f.writelines(line + "\n" for c in order for line in dec.get(c, {}).values())
     infos =[json.load(open(os.path.join(r, "run_info.json"))) for r in runs]
     for i in infos[1:]:
         assert {k: v for k, v in i.items() if k != "clips"} == {k: v for k, v in infos[0].items() if k != "clips"}, \

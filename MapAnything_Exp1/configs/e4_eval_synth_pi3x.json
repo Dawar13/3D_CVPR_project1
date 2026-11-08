@@ -1,0 +1,298 @@
+{
+ "_comment": "E4-A eval (synth, pi3x), experiments/E4.md: the E3 eval grid unchanged; controls R2, R3, VtT; VtT constants calibrated on dev / cal clips only (results/e4_vtt_cal/chosen.json).",
+ "checkpoint": "yyfz233/Pi3X",
+ "seeds": [
+  0
+ ],
+ "depth_views": [
+  3,
+  7
+ ],
+ "filter_rot_tau_deg": 10.0,
+ "filter_dir_tau_deg": 15.0,
+ "conditions": [
+  {
+   "name": "rgb_only",
+   "family": "reference",
+   "inputs": [],
+   "seeds": 1
+  },
+  {
+   "name": "clean_pose",
+   "family": "reference",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "seeds": 1,
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "name": "clean_pose_depth2",
+   "family": "reference",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "seeds": 1,
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "c6_shared_rot",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "sweep": "rot_deg",
+   "values": [
+    2,
+    5
+   ],
+   "seeds": 1,
+   "corruption": {
+    "type": "shared_rot"
+   },
+   "floor": "rgb_only",
+   "ceiling": "clean_pose",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "noise_rot",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "sweep": "rot_deg",
+   "values": [
+    0.5,
+    1,
+    2,
+    5
+   ],
+   "seeds": 1,
+   "corruption": {
+    "mode": "all",
+    "trans_frac": 0.0
+   },
+   "floor": "rgb_only",
+   "ceiling": "clean_pose",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "outlier_rot",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "sweep": "rot_deg",
+   "values": [
+    5,
+    15,
+    30,
+    90
+   ],
+   "seeds": 1,
+   "corruption": {
+    "mode": "subset",
+    "n": 1,
+    "trans_frac": 0.0
+   },
+   "floor": "rgb_only",
+   "ceiling": "clean_pose",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "outlier_frac",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "sweep": "frac",
+   "values": [
+    0.1,
+    0.2,
+    0.4
+   ],
+   "seeds": 1,
+   "corruption": {
+    "mode": "subset",
+    "rot_deg": 15,
+    "trans_frac": 0.25
+   },
+   "floor": "rgb_only",
+   "ceiling": "clean_pose",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "drift",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "levels": [
+    {
+     "rot_deg": 0.5,
+     "scale_growth": 0.01
+    },
+    {
+     "rot_deg": 1.0,
+     "scale_growth": 0.02
+    },
+    {
+     "rot_deg": 2.0,
+     "scale_growth": 0.04
+    }
+   ],
+   "seeds": 1,
+   "corruption": {
+    "type": "drift"
+   },
+   "floor": "rgb_only",
+   "ceiling": "clean_pose",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "shared_heading_bias",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "sweep": "rot_deg",
+   "values": [
+    2,
+    5,
+    10
+   ],
+   "seeds": 1,
+   "corruption": {
+    "type": "shared_rot"
+   },
+   "floor": "rgb_only",
+   "ceiling": "clean_pose",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "anchor_error",
+   "inputs": [
+    "intrinsics",
+    "pose"
+   ],
+   "levels": [
+    {
+     "rot_deg": 15.0,
+     "trans_frac": 0.0
+    },
+    {
+     "rot_deg": 0.0,
+     "trans_frac": 0.25
+    }
+   ],
+   "seeds": 1,
+   "corruption": {
+    "views": [
+     0
+    ]
+   },
+   "floor": "rgb_only",
+   "ceiling": "clean_pose",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "depth_scale",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "sweep": "factor",
+   "values": [
+    0.67,
+    1.5
+   ],
+   "seeds": 1,
+   "corruption": {
+    "target": "depth",
+    "type": "scale"
+   },
+   "floor": "clean_pose",
+   "ceiling": "clean_pose_depth2",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  },
+  {
+   "family": "depth_one_scale",
+   "inputs": [
+    "intrinsics",
+    "pose",
+    "depth"
+   ],
+   "sweep": "factor",
+   "values": [
+    1.5
+   ],
+   "seeds": 1,
+   "corruption": {
+    "target": "depth",
+    "type": "scale",
+    "views": [
+     3
+    ]
+   },
+   "floor": "clean_pose",
+   "ceiling": "clean_pose_depth2",
+   "controls": [
+    "filter_rgbcheck",
+    "drop_lowconf",
+    "vtt"
+   ]
+  }
+ ],
+ "lowconf_tau": 0.4572,
+ "vtt_kappa_rot": 2.753291702531848,
+ "vtt_sys_rot_deg": 0.2497122651186922,
+ "vtt_kappa_dir": 3.6362152007925914,
+ "vtt_sys_dir_deg": 0.9896939911713953,
+ "vtt_pe_a": -0.6862595982496519,
+ "vtt_pe_b": 0.5259259261890634,
+ "vtt_depth_sys": 0.009816617349247407
+}

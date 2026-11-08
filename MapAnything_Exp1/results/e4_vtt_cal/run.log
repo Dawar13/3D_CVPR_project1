@@ -1,0 +1,236 @@
+[ok] accurate dev__delivery_area__c0: 29 matched pairs, 29 edges, 4.8 s
+[ok] accurate dev__delivery_area__c1: 29 matched pairs, 29 edges, 3.8 s
+[ok] accurate dev__delivery_area__c2: 27 matched pairs, 27 edges, 3.8 s
+[ok] accurate dev__facade__c0: 35 matched pairs, 35 edges, 6.4 s
+[ok] accurate dev__facade__c1: 22 matched pairs, 17 edges, 7.8 s
+[ok] accurate dev__facade__c2: 13 matched pairs, 12 edges, 10.2 s
+[ok] accurate dev__terrace__c0: 13 matched pairs, 13 edges, 2.6 s
+[ok] accurate dev__terrace__c1: 36 matched pairs, 29 edges, 7.3 s
+[ok] accurate cal__tum_fr3_cabinet__c2: 0 matched pairs, 0 edges, 1.0 s
+[ok] accurate cal__tum_fr3_cabinet__c3: 0 matched pairs, 0 edges, 1.1 s
+[ok] accurate cal__tum_fr3_large_cabinet__c2: 28 matched pairs, 22 edges, 3.1 s
+[ok] accurate cal__tum_fr3_large_cabinet__c3: 22 matched pairs, 19 edges, 4.2 s
+[ok] accurate cal__tum_fr3_long_office_household__c0: 43 matched pairs, 43 edges, 8.4 s
+[ok] accurate cal__tum_fr3_long_office_household__c1: 35 matched pairs, 35 edges, 4.4 s
+[ok] accurate cal__tum_fr3_long_office_household__c3: 44 matched pairs, 44 edges, 4.1 s
+[ok] accurate cal__tum_fr3_nostructure_texture_far__c0: 45 matched pairs, 45 edges, 4.5 s
+[ok] accurate cal__tum_fr3_nostructure_texture_near_withloop__c0: 38 matched pairs, 38 edges, 8.5 s
+[ok] accurate cal__tum_fr3_nostructure_texture_near_withloop__c1: 37 matched pairs, 37 edges, 8.0 s
+[ok] accurate cal__tum_fr3_nostructure_texture_near_withloop__c2: 36 matched pairs, 34 edges, 5.9 s
+[ok] accurate cal__tum_fr3_nostructure_texture_near_withloop__c3: 22 matched pairs, 22 edges, 7.0 s
+[ok] accurate cal__tum_fr3_structure_notexture_far__c0: 0 matched pairs, 0 edges, 1.1 s
+[ok] accurate cal__tum_fr3_structure_notexture_far__c1: 0 matched pairs, 0 edges, 2.1 s
+[ok] accurate cal__tum_fr3_structure_texture_far__c0: 45 matched pairs, 45 edges, 6.5 s
+[ok] accurate cal__tum_fr3_structure_texture_far__c1: 45 matched pairs, 45 edges, 3.3 s
+[ok] accurate cal__tum_fr3_structure_texture_near__c0: 35 matched pairs, 35 edges, 4.7 s
+[ok] accurate cal__tum_fr3_structure_texture_near__c1: 23 matched pairs, 22 edges, 4.0 s
+[ok] accurate cal__tum_fr3_structure_texture_near__c2: 31 matched pairs, 30 edges, 6.0 s
+[ok] noisy dev__sf422391__c0: 13 matched pairs, 11 edges, 3.4 s
+[ok] noisy dev__sf422391__c1: 9 matched pairs, 9 edges, 1.5 s
+[ok] noisy dev__sf422391__c2: 3 matched pairs, 3 edges, 1.2 s
+[ok] noisy dev__sf422803__c0: 10 matched pairs, 10 edges, 4.1 s
+[ok] noisy dev__sf422803__c1: 4 matched pairs, 3 edges, 1.4 s
+[ok] noisy dev__sf434650__c0: 19 matched pairs, 19 edges, 9.7 s
+[ok] noisy dev__sf434650__c1: 5 matched pairs, 5 edges, 3.2 s
+[ok] noisy dev__sf434650__c2: 7 matched pairs, 7 edges, 1.8 s
+[ok] noisy cal__sf422386__c0: 2 matched pairs, 2 edges, 3.8 s
+[ok] noisy cal__sf422386__c1: 5 matched pairs, 4 edges, 1.5 s
+[ok] noisy cal__sf422386__c2: 10 matched pairs, 10 edges, 3.0 s
+[ok] noisy cal__sf422826__c0: 0 matched pairs, 0 edges, 1.5 s
+[ok] noisy cal__sf422826__c2: 10 matched pairs, 10 edges, 3.6 s
+[ok] noisy cal__sf460417__c0: 22 matched pairs, 20 edges, 4.2 s
+[ok] noisy cal__sf460417__c1: 5 matched pairs, 4 edges, 1.9 s
+[ok] noisy cal__sf460417__c2: 13 matched pairs, 11 edges, 8.4 s
+[ok] noisy cal__sf467172__c0: 8 matched pairs, 8 edges, 3.1 s
+[ok] noisy cal__sf467172__c1: 8 matched pairs, 7 edges, 2.9 s
+[ok] noisy cal__sf467172__c2: 3 matched pairs, 2 edges, 1.6 s
+[ok] noisy cal__sf467306__c0: 10 matched pairs, 10 edges, 2.1 s
+[ok] noisy cal__sf467306__c1: 9 matched pairs, 9 edges, 2.1 s
+[ok] noisy cal__sf467306__c2: 5 matched pairs, 5 edges, 1.7 s
+[ok] noisy cal__sf468711__c0: 27 matched pairs, 27 edges, 3.3 s
+[ok] noisy cal__sf468711__c1: 2 matched pairs, 2 edges, 1.3 s
+[ok] noisy cal__sf468711__c2: 1 matched pairs, 1 edges, 1.2 s
+[ok] noisy cal__sf470352__c0: 6 matched pairs, 6 edges, 2.2 s
+[ok] noisy cal__sf470352__c1: 4 matched pairs, 4 edges, 1.4 s
+[ok] noisy cal__sf470352__c2: 38 matched pairs, 38 edges, 3.4 s
+[ok] noisy cal__sf471425__c1: 0 matched pairs, 0 edges, 1.2 s
+[ok] noisy cal__sf471425__c2: 0 matched pairs, 0 edges, 1.1 s
+[ok] noisy cal__sf471952__c0: 17 matched pairs, 17 edges, 2.4 s
+[ok] noisy cal__sf483632__c0: 37 matched pairs, 37 edges, 5.6 s
+[ok] noisy cal__sf483632__c1: 2 matched pairs, 2 edges, 1.4 s
+[ok] noisy cal__sf483632__c2: 12 matched pairs, 12 edges, 2.6 s
+[ok] noisy cal__sf422826__r0: 1 matched pairs, 1 edges, 1.3 s
+[ok] noisy cal__sf422826__r1: 0 matched pairs, 0 edges, 2.0 s
+[ok] noisy cal__sf422826__r2: 3 matched pairs, 3 edges, 1.8 s
+[ok] noisy cal__sf460417__r0: 0 matched pairs, 0 edges, 1.5 s
+[ok] noisy cal__sf460417__r1: 1 matched pairs, 1 edges, 1.7 s
+[ok] noisy cal__sf460417__r2: 0 matched pairs, 0 edges, 1.9 s
+[ok] noisy cal__sf467172__r0: 1 matched pairs, 1 edges, 3.6 s
+[ok] noisy cal__sf467172__r1: 2 matched pairs, 2 edges, 1.5 s
+[ok] noisy cal__sf467172__r2: 0 matched pairs, 0 edges, 1.8 s
+[ok] noisy cal__sf467306__r1: 0 matched pairs, 0 edges, 1.6 s
+[ok] noisy cal__sf467306__r2: 1 matched pairs, 1 edges, 1.2 s
+[ok] noisy cal__sf468711__r1: 0 matched pairs, 0 edges, 1.1 s
+[ok] noisy cal__sf468711__r2: 0 matched pairs, 0 edges, 1.0 s
+[ok] noisy cal__sf470352__r0: 1 matched pairs, 1 edges, 1.4 s
+[ok] noisy cal__sf470352__r1: 0 matched pairs, 0 edges, 1.4 s
+[ok] noisy cal__sf470352__r2: 2 matched pairs, 2 edges, 1.4 s
+[ok] noisy cal__sf471425__r0: 0 matched pairs, 0 edges, 1.2 s
+[ok] noisy cal__sf471425__r1: 0 matched pairs, 0 edges, 1.1 s
+[ok] noisy cal__sf471425__r2: 0 matched pairs, 0 edges, 2.8 s
+[ok] noisy cal__sf471952__r0: 0 matched pairs, 0 edges, 1.2 s
+[ok] noisy cal__sf471952__r2: 0 matched pairs, 0 edges, 1.2 s
+[ok] noisy cal__sf483632__r0: 0 matched pairs, 0 edges, 1.7 s
+[ok] noisy cal__sf483632__r1: 1 matched pairs, 1 edges, 1.8 s
+[ok] noisy cal__sf483632__r2: 0 matched pairs, 0 edges, 1.4 s
+[ok] noisy dev__sf422391__r1: 0 matched pairs, 0 edges, 3.2 s
+[ok] noisy dev__sf422391__r2: 0 matched pairs, 0 edges, 1.6 s
+[ok] noisy dev__sf422803__r0: 1 matched pairs, 1 edges, 2.4 s
+[ok] noisy dev__sf422803__r1: 1 matched pairs, 1 edges, 1.7 s
+[ok] noisy dev__sf422803__r2: 3 matched pairs, 3 edges, 1.5 s
+[ok] noisy dev__sf434650__r1: 0 matched pairs, 0 edges, 1.2 s
+[ok] noisy dev__sf434650__r2: 2 matched pairs, 1 edges, 1.4 s
+[ok] depth dev__delivery_area__c0
+[ok] depth dev__delivery_area__c1
+[ok] depth dev__delivery_area__c2
+[ok] depth dev__facade__c0
+[ok] depth dev__facade__c1
+[ok] depth dev__facade__c2
+[ok] depth dev__terrace__c0
+[ok] depth dev__terrace__c1
+[ok] depth dev__sf422391__c0
+[ok] depth dev__sf422391__c1
+[ok] depth dev__sf422391__c2
+[ok] depth dev__sf422803__c0
+[ok] depth dev__sf422803__c1
+[ok] depth dev__sf434650__c0
+[ok] depth dev__sf434650__c1
+[ok] depth dev__sf434650__c2
+[ok] depth cal__sf422386__c0
+[ok] depth cal__sf422386__c1
+[ok] depth cal__sf422386__c2
+[ok] depth cal__sf422826__c0
+[ok] depth cal__sf422826__c2
+[ok] depth cal__sf460417__c0
+[ok] depth cal__sf460417__c1
+[ok] depth cal__sf460417__c2
+[ok] depth cal__sf467172__c0
+[ok] depth cal__sf467172__c1
+[ok] depth cal__sf467172__c2
+[ok] depth cal__sf467306__c0
+[ok] depth cal__sf467306__c1
+[ok] depth cal__sf467306__c2
+[ok] depth cal__sf468711__c0
+[ok] depth cal__sf468711__c1
+[ok] depth cal__sf468711__c2
+[ok] depth cal__sf470352__c0
+[ok] depth cal__sf470352__c1
+[ok] depth cal__sf470352__c2
+[ok] depth cal__sf471425__c1
+[ok] depth cal__sf471425__c2
+[ok] depth cal__sf471952__c0
+[ok] depth cal__sf483632__c0
+[ok] depth cal__sf483632__c1
+[ok] depth cal__sf483632__c2
+[ok] depth cal__sf422826__r0
+[ok] depth cal__sf422826__r1
+[ok] depth cal__sf422826__r2
+[ok] depth cal__sf460417__r0
+[ok] depth cal__sf460417__r1
+[ok] depth cal__sf460417__r2
+[ok] depth cal__sf467172__r0
+[ok] depth cal__sf467172__r1
+[ok] depth cal__sf467172__r2
+[ok] depth cal__sf467306__r1
+[ok] depth cal__sf467306__r2
+[ok] depth cal__sf468711__r1
+[ok] depth cal__sf468711__r2
+[ok] depth cal__sf470352__r0
+[ok] depth cal__sf470352__r1
+[ok] depth cal__sf470352__r2
+[ok] depth cal__sf471425__r0
+[ok] depth cal__sf471425__r1
+[ok] depth cal__sf471425__r2
+[ok] depth cal__sf471952__r0
+[ok] depth cal__sf471952__r2
+[ok] depth cal__sf483632__r0
+[ok] depth cal__sf483632__r1
+[ok] depth cal__sf483632__r2
+[ok] depth dev__sf422391__r1
+[ok] depth dev__sf422391__r2
+[ok] depth dev__sf422803__r0
+[ok] depth dev__sf422803__r1
+[ok] depth dev__sf422803__r2
+[ok] depth dev__sf434650__r1
+[ok] depth dev__sf434650__r2
+{
+ "vtt_kappa_rot": 2.753291702531848,
+ "vtt_sys_rot_deg": 0.2497122651186922,
+ "vtt_kappa_dir": 3.6362152007925914,
+ "vtt_sys_dir_deg": 0.9896939911713953,
+ "vtt_pe_a": -0.6862595982496519,
+ "vtt_pe_b": 0.5259259261890634,
+ "vtt_depth_sys": 0.009816617349247407,
+ "stage3_depth_share_right": 0.9758882731787167,
+ "stage3_n_views": 562,
+ "stage3_by_depth": {
+  "depth": {
+   "n": 326,
+   "median_abs_m": 0.003519752554510487
+  },
+  "dev_depth": {
+   "n": 236,
+   "median_abs_m": 0.009539265296799328
+  }
+ },
+ "stage1_share_right": 0.872637886590896,
+ "stage2_noisy_gt_sd_deg": 0.0,
+ "pe_at_n": {
+  "15": 0.6765527134242126,
+  "30": 0.7507316588901963,
+  "60": 0.8126104682003885,
+  "120": 0.8619529872399253,
+  "250": 0.9018206582020792,
+  "500": 0.9297048211152307
+ },
+ "median_match_kappa_accurate": [
+  7.5981128215364855,
+  5.14429239813925
+ ],
+ "n_edges": {
+  "accurate": 707,
+  "noisy": 334
+ },
+ "by_folder": {
+  "accurate/clips_e2": {
+   "n_edges": 191,
+   "median_rot_err_deg": 0.2188337156420022,
+   "share_rot_err_gt5deg": 0.08376963350785341,
+   "mean_stage2_right_prob": 0.9056450043469576
+  },
+  "accurate/clips_tum": {
+   "n_edges": 516,
+   "median_rot_err_deg": 0.6758862455890597,
+   "share_rot_err_gt5deg": 0.12790697674418605,
+   "mean_stage2_right_prob": 0.8603652137435698
+  },
+  "noisy/clips_e2e": {
+   "n_edges": 67,
+   "median_rot_err_deg": 1.2610886693704595,
+   "share_rot_err_gt5deg": 0.13432835820895522,
+   "mean_stage2_right_prob": 0.7788045628137734
+  },
+  "noisy/clips_e2x_cal": {
+   "n_edges": 248,
+   "median_rot_err_deg": 1.4757722471573171,
+   "share_rot_err_gt5deg": 0.21774193548387097,
+   "mean_stage2_right_prob": 0.7274226888615445
+  },
+  "noisy/clips_e2x_room": {
+   "n_edges": 19,
+   "median_rot_err_deg": 4.559055291438117,
+   "share_rot_err_gt5deg": 0.47368421052631576,
+   "mean_stage2_right_prob": 0.5263089601590322
+  }
+ }
+}

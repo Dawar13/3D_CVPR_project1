@@ -1,0 +1,36 @@
+[ok] dev__delivery_area__c0: 29 pairs, match 3.0 s, 1 K sets
+[ok] dev__delivery_area__c1: 29 pairs, match 1.4 s, 1 K sets
+[ok] dev__delivery_area__c2: 27 pairs, match 1.7 s, 1 K sets
+[ok] dev__facade__c0: 35 pairs, match 4.9 s, 1 K sets
+[ok] dev__facade__c1: 22 pairs, match 7.0 s, 1 K sets
+[ok] dev__facade__c2: 13 pairs, match 6.2 s, 1 K sets
+[ok] dev__terrace__c0: 13 pairs, match 1.3 s, 1 K sets
+[ok] dev__terrace__c1: 36 pairs, match 4.8 s, 1 K sets
+                                n  rre_before  rre_after  rre_max_before  rre_max_after  view_max_before  view_max_after  dlog_before  dlog_after  max_correction_deg  t_vtt_s  share_rot_worse_0.25  worst_rot_increase  share_depth_worse_0.05
+condition                                                                                                                                                                                                                                       
+clean_pose                      8       0.000      0.000           0.000          0.000            0.000           0.000          NaN         NaN               0.000    5.918                 0.000               0.000                   0.000
+clean_pose_depth2               8       0.000      0.000           0.000          0.000            0.000           0.000        0.000       0.000               0.000    3.698                 0.000               0.000                   0.000
+c6_shared_rot_rot_deg=2         8       1.325      1.325           2.631          2.631            2.000           2.000          NaN         NaN               0.000    3.922                 0.000               0.000                   0.000
+c6_shared_rot_rot_deg=5         8       3.237      2.486           6.575          5.019            5.000           4.421          NaN         NaN               2.934    3.611                 0.000               0.000                   0.000
+noise_rot_rot_deg=0.5           8       0.637      0.637           0.977          0.977            0.500           0.500          NaN         NaN               0.000    3.380                 0.000               0.000                   0.000
+noise_rot_rot_deg=1             8       1.236      1.236           1.974          1.974            1.000           1.000          NaN         NaN               0.000    3.806                 0.000               0.000                   0.000
+noise_rot_rot_deg=2             8       2.512      2.512           3.938          3.938            2.000           2.000          NaN         NaN               0.000    4.113                 0.000               0.000                   0.000
+noise_rot_rot_deg=5             8       6.284      1.196           9.890          3.439            5.000           2.869          NaN         NaN               6.918    4.346                 0.000              -2.897                   0.000
+outlier_rot_rot_deg=5           8       1.000      0.031           5.000          0.155            5.000           0.155          NaN         NaN               4.998    3.372                 0.000              -0.952                   0.000
+outlier_rot_rot_deg=15          8       3.000      0.028          15.000          0.140           15.000           0.140          NaN         NaN              15.014    3.236                 0.000              -2.938                   0.000
+outlier_rot_rot_deg=30          8       6.000      0.026          30.000          0.130           30.000           0.130          NaN         NaN              30.032    2.926                 0.000              -5.927                   0.000
+outlier_rot_rot_deg=90          8      18.000      2.286          90.000         11.429           90.000          11.429          NaN         NaN              78.791    3.130                 0.000               0.000                   0.000
+outlier_frac_frac=0.1           8       3.000      1.178          15.000          5.892           15.000           5.892          NaN         NaN               9.376    3.476                 0.000               0.000                   0.000
+outlier_frac_frac=0.2           8       5.690      2.602          17.007          9.415           15.000           7.723          NaN         NaN               9.455    3.355                 0.000               0.000                   0.000
+outlier_frac_frac=0.4           8      10.676      0.145          27.888          0.519           15.000           0.402          NaN         NaN              15.143    3.453                 0.000              -9.915                   0.000
+drift_level=1                   8       1.807      1.807           4.365          4.365            4.365           4.365          NaN         NaN               0.000    3.131                 0.000               0.000                   0.000
+drift_level=2                   8       3.579      2.985           8.530          7.101            8.530           7.671          NaN         NaN               2.584    3.631                 0.000               0.000                   0.000
+drift_level=3                   8       7.051      3.146          16.721          8.275           16.721          12.890          NaN         NaN               7.977    3.698                 0.000              -0.784                   0.000
+shared_heading_bias_rot_deg=2   8       1.339      1.339           2.646          2.646            2.000           2.000          NaN         NaN               0.000    3.561                 0.000               0.000                   0.000
+shared_heading_bias_rot_deg=5   8       3.029      2.473           6.324          5.318            5.000           5.024          NaN         NaN               3.317    4.005                 0.125               0.459                   0.000
+shared_heading_bias_rot_deg=10  8       6.977      1.138          14.411          3.036           10.000           2.957          NaN         NaN              10.292    3.838                 0.000              -2.793                   0.000
+anchor_error_level=1            8       3.000      0.051          15.000          0.255           15.000           0.255          NaN         NaN              14.943    3.202                 0.000              -2.888                   0.000
+anchor_error_level=2            8       0.000      0.000           0.000          0.000            0.000           0.000          NaN         NaN               0.000    3.412                 0.000               0.000                   0.000
+depth_scale_factor=0.67         8       0.000      0.000           0.000          0.000            0.000           0.000        0.400       0.051               0.000    3.887                 0.000               0.000                   0.000
+depth_scale_factor=1.5          8       0.000      0.000           0.000          0.000            0.000           0.000        0.405       0.052               0.000    3.151                 0.000               0.000                   0.000
+depth_one_scale_factor=1.5      8       0.000      0.000           0.000          0.000            0.000           0.000        0.203       0.001               0.000    2.868                 0.000               0.000                   0.000

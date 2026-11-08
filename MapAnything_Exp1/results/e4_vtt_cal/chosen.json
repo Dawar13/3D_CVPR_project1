@@ -1,0 +1,169 @@
+{
+ "vtt_kappa_rot": 2.753291702531848,
+ "vtt_sys_rot_deg": 0.2497122651186922,
+ "vtt_kappa_dir": 3.6362152007925914,
+ "vtt_sys_dir_deg": 0.9896939911713953,
+ "vtt_pe_a": -0.6862595982496519,
+ "vtt_pe_b": 0.5259259261890634,
+ "vtt_depth_sys": 0.009816617349247407,
+ "stage3_depth_share_right": 0.9758882731787167,
+ "stage3_n_views": 562,
+ "stage3_by_depth": {
+  "depth": {
+   "n": 326,
+   "median_abs_m": 0.003519752554510487
+  },
+  "dev_depth": {
+   "n": 236,
+   "median_abs_m": 0.009539265296799328
+  }
+ },
+ "stage1_share_right": 0.872637886590896,
+ "stage2_noisy_gt_sd_deg": 0.0,
+ "pe_at_n": {
+  "15": 0.6765527134242126,
+  "30": 0.7507316588901963,
+  "60": 0.8126104682003885,
+  "120": 0.8619529872399253,
+  "250": 0.9018206582020792,
+  "500": 0.9297048211152307
+ },
+ "median_match_kappa_accurate": [
+  7.5981128215364855,
+  5.14429239813925
+ ],
+ "n_edges": {
+  "accurate": 707,
+  "noisy": 334
+ },
+ "by_folder": {
+  "accurate/clips_e2": {
+   "n_edges": 191,
+   "median_rot_err_deg": 0.2188337156420022,
+   "share_rot_err_gt5deg": 0.08376963350785341,
+   "mean_stage2_right_prob": 0.9056450043469576
+  },
+  "accurate/clips_tum": {
+   "n_edges": 516,
+   "median_rot_err_deg": 0.6758862455890597,
+   "share_rot_err_gt5deg": 0.12790697674418605,
+   "mean_stage2_right_prob": 0.8603652137435698
+  },
+  "noisy/clips_e2e": {
+   "n_edges": 67,
+   "median_rot_err_deg": 1.2610886693704595,
+   "share_rot_err_gt5deg": 0.13432835820895522,
+   "mean_stage2_right_prob": 0.7788045628137734
+  },
+  "noisy/clips_e2x_cal": {
+   "n_edges": 248,
+   "median_rot_err_deg": 1.4757722471573171,
+   "share_rot_err_gt5deg": 0.21774193548387097,
+   "mean_stage2_right_prob": 0.7274226888615445
+  },
+  "noisy/clips_e2x_room": {
+   "n_edges": 19,
+   "median_rot_err_deg": 4.559055291438117,
+   "share_rot_err_gt5deg": 0.47368421052631576,
+   "mean_stage2_right_prob": 0.5263089601590322
+  }
+ },
+ "clips": {
+  "accurate": [
+   "dev__delivery_area__c0.npz",
+   "dev__delivery_area__c1.npz",
+   "dev__delivery_area__c2.npz",
+   "dev__facade__c0.npz",
+   "dev__facade__c1.npz",
+   "dev__facade__c2.npz",
+   "dev__terrace__c0.npz",
+   "dev__terrace__c1.npz",
+   "cal__tum_fr3_cabinet__c2.npz",
+   "cal__tum_fr3_cabinet__c3.npz",
+   "cal__tum_fr3_large_cabinet__c2.npz",
+   "cal__tum_fr3_large_cabinet__c3.npz",
+   "cal__tum_fr3_long_office_household__c0.npz",
+   "cal__tum_fr3_long_office_household__c1.npz",
+   "cal__tum_fr3_long_office_household__c3.npz",
+   "cal__tum_fr3_nostructure_texture_far__c0.npz",
+   "cal__tum_fr3_nostructure_texture_near_withloop__c0.npz",
+   "cal__tum_fr3_nostructure_texture_near_withloop__c1.npz",
+   "cal__tum_fr3_nostructure_texture_near_withloop__c2.npz",
+   "cal__tum_fr3_nostructure_texture_near_withloop__c3.npz",
+   "cal__tum_fr3_structure_notexture_far__c0.npz",
+   "cal__tum_fr3_structure_notexture_far__c1.npz",
+   "cal__tum_fr3_structure_texture_far__c0.npz",
+   "cal__tum_fr3_structure_texture_far__c1.npz",
+   "cal__tum_fr3_structure_texture_near__c0.npz",
+   "cal__tum_fr3_structure_texture_near__c1.npz",
+   "cal__tum_fr3_structure_texture_near__c2.npz"
+  ],
+  "noisy": [
+   "dev__sf422391__c0.npz",
+   "dev__sf422391__c1.npz",
+   "dev__sf422391__c2.npz",
+   "dev__sf422803__c0.npz",
+   "dev__sf422803__c1.npz",
+   "dev__sf434650__c0.npz",
+   "dev__sf434650__c1.npz",
+   "dev__sf434650__c2.npz",
+   "cal__sf422386__c0.npz",
+   "cal__sf422386__c1.npz",
+   "cal__sf422386__c2.npz",
+   "cal__sf422826__c0.npz",
+   "cal__sf422826__c2.npz",
+   "cal__sf460417__c0.npz",
+   "cal__sf460417__c1.npz",
+   "cal__sf460417__c2.npz",
+   "cal__sf467172__c0.npz",
+   "cal__sf467172__c1.npz",
+   "cal__sf467172__c2.npz",
+   "cal__sf467306__c0.npz",
+   "cal__sf467306__c1.npz",
+   "cal__sf467306__c2.npz",
+   "cal__sf468711__c0.npz",
+   "cal__sf468711__c1.npz",
+   "cal__sf468711__c2.npz",
+   "cal__sf470352__c0.npz",
+   "cal__sf470352__c1.npz",
+   "cal__sf470352__c2.npz",
+   "cal__sf471425__c1.npz",
+   "cal__sf471425__c2.npz",
+   "cal__sf471952__c0.npz",
+   "cal__sf483632__c0.npz",
+   "cal__sf483632__c1.npz",
+   "cal__sf483632__c2.npz",
+   "cal__sf422826__r0.npz",
+   "cal__sf422826__r1.npz",
+   "cal__sf422826__r2.npz",
+   "cal__sf460417__r0.npz",
+   "cal__sf460417__r1.npz",
+   "cal__sf460417__r2.npz",
+   "cal__sf467172__r0.npz",
+   "cal__sf467172__r1.npz",
+   "cal__sf467172__r2.npz",
+   "cal__sf467306__r1.npz",
+   "cal__sf467306__r2.npz",
+   "cal__sf468711__r1.npz",
+   "cal__sf468711__r2.npz",
+   "cal__sf470352__r0.npz",
+   "cal__sf470352__r1.npz",
+   "cal__sf470352__r2.npz",
+   "cal__sf471425__r0.npz",
+   "cal__sf471425__r1.npz",
+   "cal__sf471425__r2.npz",
+   "cal__sf471952__r0.npz",
+   "cal__sf471952__r2.npz",
+   "cal__sf483632__r0.npz",
+   "cal__sf483632__r1.npz",
+   "cal__sf483632__r2.npz",
+   "dev__sf422391__r1.npz",
+   "dev__sf422391__r2.npz",
+   "dev__sf422803__r0.npz",
+   "dev__sf422803__r1.npz",
+   "dev__sf422803__r2.npz",
+   "dev__sf434650__r1.npz",
+   "dev__sf434650__r2.npz"
+  ]
+ }
+}

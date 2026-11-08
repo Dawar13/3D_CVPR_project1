@@ -50,6 +50,7 @@ import traceback
 import numpy as np
 
 from . import e3, model_io
+from . import photo_check, vtt  # E4-A Verify-then-Trust
 from .controls import rgbcheck_mask
 from .corrupt_geometry import _seed_for, corrupt_poses
 from .corrupt_inputs import corrupt_depth, corrupt_intrinsics
@@ -158,6 +159,7 @@ def apply_corruption(clip, cond, seed, depth_views, base_mask=None):
 
 
 E3_CONTROLS = ("witness", "witness_drop")
+VTT_CONTROLS = ("vtt", "vtt_gate")  # E4-A (exp1/vtt.py): corrected hints / MapAnything dial at the posterior
 
 
 def run_e3(ctrl, cond, cfg, clip, poses, K, depth, depth_views, base, run_views, witness_for, intrinsics_alone=True):
@@ -455,6 +457,22 @@ def main():
                 cache["e3_witness"] = e3.witness_ensemble(run_images_only, N, e3.cfg_get(cfg, "e3_n_orders"))
             return cache["e3_witness"]
 
+        def vtt_pairs():
+            """E4-A photo matches, once per clip (hint-free, RANSAC-clean; exp1/photo_check.match_pairs)."""
+            if "vtt_pairs" not in cache:
+                cache["vtt_pairs"] = photo_check.match_pairs(clip["images"])
+            return cache["vtt_pairs"]
+
+        def vtt_sanitize(key, K, poses, depth, dv, inputs):
+            """E4-A hint posterior, once per hint set (shared by vtt and vtt_gate); the two-view edges once per clip and
+            intrinsics (they depend on the photos and K only)."""
+            if ("vtt", key) not in cache:
+                kk = ("vtt_edges", np.asarray(K, np.float64).tobytes())
+                if kk not in cache:
+                    cache[kk] = vtt.pair_edges(vtt_pairs(), K, cfg)
+                cache[("vtt", key)] = vtt.sanitize(vtt_pairs(), K, poses, depth, dv, inputs, cfg, edges=cache[kk])
+            return cache[("vtt", key)]
+
         def record(cond, seed, control, pred, entry, pose_mask, hints):
             nonlocal peak, n_new
             peak, n_new = max(peak, pred["peak_mem_gb"]), n_new + 1
@@ -550,6 +568,25 @@ def main():
                     record(cond, seed, "none", pred, entry, base, hints)
 
                     for ctrl in cond.get("controls", []):
+                        if ctrl in VTT_CONTROLS:  # E4-A (exp1/vtt.py): any hint set, clean ones included
+                            dv = depth_views if "depth" in cond["inputs"] else ()
+                            newP, newD, vinfo = vtt_sanitize(base_key, K, poses, depth, dv, cond["inputs"])
+                            with open(os.path.join(a.out, "vtt_decisions.jsonl"), "a") as f:
+                                f.write(json.dumps({"run_key": f"{base_key}|{ctrl}", **vinfo}) + "\n")
+                            if ctrl == "vtt":
+                                pv, hv = run_views(None, poses_=newP, depth_=newD), (newP, K, newD)
+                            else:   # MapAnything only: the ORIGINAL hints, pose dial = posterior inlier probability
+                                if a.backend != "mapanything":
+                                    raise ValueError("vtt_gate needs MapAnything's fusion gate")
+                                gp = np.asarray(vinfo.get("w_hint", np.ones(len(poses))), np.float32)
+                                model_io.set_hint_gate(model, None, None, gp)
+                                try:
+                                    pv = run_views(None)
+                                finally:
+                                    model_io.clear_hint_gate(model)
+                                hv = hints
+                            record(cond, seed, ctrl, pv, entry, base, hv)
+                            continue
                         if ctrl in E3_CONTROLS:  # E3 (exp1/e3.py): any hint set, clean ones included
                             p3, mask3, hints3, dec = run_e3(ctrl, cond, cfg, clip, poses, K, depth, depth_views,
                                                             base, run_views, witness_for,

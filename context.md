@@ -344,3 +344,17 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
       - Pi3X: 0.38° / 0.43°, vs 0.53° / 1.07° for R2.
     - On calibration data, E3's actions on correct hints concentrate where the photos barely match (`posthoc_support_vs_false_actions.csv`): 34% of clips with 0-2 verified pairs, 18% with 3-9, 0% with >= 10.
     - This motivates the proposed E4 method ("Verify-then-Trust": act only where the photos can verify a hint; soft per-camera trust dial; model-confidence + geometry detectors). The user is deciding on it.
+- 2026-11-08/09: **E4-A Verify-then-Trust (VtT) built on dev / cal data and preregistered at tag `e4-prereg`** (`experiments/E4.md`). User decision: go to E4; algorithmic, not heuristic; E4-B (learned trust read-out) may follow; log everything.
+  - **Method** (`exp1/vtt.py`, CPU, model-agnostic, no training): photo evidence, explanations, decisions.
+    - **Evidence:** refined two-view geometry with first-order covariances plus a calibrated model-error floor (rolling shutter).
+    - **Wrong pairs and wrong hints:** explicit mixtures. The explanation (which hints and pairs are wrong) is chosen by Laplace evidence.
+    - **Ambiguity:** ambiguous video pairs are resolved against the matches themselves.
+    - **Decision:** a hint is replaced only if a leave-one-out predictive check (α = 0.01) fails and the evidence survives removing any single photo pair.
+    - **Depth:** the same label logic for depth scale, in the pose hints' units, with their own 5% scale uncertainty.
+    - **Constants:** calibrated on dev / cal clips only (`results/e4_vtt_cal/chosen.json`: κ_rot 2.75 + 0.25° floor, κ_dir 3.64 + 0.99° floor; pair reliability 0.68 at 15 matches to 0.93 at 500; depth-evidence floor 0.0098).
+  - **Development:** 12 defects found on dev / cal data and fixed (E4.md §1.4, every iteration in `results/e4_dev/history/`). The key diagnosis: SceneFun3D video pairs with hundreds of matches have a second relative pose 5–25° away that fits them as well as the ground truth does (`results/e4_dev/gt_epipolar_check.csv`).
+  - **Final dev check, hint level, no model run** (`results/e4_dev/`; E4.md §6):
+    - Correct and real iPad pose hints on every room, E2-E and SceneFun3D dev/cal clip come back unchanged.
+    - ETH3D dev: one wrong camera 5–30° → about 0.03°; shared heading 10° 7.0° → 1.4°; drift 3 7.1° → 3.7°; depth ×1.5 abs log 0.405 → 0.059.
+    - Weak on 5° agreeing errors (shared heading 5°: 3.0° → 2.7°).
+  - **Eval plan (not yet run):** E3's eval sets, MapAnything and Pi3X. Tests SAFE (non-inferiority), HELP, FIXED (vs every single deployable remedy, including E3) and BEST. Queue `scripts/session_queue_e4.sh`; deploy `scripts/e4/deploy_vm.sh`; analysis `scripts/e4/analyse_e4.py`.
