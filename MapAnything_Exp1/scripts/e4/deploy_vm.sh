@@ -19,8 +19,8 @@ ssh -i "$KEY" "$HOST" "set -e
   cd ~/e4/MapAnything_Exp1 && find exp1 scripts configs tests -type f | sort | xargs sha256sum > ~/e4/code.sha256"
 T=$(mktemp -d)
 git archive "$TAG" -- MapAnything_Exp1 ':(exclude)MapAnything_Exp1/results' | tar -x -C "$T"
-(cd "$T/MapAnything_Exp1" && find exp1 scripts configs tests -type f | sort | xargs sha256sum) | tr -d '*' > "$T/local.sha256"
-ssh -i "$KEY" "$HOST" "cat ~/e4/code.sha256" | tr -d '*' > "$T/vm.sha256"
+(cd "$T/MapAnything_Exp1" && find exp1 scripts configs tests -type f | sort | xargs sha256sum) | tr -d '*' | tr -s ' ' > "$T/local.sha256"
+ssh -i "$KEY" "$HOST" "cat ~/e4/code.sha256" | tr -s ' ' > "$T/vm.sha256"   # Git Bash prints 'hash *file', Linux 'hash  file'
 if diff -q "$T/local.sha256" "$T/vm.sha256" > /dev/null; then
   echo "deployed $TAG ($COMMIT) to $HOST:~/e4: $(wc -l < "$T/vm.sha256") files, checksums identical to the tag"
 else
