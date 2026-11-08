@@ -69,6 +69,19 @@ def test_mapanything_patch():
         model_io.TokenPatch(m, 1, [1], ta)           # frame block
 
 
+def test_gate_exact_in_fp32_and_per_patch():
+    """A2 amendment 2: exact pass-through at gamma = 1 / 0 also in fp32 and with per-patch gates."""
+    feats = torch.randn(V, C, 2, 2) * 3
+    fused = feats * 1.37 + 0.11 * torch.randn(V, C, 2, 2)
+    orig = lambda a, b, c, f: fused
+    assert torch.equal(model_io._gated_fuse(orig, np.ones(V, np.float32))(None, None, None, feats), fused)
+    assert torch.equal(model_io._gated_fuse(orig, np.zeros(V, np.float32))(None, None, None, feats), feats)
+    g = np.ones((V, 2, 2), np.float32)
+    g[1, 0, 0] = 0
+    out = model_io._gated_fuse(orig, g)(None, None, None, feats)
+    assert torch.equal(out[1, :, 0, 0], feats[1, :, 0, 0]) and torch.equal(out[0], fused[0])
+
+
 def test_gate_exact_in_bf16():
     feats = torch.randn(V, C, 2, 2).to(torch.bfloat16)
     fused = (feats * 1.37 + 0.11 * torch.randn(V, C, 2, 2)).to(torch.bfloat16)

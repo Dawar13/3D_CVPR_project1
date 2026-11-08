@@ -186,12 +186,12 @@ def _gated_fuse(orig, gamma):
             g = g[:, None]
         else:
             raise ValueError("gamma must be (V,) or (V, h, w)")
-        # in fp32, then back: in bf16, feats + 1 * (fused - feats) is not fused (rounding of the difference); the
-        # E2X session-A gate check (gamma = 1 must change nothing) failed by up to 0.23 on ETH3D, likely for this
-        # reason (seen in the lost VM log). With the difference taken in fp32, gamma = 1 returns fused and
-        # gamma = 0 returns feats exactly.
-        out = feats.float() + g.float() * (fused.float() - feats.float())
-        return out.to(fused.dtype)
+        # Exact at the ends (A2 amendment 2): gamma = 1 returns fused and gamma = 0 returns feats bit for bit; only
+        # values in between are mixed (in fp32). feats + 1 * (fused - feats) is not fused in floating point: in bf16
+        # the session-A gate check failed by up to 0.23 on ETH3D; mixing in fp32 still left 0.0018 deg (A2 dev gate).
+        mix = (feats.float() + g.float() * (fused.float() - feats.float())).to(fused.dtype)
+        out = torch.where(g == 1, fused, torch.where(g == 0, feats.to(fused.dtype), mix))
+        return out
     return wrapped
 
 
