@@ -1,0 +1,6 @@
+2026-11-08 06:47:56 [tum] build clips
+2026-11-08 06:48:38 [tum] built 31 clips
+[tum] GT check: 31 clips checked, 12 excluded: ['cal__tum_fr3_cabinet__c0', 'cal__tum_fr3_cabinet__c1', 'cal__tum_fr3_large_cabinet__c0', 'cal__tum_fr3_large_cabinet__c1', 'cal__tum_fr3_long_office_household__c2', 'cal__tum_fr3_nostructure_texture_far__c1', 'cal__tum_fr3_structure_notexture_near__c0', 'cal__tum_fr3_structure_notexture_near__c1', 'cal__tum_fr3_teddy__c0', 'cal__tum_fr3_teddy__c1', 'cal__tum_fr3_teddy__c2', 'cal__tum_fr3_teddy__c3']
+2026-11-08 07:17:25 [tum] MA E3-cal on TUM: ground-truth conditions
+2026-11-08 07:35:47 [tum] TUM_MA_GT_DONE
+2026-11-08 07:35:47 [tum] MA E3-cal on TUM: rest of the grid

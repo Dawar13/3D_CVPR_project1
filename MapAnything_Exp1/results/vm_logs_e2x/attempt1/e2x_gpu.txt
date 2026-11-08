@@ -1,0 +1,3 @@
+2026-11-07 18:12:24 start e2x session A, budget 32 GB of 80 GB, free now 15 GB, tree ab5bc73d5a844da74539d390883b6273ad6b3482, scripts 1c0835f8c12bac528b08c2d16a6de124d1f0fb6c
+2026-11-07 18:12:24 MA 1 E3-cal synthetic on ETH3D dev
+2026-11-07 18:12:25   -> attempt 1: 1 shards, 1 at a time, cap 10 GB each, free now 15 GB

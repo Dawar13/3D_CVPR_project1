@@ -1,0 +1,2 @@
+shard=0 start=2026-11-08 02:38:24 end=2026-11-08 03:07:18 config=configs/e2x_e3cal_synth_omnivggt.json clips=results/e2x_e3cal_synth_ov_eth3d/_shards/0/clips/*.npz runs_recorded=276 peak_mem_gb=7.74 mem_fraction=0.1187
+shard=1 start=2026-11-08 02:38:44 end=2026-11-08 02:56:07 config=configs/e2x_e3cal_synth_omnivggt.json clips=results/e2x_e3cal_synth_ov_eth3d/_shards/1/clips/*.npz runs_recorded=138 peak_mem_gb=7.74 mem_fraction=0.1187

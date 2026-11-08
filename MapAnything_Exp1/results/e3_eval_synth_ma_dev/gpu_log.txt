@@ -1,0 +1,5 @@
+shard=0 start=2026-11-08 08:49:15 end=2026-11-08 08:59:58 config=configs/e3_eval_synth_mapanything.json clips=./results/e3_eval_synth_ma_dev/_shards/0/clips/*.npz runs_recorded=138 peak_mem_gb=8.22 mem_fraction=0.13
+shard=0 start=2026-11-08 09:11:26 end=2026-11-08 09:12:46 config=configs/e3_eval_synth_mapanything.json clips=./results/e3_eval_synth_ma_dev/_shards/0/clips/*.npz runs_recorded=6 peak_mem_gb=8.21 mem_fraction=0.13
+shard=1 start=2026-11-08 08:49:36 end=2026-11-08 09:00:06 config=configs/e3_eval_synth_mapanything.json clips=./results/e3_eval_synth_ma_dev/_shards/1/clips/*.npz runs_recorded=138 peak_mem_gb=8.22 mem_fraction=0.13
+shard=1 start=2026-11-08 09:11:47 end=2026-11-08 09:13:11 config=configs/e3_eval_synth_mapanything.json clips=./results/e3_eval_synth_ma_dev/_shards/1/clips/*.npz runs_recorded=6 peak_mem_gb=8.21 mem_fraction=0.13
+shard=2 start=2026-11-08 09:12:07 end=2026-11-08 09:23:58 config=configs/e3_eval_synth_mapanything.json clips=./results/e3_eval_synth_ma_dev/_shards/2/clips/*.npz runs_recorded=138 peak_mem_gb=8.22 mem_fraction=0.13

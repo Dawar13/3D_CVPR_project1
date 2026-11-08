@@ -1,0 +1,3 @@
+shard=0 start=2026-11-08 02:48:35 end=2026-11-08 02:58:05 config=configs/e2x_e3cal_real_mapanything.json clips=results/e2x_e3cal_real_ma_roomdev/_shards/0/clips/*.npz runs_recorded=123 peak_mem_gb=8.83 mem_fraction=0.125
+shard=1 start=2026-11-08 02:48:55 end=2026-11-08 02:56:16 config=configs/e2x_e3cal_real_mapanything.json clips=results/e2x_e3cal_real_ma_roomdev/_shards/1/clips/*.npz runs_recorded=82 peak_mem_gb=8.83 mem_fraction=0.125
+shard=2 start=2026-11-08 02:49:16 end=2026-11-08 02:56:33 config=configs/e2x_e3cal_real_mapanything.json clips=results/e2x_e3cal_real_ma_roomdev/_shards/2/clips/*.npz runs_recorded=82 peak_mem_gb=8.83 mem_fraction=0.125

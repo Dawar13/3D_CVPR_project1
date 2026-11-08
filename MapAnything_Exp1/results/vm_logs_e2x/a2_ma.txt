@@ -1,0 +1,129 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/dawar/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+[done] dev__delivery_area__c0
+[done] dev__facade__c0
+[done] dev__terrace__c0
+{'per_run.csv': 33, 'per_view.csv': 320}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/dawar/.cache/torch/hub/facebookresearch_dinov2_main
+[W1108 06:57:25.003383546 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 2097152, total: 85093777408).
+[W1108 06:57:29.119288053 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:57:33.378876625 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:57:36.870563367 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:57:43.954957889 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:57:47.663116133 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:57:51.268605661 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:57:53.648601311 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:57:56.250134200 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:58:00.262286403 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:58:03.640931245 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+[W1108 06:58:05.869348447 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 8388608, total: 85093777408).
+Loading pretrained dinov2_vitg14 from torch hub
+[done] dev__delivery_area__c0
+[done] dev__facade__c0
+[done] dev__terrace__c0
+shard exit codes [1]; see ./results/m8_ma_dev/_shards/*/log.txt
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Traceback (most recent call last):
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/uniception/models/encoders/dinov2.py", line 91, in __init__
+    self.model = torch.hub.load(
+                 ^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/hub.py", line 661, in load
+    repo_or_dir = _get_cache_or_reload(
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/hub.py", line 278, in _get_cache_or_reload
+    repo_owner, repo_name, ref = _parse_repo_info(github)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/hub.py", line 206, in _parse_repo_info
+    with urlopen(f"https://github.com/{repo_owner}/{repo_name}/tree/main/"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 504: Gateway Time-out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/dawar/e2x_a2/MapAnything_Exp1/exp1/run_xm.py", line 219, in <module>
+    main()
+  File "/home/dawar/e2x_a2/MapAnything_Exp1/exp1/run_xm.py", line 120, in main
+    model = io.load_model(cfg["checkpoint"], a.device)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_a2/MapAnything_Exp1/exp1/model_io.py", line 40, in load_model
+    model = MapAnything.from_pretrained(checkpoint).to(device)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/huggingface_hub/utils/_validators.py", line 89, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/huggingface_hub/hub_mixin.py", line 550, in from_pretrained
+    instance = cls._from_pretrained(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 104, in _from_pretrained
+    return super()._from_pretrained(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/huggingface_hub/hub_mixin.py", line 766, in _from_pretrained
+    model = cls(**model_kwargs)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 181, in __init__
+    self.encoder = encoder_factory(**encoder_config_copy)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/uniception/models/encoders/__init__.py", line 117, in encoder_factory
+    return encoder_class(**kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/uniception/models/encoders/dinov2.py", line 98, in __init__
+    self.model = torch.hub.load(
+                 ^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/hub.py", line 661, in load
+    repo_or_dir = _get_cache_or_reload(
+                  ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/hub.py", line 278, in _get_cache_or_reload
+    repo_owner, repo_name, ref = _parse_repo_info(github)
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/hub.py", line 206, in _parse_repo_info
+    with urlopen(f"https://github.com/{repo_owner}/{repo_name}/tree/main/"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 215, in urlopen
+    return opener.open(url, data, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 521, in open
+    response = meth(req, response)
+               ^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 630, in http_response
+    response = self.parent.error(
+               ^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 559, in error
+    return self._call_chain(*args)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 492, in _call_chain
+    result = func(*args)
+             ^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/urllib/request.py", line 639, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 504: Gateway Time-out
+Loading pretrained dinov2_vitg14 from torch hub
+shard exit codes [1]; see ./results/m8_ma_dev/_shards/*/log.txt
+Using cache found in /home/dawar/.cache/torch/hub/facebookresearch_dinov2_main
+Loading pretrained dinov2_vitg14 from torch hub
+[done] dev__delivery_area__c0
+[done] dev__facade__c0
+[done] dev__terrace__c0
+{'per_run.csv': 33, 'per_view.csv': 330}
+{'per_run.csv': 264, 'per_view.csv': 2640}

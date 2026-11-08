@@ -1,0 +1,13 @@
+part,setting,n,group_action_rate,view_drop_rate,meets_rule
+pose,e3_z=2.0,206,0.7864077669902912,0.1574973031283711,False
+pose,e3_z=2.5,206,0.7572815533980582,0.1186623516720604,False
+pose,e3_z=3.0,206,0.6796116504854369,0.10355987055016182,False
+pose,e3_z=4.0,206,0.4854368932038835,0.09061488673139159,False
+pose,e3_z=5.0,206,0.3883495145631068,0.07551240560949299,False
+depth_shared,e3_tau_depth_shared=0.05,103,0.27184466019417475,,False
+depth_shared,e3_tau_depth_shared=0.1,103,0.08737864077669903,,False
+depth_shared,e3_tau_depth_shared=0.15,103,0.038834951456310676,,True
+depth_shared,e3_tau_depth_shared=0.2,103,0.038834951456310676,,True
+depth_view,e3_tau_depth_view=0.1,103,,0.036303630363036306,False
+depth_view,e3_tau_depth_view=0.15,103,,0.0165016501650165,True
+depth_view,e3_tau_depth_view=0.25,103,,0.006600660066006601,True

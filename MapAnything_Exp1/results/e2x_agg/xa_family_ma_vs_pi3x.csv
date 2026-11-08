@@ -1,0 +1,10 @@
+family,class
+anchor_error,neither
+depth_one_scale,same
+depth_scale,MapAnything only
+drift,same
+noise_rot,neither
+outlier_frac,same
+outlier_rot,same
+scale_all,MapAnything only
+shared_heading_bias,neither

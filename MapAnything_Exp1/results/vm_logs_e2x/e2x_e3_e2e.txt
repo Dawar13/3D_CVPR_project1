@@ -1,0 +1,2 @@
+2026-11-08 11:53:02 [e3 e2e-lane] eval real (E2-E): done, all clips complete, 0 failures
+2026-11-08 11:53:02 [e3 e2e-lane] E3_E2E_EVAL_DONE (parallel lane)

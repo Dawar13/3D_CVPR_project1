@@ -1,0 +1,348 @@
+{
+ "config": {
+  "_comment": "E3 eval (synth), experiments/E3.md: the E3-cal grid unchanged, E3 thresholds frozen: e3_z from the secondary calibration (accurate ground truth), depth taus from the primary one.",
+  "checkpoint": "facebook/map-anything",
+  "seeds": [
+   0
+  ],
+  "depth_views": [
+   3,
+   7
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": []
+   },
+   {
+    "name": "clean_pose",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "clean_pose_depth2",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "c6_shared_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     2,
+     5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "shared_rot"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "noise_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     0.5,
+     1,
+     2,
+     5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "all",
+     "trans_frac": 0.0
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "outlier_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     5,
+     15,
+     30,
+     90
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "trans_frac": 0.0
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop",
+     "drop_oracle"
+    ]
+   },
+   {
+    "family": "outlier_frac",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "frac",
+    "values": [
+     0.1,
+     0.2,
+     0.4
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "subset",
+     "rot_deg": 15,
+     "trans_frac": 0.25
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop",
+     "drop_oracle"
+    ]
+   },
+   {
+    "family": "drift",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 0.5,
+      "scale_growth": 0.01
+     },
+     {
+      "rot_deg": 1.0,
+      "scale_growth": 0.02
+     },
+     {
+      "rot_deg": 2.0,
+      "scale_growth": 0.04
+     }
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "drift"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "shared_heading_bias",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     2,
+     5,
+     10
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "shared_rot"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "anchor_error",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 15.0,
+      "trans_frac": 0.0
+     },
+     {
+      "rot_deg": 0.0,
+      "trans_frac": 0.25
+     }
+    ],
+    "seeds": 1,
+    "corruption": {
+     "views": [
+      0
+     ]
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "depth_scale",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.67,
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale"
+    },
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "depth_one_scale",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale",
+     "views": [
+      3
+     ]
+    },
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   }
+  ],
+  "lowconf_tau": 0.4572,
+  "e3_z": 5.0,
+  "e3_tau_depth_shared": 0.2,
+  "e3_tau_depth_view": 0.25
+ },
+ "clips": [
+  "data/clips_e2/eval__courtyard__c0.npz",
+  "data/clips_e2/eval__courtyard__c1.npz",
+  "data/clips_e2/eval__courtyard__c2.npz",
+  "data/clips_e2/eval__electro__c0.npz",
+  "data/clips_e2/eval__electro__c1.npz",
+  "data/clips_e2/eval__electro__c2.npz",
+  "data/clips_e2/eval__kicker__c0.npz",
+  "data/clips_e2/eval__kicker__c1.npz",
+  "data/clips_e2/eval__kicker__c2.npz",
+  "data/clips_e2/eval__meadow__c0.npz",
+  "data/clips_e2/eval__office__c0.npz",
+  "data/clips_e2/eval__office__c1.npz",
+  "data/clips_e2/eval__pipes__c0.npz",
+  "data/clips_e2/eval__playground__c0.npz",
+  "data/clips_e2/eval__playground__c1.npz",
+  "data/clips_e2/eval__playground__c2.npz",
+  "data/clips_e2/eval__relief_2__c0.npz",
+  "data/clips_e2/eval__relief_2__c1.npz",
+  "data/clips_e2/eval__relief_2__c2.npz",
+  "data/clips_e2/eval__relief__c0.npz",
+  "data/clips_e2/eval__relief__c1.npz",
+  "data/clips_e2/eval__terrains__c0.npz",
+  "data/clips_e2/eval__terrains__c1.npz",
+  "data/clips_e2/eval__terrains__c2.npz"
+ ],
+ "checkpoint": "facebook/map-anything",
+ "backend": "mapanything",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "model_repo_commit": null,
+ "torch": "2.14.1+cu130",
+ "cuda": "13.0",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "memory_efficient_inference": false,
+  "use_amp": true,
+  "amp_dtype": "bf16",
+  "apply_mask": false,
+  "mask_edges": false,
+  "apply_confidence_mask": false
+ },
+ "shards": 3
+}

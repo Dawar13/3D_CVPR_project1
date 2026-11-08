@@ -1,0 +1,146 @@
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[ok] data/clips_e2e/dev__sf422391__c0.npz  4.9 s  AI/GT median depth ratio 1.3669
+[ok] data/clips_e2e/dev__sf422391__c1.npz  4.3 s  AI/GT median depth ratio 1.4526
+[ok] data/clips_e2e/dev__sf422391__c2.npz  4.3 s  AI/GT median depth ratio 1.3643
+[ok] data/clips_e2e/dev__sf422803__c0.npz  4.3 s  AI/GT median depth ratio 1.3326
+[ok] data/clips_e2e/dev__sf422803__c1.npz  4.4 s  AI/GT median depth ratio 1.4135
+[ok] data/clips_e2e/dev__sf434650__c0.npz  4.3 s  AI/GT median depth ratio 1.0810
+[ok] data/clips_e2e/dev__sf434650__c1.npz  4.5 s  AI/GT median depth ratio 1.7483
+[ok] data/clips_e2e/dev__sf434650__c2.npz  4.4 s  AI/GT median depth ratio 2.0011
+[ok] data/clips_e2e/eval__sf422014__c0.npz  4.7 s
+[ok] data/clips_e2e/eval__sf422014__c1.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422014__c2.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422015__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf422015__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf422015__c2.npz  4.7 s
+[ok] data/clips_e2e/eval__sf422381__c0.npz  4.7 s
+[ok] data/clips_e2e/eval__sf422381__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf422829__c0.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422829__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf422829__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf434641__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf434641__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf434641__c2.npz  4.7 s
+[ok] data/clips_e2e/eval__sf466183__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf466183__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf466183__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf466193__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf466193__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf466193__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf467305__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf467311__c0.npz  4.6 s
+[ok] data/clips_e2e/eval__sf467311__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf467311__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf468079__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf468079__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf468712__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf468712__c1.npz  4.6 s
+[ok] data/clips_e2e/eval__sf468712__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf469319__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf469319__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf469319__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf470541__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf470541__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf470541__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf472297__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf472297__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf472297__c2.npz  4.4 s
+[ok] data/clips_e2e/eval__sf483618__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf483618__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf483618__c2.npz  4.5 s
+AI depth on the E2-E clips: 0/49 bit-identical to E2-E; same model revision: True
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[ok] data/clips_e2x_room/dev__sf422391__r1.npz  5.1 s  AI/GT median depth ratio 1.3773
+[ok] data/clips_e2x_room/dev__sf422391__r2.npz  4.6 s  AI/GT median depth ratio 1.2652
+[ok] data/clips_e2x_room/dev__sf422803__r0.npz  4.6 s  AI/GT median depth ratio 1.5160
+[ok] data/clips_e2x_room/dev__sf422803__r1.npz  4.4 s  AI/GT median depth ratio 1.2843
+[ok] data/clips_e2x_room/dev__sf422803__r2.npz  4.6 s  AI/GT median depth ratio 1.5126
+[ok] data/clips_e2x_room/dev__sf434650__r1.npz  4.5 s  AI/GT median depth ratio 1.3675
+[ok] data/clips_e2x_room/dev__sf434650__r2.npz  4.6 s  AI/GT median depth ratio 1.6178
+[ok] data/clips_e2x_room/cal__sf422826__r0.npz  4.6 s
+[ok] data/clips_e2x_room/cal__sf422826__r1.npz  4.6 s
+[ok] data/clips_e2x_room/cal__sf422826__r2.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf460417__r0.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf460417__r1.npz  4.6 s
+[ok] data/clips_e2x_room/cal__sf460417__r2.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf467172__r0.npz  4.4 s
+[ok] data/clips_e2x_room/cal__sf467172__r1.npz  4.4 s
+[ok] data/clips_e2x_room/cal__sf467172__r2.npz  4.6 s
+[ok] data/clips_e2x_room/cal__sf467306__r1.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf467306__r2.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf468711__r1.npz  4.7 s
+[ok] data/clips_e2x_room/cal__sf468711__r2.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf470352__r0.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf470352__r1.npz  4.7 s
+[ok] data/clips_e2x_room/cal__sf470352__r2.npz  4.6 s
+[ok] data/clips_e2x_room/cal__sf471425__r0.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf471425__r1.npz  4.7 s
+[ok] data/clips_e2x_room/cal__sf471425__r2.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf471952__r0.npz  4.4 s
+[ok] data/clips_e2x_room/cal__sf471952__r2.npz  4.7 s
+[ok] data/clips_e2x_room/cal__sf483632__r0.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf483632__r1.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf483632__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf422014__r0.npz  4.7 s
+[ok] data/clips_e2x_room/eval__sf422014__r1.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf422014__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf422015__r0.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf422015__r1.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf422015__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf422381__r1.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf422381__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf422829__r0.npz  4.4 s
+[ok] data/clips_e2x_room/eval__sf422829__r1.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf422829__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf434641__r0.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf434641__r1.npz  4.4 s
+[ok] data/clips_e2x_room/eval__sf434641__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf466183__r1.npz  4.7 s
+[ok] data/clips_e2x_room/eval__sf466183__r2.npz  4.7 s
+[ok] data/clips_e2x_room/eval__sf466193__r1.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf466193__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf467305__r1.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf467311__r0.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf467311__r1.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf467311__r2.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf468079__r0.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf468079__r1.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf468079__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf468712__r0.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf468712__r1.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf468712__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf469319__r1.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf469319__r2.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf470541__r0.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf470541__r1.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf472297__r2.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf483618__r0.npz  4.5 s
+[ok] data/clips_e2x_room/eval__sf483618__r1.npz  4.6 s
+[ok] data/clips_e2x_room/eval__sf483618__r2.npz  4.5 s
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[ok] data/clips_e2x_cal/cal__sf422386__c0.npz  5.2 s
+[ok] data/clips_e2x_cal/cal__sf422386__c1.npz  4.6 s
+[ok] data/clips_e2x_cal/cal__sf422386__c2.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf422826__c0.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf422826__c2.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf460417__c0.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf460417__c1.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf460417__c2.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf467172__c0.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf467172__c1.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf467172__c2.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf467306__c0.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf467306__c1.npz  4.6 s
+[ok] data/clips_e2x_cal/cal__sf467306__c2.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf468711__c0.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf468711__c1.npz  4.6 s
+[ok] data/clips_e2x_cal/cal__sf468711__c2.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf470352__c0.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf470352__c1.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf470352__c2.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf471425__c1.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf471425__c2.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf471952__c0.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf483632__c0.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf483632__c1.npz  4.5 s
+[ok] data/clips_e2x_cal/cal__sf483632__c2.npz  4.5 s

@@ -1,0 +1,62 @@
+2026-11-08 06:35:49 [a2 ma] start, tree b7b14cbdcf5992c33833256324da38da672d1ff1
+2026-11-08 06:35:49 [a2 ma] X-M dev
+2026-11-08 06:36:19 [a2 px] start, tree b7b14cbdcf5992c33833256324da38da672d1ff1
+2026-11-08 06:36:19 [a2 px] X-M dev
+GATE a2 xm results/xm_px_dev: FAIL (failures.jsonl exists)
+2026-11-08 06:37:27 [a2 px] M8 dev
+2026-11-08 06:40:19 [a2 px] amendment 1 deployed (tree 4f71d0810c9df8a4025d18bbc0d44eab3ded11df); Pi3X dev results before the fix moved to results/_discarded/
+GATE a2 xm results/xm_ma_dev: FAIL (gamma = 1 differs from no gate on rre_deg by 0.0018085973758815155)
+2026-11-08 06:51:35 [a2 ma] M8 dev
+2026-11-08 06:51:43 [a2 px] restarting (free memory >= 16 GB)
+2026-11-08 06:51:44 [a2 px] start, tree 4f71d0810c9df8a4025d18bbc0d44eab3ded11df
+2026-11-08 06:51:44 [a2 px] X-M dev
+GATE a2 m8 results/m8_ma_dev: FAIL (failures.jsonl exists)
+2026-11-08 06:54:18 [a2 ma] A2_MA_DONE
+2026-11-08 06:56:25 [a2 ma] X-M dev results before amendment 2 moved to results/_discarded/ (tree fbc29aa9e7200f1eced342804dc3ad6d26b6d6f9)
+2026-11-08 06:56:26 [a2 ma] start, tree fbc29aa9e7200f1eced342804dc3ad6d26b6d6f9
+2026-11-08 06:56:26 [a2 ma] X-M dev
+GATE a2 xm results/xm_px_dev: FAIL (failures.jsonl exists)
+2026-11-08 07:12:03 [a2 px] M8 dev
+GATE a2 m8 results/m8_px_dev: FAIL (failures.jsonl exists)
+2026-11-08 07:14:02 [a2 px] A2_PX_DONE
+GATE a2 xm results/xm_ma_dev: PASS (12 cases, clean beats images only on 3/3 clips)
+2026-11-08 07:16:56 [a2 ma] X-M eval
+2026-11-08 07:17:42 [a2 px] start, tree fbc29aa9e7200f1eced342804dc3ad6d26b6d6f9
+2026-11-08 07:17:42 [a2 px] X-M dev
+GATE a2 xm results/xm_px_dev: PASS (12 cases, clean beats images only on 2/3 clips)
+2026-11-08 07:22:33 [a2 px] X-M eval
+2026-11-08 09:53:38 [a2 ma] A2_XM_MA_EVAL_DONE
+2026-11-08 09:53:38 [a2 ma] M8 dev
+2026-11-08 09:53:49 [a2 ma] M8 dev error
+GATE a2 m8 results/m8_ma_dev: FAIL (failures.jsonl exists)
+2026-11-08 09:53:50 [a2 ma] A2_MA_DONE
+2026-11-08 09:53:51 [a2 ma] pass 1: 7 runs reset after CUDA out-of-memory; running the lane again
+2026-11-08 09:55:52 [a2 ma] start, tree fbc29aa9e7200f1eced342804dc3ad6d26b6d6f9
+2026-11-08 09:55:52 [a2 ma] X-M dev
+2026-11-08 09:56:02 [a2 ma] X-M dev runner exited with an error
+GATE a2 xm results/xm_ma_dev: PASS (12 cases, clean beats images only on 3/3 clips)
+2026-11-08 09:56:03 [a2 ma] X-M eval
+2026-11-08 09:56:25 [a2 ma] X-M eval: a process exited with an error (see _parts/*/log.txt)
+2026-11-08 09:56:25 [a2 ma] M8 dev
+2026-11-08 09:56:35 [a2 ma] M8 dev error
+GATE a2 m8 results/m8_ma_dev: FAIL (failures.jsonl exists)
+2026-11-08 09:56:37 [a2 ma] A2_MA_DONE
+2026-11-08 09:56:38 [a2 ma] A2_MA_LANE_FINISHED
+2026-11-08 09:57:35 [a2 ma] lane restarted offline (GitHub 504 crashed model loading 09:53-09:56)
+2026-11-08 09:57:36 [a2 ma] start, tree fbc29aa9e7200f1eced342804dc3ad6d26b6d6f9
+2026-11-08 09:57:36 [a2 ma] X-M dev
+GATE a2 xm results/xm_ma_dev: PASS (12 cases, clean beats images only on 3/3 clips)
+2026-11-08 09:59:24 [a2 ma] X-M eval
+2026-11-08 10:01:19 [a2 ma] A2_XM_MA_EVAL_DONE
+2026-11-08 10:01:19 [a2 ma] M8 dev
+GATE a2 m8 results/m8_ma_dev: PASS (3 clips)
+2026-11-08 10:04:29 [a2 ma] M8 eval
+2026-11-08 10:32:09 [a2 ma] A2_M8_MA_EVAL_DONE
+2026-11-08 10:32:10 [a2 ma] A2_MA_DONE
+2026-11-08 10:32:11 [a2 ma] A2_MA_LANE_FINISHED
+2026-11-08 10:45:59 [a2 px] A2_XM_PX_EVAL_DONE
+2026-11-08 10:45:59 [a2 px] M8 dev
+GATE a2 m8 results/m8_px_dev: PASS (3 clips)
+2026-11-08 10:48:24 [a2 px] M8 eval
+2026-11-08 11:05:00 [a2 px] A2_M8_PX_EVAL_DONE
+2026-11-08 11:05:00 [a2 px] A2_PX_DONE

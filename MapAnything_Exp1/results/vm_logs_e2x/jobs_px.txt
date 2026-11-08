@@ -1,0 +1,2 @@
+results/e2x_e3cal_real_px_cal/_shards/0/clips/*.npz results/e2x_e3cal_real_px_cal/_shards/0/run
+results/e2x_e3cal_real_px_cal/_shards/1/clips/*.npz results/e2x_e3cal_real_px_cal/_shards/1/run

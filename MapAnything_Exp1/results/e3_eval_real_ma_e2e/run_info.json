@@ -1,0 +1,267 @@
+{
+ "config": {
+  "_comment": "E3 eval (real), experiments/E3.md: the E3-cal grid unchanged, E3 thresholds frozen: e3_z from the secondary calibration (accurate ground truth), depth taus from the primary one.",
+  "checkpoint": "facebook/map-anything",
+  "seeds": [
+   0
+  ],
+  "depth_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "lowconf_tau": 0.4572,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": []
+   },
+   {
+    "name": "gt_K",
+    "family": "gt",
+    "inputs": [
+     "intrinsics"
+    ],
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "gt_pose",
+    "family": "gt",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "gt_depth",
+    "family": "gt",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "gt_all",
+    "family": "gt",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_K",
+    "family": "device",
+    "inputs": [
+     "intrinsics"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "K"
+     ]
+    },
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_pose",
+    "family": "device",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "pose",
+      "K"
+     ]
+    },
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_depth",
+    "family": "device",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "depth",
+      "K"
+     ]
+    },
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_all",
+    "family": "device",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "pose",
+      "K",
+      "depth"
+     ]
+    },
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "ai_depth",
+    "family": "ai",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "mono_depth",
+      "K"
+     ]
+    },
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_pose_ai_depth",
+    "family": "ai",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "pose",
+      "K",
+      "mono_depth"
+     ]
+    },
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   }
+  ],
+  "e3_z": 5.0,
+  "e3_tau_depth_shared": 0.2,
+  "e3_tau_depth_view": 0.25
+ },
+ "clips": [
+  "data/clips_e2e/eval__sf422014__c0.npz",
+  "data/clips_e2e/eval__sf422014__c1.npz",
+  "data/clips_e2e/eval__sf422014__c2.npz",
+  "data/clips_e2e/eval__sf422015__c0.npz",
+  "data/clips_e2e/eval__sf422015__c1.npz",
+  "data/clips_e2e/eval__sf422015__c2.npz",
+  "data/clips_e2e/eval__sf422381__c0.npz",
+  "data/clips_e2e/eval__sf422381__c2.npz",
+  "data/clips_e2e/eval__sf422829__c0.npz",
+  "data/clips_e2e/eval__sf422829__c1.npz",
+  "data/clips_e2e/eval__sf422829__c2.npz",
+  "data/clips_e2e/eval__sf434641__c0.npz",
+  "data/clips_e2e/eval__sf434641__c1.npz",
+  "data/clips_e2e/eval__sf434641__c2.npz",
+  "data/clips_e2e/eval__sf466183__c0.npz",
+  "data/clips_e2e/eval__sf466183__c1.npz",
+  "data/clips_e2e/eval__sf466183__c2.npz",
+  "data/clips_e2e/eval__sf466193__c0.npz",
+  "data/clips_e2e/eval__sf466193__c1.npz",
+  "data/clips_e2e/eval__sf466193__c2.npz",
+  "data/clips_e2e/eval__sf467305__c0.npz",
+  "data/clips_e2e/eval__sf467311__c0.npz",
+  "data/clips_e2e/eval__sf467311__c1.npz",
+  "data/clips_e2e/eval__sf467311__c2.npz",
+  "data/clips_e2e/eval__sf468079__c0.npz",
+  "data/clips_e2e/eval__sf468079__c2.npz",
+  "data/clips_e2e/eval__sf468712__c0.npz",
+  "data/clips_e2e/eval__sf468712__c1.npz",
+  "data/clips_e2e/eval__sf468712__c2.npz",
+  "data/clips_e2e/eval__sf469319__c0.npz",
+  "data/clips_e2e/eval__sf469319__c1.npz",
+  "data/clips_e2e/eval__sf469319__c2.npz",
+  "data/clips_e2e/eval__sf470541__c0.npz",
+  "data/clips_e2e/eval__sf470541__c1.npz",
+  "data/clips_e2e/eval__sf470541__c2.npz",
+  "data/clips_e2e/eval__sf472297__c0.npz",
+  "data/clips_e2e/eval__sf472297__c1.npz",
+  "data/clips_e2e/eval__sf472297__c2.npz",
+  "data/clips_e2e/eval__sf483618__c0.npz",
+  "data/clips_e2e/eval__sf483618__c1.npz",
+  "data/clips_e2e/eval__sf483618__c2.npz"
+ ],
+ "checkpoint": "facebook/map-anything",
+ "backend": "mapanything",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "model_repo_commit": null,
+ "torch": "2.14.1+cu130",
+ "cuda": "13.0",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "memory_efficient_inference": false,
+  "use_amp": true,
+  "amp_dtype": "bf16",
+  "apply_mask": false,
+  "mask_edges": false,
+  "apply_confidence_mask": false
+ },
+ "shards": 3
+}

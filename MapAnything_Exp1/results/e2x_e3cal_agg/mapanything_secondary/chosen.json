@@ -1,0 +1,7 @@
+{
+ "e3_z": 5.0,
+ "e3_tau_depth_shared": 0.1,
+ "e3_tau_depth_view": 0.1,
+ "n_gt_pose_decisions": 44,
+ "n_gt_depth_decisions": 22
+}

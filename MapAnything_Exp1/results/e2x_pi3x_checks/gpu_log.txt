@@ -1,0 +1,1 @@
+shard=0 start=2026-11-08 01:38:56 end=2026-11-08 01:40:33 config=configs/e2x_pi3x_checks.json clips=results/e2x_pi3x_checks/_shards/0/clips/*.npz runs_recorded=39 peak_mem_gb=9.33 mem_fraction=0.2437

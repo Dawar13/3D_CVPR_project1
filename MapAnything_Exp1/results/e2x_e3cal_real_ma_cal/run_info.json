@@ -1,0 +1,273 @@
+{
+ "config": {
+  "_comment": "E3 calibration, real hints (experiments/E2X.md): the E2-E conditions with the E3 controls and baselines. cal and dev clips only.",
+  "checkpoint": "facebook/map-anything",
+  "seeds": [
+   0
+  ],
+  "depth_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "lowconf_tau": 0.4572,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": []
+   },
+   {
+    "name": "gt_K",
+    "family": "gt",
+    "inputs": [
+     "intrinsics"
+    ],
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "gt_pose",
+    "family": "gt",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "gt_depth",
+    "family": "gt",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "gt_all",
+    "family": "gt",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_K",
+    "family": "device",
+    "inputs": [
+     "intrinsics"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "K"
+     ]
+    },
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_pose",
+    "family": "device",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "pose",
+      "K"
+     ]
+    },
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_depth",
+    "family": "device",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "depth",
+      "K"
+     ]
+    },
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_all",
+    "family": "device",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "pose",
+      "K",
+      "depth"
+     ]
+    },
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "ai_depth",
+    "family": "ai",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "mono_depth",
+      "K"
+     ]
+    },
+    "controls": [
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "dev_pose_ai_depth",
+    "family": "ai",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "corruption": {
+     "target": "device",
+     "use": [
+      "pose",
+      "K",
+      "mono_depth"
+     ]
+    },
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   }
+  ]
+ },
+ "clips": [
+  "data/clips_e2x_cal/cal__sf422386__c0.npz",
+  "data/clips_e2x_cal/cal__sf422386__c1.npz",
+  "data/clips_e2x_cal/cal__sf422386__c2.npz",
+  "data/clips_e2x_cal/cal__sf422826__c0.npz",
+  "data/clips_e2x_cal/cal__sf422826__c2.npz",
+  "data/clips_e2x_cal/cal__sf460417__c0.npz",
+  "data/clips_e2x_cal/cal__sf460417__c1.npz",
+  "data/clips_e2x_cal/cal__sf460417__c2.npz",
+  "data/clips_e2x_cal/cal__sf467172__c0.npz",
+  "data/clips_e2x_cal/cal__sf467172__c1.npz",
+  "data/clips_e2x_cal/cal__sf467172__c2.npz",
+  "data/clips_e2x_cal/cal__sf467306__c0.npz",
+  "data/clips_e2x_cal/cal__sf467306__c1.npz",
+  "data/clips_e2x_cal/cal__sf467306__c2.npz",
+  "data/clips_e2x_cal/cal__sf468711__c0.npz",
+  "data/clips_e2x_cal/cal__sf468711__c1.npz",
+  "data/clips_e2x_cal/cal__sf468711__c2.npz",
+  "data/clips_e2x_cal/cal__sf470352__c0.npz",
+  "data/clips_e2x_cal/cal__sf470352__c1.npz",
+  "data/clips_e2x_cal/cal__sf470352__c2.npz",
+  "data/clips_e2x_cal/cal__sf471425__c1.npz",
+  "data/clips_e2x_cal/cal__sf471425__c2.npz",
+  "data/clips_e2x_cal/cal__sf471952__c0.npz",
+  "data/clips_e2x_cal/cal__sf483632__c0.npz",
+  "data/clips_e2x_cal/cal__sf483632__c1.npz",
+  "data/clips_e2x_cal/cal__sf483632__c2.npz",
+  "data/clips_e2x_room/cal__sf422826__r0.npz",
+  "data/clips_e2x_room/cal__sf422826__r1.npz",
+  "data/clips_e2x_room/cal__sf422826__r2.npz",
+  "data/clips_e2x_room/cal__sf460417__r0.npz",
+  "data/clips_e2x_room/cal__sf460417__r1.npz",
+  "data/clips_e2x_room/cal__sf460417__r2.npz",
+  "data/clips_e2x_room/cal__sf467172__r0.npz",
+  "data/clips_e2x_room/cal__sf467172__r1.npz",
+  "data/clips_e2x_room/cal__sf467172__r2.npz",
+  "data/clips_e2x_room/cal__sf467306__r1.npz",
+  "data/clips_e2x_room/cal__sf467306__r2.npz",
+  "data/clips_e2x_room/cal__sf468711__r1.npz",
+  "data/clips_e2x_room/cal__sf468711__r2.npz",
+  "data/clips_e2x_room/cal__sf470352__r0.npz",
+  "data/clips_e2x_room/cal__sf470352__r1.npz",
+  "data/clips_e2x_room/cal__sf470352__r2.npz",
+  "data/clips_e2x_room/cal__sf471425__r0.npz",
+  "data/clips_e2x_room/cal__sf471425__r1.npz",
+  "data/clips_e2x_room/cal__sf471425__r2.npz",
+  "data/clips_e2x_room/cal__sf471952__r0.npz",
+  "data/clips_e2x_room/cal__sf471952__r2.npz",
+  "data/clips_e2x_room/cal__sf483632__r0.npz",
+  "data/clips_e2x_room/cal__sf483632__r1.npz",
+  "data/clips_e2x_room/cal__sf483632__r2.npz"
+ ],
+ "checkpoint": "facebook/map-anything",
+ "backend": "mapanything",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "model_repo_commit": null,
+ "torch": "2.14.1+cu130",
+ "cuda": "13.0",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "memory_efficient_inference": false,
+  "use_amp": true,
+  "amp_dtype": "bf16",
+  "apply_mask": false,
+  "mask_edges": false,
+  "apply_confidence_mask": false
+ },
+ "shards": 3
+}

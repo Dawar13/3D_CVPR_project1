@@ -1,0 +1,383 @@
+{
+ "config": {
+  "_comment": "G2 (experiments/G.md): do the tokens at global attention layers reveal bad hints better than the confidence of the model and simple hint-vs-photos checks? Scores use no ground truth; labels are known because the corruption is. Dev clips only until the g-prereg tag.",
+  "checkpoint_mapanything": "facebook/map-anything",
+  "checkpoint_omnivggt": "Livioni/OmniVGGT",
+  "token_layers": {
+   "mapanything": [
+    0,
+    4,
+    8,
+    12,
+    14
+   ],
+   "omnivggt": [
+    0,
+    5,
+    11,
+    17,
+    23
+   ]
+  },
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "inputs": [],
+    "dataset": "rooms"
+   },
+   {
+    "name": "rgb_only",
+    "inputs": [],
+    "dataset": "eth"
+   },
+   {
+    "name": "clean_pose",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "neg_for": [
+      [
+       "pose_outlier",
+       "view"
+      ],
+      [
+       "pose_several",
+       "view"
+      ],
+      [
+       "pose_drift",
+       "group"
+      ],
+      [
+       "pose_shared",
+       "group"
+      ]
+     ]
+    },
+    "dataset": "eth"
+   },
+   {
+    "name": "clean_depth",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "signal": {
+     "neg_for": [
+      [
+       "depth_view_bad",
+       "view"
+      ],
+      [
+       "depth_all_bad",
+       "group"
+      ]
+     ]
+    },
+    "dataset": "eth",
+    "depth": {
+     "type": "gt"
+    }
+   },
+   {
+    "name": "out5",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_outlier",
+     "kind": "view"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "mode": "subset",
+     "n": 1,
+     "rot_deg": 5,
+     "trans_frac": 0.0
+    }
+   },
+   {
+    "name": "out15",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_outlier",
+     "kind": "view"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "mode": "subset",
+     "n": 1,
+     "rot_deg": 15,
+     "trans_frac": 0.0
+    }
+   },
+   {
+    "name": "out30",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_outlier",
+     "kind": "view"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "mode": "subset",
+     "n": 1,
+     "rot_deg": 30,
+     "trans_frac": 0.0
+    }
+   },
+   {
+    "name": "frac20",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_several",
+     "kind": "view"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "mode": "subset",
+     "frac": 0.2,
+     "rot_deg": 15,
+     "trans_frac": 0.25
+    }
+   },
+   {
+    "name": "frac40",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_several",
+     "kind": "view"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "mode": "subset",
+     "frac": 0.4,
+     "rot_deg": 15,
+     "trans_frac": 0.25
+    }
+   },
+   {
+    "name": "drift2",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_drift",
+     "kind": "group"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "type": "drift",
+     "rot_deg": 1.0,
+     "scale_growth": 0.02
+    }
+   },
+   {
+    "name": "drift3",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_drift",
+     "kind": "group"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "type": "drift",
+     "rot_deg": 2.0,
+     "scale_growth": 0.04
+    }
+   },
+   {
+    "name": "shared5",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_shared",
+     "kind": "group"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "type": "shared_rot",
+     "rot_deg": 5
+    }
+   },
+   {
+    "name": "shared10",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "signal": {
+     "task": "pose_shared",
+     "kind": "group"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "pose": {
+     "type": "shared_rot",
+     "rot_deg": 10
+    }
+   },
+   {
+    "name": "eth_view_bad",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "signal": {
+     "task": "depth_view_bad",
+     "kind": "view"
+    },
+    "dataset": "eth",
+    "seeds": 2,
+    "depth": {
+     "type": "view_bad",
+     "source": "gt",
+     "frac": 0.3,
+     "factor": 1.5
+    }
+   },
+   {
+    "name": "eth_all_bad",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "signal": {
+     "task": "depth_all_bad",
+     "kind": "group"
+    },
+    "dataset": "eth",
+    "depth": {
+     "type": "view_bad",
+     "source": "gt",
+     "frac": 1.0,
+     "factor": 1.5
+    }
+   },
+   {
+    "name": "lidar",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "signal": {
+     "neg_for": [
+      [
+       "depth_view_bad",
+       "view"
+      ],
+      [
+       "depth_ai",
+       "group"
+      ],
+      [
+       "depth_mix_ai",
+       "view"
+      ]
+     ]
+    },
+    "dataset": "rooms",
+    "depth": {
+     "type": "lidar"
+    }
+   },
+   {
+    "name": "ai",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "signal": {
+     "task": "depth_ai",
+     "kind": "group"
+    },
+    "dataset": "rooms",
+    "depth": {
+     "type": "ai"
+    }
+   },
+   {
+    "name": "mix_ai",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "signal": {
+     "task": "depth_mix_ai",
+     "kind": "view"
+    },
+    "dataset": "rooms",
+    "seeds": 2,
+    "depth": {
+     "type": "mix_ai",
+     "frac": 0.3
+    }
+   },
+   {
+    "name": "lidar_view_bad",
+    "inputs": [
+     "intrinsics",
+     "depth"
+    ],
+    "signal": {
+     "task": "depth_view_bad",
+     "kind": "view"
+    },
+    "dataset": "rooms",
+    "seeds": 2,
+    "depth": {
+     "type": "view_bad",
+     "source": "lidar",
+     "frac": 0.3,
+     "factor": 1.5
+    }
+   }
+  ]
+ },
+ "config_path": "configs/g2_signal.json",
+ "clips": [
+  "data/clips_e2e/dev__sf422391__c0.npz",
+  "data/clips_e2e/dev__sf422391__c1.npz",
+  "data/clips_e2e/dev__sf422391__c2.npz",
+  "data/clips_e2e/dev__sf422803__c0.npz",
+  "data/clips_e2e/dev__sf422803__c1.npz",
+  "data/clips_e2e/dev__sf434650__c0.npz",
+  "data/clips_e2e/dev__sf434650__c1.npz",
+  "data/clips_e2e/dev__sf434650__c2.npz"
+ ],
+ "backend": "mapanything",
+ "torch": "2.14.1+cu130",
+ "cuda": "13.0",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "started": "2026-11-07 19:04:50",
+ "repo_commit": "unknown"
+}

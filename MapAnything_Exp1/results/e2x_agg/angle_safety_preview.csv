@@ -1,0 +1,25 @@
+label,model,metric,remedy,benefit_kept,damage_removed,n_bad_conditions
+DESCRIPTIVE (cal/dev),mapanything,rre_deg,drop_lowconf,0.9377405091031796,-1.4712642776887297,21.0
+DESCRIPTIVE (cal/dev),mapanything,rre_deg,filter_rgbcheck,0.3213887635739103,-41.02535613457675,21.0
+DESCRIPTIVE (cal/dev),mapanything,rre_deg,none,1.0,0.0,21.0
+DESCRIPTIVE (cal/dev),mapanything,rre_deg,witness,0.5502857669998976,-23.55822507735399,21.0
+DESCRIPTIVE (cal/dev),mapanything,rre_deg,witness_drop,0.35775847090393437,-33.48899739810139,21.0
+DESCRIPTIVE (cal/dev),mapanything,rre_deg,R0 images only,0.0,-49.56474840374097,
+DESCRIPTIVE (cal/dev),mapanything,pts_relerr_scale,drop_lowconf,0.9641560247780457,-4.270592769430128,21.0
+DESCRIPTIVE (cal/dev),mapanything,pts_relerr_scale,filter_rgbcheck,0.3711038105885294,-70.62223493472021,21.0
+DESCRIPTIVE (cal/dev),mapanything,pts_relerr_scale,none,1.0,0.0,21.0
+DESCRIPTIVE (cal/dev),mapanything,pts_relerr_scale,witness,0.6225556604739503,-38.318189009016685,21.0
+DESCRIPTIVE (cal/dev),mapanything,pts_relerr_scale,witness_drop,0.35331070950157994,-63.248705826738195,21.0
+DESCRIPTIVE (cal/dev),mapanything,pts_relerr_scale,R0 images only,0.0,-99.40164779653784,
+DESCRIPTIVE (cal/dev),pi3x,rre_deg,drop_lowconf,0.9872358245778841,-1.2792587630896552,21.0
+DESCRIPTIVE (cal/dev),pi3x,rre_deg,filter_rgbcheck,0.2737100362020218,-37.355980680288916,21.0
+DESCRIPTIVE (cal/dev),pi3x,rre_deg,none,1.0,0.0,21.0
+DESCRIPTIVE (cal/dev),pi3x,rre_deg,witness,0.23666896363420245,-34.64439474469094,21.0
+DESCRIPTIVE (cal/dev),pi3x,rre_deg,witness_drop,0.047644823620130325,-39.73367906539473,21.0
+DESCRIPTIVE (cal/dev),pi3x,rre_deg,R0 images only,0.0,-41.073877846155874,
+DESCRIPTIVE (cal/dev),pi3x,pts_relerr_scale,drop_lowconf,0.9839000517016213,-5.71506439158924,21.0
+DESCRIPTIVE (cal/dev),pi3x,pts_relerr_scale,filter_rgbcheck,0.3992205206370901,-134.4250594572774,21.0
+DESCRIPTIVE (cal/dev),pi3x,pts_relerr_scale,none,1.0,0.0,21.0
+DESCRIPTIVE (cal/dev),pi3x,pts_relerr_scale,witness,0.45566919848685117,-135.22386608562238,21.0
+DESCRIPTIVE (cal/dev),pi3x,pts_relerr_scale,witness_drop,0.21145718448395456,-165.51109474332247,21.0
+DESCRIPTIVE (cal/dev),pi3x,pts_relerr_scale,R0 images only,0.0,-177.00892795208514,

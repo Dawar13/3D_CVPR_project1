@@ -1,0 +1,92 @@
+{
+ "config": {
+  "checkpoint": "facebook/map-anything",
+  "backend": "mapanything",
+  "inputs": [
+   "intrinsics",
+   "pose"
+  ],
+  "depth_views": [
+   3,
+   7
+  ],
+  "layers": "all",
+  "dial": [
+   0.0,
+   0.1667,
+   0.3333,
+   0.5,
+   0.6667,
+   0.8333,
+   1.0
+  ],
+  "seeds": [
+   0
+  ],
+  "cases": [
+   {
+    "name": "one_cam_15",
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "trans_frac": 0.0,
+     "rot_deg": 15
+    }
+   },
+   {
+    "name": "shared_heading_5",
+    "corruption": {
+     "type": "shared_rot",
+     "rot_deg": 5
+    }
+   },
+   {
+    "name": "drift_level2",
+    "corruption": {
+     "type": "drift",
+     "rot_deg": 1.0,
+     "scale_growth": 0.02
+    }
+   },
+   {
+    "name": "depth_x1.5",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "corruption": {
+     "target": "depth",
+     "type": "scale",
+     "factor": 1.5
+    }
+   }
+  ]
+ },
+ "clips": [
+  "data/clips_e2/dev__delivery_area__c0.npz",
+  "data/clips_e2/dev__facade__c0.npz",
+  "data/clips_e2/dev__terrace__c0.npz"
+ ],
+ "backend": "mapanything",
+ "torch": "2.14.1+cu130",
+ "cuda": "13.0",
+ "infer_kwargs": {
+  "memory_efficient_inference": false,
+  "use_amp": true,
+  "amp_dtype": "bf16",
+  "apply_mask": false,
+  "mask_edges": false,
+  "apply_confidence_mask": false
+ },
+ "layers": [
+  0,
+  2,
+  4,
+  6,
+  8,
+  10,
+  12,
+  14
+ ]
+}

@@ -1,0 +1,3 @@
+results/e2x_room_ma_eval/_shards/0/clips/*.npz results/e2x_room_ma_eval/_shards/0/run
+results/e2x_room_ma_eval/_shards/1/clips/*.npz results/e2x_room_ma_eval/_shards/1/run
+results/e2x_room_ma_eval/_shards/2/clips/*.npz results/e2x_room_ma_eval/_shards/2/run

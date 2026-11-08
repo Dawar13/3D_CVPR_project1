@@ -1,0 +1,50 @@
+2026-11-07 18:38:51 start e2x session A, budget 32 GB of 80 GB, free now 15 GB, tree ab5bc73d5a844da74539d390883b6273ad6b3482, scripts 1c0835f8c12bac528b08c2d16a6de124d1f0fb6c
+2026-11-07 18:38:51 MA 1 E3-cal synthetic on ETH3D dev
+2026-11-07 18:38:52   -> attempt 1: 1 shards, 1 at a time, cap 10 GB each, free now 15 GB
+2026-11-07 19:03:07 MA 4 gate tests start beside the main jobs (dev only)
+2026-11-07 19:03:12 MA 2 E3-cal on cal clips (synthetic, real) and SceneFun3D dev clips (real)
+2026-11-07 19:03:12   -> attempt 1: 1 shards, 1 at a time, cap 10 GB each, free now 15 GB
+2026-11-07 19:06:08 GATE_MA had errors: see /home/dawar/e2x_logs/gate.txt (queue continues)
+2026-11-08 01:27:07   !! 27 runs reset after CUDA out-of-memory; all processes ok: 1 (logs: results/e2x_e3cal_synth_ma_cal/_shards/*/log.txt). Retry in 120 s
+2026-11-08 01:29:11   -> attempt 2: 1 shards, 1 at a time, cap 10 GB each, free now 79 GB
+2026-11-08 01:38:53 PART px start (beside the main queue), budget 30 GB, free now 69 GB
+2026-11-08 01:38:54 PX 1 checks (one process; measures Pi3X's memory), ETH3D dev, gate, eval
+2026-11-08 01:38:54   -> attempt 1: 1 shards, 1 at a time, cap 19 GB each, free now 69 GB
+2026-11-08 01:39:18 PART ov start (beside the main queue), budget 20 GB, free now 59 GB
+2026-11-08 01:39:19 OV 1 room clips: dev, gate, eval
+2026-11-08 01:39:19   -> attempt 1: 2 shards, 2 at a time, cap 9 GB each, free now 59 GB
+2026-11-08 01:40:35   Pi3X peak measured: 9 GB + headroom -> 10 GB per process
+2026-11-08 01:40:35   -> attempt 1: 2 shards, 2 at a time, cap 10 GB each, free now 50 GB
+GATE e2e results/e2x_room_ov_dev: PASS
+2026-11-08 01:48:44   -> attempt 1: 2 shards, 2 at a time, cap 9 GB each, free now 59 GB
+2026-11-08 01:53:22   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 49 GB
+GATE ov_e2d results/e2x_pi3x_eth3d_dev: PASS
+2026-11-08 01:53:31   -> attempt 1: 2 shards, 2 at a time, cap 10 GB each, free now 60 GB
+2026-11-08 02:38:20 ROOM_OV_EVAL_DONE
+2026-11-08 02:38:20 OV 2 E3-cal
+2026-11-08 02:38:21   -> attempt 1: 2 shards, 2 at a time, cap 9 GB each, free now 27 GB
+2026-11-08 02:48:33   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 41 GB
+2026-11-08 02:58:08 MA 3 room clips: dev, gate, eval
+2026-11-08 02:58:08   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 50 GB
+GATE e2e results/e2x_room_ma_dev: PASS
+2026-11-08 03:02:53   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 50 GB
+2026-11-08 03:07:21   -> attempt 1: 2 shards, 2 at a time, cap 9 GB each, free now 30 GB
+2026-11-08 03:22:04 ROOM_MA_EVAL_DONE
+2026-11-08 03:26:37 PX_ETH3D_EVAL_DONE
+2026-11-08 03:26:37 PX 2 real hints: E2-E clips and room clips
+2026-11-08 03:26:37   -> attempt 1: 2 shards, 2 at a time, cap 10 GB each, free now 60 GB
+GATE e2e results/e2x_e2e_px_dev: PASS
+2026-11-08 03:32:32   -> attempt 1: 2 shards, 2 at a time, cap 10 GB each, free now 60 GB
+2026-11-08 03:59:25 PX_E2E_EVAL_DONE
+2026-11-08 03:59:25   -> attempt 1: 2 shards, 2 at a time, cap 10 GB each, free now 60 GB
+GATE e2e results/e2x_room_px_dev: PASS
+2026-11-08 04:04:51   -> attempt 1: 2 shards, 2 at a time, cap 10 GB each, free now 60 GB
+2026-11-08 04:13:22 budgets raised by hand after the MapAnything part finished: px 45 GB, ov 30 GB
+2026-11-08 04:31:03 ROOM_PX_EVAL_DONE
+2026-11-08 04:31:03 PX 3 E3-cal
+2026-11-08 04:31:03   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 56 GB
+2026-11-08 04:42:18   -> attempt 1: 4 shards, 4 at a time, cap 10 GB each, free now 56 GB
+2026-11-08 06:35:48 px budget back to 30 GB to leave room for session A2
+2026-11-08 07:17:41 OV E3-cal (opt-in) PAUSED by hand (07:18) to make room for the TUM secondary calibration and session A2; resumable from its shard folders
+2026-11-08 07:31:09   -> attempt 1: 2 shards, 2 at a time, cap 10 GB each, free now 46 GB
+2026-11-08 08:48:59 PART_PX_DONE

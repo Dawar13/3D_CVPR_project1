@@ -1,0 +1,21 @@
+[
+ "angle_break_even",
+ "angle_safety_preview",
+ "xa_behaviour_ma_vs_pi3x",
+ "xa_behaviour_pi3x",
+ "xa_family_ma_vs_pi3x",
+ "xa_harm_ma_vs_pi3x",
+ "xa_harm_ov_vs_pi3x",
+ "xa_harm_pi3x",
+ "xb_e2e_tests_pi3x",
+ "xb_room_costs_mapanything",
+ "xb_room_costs_omnivggt",
+ "xb_room_costs_pi3x",
+ "xb_room_real_errors",
+ "xb_room_remedies_mapanything",
+ "xb_room_remedies_omnivggt",
+ "xb_room_remedies_pi3x",
+ "xb_room_tests_mapanything",
+ "xb_room_tests_omnivggt",
+ "xb_room_tests_pi3x"
+]

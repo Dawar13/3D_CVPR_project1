@@ -1,0 +1,1 @@
+results/e2x_e3cal_synth_ma_eth3d/_shards/0/clips/*.npz results/e2x_e3cal_synth_ma_eth3d/_shards/0/run

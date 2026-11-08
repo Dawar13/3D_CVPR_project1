@@ -1,0 +1,327 @@
+{
+ "config": {
+  "_comment": "E3 eval (synth) for Pi3X, experiments/E3.md amendment 2: the E3-cal grid unchanged; e3_z from Pi3X's secondary calibration (ETH3D dev + TUM fr3), depth taus from its primary calibration.",
+  "checkpoint": "yyfz233/Pi3X",
+  "seeds": [
+   0
+  ],
+  "depth_views": [
+   3,
+   7
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": [],
+    "seeds": 1
+   },
+   {
+    "name": "clean_pose",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "seeds": 1,
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "clean_pose_depth2",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "seeds": 1,
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "c6_shared_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     2,
+     5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "shared_rot"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "noise_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     0.5,
+     1,
+     2,
+     5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "all",
+     "trans_frac": 0.0
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "outlier_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     5,
+     15,
+     30,
+     90
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "trans_frac": 0.0
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop",
+     "drop_oracle"
+    ]
+   },
+   {
+    "family": "outlier_frac",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "frac",
+    "values": [
+     0.1,
+     0.2,
+     0.4
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "subset",
+     "rot_deg": 15,
+     "trans_frac": 0.25
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop",
+     "drop_oracle"
+    ]
+   },
+   {
+    "family": "drift",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 0.5,
+      "scale_growth": 0.01
+     },
+     {
+      "rot_deg": 1.0,
+      "scale_growth": 0.02
+     },
+     {
+      "rot_deg": 2.0,
+      "scale_growth": 0.04
+     }
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "drift"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "shared_heading_bias",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     2,
+     5,
+     10
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "shared_rot"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "anchor_error",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 15.0,
+      "trans_frac": 0.0
+     },
+     {
+      "rot_deg": 0.0,
+      "trans_frac": 0.25
+     }
+    ],
+    "seeds": 1,
+    "corruption": {
+     "views": [
+      0
+     ]
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "depth_scale",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.67,
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale"
+    },
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "depth_one_scale",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale",
+     "views": [
+      3
+     ]
+    },
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   }
+  ],
+  "lowconf_tau": 0.4572,
+  "e3_z": 4.0,
+  "e3_tau_depth_shared": 0.15,
+  "e3_tau_depth_view": 0.15
+ },
+ "clips": [
+  "data/clips_e2/dev__delivery_area__c0.npz",
+  "data/clips_e2/dev__facade__c0.npz",
+  "data/clips_e2/dev__terrace__c0.npz"
+ ],
+ "checkpoint": "yyfz233/Pi3X",
+ "backend": "pi3x",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "model_repo_commit": "9fa3ddb3f8d53041f8b2738df404f62223bbaa7b",
+ "torch": "2.7.0+cu128",
+ "cuda": "12.8",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "dtype": "bf16 autocast (fp32 below sm80: fp16)",
+  "masks": "explicit per view",
+  "conf": "sigmoid(logit)"
+ },
+ "shards": 3
+}

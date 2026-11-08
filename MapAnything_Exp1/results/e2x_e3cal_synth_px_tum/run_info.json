@@ -1,0 +1,340 @@
+{
+ "config": {
+  "_comment": "E3 calibration, synthetic hint errors (experiments/E2X.md): the E2-D families that stress E3's error model, from configs/e2d_full.json (same names, same corruptions), one seed, with the E3 controls (witness = repair, witness_drop = drop ablation), the baselines R2/R3 and the ORACLE drop. cal and dev clips only.",
+  "checkpoint": "yyfz233/Pi3X",
+  "seeds": [
+   0
+  ],
+  "depth_views": [
+   3,
+   7
+  ],
+  "filter_rot_tau_deg": 10.0,
+  "filter_dir_tau_deg": 15.0,
+  "conditions": [
+   {
+    "name": "rgb_only",
+    "family": "reference",
+    "inputs": [],
+    "seeds": 1
+   },
+   {
+    "name": "clean_pose",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "seeds": 1,
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "name": "clean_pose_depth2",
+    "family": "reference",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "seeds": 1,
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "c6_shared_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     2,
+     5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "shared_rot"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "noise_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     0.5,
+     1,
+     2,
+     5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "all",
+     "trans_frac": 0.0
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "outlier_rot",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     5,
+     15,
+     30,
+     90
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "subset",
+     "n": 1,
+     "trans_frac": 0.0
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop",
+     "drop_oracle"
+    ]
+   },
+   {
+    "family": "outlier_frac",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "frac",
+    "values": [
+     0.1,
+     0.2,
+     0.4
+    ],
+    "seeds": 1,
+    "corruption": {
+     "mode": "subset",
+     "rot_deg": 15,
+     "trans_frac": 0.25
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop",
+     "drop_oracle"
+    ]
+   },
+   {
+    "family": "drift",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 0.5,
+      "scale_growth": 0.01
+     },
+     {
+      "rot_deg": 1.0,
+      "scale_growth": 0.02
+     },
+     {
+      "rot_deg": 2.0,
+      "scale_growth": 0.04
+     }
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "drift"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "shared_heading_bias",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "sweep": "rot_deg",
+    "values": [
+     2,
+     5,
+     10
+    ],
+    "seeds": 1,
+    "corruption": {
+     "type": "shared_rot"
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "anchor_error",
+    "inputs": [
+     "intrinsics",
+     "pose"
+    ],
+    "levels": [
+     {
+      "rot_deg": 15.0,
+      "trans_frac": 0.0
+     },
+     {
+      "rot_deg": 0.0,
+      "trans_frac": 0.25
+     }
+    ],
+    "seeds": 1,
+    "corruption": {
+     "views": [
+      0
+     ]
+    },
+    "floor": "rgb_only",
+    "ceiling": "clean_pose",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "depth_scale",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     0.67,
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale"
+    },
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   },
+   {
+    "family": "depth_one_scale",
+    "inputs": [
+     "intrinsics",
+     "pose",
+     "depth"
+    ],
+    "sweep": "factor",
+    "values": [
+     1.5
+    ],
+    "seeds": 1,
+    "corruption": {
+     "target": "depth",
+     "type": "scale",
+     "views": [
+      3
+     ]
+    },
+    "floor": "clean_pose",
+    "ceiling": "clean_pose_depth2",
+    "controls": [
+     "filter_rgbcheck",
+     "drop_lowconf",
+     "witness",
+     "witness_drop"
+    ]
+   }
+  ],
+  "lowconf_tau": 0.4572
+ },
+ "clips": [
+  "data/clips_tum/cal__tum_fr3_cabinet__c2.npz",
+  "data/clips_tum/cal__tum_fr3_cabinet__c3.npz",
+  "data/clips_tum/cal__tum_fr3_large_cabinet__c2.npz",
+  "data/clips_tum/cal__tum_fr3_large_cabinet__c3.npz",
+  "data/clips_tum/cal__tum_fr3_long_office_household__c0.npz",
+  "data/clips_tum/cal__tum_fr3_long_office_household__c1.npz",
+  "data/clips_tum/cal__tum_fr3_long_office_household__c3.npz",
+  "data/clips_tum/cal__tum_fr3_nostructure_texture_far__c0.npz",
+  "data/clips_tum/cal__tum_fr3_nostructure_texture_near_withloop__c0.npz",
+  "data/clips_tum/cal__tum_fr3_nostructure_texture_near_withloop__c1.npz",
+  "data/clips_tum/cal__tum_fr3_nostructure_texture_near_withloop__c2.npz",
+  "data/clips_tum/cal__tum_fr3_nostructure_texture_near_withloop__c3.npz",
+  "data/clips_tum/cal__tum_fr3_structure_notexture_far__c0.npz",
+  "data/clips_tum/cal__tum_fr3_structure_notexture_far__c1.npz",
+  "data/clips_tum/cal__tum_fr3_structure_texture_far__c0.npz",
+  "data/clips_tum/cal__tum_fr3_structure_texture_far__c1.npz",
+  "data/clips_tum/cal__tum_fr3_structure_texture_near__c0.npz",
+  "data/clips_tum/cal__tum_fr3_structure_texture_near__c1.npz",
+  "data/clips_tum/cal__tum_fr3_structure_texture_near__c2.npz"
+ ],
+ "checkpoint": "yyfz233/Pi3X",
+ "backend": "pi3x",
+ "mapanything_commit": "3d10cf7a3016fc0f9bb13a071ee66c47b10be0d9",
+ "model_repo_commit": "9fa3ddb3f8d53041f8b2738df404f62223bbaa7b",
+ "torch": "2.7.0+cu128",
+ "cuda": "12.8",
+ "gpu": "NVIDIA A100-SXM4-80GB",
+ "infer_kwargs": {
+  "dtype": "bf16 autocast (fp32 below sm80: fp16)",
+  "masks": "explicit per view",
+  "conf": "sigmoid(logit)"
+ },
+ "shards": 1
+}

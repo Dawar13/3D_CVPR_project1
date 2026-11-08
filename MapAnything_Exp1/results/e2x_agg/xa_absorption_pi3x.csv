@@ -1,0 +1,5 @@
+label,condition,mean,min,max,count
+"DESCRIPTIVE: absorption of a wrong camera rotation (bad view, scene means), Pi3X, ETH3D eval",outlier_rot_rot_deg=15,0.12794528843018202,0.08040895381169723,0.20927640186098903,10
+"DESCRIPTIVE: absorption of a wrong camera rotation (bad view, scene means), Pi3X, ETH3D eval",outlier_rot_rot_deg=30,0.16625902243624796,0.08278187069766155,0.2735477003484414,10
+"DESCRIPTIVE: absorption of a wrong camera rotation (bad view, scene means), Pi3X, ETH3D eval",outlier_rot_rot_deg=5,0.15534190614180576,0.053922971494204386,0.2926438650663387,10
+"DESCRIPTIVE: absorption of a wrong camera rotation (bad view, scene means), Pi3X, ETH3D eval",outlier_rot_rot_deg=90,0.4420615011565303,0.17382389927917102,0.7320856527811914,10

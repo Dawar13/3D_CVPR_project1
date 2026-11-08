@@ -1,0 +1,33 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning, cannot find cuda-compiled version of RoPE2D, using a slow pytorch version instead
+[FAIL] dev__delivery_area__c0|one_cam_15|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__delivery_area__c0|shared_heading_5|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__delivery_area__c0|drift_level2|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__delivery_area__c0|depth_x1.5|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[done] dev__delivery_area__c0
+[FAIL] dev__facade__c0|one_cam_15|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__facade__c0|shared_heading_5|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__facade__c0|drift_level2|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__facade__c0|depth_x1.5|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[done] dev__facade__c0
+[FAIL] dev__terrace__c0|one_cam_15|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__terrace__c0|shared_heading_5|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__terrace__c0|drift_level2|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[FAIL] dev__terrace__c0|depth_x1.5|0: AttributeError("module 'exp1.model_io_pi3x' has no attribute 'clear_hint_gate'")
+[done] dev__terrace__c0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning, cannot find cuda-compiled version of RoPE2D, using a slow pytorch version instead
+[FAIL] dev__delivery_area__c0|depth_x1.5|0: OutOfMemoryError('CUDA out of memory. Tried to allocate 214.00 MiB. GPU 0 has a total capacity of 79.25 GiB of which 186.00 MiB is free. Process 69105 has 9.59 GiB memory in use. Process 69141 has 9.59 GiB memory in use. Process 81042 has 10.40 GiB memory in use. Process 81060 has 10.40 GiB memory in use. Process 81080 has 10.40 GiB memory in use. Process 81134 has 10.40 GiB memory in use. Including non-PyTorch memory, this process has 9.38 GiB memory in use. Process 96602 has 8.85 GiB memory in use. 10.30 GiB allowed; Of the allocated memory 8.68 GiB is allocated by PyTorch, and 173.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)')
+[done] dev__delivery_area__c0
+[FAIL] dev__facade__c0|depth_x1.5|0: OutOfMemoryError('CUDA out of memory. Tried to allocate 214.00 MiB. GPU 0 has a total capacity of 79.25 GiB of which 164.00 MiB is free. Process 69105 has 9.59 GiB memory in use. Process 69141 has 9.59 GiB memory in use. Process 81042 has 10.40 GiB memory in use. Process 81060 has 10.40 GiB memory in use. Process 81080 has 10.40 GiB memory in use. Process 81134 has 10.40 GiB memory in use. Including non-PyTorch memory, this process has 9.40 GiB memory in use. Process 96602 has 8.85 GiB memory in use. 10.30 GiB allowed; Of the allocated memory 8.68 GiB is allocated by PyTorch, and 193.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)')
+[done] dev__facade__c0
+[FAIL] dev__terrace__c0|depth_x1.5|0: OutOfMemoryError('CUDA out of memory. Tried to allocate 214.00 MiB. GPU 0 has a total capacity of 79.25 GiB of which 184.00 MiB is free. Process 69105 has 9.59 GiB memory in use. Process 69141 has 9.59 GiB memory in use. Process 81042 has 10.40 GiB memory in use. Process 81060 has 10.40 GiB memory in use. Process 81080 has 10.40 GiB memory in use. Process 81134 has 10.40 GiB memory in use. Including non-PyTorch memory, this process has 9.38 GiB memory in use. Process 96602 has 8.85 GiB memory in use. 10.30 GiB allowed; Of the allocated memory 8.68 GiB is allocated by PyTorch, and 173.15 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)')
+[done] dev__terrace__c0
+{'per_run.csv': 33, 'per_view.csv': 40}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning, cannot find cuda-compiled version of RoPE2D, using a slow pytorch version instead
+[done] dev__delivery_area__c0
+[done] dev__facade__c0
+[done] dev__terrace__c0
+{'per_run.csv': 33, 'per_view.csv': 330}
+{'per_run.csv': 264, 'per_view.csv': 2640}

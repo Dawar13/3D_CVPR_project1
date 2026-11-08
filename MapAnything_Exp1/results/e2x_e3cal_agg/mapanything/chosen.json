@@ -1,0 +1,7 @@
+{
+ "e3_z": "NOT CALIBRATED",
+ "e3_tau_depth_shared": 0.2,
+ "e3_tau_depth_view": 0.25,
+ "n_gt_pose_decisions": 269,
+ "n_gt_depth_decisions": 110
+}

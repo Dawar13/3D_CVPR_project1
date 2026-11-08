@@ -1,0 +1,89 @@
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[ok] data/clips_e2e/dev__sf422391__c0.npz  5.0 s  AI/GT median depth ratio 1.3669
+[ok] data/clips_e2e/dev__sf422391__c1.npz  4.5 s  AI/GT median depth ratio 1.4526
+[ok] data/clips_e2e/dev__sf422391__c2.npz  4.6 s  AI/GT median depth ratio 1.3643
+[ok] data/clips_e2e/dev__sf422803__c0.npz  4.6 s  AI/GT median depth ratio 1.3326
+[ok] data/clips_e2e/dev__sf422803__c1.npz  4.8 s  AI/GT median depth ratio 1.4135
+[ok] data/clips_e2e/dev__sf434650__c0.npz  4.6 s  AI/GT median depth ratio 1.0810
+[ok] data/clips_e2e/dev__sf434650__c1.npz  4.5 s  AI/GT median depth ratio 1.7483
+[ok] data/clips_e2e/dev__sf434650__c2.npz  4.6 s  AI/GT median depth ratio 2.0011
+[ok] data/clips_e2e/eval__sf422014__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf422014__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf422014__c2.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422015__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf422015__c1.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422015__c2.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422381__c0.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422381__c2.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422829__c0.npz  4.6 s
+[ok] data/clips_e2e/eval__sf422829__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf422829__c2.npz  4.6 s
+[ok] data/clips_e2e/eval__sf434641__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf434641__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf434641__c2.npz  4.6 s
+[ok] data/clips_e2e/eval__sf466183__c0.npz  4.6 s
+[ok] data/clips_e2e/eval__sf466183__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf466183__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf466193__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf466193__c1.npz  4.6 s
+[ok] data/clips_e2e/eval__sf466193__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf467305__c0.npz  4.6 s
+[ok] data/clips_e2e/eval__sf467311__c0.npz  4.6 s
+[ok] data/clips_e2e/eval__sf467311__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf467311__c2.npz  4.6 s
+[ok] data/clips_e2e/eval__sf468079__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf468079__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf468712__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf468712__c1.npz  4.6 s
+[ok] data/clips_e2e/eval__sf468712__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf469319__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf469319__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf469319__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf470541__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf470541__c1.npz  4.4 s
+[ok] data/clips_e2e/eval__sf470541__c2.npz  4.6 s
+[ok] data/clips_e2e/eval__sf472297__c0.npz  4.4 s
+[ok] data/clips_e2e/eval__sf472297__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf472297__c2.npz  4.5 s
+[ok] data/clips_e2e/eval__sf483618__c0.npz  4.5 s
+[ok] data/clips_e2e/eval__sf483618__c1.npz  4.5 s
+[ok] data/clips_e2e/eval__sf483618__c2.npz  4.5 s
+AI depth on the E2-E clips: 0/49 bit-identical to E2-E; same model revision: True
+Using a slow image processor as `use_fast` is unset and a slow processor was saved with this model. `use_fast=True` will be the default behavior in v4.52, even if the model was saved with a slow processor. This will result in minor differences in outputs. You'll still be able to use a slow processor with `use_fast=False`.
+[ok] data/clips_e2x_room/dev__sf422391__r1.npz  5.2 s  AI/GT median depth ratio 1.3773
+[ok] data/clips_e2x_room/dev__sf422391__r2.npz  4.6 s  AI/GT median depth ratio 1.2652
+[ok] data/clips_e2x_room/dev__sf422803__r0.npz  4.7 s  AI/GT median depth ratio 1.5160
+[ok] data/clips_e2x_room/dev__sf422803__r1.npz  4.5 s  AI/GT median depth ratio 1.2843
+[ok] data/clips_e2x_room/dev__sf422803__r2.npz  4.5 s  AI/GT median depth ratio 1.5126
+[ok] data/clips_e2x_room/dev__sf434650__r1.npz  4.6 s  AI/GT median depth ratio 1.3675
+[ok] data/clips_e2x_room/dev__sf434650__r2.npz  4.6 s  AI/GT median depth ratio 1.6178
+[ok] data/clips_e2x_room/cal__sf422826__r0.npz  4.4 s
+[ok] data/clips_e2x_room/cal__sf422826__r1.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf422826__r2.npz  4.6 s
+[ok] data/clips_e2x_room/cal__sf460417__r0.npz  4.6 s
+[ok] data/clips_e2x_room/cal__sf460417__r1.npz  4.5 s
+[ok] data/clips_e2x_room/cal__sf460417__r2.npz  4.4 s
+[ok] data/clips_e2x_room/cal__sf467172__r0.npz  4.8 s
+[ok] data/clips_e2x_room/cal__sf467172__r1.npz  4.4 s
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/mono_depth.py", line 80, in <module>
+    main()
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/mono_depth.py", line 58, in main
+    z = dict(np.load(path, allow_pickle=False))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/aidepth/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 471, in load
+    ret = NpzFile(fid, own_fid=own_fid, allow_pickle=allow_pickle,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/aidepth/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 197, in __init__
+    _zip = zipfile_factory(fid)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/aidepth/lib/python3.11/site-packages/numpy/lib/_npyio_impl.py", line 112, in zipfile_factory
+    return zipfile.ZipFile(file, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/aidepth/lib/python3.11/zipfile.py", line 1355, in __init__
+    self._RealGetContents()
+  File "/home/dawar/e2x_conda/envs/aidepth/lib/python3.11/zipfile.py", line 1422, in _RealGetContents
+    raise BadZipFile("File is not a zip file")
+zipfile.BadZipFile: File is not a zip file

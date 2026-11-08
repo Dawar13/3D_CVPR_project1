@@ -1,0 +1,13 @@
+clip_id,reason
+cal__tum_fr3_cabinet__c0,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_cabinet__c1,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_large_cabinet__c0,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_large_cabinet__c1,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_long_office_household__c2,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_nostructure_texture_far__c1,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_structure_notexture_near__c0,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_structure_notexture_near__c1,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_teddy__c0,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_teddy__c1,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_teddy__c2,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)
+cal__tum_fr3_teddy__c3,failed the E0 ground-truth check (median_rel >= 0.03 on a pair with overlap > 0.05)

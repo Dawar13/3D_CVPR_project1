@@ -1,0 +1,2 @@
+shard=0 start=2026-11-08 07:31:11 end=2026-11-08 08:48:43 config=configs/e2x_e3cal_real_pi3x.json clips=results/e2x_e3cal_real_px_cal/_shards/0/clips/*.npz runs_recorded=1025 peak_mem_gb=9.62 mem_fraction=0.1291
+shard=1 start=2026-11-08 07:31:31 end=2026-11-08 08:48:56 config=configs/e2x_e3cal_real_pi3x.json clips=results/e2x_e3cal_real_px_cal/_shards/1/clips/*.npz runs_recorded=1025 peak_mem_gb=9.62 mem_fraction=0.1291

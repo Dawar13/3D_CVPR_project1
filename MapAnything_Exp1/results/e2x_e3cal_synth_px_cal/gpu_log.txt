@@ -1,0 +1,4 @@
+shard=0 start=2026-11-08 04:42:21 end=2026-11-08 07:31:05 config=configs/e2x_e3cal_synth_pi3x.json clips=results/e2x_e3cal_synth_px_cal/_shards/0/clips/*.npz runs_recorded=1794 peak_mem_gb=9.62 mem_fraction=0.1291
+shard=1 start=2026-11-08 04:42:41 end=2026-11-08 07:29:44 config=configs/e2x_e3cal_synth_pi3x.json clips=results/e2x_e3cal_synth_px_cal/_shards/1/clips/*.npz runs_recorded=1794 peak_mem_gb=9.62 mem_fraction=0.1291
+shard=2 start=2026-11-08 04:43:02 end=2026-11-08 07:20:32 config=configs/e2x_e3cal_synth_pi3x.json clips=results/e2x_e3cal_synth_px_cal/_shards/2/clips/*.npz runs_recorded=1656 peak_mem_gb=9.62 mem_fraction=0.1291
+shard=3 start=2026-11-08 04:43:21 end=2026-11-08 07:18:06 config=configs/e2x_e3cal_synth_pi3x.json clips=results/e2x_e3cal_synth_px_cal/_shards/3/clips/*.npz runs_recorded=1656 peak_mem_gb=9.62 mem_fraction=0.1291

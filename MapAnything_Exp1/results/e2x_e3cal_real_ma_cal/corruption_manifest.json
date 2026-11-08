@@ -1,0 +1,6502 @@
+[
+ {
+  "clip_id": "cal__sf422386__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422386__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__c2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf422826__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf460417__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467172__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf467306__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf468711__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf470352__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471425__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf471952__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r0",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r0",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r0",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r0",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r0",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r0",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r1",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r1",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r1",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r1",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r1",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r1",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r2",
+  "condition": "dev_K",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r2",
+  "condition": "dev_pose",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r2",
+  "condition": "dev_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r2",
+  "condition": "dev_all",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r2",
+  "condition": "ai_depth",
+  "target": "device",
+  "type": "device",
+  "use": [
+   "mono_depth",
+   "K"
+  ],
+  "affected_views": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ },
+ {
+  "clip_id": "cal__sf483632__r2",
+  "condition": "dev_pose_ai_depth",
+  "target": "pose",
+  "type": "device",
+  "use": [
+   "pose",
+   "K",
+   "mono_depth"
+  ],
+  "affected_views": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ]
+ }
+]

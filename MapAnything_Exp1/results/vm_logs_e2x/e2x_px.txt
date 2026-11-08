@@ -1,0 +1,7 @@
+Pi3 at 9fa3ddb
+torch 2.7.0+cu128 12.8 True
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 4 files:  50%|█████     | 2/4 [00:00<00:00, 16.47it/s]Fetching 4 files:  75%|███████▌  | 3/4 [00:20<00:00, 16.47it/s]Fetching 4 files: 100%|██████████| 4/4 [00:35<00:00, 10.43s/it]Fetching 4 files: 100%|██████████| 4/4 [00:35<00:00,  8.87s/it]
+weights at /home/dawar/.cache/huggingface/hub/models--yyfz233--Pi3X/snapshots/bb1deea4d7423de5b30691739cb451a3f57dc1d5
+.................                                                        [100%]
+17 passed in 172.29s (0:02:52)

@@ -1,0 +1,243 @@
+source                    ai  lidar
+overall_ratio          1.390  0.995
+view_ratio_min         1.184  0.970
+view_ratio_max         1.840  1.003
+view_ratio_sd_log      0.154  0.009
+absrel_raw             0.454  0.023
+absrel_after_overall   0.152  0.022
+absrel_after_per_view  0.049  0.021
+valid_share            0.944  0.881
+fatal: not a git repository (or any of the parent directories): .git
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/dawar/.cache/torch/hub/facebookresearch_dinov2_main
+[W1107 19:03:49.530760824 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 15204352, total: 85093777408).
+[W1107 19:03:51.712821813 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 19398656, total: 85093777408).
+[W1107 19:03:54.236997443 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 15204352, total: 85093777408).
+[W1107 19:03:56.214937290 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 19398656, total: 85093777408).
+[W1107 19:03:58.003433715 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 15204352, total: 85093777408).
+[W1107 19:04:01.911226620 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 15204352, total: 85093777408).
+[W1107 19:04:04.618266401 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 15204352, total: 85093777408).
+[W1107 19:04:06.606816632 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 13107200, total: 85093777408).
+Loading pretrained dinov2_vitg14 from torch hub
+[check] {'clip': 'dev__sf422391__c0', 'hint': 'depth', 'gamma1_vs_no_gate': 0.006979465484619141, 'gamma0_vs_absent': 0.0, 'hint_vs_absent': 1.3517606258392334}
+gate with gamma = 1 changed the output: {'clip': 'dev__sf422391__c0', 'hint': 'depth', 'gamma1_vs_no_gate': 0.006979465484619141, 'gamma0_vs_absent': 0.0, 'hint_vs_absent': 1.3517606258392334}
+fatal: not a git repository (or any of the parent directories): .git
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/dawar/.cache/torch/hub/facebookresearch_dinov2_main
+[W1107 19:04:46.699407298 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 4653056, total: 85093777408).
+[W1107 19:04:46.699610709 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 4653056, total: 85093777408).
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 303, in <module>
+    main()
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 246, in main
+    run_checks(io, model, a.device, clip, os.path.join(a.out, "checks.csv"))
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 151, in run_checks
+    base = infer(io, model, device, v)[0]["pts3d"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 127, in infer
+    pred = io.run(model, views, device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/model_io.py", line 117, in run
+    preds = model.infer(processed, **INFER_KW)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 2165, in infer
+    preds = self.forward(
+            ^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 1571, in forward
+    self._encode_n_views(views)
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 676, in _encode_n_views
+    encoder_output = self.encoder(encoder_input)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/uniception/models/encoders/dinov2.py", line 188, in forward
+    result_dict = self.model.forward_features(encoder_input.image)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py", line 264, in forward_features
+    x = blk(x)
+        ^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py", line 310, in forward
+    return super().forward(x_or_x_list)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py", line 112, in forward
+    x = x + attn_residual_func(x)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py", line 91, in attn_residual_func
+    return self.ls1(self.attn(self.norm1(x)))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/uniception/models/encoders/dinov2.py", line 150, in forward
+    self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+    ^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 80.00 MiB. GPU 0 has a total capacity of 79.25 GiB of which 4.44 MiB is free. Process 17498 has 30.78 GiB memory in use. Process 17783 has 30.64 GiB memory in use. Process 19637 has 2.31 GiB memory in use. Process 38826 has 10.16 GiB memory in use. Including non-PyTorch memory, this process has 5.31 GiB memory in use. Of the allocated memory 4.79 GiB is allocated by PyTorch, and 42.88 MiB is reserved by PyTorch but unallocated.
+Loading pretrained dinov2_vitg14 from torch hub
+fatal: not a git repository (or any of the parent directories): .git
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/dawar/.cache/torch/hub/facebookresearch_dinov2_main
+[W1107 19:05:25.785057844 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 4653056, total: 85093777408).
+[W1107 19:05:25.796276131 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 6750208, total: 85093777408).
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 303, in <module>
+    main()
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 246, in main
+    run_checks(io, model, a.device, clip, os.path.join(a.out, "checks.csv"))
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 151, in run_checks
+    base = infer(io, model, device, v)[0]["pts3d"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 127, in infer
+    pred = io.run(model, views, device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/model_io.py", line 117, in run
+    preds = model.infer(processed, **INFER_KW)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 2165, in infer
+    preds = self.forward(
+            ^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 1571, in forward
+    self._encode_n_views(views)
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 676, in _encode_n_views
+    encoder_output = self.encoder(encoder_input)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/uniception/models/encoders/dinov2.py", line 188, in forward
+    result_dict = self.model.forward_features(encoder_input.image)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py", line 261, in forward_features
+    x = self.prepare_tokens_with_masks(x, masks)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py", line 223, in prepare_tokens_with_masks
+    x = x + self.interpolate_pos_encoding(x, w, h)
+        ~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 62.00 MiB. GPU 0 has a total capacity of 79.25 GiB of which 46.44 MiB is free. Process 17498 has 30.78 GiB memory in use. Process 17783 has 30.64 GiB memory in use. Process 19637 has 2.32 GiB memory in use. Process 38826 has 10.16 GiB memory in use. Including non-PyTorch memory, this process has 5.26 GiB memory in use. Of the allocated memory 4.73 GiB is allocated by PyTorch, and 49.59 MiB is reserved by PyTorch but unallocated.
+Loading pretrained dinov2_vitg14 from torch hub
+fatal: not a git repository (or any of the parent directories): .git
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Using cache found in /home/dawar/.cache/torch/hub/facebookresearch_dinov2_main
+[W1107 19:06:05.772573809 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 17235968, total: 85093777408).
+[W1107 19:06:05.793947351 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 17235968, total: 85093777408).
+[W1107 19:06:05.794105802 CUDACachingAllocator.cpp:528] expandable_segments: memory mapping failed with OOM on device 0 while trying to map 20971520 bytes (free: 17235968, total: 85093777408).
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 303, in <module>
+    main()
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 246, in main
+    run_checks(io, model, a.device, clip, os.path.join(a.out, "checks.csv"))
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 151, in run_checks
+    base = infer(io, model, device, v)[0]["pts3d"]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/run_gate.py", line 127, in infer
+    pred = io.run(model, views, device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/exp1/model_io.py", line 117, in run
+    preds = model.infer(processed, **INFER_KW)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 2165, in infer
+    preds = self.forward(
+            ^^^^^^^^^^^^^
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 1571, in forward
+    self._encode_n_views(views)
+  File "/home/dawar/e2x/MapAnything_Exp1/third_party/map-anything/mapanything/models/mapanything/model.py", line 676, in _encode_n_views
+    encoder_output = self.encoder(encoder_input)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/uniception/models/encoders/dinov2.py", line 188, in forward
+    result_dict = self.model.forward_features(encoder_input.image)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/models/vision_transformer.py", line 264, in forward_features
+    x = blk(x)
+        ^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py", line 310, in forward
+    return super().forward(x_or_x_list)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py", line 112, in forward
+    x = x + attn_residual_func(x)
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/.cache/torch/hub/facebookresearch_dinov2_main/dinov2/layers/block.py", line 91, in attn_residual_func
+    return self.ls1(self.attn(self.norm1(x)))
+                    ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/uniception/models/encoders/dinov2.py", line 150, in forward
+    self.qkv(x).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+    ^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/dawar/e2x_conda/envs/mapanything/lib/python3.12/site-packages/torch/nn/modules/linear.py", line 134, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 28.00 MiB. GPU 0 has a total capacity of 79.25 GiB of which 16.44 MiB is free. Process 17498 has 30.78 GiB memory in use. Process 17783 has 30.64 GiB memory in use. Process 19637 has 2.33 GiB memory in use. Process 38826 has 10.16 GiB memory in use. Including non-PyTorch memory, this process has 5.28 GiB memory in use. Of the allocated memory 4.76 GiB is allocated by PyTorch, and 28.92 MiB is reserved by PyTorch but unallocated.
+Loading pretrained dinov2_vitg14 from torch hub
+no per_run.csv under ['results/g1_*_dev']
+no token files under ['results/g2_*_dev']
+2026-11-07 19:06:08 GATE_MA had errors: see /home/dawar/e2x_logs/gate.txt (queue continues)

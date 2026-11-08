@@ -1,0 +1,18 @@
+2026-11-08 08:40:11 [e3] start (thresholds: {'e3_z': 5.0, 'e3_tau_depth_shared': 0.2, 'e3_tau_depth_view': 0.25})
+2026-11-08 09:00:08 [e3] dev synth: a process exited with an error (pass 1)
+2026-11-08 09:00:08 [e3] dev synth: done, 0 failures
+2026-11-08 09:00:56 [e3] dev real: a process exited with an error (pass 1)
+2026-11-08 09:00:56 [e3] dev real: done, 0 failures
+2026-11-08 09:00:56 [e3] GATE e3 dev: PASS
+2026-11-08 09:11:23 [e3] start (thresholds: {'e3_z': 5.0, 'e3_tau_depth_shared': 0.2, 'e3_tau_depth_view': 0.25})
+2026-11-08 09:24:02 [e3] dev synth: done, all clips complete, 0 failures
+2026-11-08 09:45:47 [e3] dev real: done, all clips complete, 0 failures
+2026-11-08 09:45:47 [e3] GATE e3 dev: PASS
+2026-11-08 11:16:45 [e3] eval synth (ETH3D): pass 1 incomplete (all processes ok: 0, out-of-memory resets: 27, clips without rows: 9)
+2026-11-08 12:09:47 [e3] eval synth (ETH3D): done, all clips complete, 0 failures
+2026-11-08 12:09:47 [e3] E3_SYNTH_EVAL_DONE
+2026-11-08 12:40:55 [e3] eval real (rooms): done, all clips complete, 0 failures
+2026-11-08 12:40:55 [e3] E3_ROOM_EVAL_DONE
+2026-11-08 12:42:58 [e3] eval real (E2-E): done, all clips complete, 0 failures
+2026-11-08 12:42:58 [e3] E3_E2E_EVAL_DONE
+2026-11-08 12:42:58 [e3] E3_QUEUE_DONE

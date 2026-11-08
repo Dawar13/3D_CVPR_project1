@@ -1,0 +1,15 @@
+2026-11-07 18:38:51 start e2x session A, budget 32 GB of 80 GB, free now 15 GB, tree ab5bc73d5a844da74539d390883b6273ad6b3482, scripts 1c0835f8c12bac528b08c2d16a6de124d1f0fb6c
+2026-11-07 18:38:51 MA 1 E3-cal synthetic on ETH3D dev
+2026-11-07 18:38:52   -> attempt 1: 1 shards, 1 at a time, cap 10 GB each, free now 15 GB
+2026-11-07 19:03:07 MA 4 gate tests start beside the main jobs (dev only)
+2026-11-07 19:03:12 MA 2 E3-cal on cal clips (synthetic, real) and SceneFun3D dev clips (real)
+2026-11-07 19:03:12   -> attempt 1: 1 shards, 1 at a time, cap 10 GB each, free now 15 GB
+2026-11-08 01:27:07   !! 27 runs reset after CUDA out-of-memory; all processes ok: 1 (logs: results/e2x_e3cal_synth_ma_cal/_shards/*/log.txt). Retry in 120 s
+2026-11-08 01:29:11   -> attempt 2: 1 shards, 1 at a time, cap 10 GB each, free now 79 GB
+2026-11-08 01:53:22   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 49 GB
+2026-11-08 02:48:33   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 41 GB
+2026-11-08 02:58:08 MA 3 room clips: dev, gate, eval
+2026-11-08 02:58:08   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 50 GB
+GATE e2e results/e2x_room_ma_dev: PASS
+2026-11-08 03:02:53   -> attempt 1: 3 shards, 3 at a time, cap 10 GB each, free now 50 GB
+2026-11-08 03:22:04 ROOM_MA_EVAL_DONE

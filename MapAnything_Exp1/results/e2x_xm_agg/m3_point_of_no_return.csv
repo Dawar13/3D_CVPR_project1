@@ -1,0 +1,17 @@
+label,model,case,source,point_of_no_return_layer
+DESCRIPTIVE,mapanything,depth_x1.5,clean,8.0
+DESCRIPTIVE,mapanything,depth_x1.5,drop,8.0
+DESCRIPTIVE,mapanything,drift_level2,clean,none
+DESCRIPTIVE,mapanything,drift_level2,drop,8.0
+DESCRIPTIVE,mapanything,one_cam_15,clean,none
+DESCRIPTIVE,mapanything,one_cam_15,drop,none
+DESCRIPTIVE,mapanything,shared_heading_5,clean,none
+DESCRIPTIVE,mapanything,shared_heading_5,drop,8.0
+DESCRIPTIVE,pi3x,depth_x1.5,clean,1.0
+DESCRIPTIVE,pi3x,depth_x1.5,drop,1.0
+DESCRIPTIVE,pi3x,drift_level2,clean,1.0
+DESCRIPTIVE,pi3x,drift_level2,drop,1.0
+DESCRIPTIVE,pi3x,one_cam_15,clean,1.0
+DESCRIPTIVE,pi3x,one_cam_15,drop,1.0
+DESCRIPTIVE,pi3x,shared_heading_5,clean,1.0
+DESCRIPTIVE,pi3x,shared_heading_5,drop,1.0

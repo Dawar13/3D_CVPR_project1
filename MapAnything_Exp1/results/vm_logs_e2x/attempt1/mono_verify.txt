@@ -1,0 +1,1 @@
+AI depth on the E2-E clips: 0/49 bit-identical to E2-E; same model revision: True

@@ -1,0 +1,1 @@
+shard=0 start=2026-11-07 18:38:54 end=2026-11-07 19:03:06 config=configs/e2x_e3cal_synth_mapanything.json clips=results/e2x_e3cal_synth_ma_eth3d/_shards/0/clips/*.npz runs_recorded=414 peak_mem_gb=8.22 mem_fraction=0.125

@@ -1,0 +1,2 @@
+shard=0 start=2026-11-08 01:53:33 end=2026-11-08 03:26:13 config=configs/e2x_pi3x_eth3d.json clips=results/e2x_pi3x_eth3d_eval/_shards/0/clips/*.npz runs_recorded=1656 peak_mem_gb=9.33 mem_fraction=0.1291
+shard=1 start=2026-11-08 01:53:53 end=2026-11-08 03:26:34 config=configs/e2x_pi3x_eth3d.json clips=results/e2x_pi3x_eth3d_eval/_shards/1/clips/*.npz runs_recorded=1656 peak_mem_gb=9.33 mem_fraction=0.1291

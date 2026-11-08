@@ -1,0 +1,6 @@
+NVIDIA A100-SXM4-80GB, 580.178.04, 81920 MiB, 0 MiB
+cpus 12
+Mem:             167           5         112           0          50         161
+/dev/root       991G   66G  926G   7% /
+torch wheels cu130
+our GPU budget 32 GB

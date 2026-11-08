@@ -1,0 +1,1 @@
+2026-11-07 18:28:12 attempt 1 stopped by hand: clips were marked ready while still being rewritten (orphan upload loops); MA 1 partial results and the AI depth discarded, clips re-verified, AI depth redone, queue restarted

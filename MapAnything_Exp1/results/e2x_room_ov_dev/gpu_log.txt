@@ -1,0 +1,2 @@
+shard=0 start=2026-11-08 01:39:21 end=2026-11-08 01:48:39 config=configs/e2x_real_omnivggt.json clips=results/e2x_room_ov_dev/_shards/0/clips/*.npz runs_recorded=76 peak_mem_gb=8.27 mem_fraction=0.1187
+shard=1 start=2026-11-08 01:39:42 end=2026-11-08 01:47:12 config=configs/e2x_real_omnivggt.json clips=results/e2x_room_ov_dev/_shards/1/clips/*.npz runs_recorded=57 peak_mem_gb=8.27 mem_fraction=0.1187
