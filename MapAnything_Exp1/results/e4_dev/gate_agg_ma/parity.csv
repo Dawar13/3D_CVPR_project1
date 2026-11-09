@@ -1,0 +1,9 @@
+e4_run,e3_run,metric,n_rows,n_exact,max_abs_diff
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_synth_ma_dev,results/e3_eval_synth_ma_dev,pts_relerr_scale,237,237,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_synth_ma_dev,results/e3_eval_synth_ma_dev,rre_deg,237,237,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_synth_ma_dev,results/e3_eval_synth_ma_dev,pts_relerr_metric,237,237,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_synth_ma_dev,results/e3_eval_synth_ma_dev,depth_absrel_scale,237,237,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_real_ma_roomdev,results/e3_eval_real_ma_roomdev,pts_relerr_scale,147,147,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_real_ma_roomdev,results/e3_eval_real_ma_roomdev,rre_deg,147,147,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_real_ma_roomdev,results/e3_eval_real_ma_roomdev,pts_relerr_metric,147,147,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_real_ma_roomdev,results/e3_eval_real_ma_roomdev,depth_absrel_scale,147,147,0.0

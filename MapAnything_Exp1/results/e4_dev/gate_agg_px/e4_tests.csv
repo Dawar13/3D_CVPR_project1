@@ -1,0 +1,67 @@
+test,data,condition,metric,vs,delta,ci_lo,ci_hi,n_scenes,threshold,p_t,n_conditions,p_holm,clear,noninferior,harmful,better
+SAFE,synth,clean_pose,shape,hints as given,0.0,0.0,0.0,3,0.01,1.0,,,False,True,False,False
+SAFE,synth,clean_pose,rotation,hints as given,0.0,0.0,0.0,3,0.25,1.0,,,False,True,False,False
+SAFE,synth,clean_pose_depth2,shape,hints as given,0.0,0.0,0.0,3,0.01,1.0,,,False,True,False,False
+SAFE,synth,clean_pose_depth2,rotation,hints as given,0.0,0.0,0.0,3,0.25,1.0,,,False,True,False,False
+HELP,synth,outlier_rot_rot_deg=15,rotation,hints as given,-0.121002565446853,-0.25209873842783315,0.020945590373896872,3,0.25,0.26531462209499906,,1.0,False,True,False,False
+BEST,synth,outlier_rot_rot_deg=15,rotation,filter_rgbcheck,-0.03793752540128098,-0.0870242732085717,0.00896247241477488,3,0.25,0.30471422962724526,,1.0,False,True,False,False
+HELP,synth,outlier_rot_rot_deg=30,rotation,hints as given,-1.2027606467359164,-1.7887125295638082,-0.7058529226513336,3,0.25,0.06252316644571587,,1.0,False,True,False,False
+BEST,synth,outlier_rot_rot_deg=30,rotation,filter_rgbcheck,-0.04033785122984227,-0.06470795544202618,0.005705489934799635,3,0.25,0.22201731490244145,,1.0,False,True,False,False
+HELP,synth,outlier_rot_rot_deg=90,rotation,hints as given,-7.409876498986329,-12.91298343725615,-2.786605524656498,3,0.25,0.1290565864850341,,1.0,False,True,False,False
+BEST,synth,outlier_rot_rot_deg=90,rotation,filter_rgbcheck,-0.042897648310232794,-0.06470795544202618,-0.010803660091111722,3,0.25,0.12019660746403593,,1.0,False,True,False,False
+HELP,synth,outlier_frac_frac=0.2,rotation,hints as given,-0.23921747338923838,-0.7176524201677151,0.0,3,0.25,0.42264973081037427,,1.0,False,True,False,False
+BEST,synth,outlier_frac_frac=0.2,rotation,filter_rgbcheck,0.1984401897797713,-0.1368448391918133,0.5467995253554279,3,0.25,0.42074259687811155,,1.0,False,False,False,False
+HELP,synth,outlier_frac_frac=0.4,rotation,hints as given,-1.0367255812071579,-1.6345937794895946,-0.7327340792052737,3,0.25,0.0740347545417093,,1.0,False,True,False,False
+BEST,synth,outlier_frac_frac=0.4,rotation,filter_rgbcheck,-0.06060507036468945,-0.1425021713233401,-0.006339562885503192,3,0.25,0.2830071202431111,,1.0,False,True,False,False
+HELP,synth,shared_heading_bias_rot_deg=5,rotation,hints as given,0.012948373426075596,0.0,0.038845120278226786,3,0.25,0.42264973081037416,,1.0,False,True,False,False
+BEST,synth,shared_heading_bias_rot_deg=5,rotation,filter_rgbcheck,0.012948373426075596,0.0,0.038845120278226786,3,0.25,0.42264973081037416,,1.0,False,True,False,False
+HELP,synth,shared_heading_bias_rot_deg=10,rotation,hints as given,-0.4958300480530709,-0.7876259132720597,-0.17799350094978417,3,0.25,0.10676249769242999,,1.0,False,True,False,False
+BEST,synth,shared_heading_bias_rot_deg=10,rotation,rgb_only,-0.21778596763680735,-0.6018387243020589,-0.021063183768601557,3,0.25,0.37440987268993187,,1.0,False,True,False,False
+HELP,synth,c6_shared_rot_rot_deg=5,rotation,hints as given,-0.1071135563529294,-0.24488748067585106,-0.006521058635121868,3,0.25,0.27176256891683453,,1.0,False,True,False,False
+BEST,synth,c6_shared_rot_rot_deg=5,rotation,filter_rgbcheck,-0.1071135563529294,-0.24488748067585106,-0.006521058635121868,3,0.25,0.27176256891683453,,1.0,False,True,False,False
+HELP,synth,drift_level=2,rotation,hints as given,-0.07739468841720562,-0.17168340104298296,0.0,3,0.25,0.2635811702255357,,1.0,False,True,False,False
+BEST,synth,drift_level=2,rotation,filter_rgbcheck,-0.01081543463841251,-0.17168340104298296,0.19973776133637933,3,0.25,0.9306810635200639,,1.0,False,True,False,False
+HELP,synth,drift_level=3,rotation,hints as given,-0.6044681354924122,-0.8253585048796518,-0.1786827536622715,3,0.25,0.10492959014043715,,1.0,False,True,False,False
+BEST,synth,drift_level=3,rotation,rgb_only,0.5229313540960252,0.08405449133025933,1.3808121203320518,3,0.25,0.34710186448498637,,1.0,False,False,False,False
+HELP,synth,depth_scale_factor=0.67,shape,hints as given,0.0023676677894944654,-0.0013437881490544002,0.008055799355569396,3,0.01,0.4984480474388209,,1.0,False,True,False,False
+BEST,synth,depth_scale_factor=0.67,shape,filter_rgbcheck,0.0023676677894944654,-0.0013437881490544002,0.008055799355569396,3,0.01,0.4984480474388209,,1.0,False,True,False,False
+HELP,synth,depth_scale_factor=1.5,shape,hints as given,-0.009238564838858331,-0.023408276775867497,-0.0015151972773348003,3,0.01,0.32261968005353214,,1.0,False,True,False,False
+BEST,synth,depth_scale_factor=1.5,shape,filter_rgbcheck,-0.009238564838858331,-0.023408276775867497,-0.0015151972773348003,3,0.01,0.32261968005353214,,1.0,False,True,False,False
+HELP,synth,depth_one_scale_factor=1.5,shape,hints as given,-0.04999016415466407,-0.06456072877547081,-0.042389683130890504,3,0.01,0.020597423158726105,,1.0,False,True,False,False
+BEST,synth,depth_one_scale_factor=1.5,shape,rgb_only,-0.015343158872887364,-0.019122513602762896,-0.0092995051451743,3,0.01,0.03739442086919638,,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3,rotation,rgb_only,-0.10075972300762061,-0.32034462877277425,0.027259236536271825,3,0.25,0.4573922773681298,12.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3,rotation,filter_rgbcheck,-0.05116949587007099,-0.15159555557309934,0.03366113074280719,3,0.25,0.44367614357815965,12.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3,rotation,drop_lowconf,-0.9401200683879196,-1.5107613500732002,-0.5533000054995647,3,0.25,0.08406620903866682,12.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3,rotation,witness,0.047669693575430494,-0.021702219673562784,0.1761046899615234,3,0.25,0.5356284380522909,12.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3,rotation,witness_drop,0.038203961391720366,0.018858475955234766,0.06025598257605802,3,0.25,0.08644544965802362,12.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3+depth_scale_factor=0.67+depth_scale_factor=1.5+depth_one_scale_factor=1.5,shape,rgb_only,-0.01240459796484115,-0.015811105346018477,-0.006210523362757712,3,0.01,0.057226008036741216,15.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3+depth_scale_factor=0.67+depth_scale_factor=1.5+depth_one_scale_factor=1.5,shape,filter_rgbcheck,-0.006130487068621219,-0.009749188941400441,-0.003694142776202426,3,0.01,0.07988861355966992,15.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3+depth_scale_factor=0.67+depth_scale_factor=1.5+depth_one_scale_factor=1.5,shape,drop_lowconf,-0.011914940129005305,-0.016229739313200986,-0.007716487643846855,3,0.01,0.04002822682097105,15.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3+depth_scale_factor=0.67+depth_scale_factor=1.5+depth_one_scale_factor=1.5,shape,witness,0.0006610114700819856,-0.000329110785402386,0.0026350243998171027,3,0.01,0.5720067390641324,15.0,1.0,False,True,False,False
+FIXED,synth,clean_pose+clean_pose_depth2+outlier_rot_rot_deg=15+outlier_rot_rot_deg=30+outlier_rot_rot_deg=90+outlier_frac_frac=0.2+outlier_frac_frac=0.4+shared_heading_bias_rot_deg=5+shared_heading_bias_rot_deg=10+c6_shared_rot_rot_deg=5+drift_level=2+drift_level=3+depth_scale_factor=0.67+depth_scale_factor=1.5+depth_one_scale_factor=1.5,shape,witness_drop,-0.0012653037997414813,-0.0017566573452292272,-0.00048098201967480304,3,0.01,0.08568617419249928,15.0,1.0,False,True,False,False
+SAFE,real_roomdev,gt_pose,shape,hints as given,0.0,0.0,0.0,3,0.01,1.0,,,False,True,False,False
+SAFE,real_roomdev,gt_pose,rotation,hints as given,0.0,0.0,0.0,3,0.25,1.0,,,False,True,False,False
+SAFE,real_roomdev,gt_pose,real_size,hints as given,0.0,0.0,0.0,3,0.05,1.0,,,False,True,False,False
+SAFE,real_roomdev,gt_all,shape,hints as given,0.0,0.0,0.0,3,0.01,1.0,,,False,True,False,False
+SAFE,real_roomdev,gt_all,rotation,hints as given,0.0,0.0,0.0,3,0.25,1.0,,,False,True,False,False
+SAFE,real_roomdev,gt_all,real_size,hints as given,0.0,0.0,0.0,3,0.05,1.0,,,False,True,False,False
+SAFE,real_roomdev,dev_pose,shape,hints as given,0.0,0.0,0.0,3,0.01,1.0,,,False,True,False,False
+SAFE,real_roomdev,dev_pose,rotation,hints as given,0.0,0.0,0.0,3,0.25,1.0,,,False,True,False,False
+SAFE,real_roomdev,dev_pose,real_size,hints as given,0.0,0.0,0.0,3,0.05,1.0,,,False,True,False,False
+SAFE,real_roomdev,dev_all,shape,hints as given,0.0020824628221997855,-0.0010917766683914976,0.0073391651349908535,3,0.01,0.5138858824430791,,,False,True,False,False
+SAFE,real_roomdev,dev_all,rotation,hints as given,0.00737100809666047,0.0,0.01946003428914933,3,0.25,0.3499525177909383,,,False,True,False,False
+SAFE,real_roomdev,dev_all,real_size,hints as given,0.002161789800021907,0.0,0.005248053555074489,3,0.05,0.30556909178721126,,,False,True,False,False
+HELP,real_roomdev,ai_depth,shape,hints as given,0.0,0.0,0.0,3,0.01,1.0,,1.0,False,True,False,False
+BEST,real_roomdev,ai_depth,shape,rgb_only,0.18283392952528846,0.07907256325947518,0.30074731246547903,3,0.01,0.1048551619434717,,1.0,False,False,False,False
+HELP,real_roomdev,dev_pose_ai_depth,shape,hints as given,-0.025421113181040844,-0.0730919365562982,0.0,3,0.01,0.39816519445736753,,1.0,False,True,False,False
+BEST,real_roomdev,dev_pose_ai_depth,shape,rgb_only,0.07863881027419144,0.051897075914086765,0.10155762372056804,3,0.01,0.03219897373578865,,1.0,False,False,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+dev_pose_ai_depth,rotation,rgb_only,-1.776832882383669,-2.9370417594586944,-0.9844240599135694,3,0.25,0.09564237025884255,5.0,1.0,False,True,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+dev_pose_ai_depth,rotation,filter_rgbcheck,-5.001338143587377,-12.850381263532967,-0.9896507412371527,3,0.25,0.33060449282479276,5.0,1.0,False,True,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+dev_pose_ai_depth,rotation,drop_lowconf,-2.3344106308501797,-7.006770577630071,0.0035386850795326996,3,0.25,0.4229413882025451,5.0,1.0,False,True,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+dev_pose_ai_depth,rotation,witness,-5.976027005497403,-13.750227532666372,-0.2222809568882258,3,0.25,0.2766547852297378,5.0,1.0,False,True,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+dev_pose_ai_depth,rotation,witness_drop,-4.84758183170707,-10.94404639896686,-0.44951464604432045,3,0.25,0.2632921788216014,5.0,1.0,False,True,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+ai_depth+dev_pose_ai_depth,shape,rgb_only,-0.010189302170621773,-0.060918139744255584,0.0164222825059136,3,0.01,0.7268554817271664,6.0,1.0,False,False,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+ai_depth+dev_pose_ai_depth,shape,filter_rgbcheck,-0.027946327296241757,-0.08687633502417284,0.024566184312308142,3,0.01,0.47848032853619216,6.0,1.0,False,False,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+ai_depth+dev_pose_ai_depth,shape,drop_lowconf,0.021417185656843973,0.006654126231829399,0.03045192606899952,3,0.01,0.10253269562758252,6.0,1.0,False,False,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+ai_depth+dev_pose_ai_depth,shape,witness,0.000709332905746989,-0.017197734008818577,0.01958545252576037,3,0.01,0.9528651918709736,6.0,1.0,False,False,False,False
+FIXED,real_roomdev,gt_pose+gt_all+dev_pose+dev_all+ai_depth+dev_pose_ai_depth,shape,witness_drop,-0.007683671676884385,-0.02901966492944244,0.008295948420005722,3,0.01,0.5603656497674079,6.0,1.0,False,True,False,False

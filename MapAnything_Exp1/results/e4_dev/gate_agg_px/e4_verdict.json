@@ -1,0 +1,25 @@
+{
+ "model": "pi3x",
+ "safe_noninferior": true,
+ "safe_failures": [],
+ "help_on_agreeing_or_ai_depth": [],
+ "fixed_rotation_better_than": [],
+ "fixed_rotation_not_better_than": [
+  "drop_lowconf",
+  "filter_rgbcheck",
+  "rgb_only",
+  "witness",
+  "witness_drop"
+ ],
+ "fixed_shape_noninferior_to": [
+  "drop_lowconf",
+  "filter_rgbcheck",
+  "rgb_only",
+  "witness",
+  "witness_drop"
+ ],
+ "fixed_shape_not_noninferior_to": [],
+ "method_claim_holds": false,
+ "n_tests": 66,
+ "parity_all_exact": false
+}

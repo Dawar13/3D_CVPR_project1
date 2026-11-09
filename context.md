@@ -358,3 +358,13 @@ Answered from the source code @ `3d10cf7a` (2026-10-27); evidence in `MapAnythin
     - ETH3D dev: one wrong camera 5–30° → about 0.03°; shared heading 10° 7.0° → 1.4°; drift 3 7.1° → 3.7°; depth ×1.5 abs log 0.405 → 0.059.
     - Weak on 5° agreeing errors (shared heading 5°: 3.0° → 2.7°).
   - **Eval plan (not yet run):** E3's eval sets, MapAnything and Pi3X. Tests SAFE (non-inferiority), HELP, FIXED (vs every single deployable remedy, including E3) and BEST. Queue `scripts/session_queue_e4.sh`; deploy `scripts/e4/deploy_vm.sh`; analysis `scripts/e4/analyse_e4.py`.
+- 2026-11-08/09: **E4 dev gates PASS for both models; eval started; then the VM stopped answering.**
+  - Queues started 20:06 UTC from `e4-prereg` (code checked by sha256). Gates: MapAnything PASS 20:49, Pi3X PASS 21:20 UTC. 0 failures; out-of-memory resets came from sharing the GPU with the user's other jobs and were rerun automatically (`results/vm_logs_e4/` once fetched; laptop backup `../3D-CVPR_Exp_vm_backup_e4/`).
+  - Dev model-level tables (3 ETH3D dev clips + room dev clips; no power, not tests): `MapAnything_Exp1/results/e4_dev/gate_agg_{ma,px}/`.
+    - Parity with the E3 dev runs on the shared rows: MapAnything exact. Pi3X: ETH3D exact; room dev rotation exact, shape metrics differ in 78 of 147 rows by at most 4.3e-5 (`gate_agg_px/parity.csv`; numerical).
+    - Correct and real iPad hints come back unchanged on room dev (where E3 had worsened them).
+  - **Dev finding after the freeze** (MapAnything, `dev__delivery_area__c0`, `outlier_frac_frac=0.2`: views 2 and 4 wrong by 15° and 0.25 L in position):
+    - VtT kept both hints (rotation 5.43° → 3.79° over the dev clips, E3 0.35°).
+    - Cause: the pair label covers rotation and direction together, and the centre hints enter as fixed with one shared noise σ_c. When a minority of centres is wrong and the rest exact, σ_c is fitted as 0, so the pairs to the bad cameras (after the ambiguity step all within 3.2° of GT, most within 0.4°) are labelled wrong instead of the hints.
+    - With the same wrong rotations and correct centres, or without direction terms, both hints are replaced (worst 0.13°). Diagnosis scripts are in the session scratchpad (`diag_frac02*.py`); E4's code and grid are unchanged.
+  - **VM unreachable** since about 21:40 UTC (SSH timeouts; last backup 21:31 UTC). At that point the ETH3D eval was running (MapAnything about 314 of 672 VtT decisions, Pi3X about 49 of 336). **No eval metric has been read.**

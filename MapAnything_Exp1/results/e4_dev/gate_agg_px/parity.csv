@@ -1,0 +1,9 @@
+e4_run,e3_run,metric,n_rows,n_exact,max_abs_diff
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_synth_px_dev,results/e3_eval_synth_px_dev,pts_relerr_scale,237,237,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_synth_px_dev,results/e3_eval_synth_px_dev,rre_deg,237,237,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_synth_px_dev,results/e3_eval_synth_px_dev,pts_relerr_metric,237,237,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_synth_px_dev,results/e3_eval_synth_px_dev,depth_absrel_scale,237,237,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_real_px_roomdev,results/e3_eval_real_px_roomdev,pts_relerr_scale,147,69,2.9914649237003377e-05
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_real_px_roomdev,results/e3_eval_real_px_roomdev,rre_deg,147,147,0.0
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_real_px_roomdev,results/e3_eval_real_px_roomdev,pts_relerr_metric,147,69,4.29401032516763e-05
+C:/Users/djtde/Downloads/3D-CVPR_Exp_vm_backup_e4/results/e4_eval_real_px_roomdev,results/e3_eval_real_px_roomdev,depth_absrel_scale,147,69,8.329749107305329e-06
