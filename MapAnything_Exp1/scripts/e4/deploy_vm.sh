@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # E4-A: put the code of tag e4-prereg on the VM as ~/e4 (results/ excluded; data and third_party linked read-only to
 # the session-A tree ~/e2x, which stays untouched), then check that the copy is the tag.
-#   SSH_KEY=~/.ssh/a100_dawar_ed25519 bash MapAnything_Exp1/scripts/e4/deploy_vm.sh dawar@35.193.8.245 [tag]
+#   SSH_KEY=~/.ssh/<key> bash MapAnything_Exp1/scripts/e4/deploy_vm.sh user@host [tag]
 set -euo pipefail
 HOST=${1:?user@host}
 TAG=${2:-e4-prereg}
